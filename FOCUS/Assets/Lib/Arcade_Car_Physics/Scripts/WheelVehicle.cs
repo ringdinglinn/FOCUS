@@ -14,7 +14,7 @@ using UnityEngine;
 
 namespace VehicleBehaviour {
     [RequireComponent(typeof(Rigidbody))]
-    public class WheelVehicle : MonoBehaviour {
+    public class WheelVehicle : MonoBehaviourReferenced {
         
         [Header("Inputs")]
     #if MULTIOSCONTROLS
@@ -184,6 +184,7 @@ namespace VehicleBehaviour {
 #if MULTIOSCONTROLS
             Debug.Log("[ACP] Using MultiOSControls");
 #endif
+            Debug.Log(referenceManagement.inputManagement);
             if (boostClip != null) {
                 boostSource.clip = boostClip;
             }
@@ -361,7 +362,7 @@ namespace VehicleBehaviour {
 #if MULTIOSCONTROLS
         return MultiOSControls.GetValue(input, playerId);
 #else
-        return Input.GetAxis(input);
+        return referenceManagement.inputManagement.GetInput(input);
 #endif
         }
     }
