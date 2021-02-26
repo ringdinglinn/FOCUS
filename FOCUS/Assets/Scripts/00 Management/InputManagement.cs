@@ -24,7 +24,6 @@ public class InputManagement : MonoBehaviourReferenced {
 
 
     public float GetInput(string key) {
-        Debug.Log(key);
         return player.GetAxis(key);
     }
 }

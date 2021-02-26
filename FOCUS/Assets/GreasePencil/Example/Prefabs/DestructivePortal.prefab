@@ -1,0 +1,2343 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1278589708169436}
+  m_IsPrefabAsset: 1
+--- !u!1 &1278589708169436
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4428288458782312}
+  - component: {fileID: 114064581409973948}
+  - component: {fileID: 50473664386023584}
+  - component: {fileID: 114872994933447022}
+  - component: {fileID: 61192358628917530}
+  m_Layer: 0
+  m_Name: DestructivePortal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4428288458782312
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1278589708169436}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4.75, y: 0.93, z: 0.22}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &50473664386023584
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1278589708169436}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!61 &61192358628917530
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1278589708169436}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.26344347, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 5.794669, y: 1}
+  m_EdgeRadius: 0
+--- !u!114 &114064581409973948
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1278589708169436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fe8475293fd7f645ba94d4b32f14011, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _layers:
+  - _id: 5619073368783819058
+    name: Default
+    visible: 1
+    _renderQueue: -1
+    _strokes:
+    - _points:
+      - position: {x: -2.6499262, y: 0.21961743, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.6278715, y: 0.065235436, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.6058173, y: -0.0009279847, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.6058173, y: -0.06709188, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.6058173, y: -0.13325566, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.6058173, y: -0.19941908, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.6058173, y: -0.24352819, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.5837626, y: -0.2876373, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.5396538, y: -0.2876373, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.451435, y: -0.2876373, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.4293804, y: -0.30969208, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.3411627, y: -0.30969208, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.2088346, y: -0.3317464, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.8780165, y: -0.3317464, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.5913072, y: -0.3317464, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.4369254, y: -0.3317464, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.3487072, y: -0.3317464, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.2604885, y: -0.3317464, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.1502161, y: -0.3317464, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.0399427, y: -0.3538012, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.8414521, y: -0.3979103, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.5767975, y: -0.3979103, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.35625172, y: -0.3979103, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.17981529, y: -0.41996497, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.047488213, y: -0.41996497, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.0033783913, y: -0.41996497, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.12894869, y: -0.41996497, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.28333044, y: -0.4420194, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.4597664, y: -0.4420194, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.6141486, y: -0.4420194, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.65825796, y: -0.4420194, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.8126402, y: -0.4420194, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.98907685, y: -0.4420194, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.1875675, y: -0.41996497, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.2537317, y: -0.41996497, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.3860588, y: -0.41996497, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.4963317, y: -0.3979103, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.6066041, y: -0.3979103, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.7168767, y: -0.3979103, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.783041, y: -0.3979103, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.8712587, y: -0.3979103, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.0035863, y: -0.3979103, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.091805, y: -0.3979103, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.157968, y: -0.3979103, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.2461872, y: -0.3979103, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.3123503, y: -0.3979103, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.3785145, y: -0.3979103, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.4446776, y: -0.3979103, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.5108418, y: -0.3979103, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.577005, y: -0.3979103, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.6872776, y: -0.3979103, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.7534416, y: -0.3979103, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.7975512, y: -0.37585586, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.8637142, y: -0.37585586, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.9078238, y: -0.37585586, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.9519322, y: -0.37585586, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.9960415, y: -0.3538012, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 3.0622058, y: -0.3538012, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 3.1283689, y: -0.3538012, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 3.1724784, y: -0.30969208, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 3.1724784, y: -0.22147387, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 3.1724784, y: -0.15530998, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 3.1724784, y: -0.11120099, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 3.1504238, y: -0.06709188, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 3.1283689, y: -0.04503709, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 3.1283689, y: -0.0009279847, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 3.1283689, y: 0.04318112, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 3.1283689, y: 0.08729023, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 3.1283689, y: 0.13139921, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 3.1063142, y: 0.15345365, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 3.0622058, y: 0.17550832, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.9960415, y: 0.19756275, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.9739869, y: 0.21961743, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.9298785, y: 0.21961743, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.9078238, y: 0.24167222, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.8637142, y: 0.24167222, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.8196049, y: 0.26372653, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.6872776, y: 0.28578132, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.577005, y: 0.28578132, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.4446776, y: 0.28578132, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.400568, y: 0.28578132, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.2902956, y: 0.28578132, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.2020776, y: 0.30783564, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.1138587, y: 0.32989043, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.0476956, y: 0.32989043, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.9153681, y: 0.32989043, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.8050957, y: 0.32989043, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.694823, y: 0.32989043, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.6066041, y: 0.32989043, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.4963317, y: 0.32989043, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.4081135, y: 0.32989043, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.3198948, y: 0.32989043, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.2537317, y: 0.32989043, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.1875675, y: 0.30783564, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.0993495, y: 0.30783564, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.0331855, y: 0.30783564, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.9229126, y: 0.30783564, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.85674953, y: 0.30783564, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.8126402, y: 0.30783564, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.72442245, y: 0.30783564, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.59209394, y: 0.28578132, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.48182106, y: 0.26372653, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.3274393, y: 0.26372653, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.19511223, y: 0.24167222, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.106894016, y: 0.24167222, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.018675804, y: 0.24167222, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.06954241, y: 0.24167222, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.13570595, y: 0.21961743, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.24597931, y: 0.21961743, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.31214285, y: 0.21961743, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.3783064, y: 0.21961743, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.4665246, y: 0.21961743, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.51063347, y: 0.21961743, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.59885216, y: 0.21961743, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.70912457, y: 0.24167222, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.7752886, y: 0.24167222, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.88556147, y: 0.24167222, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.90761566, y: 0.26372653, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.99583435, y: 0.26372653, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.0840526, y: 0.28578132, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.1722703, y: 0.28578132, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.2604885, y: 0.30783564, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.3487072, y: 0.32989043, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.4148707, y: 0.32989043, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.4810343, y: 0.32989043, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.5251436, y: 0.32989043, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.569253, y: 0.32989043, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.6354165, y: 0.32989043, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.6795254, y: 0.32989043, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.7236347, y: 0.32989043, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.7677441, y: 0.32989043, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.8339076, y: 0.32989043, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.9000711, y: 0.32989043, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.0103436, y: 0.30783564, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.0544534, y: 0.30783564, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.0985622, y: 0.30783564, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.142671, y: 0.30783564, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.186781, y: 0.30783564, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.2308893, y: 0.30783564, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.2749987, y: 0.30783564, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.319108, y: 0.30783564, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.3632169, y: 0.30783564, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.4073262, y: 0.30783564, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.451435, y: 0.30783564, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.4955444, y: 0.30783564, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.5396538, y: 0.30783564, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.5837626, y: 0.30783564, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.6278715, y: 0.30783564, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.6499262, y: 0.28578132, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.6499262, y: 0.28578132, z: -0.0000006854534}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      _lineColor: {r: 1, g: 1, b: 1, a: 0}
+      _fillColor: {r: 0.24528301, g: 0.24528301, b: 0.24528301, a: 1}
+      _right: {x: 1, y: 0, z: 0}
+      _up: {x: 0, y: 1, z: 0}
+      _finalized: 1
+    - _points:
+      - position: {x: -2.4205918, y: 0.20667392, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.4205918, y: 0.2505812, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.4205918, y: 0.3296141, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.4205918, y: 0.40864724, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.4205918, y: 0.46133572, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.4118104, y: 0.52280587, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.4118104, y: 0.5579316, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.3854666, y: 0.52280587, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.3679032, y: 0.4701174, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.3503404, y: 0.39108425, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.323996, y: 0.3296141, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.3064332, y: 0.28570694, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.3064332, y: 0.24179965, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.2888708, y: 0.20667392, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.280089, y: 0.18911105, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      _lineColor: {r: 1, g: 1, b: 1, a: 0}
+      _fillColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+      _right: {x: 1, y: 0, z: 0}
+      _up: {x: 0, y: 1, z: 0}
+      _finalized: 1
+    - _points:
+      - position: {x: -2.4118104, y: 0.022263646, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.3854666, y: -0.004080713, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.3679032, y: -0.039206505, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.3415594, y: -0.05676937, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.3152146, y: -0.08311373, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.2888708, y: -0.100676656, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.2713075, y: -0.065550864, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.2713075, y: 0.022263646, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.2713075, y: 0.05738944, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.2713075, y: 0.074952304, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      _lineColor: {r: 1, g: 1, b: 1, a: 0}
+      _fillColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+      _right: {x: 1, y: 0, z: 0}
+      _up: {x: 0, y: 1, z: 0}
+      _finalized: 1
+    - _points:
+      - position: {x: -2.4118104, y: -0.20605403, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.394248, y: -0.24117982, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.3591218, y: -0.29386842, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.3415594, y: -0.36411995, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.3327775, y: -0.41680855, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.323996, y: -0.45193446, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.3064332, y: -0.4782787, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.3064332, y: -0.522186, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.2976518, y: -0.44315296, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.2976518, y: -0.3377757, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.2976518, y: -0.27630556, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.2976518, y: -0.23239827, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.2888708, y: -0.20605403, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      _lineColor: {r: 1, g: 1, b: 1, a: 0}
+      _fillColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+      _right: {x: 1, y: 0, z: 0}
+      _up: {x: 0, y: 1, z: 0}
+      _finalized: 1
+    - _points:
+      - position: {x: -1.9639568, y: 0.24179965, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.9376125, y: 0.29448825, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.9024868, y: 0.3735215, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.8761425, y: 0.4349913, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.8585796, y: 0.4701174, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.8497982, y: 0.5052431, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.8322353, y: 0.54036885, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.7971096, y: 0.49646145, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.7795467, y: 0.38230282, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.7707653, y: 0.3032698, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.7619839, y: 0.25936252, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.7532024, y: 0.22423679, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.7532024, y: 0.20667392, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      _lineColor: {r: 1, g: 1, b: 1, a: 0}
+      _fillColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+      _right: {x: 1, y: 0, z: 0}
+      _up: {x: 0, y: 1, z: 0}
+      _finalized: 1
+    - _points:
+      - position: {x: -1.9288311, y: 0.1276409, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.9639568, y: 0.11885935, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.0166454, y: 0.08373362, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.086897, y: 0.048607886, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.1132412, y: 0.022263646, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.0781155, y: 0.013482153, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.0605526, y: -0.012862265, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -2.0342083, y: -0.030425131, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.9990826, y: -0.012862265, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.9639568, y: -0.012862265, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.9200497, y: -0.012862265, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.9112682, y: -0.030425131, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      _lineColor: {r: 1, g: 1, b: 1, a: 0}
+      _fillColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+      _right: {x: 1, y: 0, z: 0}
+      _up: {x: 0, y: 1, z: 0}
+      _finalized: 1
+    - _points:
+      - position: {x: -1.8937054, y: -0.20605403, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.8497982, y: -0.22361696, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.7795467, y: -0.27630556, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.7532024, y: -0.3289942, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.7268581, y: -0.3816828, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.7005138, y: -0.41680855, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.682951, y: -0.44315296, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.6566067, y: -0.48706025, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.6566067, y: -0.44315296, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.682951, y: -0.36411995, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.7092948, y: -0.3114313, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.7268581, y: -0.24996114, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.744421, y: -0.2148354, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.744421, y: -0.18849105, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      _lineColor: {r: 1, g: 1, b: 1, a: 0}
+      _fillColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+      _right: {x: 1, y: 0, z: 0}
+      _up: {x: 0, y: 1, z: 0}
+      _finalized: 1
+    - _points:
+      - position: {x: -1.5161033, y: 0.22423679, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.4985404, y: 0.26814407, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.4546332, y: 0.3471771, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.4195075, y: 0.39986557, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.3756003, y: 0.44377297, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.349256, y: 0.4701174, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.3316927, y: 0.4349913, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.3316927, y: 0.38230282, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.3316927, y: 0.31205112, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.3316927, y: 0.27692538, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.3316927, y: 0.24179965, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.3316927, y: 0.21545523, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      _lineColor: {r: 1, g: 1, b: 1, a: 0}
+      _fillColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+      _right: {x: 1, y: 0, z: 0}
+      _up: {x: 0, y: 1, z: 0}
+      _finalized: 1
+    - _points:
+      - position: {x: -1.2877855, y: -0.24996114, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.2526598, y: -0.27630556, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.2350969, y: -0.3026498, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.2175341, y: -0.35533857, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.1999712, y: -0.40802723, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.1911898, y: -0.46949732, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.1648455, y: -0.45193446, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.1648455, y: -0.40802723, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.156064, y: -0.3377757, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.156064, y: -0.2587427, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.156064, y: -0.22361696, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.156064, y: -0.19727254, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      _lineColor: {r: 1, g: 1, b: 1, a: 0}
+      _fillColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+      _right: {x: 1, y: 0, z: 0}
+      _up: {x: 0, y: 1, z: 0}
+      _finalized: 1
+    - _points:
+      - position: {x: -0.6379585, y: 0.101296484, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.56770706, y: 0.074952304, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.51501846, y: 0.074952304, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.47989273, y: 0.11007804, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.45354843, y: 0.1803295, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.4184227, y: 0.26814407, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.38329697, y: 0.3559584, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.37451553, y: 0.39108425, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.35695267, y: 0.4349913, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.3393898, y: 0.4701174, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.32182646, y: 0.51402444, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.3130455, y: 0.5579316, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.29548216, y: 0.584276, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.2867012, y: 0.61940175, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.3130455, y: 0.584276, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.35695267, y: 0.51402444, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.40964127, y: 0.4525543, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.444767, y: 0.40864724, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.4974556, y: 0.3559584, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.5325813, y: 0.31205112, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.56770706, y: 0.28570694, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.6028328, y: 0.2505812, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.62039614, y: 0.22423679, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.64674044, y: 0.19789237, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.6643028, y: 0.16276664, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.67308474, y: 0.13642246, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      _lineColor: {r: 1, g: 1, b: 1, a: 0}
+      _fillColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+      _right: {x: 1, y: 0, z: 0}
+      _up: {x: 0, y: 1, z: 0}
+      _finalized: 1
+    - _points:
+      - position: {x: 0.082119465, y: 0.11007804, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.13480806, y: 0.11007804, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.20506, y: 0.11007804, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.24018574, y: 0.11885935, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.26653004, y: 0.17154819, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.29287434, y: 0.25936252, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.3104372, y: 0.33839554, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.31921864, y: 0.3735215, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.32800007, y: 0.42621, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.35434484, y: 0.49646145, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.37190723, y: 0.5579316, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.3894701, y: 0.59305733, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.4158144, y: 0.6457462, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.37190723, y: 0.601839, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.32800007, y: 0.54036885, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.26653004, y: 0.46133572, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.2314043, y: 0.42621, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.20506, y: 0.39108425, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.16993427, y: 0.3471771, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.15237093, y: 0.32083267, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.1260271, y: 0.27692538, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.117245674, y: 0.24179965, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.09968233, y: 0.19789237, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.055775166, y: 0.18911105, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.005694866, y: 0.16276664, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      _lineColor: {r: 1, g: 1, b: 1, a: 0}
+      _fillColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+      _right: {x: 1, y: 0, z: 0}
+      _up: {x: 0, y: 1, z: 0}
+      _finalized: 1
+    - _points:
+      - position: {x: -0.5501442, y: -0.27630556, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.50623703, y: -0.27630556, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.47989273, y: -0.35533857, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.46232986, y: -0.4255901, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.444767, y: -0.5134044, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.42720413, y: -0.5924375, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.4184227, y: -0.6451263, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.4184227, y: -0.6890333, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.40085983, y: -0.7241592, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.40085983, y: -0.76806635, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.3920784, y: -0.81197363, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.37451553, y: -0.86466235, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.37451553, y: -0.8997881, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.40964127, y: -0.84709936, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.444767, y: -0.7768479, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.45354843, y: -0.7329406, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.4711113, y: -0.6978149, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.48867416, y: -0.6539076, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.50623703, y: -0.601219, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.50623703, y: -0.5573117, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.51501846, y: -0.522186, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.5325813, y: -0.48706025, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.5325813, y: -0.45193446, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.54136276, y: -0.41680855, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.5589256, y: -0.35533857, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.5764885, y: -0.32021284, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.59405136, y: -0.29386842, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.59405136, y: -0.29386842, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      _lineColor: {r: 1, g: 1, b: 1, a: 0}
+      _fillColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+      _right: {x: 1, y: 0, z: 0}
+      _up: {x: 0, y: 1, z: 0}
+      _finalized: 1
+    - _points:
+      - position: {x: -0.11107206, y: -0.3026498, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.11107206, y: -0.37290144, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.11107206, y: -0.40802723, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.10229063, y: -0.48706025, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.084727764, y: -0.5924375, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.07594633, y: -0.66268915, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.07594633, y: -0.7065962, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.0671649, y: -0.74172217, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.058383465, y: -0.7768479, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.04960203, y: -0.8295365, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.023257732, y: -0.89100665, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.014476299, y: -0.9349138, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.005694866, y: -0.83831793, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.014476299, y: -0.75928503, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.014476299, y: -0.680252, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.014476299, y: -0.601219, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.014476299, y: -0.5309675, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.014476299, y: -0.4782787, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.014476299, y: -0.44315296, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.014476299, y: -0.40802723, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.005694866, y: -0.3289942, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.005694866, y: -0.28508693, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.005694866, y: -0.24996114, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.005694866, y: -0.22361696, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      _lineColor: {r: 1, g: 1, b: 1, a: 0}
+      _fillColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+      _right: {x: 1, y: 0, z: 0}
+      _up: {x: 0, y: 1, z: 0}
+      _finalized: 1
+    - _points:
+      - position: {x: -0.94530916, y: -0.012862265, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.9365277, y: -0.065550864, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.9101834, y: -0.12702101, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.8750577, y: -0.22361696, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.85749483, y: -0.26752406, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.83115053, y: -0.29386842, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.80480623, y: -0.3289942, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.7960248, y: -0.24996114, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.80480623, y: -0.2148354, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.8223691, y: -0.1621468, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.83115053, y: -0.11823952, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.8487134, y: -0.08311373, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.85749483, y: -0.047987998, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.86627626, y: -0.012862265, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.89262056, y: 0.004700601, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.91896486, y: 0.004700601, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      _lineColor: {r: 1, g: 1, b: 1, a: 0}
+      _fillColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+      _right: {x: 1, y: 0, z: 0}
+      _up: {x: 0, y: 1, z: 0}
+      _finalized: 1
+    - _points:
+      - position: {x: -1.0067792, y: 0.27692538, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.97165346, y: 0.3032698, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.9277463, y: 0.36473984, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.83993196, y: 0.4349913, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.80480623, y: 0.46133572, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.75211763, y: 0.52280587, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.7169919, y: 0.5491503, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.6906476, y: 0.5754946, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.6643028, y: 0.601839, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.6291771, y: 0.63696474, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.59405136, y: 0.6808719, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.56770706, y: 0.71599764, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.62039614, y: 0.584276, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.67308474, y: 0.49646145, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.7345543, y: 0.42621, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.75211763, y: 0.39108425, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.77846193, y: 0.3559584, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.81358767, y: 0.31205112, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.83993196, y: 0.27692538, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.86627626, y: 0.2505812, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.901402, y: 0.24179965, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.9365277, y: 0.24179965, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.962872, y: 0.25936252, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.9804349, y: 0.25936252, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      _lineColor: {r: 1, g: 1, b: 1, a: 0}
+      _fillColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+      _right: {x: 1, y: 0, z: 0}
+      _up: {x: 0, y: 1, z: 0}
+      _finalized: 1
+    - _points:
+      - position: {x: -0.9804349, y: -0.36411995, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.94530916, y: -0.36411995, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.89262056, y: -0.37290144, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.86627626, y: -0.4343716, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.86627626, y: -0.5485304, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.8487134, y: -0.601219, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.83115053, y: -0.63634473, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.81358767, y: -0.6978149, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.80480623, y: -0.7329406, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.80480623, y: -0.76806635, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.81358767, y: -0.8031922, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.83115053, y: -0.7768479, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.85749483, y: -0.7505035, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.89262056, y: -0.6978149, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.91896486, y: -0.6451263, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.94530916, y: -0.5924375, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.962872, y: -0.5573117, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.9804349, y: -0.5309675, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.9892163, y: -0.49584156, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.99799824, y: -0.45193446, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.99799824, y: -0.41680855, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -0.99799824, y: -0.37290144, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.0067792, y: -0.3377757, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: -1.0067792, y: -0.3289942, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      _lineColor: {r: 1, g: 1, b: 1, a: 0}
+      _fillColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+      _right: {x: 1, y: 0, z: 0}
+      _up: {x: 0, y: 1, z: 0}
+      _finalized: 1
+    - _points:
+      - position: {x: 0.40703344, y: -0.45193446, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.42459583, y: -0.48706025, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.43337727, y: -0.56609327, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.43337727, y: -0.63634473, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.43337727, y: -0.71537775, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.43337727, y: -0.7505035, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.43337727, y: -0.7856292, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.43337727, y: -0.82075506, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.4509406, y: -0.84709936, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.45972204, y: -0.8997881, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.468503, y: -0.94369537, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.48606586, y: -0.91735095, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.48606586, y: -0.83831793, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.47728443, y: -0.8031922, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.468503, y: -0.6890333, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.468503, y: -0.63634473, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.468503, y: -0.5924375, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.468503, y: -0.53974885, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.47728443, y: -0.49584156, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.49484777, y: -0.45193446, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.49484777, y: -0.44315296, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      _lineColor: {r: 1, g: 1, b: 1, a: 0}
+      _fillColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+      _right: {x: 1, y: 0, z: 0}
+      _up: {x: 0, y: 1, z: 0}
+      _finalized: 1
+    - _points:
+      - position: {x: 0.52997303, y: 0.25936252, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.52997303, y: 0.29448825, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.52997303, y: 0.3296141, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.5563178, y: 0.39108425, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.5826616, y: 0.5052431, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.5826616, y: 0.54036885, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.6090064, y: 0.62818307, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.61778784, y: 0.6896532, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.6353502, y: 0.75112337, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.6529136, y: 0.66330916, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.661695, y: 0.5754946, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.67047644, y: 0.51402444, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.67047644, y: 0.4788987, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.67047644, y: 0.4349913, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.67047644, y: 0.39986557, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.67047644, y: 0.36473984, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.67047644, y: 0.3296141, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.661695, y: 0.29448825, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.661695, y: 0.26814407, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      _lineColor: {r: 1, g: 1, b: 1, a: 0}
+      _fillColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+      _right: {x: 1, y: 0, z: 0}
+      _up: {x: 0, y: 1, z: 0}
+      _finalized: 1
+    - _points:
+      - position: {x: 0.61778784, y: 0.048607886, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.661695, y: -0.047987998, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.69682074, y: -0.11823952, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.7143836, y: -0.14458394, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.7407279, y: -0.23239827, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.75829077, y: -0.2587427, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.793417, y: -0.35533857, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.81097937, y: -0.3904643, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.8285425, y: -0.4255901, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.7670722, y: -0.35533857, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.67047644, y: -0.29386842, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.61778784, y: -0.2587427, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.5738807, y: -0.20605403, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.5563178, y: -0.17970967, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.52997303, y: -0.1621468, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.51241064, y: -0.13580239, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.51241064, y: -0.100676656, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.51241064, y: -0.065550864, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 0.51241064, y: -0.05676937, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      _lineColor: {r: 1, g: 1, b: 1, a: 0}
+      _fillColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+      _right: {x: 1, y: 0, z: 0}
+      _up: {x: 0, y: 1, z: 0}
+      _finalized: 1
+    - _points:
+      - position: {x: 1.1973629, y: 0.31205112, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.2500515, y: 0.41742855, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.3378663, y: 0.59305733, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.3817735, y: 0.6896532, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.4081175, y: 0.7774678, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.4344621, y: 0.882845, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.4520252, y: 0.9355338, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.4608064, y: 0.86528236, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.4608064, y: 0.8301566, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.4608064, y: 0.7072163, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.4432435, y: 0.5754946, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.4432435, y: 0.54036885, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.4432435, y: 0.48768014, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.4432435, y: 0.4525543, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.4344621, y: 0.40864724, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.4256806, y: 0.3559584, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.4081175, y: 0.3296141, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.3817735, y: 0.3032698, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.3466473, y: 0.25936252, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.3027403, y: 0.23301834, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.2588332, y: 0.22423679, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.1885815, y: 0.23301834, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.1534557, y: 0.24179965, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.1534557, y: 0.24179965, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      _lineColor: {r: 1, g: 1, b: 1, a: 0}
+      _fillColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+      _right: {x: 1, y: 0, z: 0}
+      _up: {x: 0, y: 1, z: 0}
+      _finalized: 1
+    - _points:
+      - position: {x: 1.1358929, y: -0.3289942, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.1798005, y: -0.45193446, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.214926, y: -0.62756324, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.2324891, y: -0.74172217, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.2676146, y: -0.8997881, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.2851777, y: -0.9788211, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.2939587, y: -1.0402913, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.2939587, y: -0.98760253, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.2939587, y: -0.8822252, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.2939587, y: -0.84709936, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.3027403, y: -0.7241592, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.3203034, y: -0.61878186, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.3378663, y: -0.522186, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.3378663, y: -0.46949732, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.3466473, y: -0.4255901, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.3466473, y: -0.3904643, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.3466473, y: -0.34655708, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.3115218, y: -0.3114313, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.2763963, y: -0.3026498, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.2324891, y: -0.3026498, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.1973629, y: -0.3026498, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.1622374, y: -0.3114313, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.1622374, y: -0.3114313, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      _lineColor: {r: 1, g: 1, b: 1, a: 0}
+      _fillColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+      _right: {x: 1, y: 0, z: 0}
+      _up: {x: 0, y: 1, z: 0}
+      _finalized: 1
+    - _points:
+      - position: {x: 1.1973629, y: 0.013482153, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.2500515, y: -0.004080713, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.3642106, y: -0.047987998, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.4432435, y: -0.08311373, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.5661836, y: -0.1621468, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.6276536, y: -0.19727254, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.6627798, y: -0.2148354, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.7154684, y: -0.24996114, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.636435, y: -0.23239827, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.5047138, y: -0.18849105, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.4344621, y: -0.17092812, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.372992, y: -0.15336525, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.3203034, y: -0.13580239, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.2851777, y: -0.13580239, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.2500515, y: -0.13580239, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.214926, y: -0.12702101, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.1622374, y: -0.11823952, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.1358929, y: -0.09189516, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.1271114, y: -0.05676937, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.1358929, y: -0.047987998, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      _lineColor: {r: 1, g: 1, b: 1, a: 0}
+      _fillColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+      _right: {x: 1, y: 0, z: 0}
+      _up: {x: 0, y: 1, z: 0}
+      _finalized: 1
+    - _points:
+      - position: {x: 1.7505941, y: 0.21545523, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.7857196, y: 0.3032698, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.8120642, y: 0.33839554, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.9174414, y: 0.54036885, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.9350045, y: 0.62818307, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.9437861, y: 0.7072163, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.9525671, y: 0.7599047, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.97013, y: 0.82137495, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.97013, y: 0.66330916, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.9437861, y: 0.5052431, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.9437861, y: 0.42621, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.9262228, y: 0.38230282, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.9262228, y: 0.33839554, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.9174414, y: 0.3032698, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.8823156, y: 0.27692538, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.8471899, y: 0.26814407, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.8120642, y: 0.2505812, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.8120642, y: 0.2505812, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      _lineColor: {r: 1, g: 1, b: 1, a: 0}
+      _fillColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+      _right: {x: 1, y: 0, z: 0}
+      _up: {x: 0, y: 1, z: 0}
+      _finalized: 1
+    - _points:
+      - position: {x: 1.7769384, y: -0.37290144, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.8120642, y: -0.39924568, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.829627, y: -0.4782787, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.829627, y: -0.5134044, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.8384087, y: -0.66268915, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.8384087, y: -0.75928503, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.8384087, y: -0.81197363, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.8384087, y: -0.8558809, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.8384087, y: -0.9085695, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.8384087, y: -0.9788211, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.8384087, y: -0.91735095, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.8471899, y: -0.81197363, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.8647528, y: -0.7329406, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.8910973, y: -0.6451263, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.9086599, y: -0.6100004, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.9262228, y: -0.5309675, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.9350045, y: -0.45193446, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.9525671, y: -0.4255901, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.9613485, y: -0.35533857, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.9350045, y: -0.29386842, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.8910973, y: -0.26752406, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.8384087, y: -0.28508693, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.8120642, y: -0.3114313, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.8032827, y: -0.34655708, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.7945013, y: -0.35533857, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      _lineColor: {r: 1, g: 1, b: 1, a: 0}
+      _fillColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+      _right: {x: 1, y: 0, z: 0}
+      _up: {x: 0, y: 1, z: 0}
+      _finalized: 1
+    - _points:
+      - position: {x: 2.1194146, y: 0.22423679, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.163322, y: 0.28570694, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.2335734, y: 0.40864724, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.3301694, y: 0.584276, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.3828583, y: 0.6808719, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.4706724, y: 0.82137495, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.505798, y: 0.89162666, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.4882355, y: 0.8125935, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.4706724, y: 0.7335606, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.461891, y: 0.6896532, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.4179838, y: 0.5579316, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.4004207, y: 0.5052431, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.3652952, y: 0.41742855, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.3301694, y: 0.3296141, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.303825, y: 0.28570694, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.2950435, y: 0.2505812, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.2686994, y: 0.23301834, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.2160108, y: 0.23301834, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.1721032, y: 0.24179965, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.145759, y: 0.18911105, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      _lineColor: {r: 1, g: 1, b: 1, a: 0}
+      _fillColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+      _right: {x: 1, y: 0, z: 0}
+      _up: {x: 0, y: 1, z: 0}
+      _finalized: 1
+    - _points:
+      - position: {x: 2.2072291, y: 0.08373362, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.1808846, y: 0.05738944, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.0930705, y: 0.013482153, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.9525671, y: -0.05676937, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.8384087, y: -0.13580239, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.7769384, y: -0.1621468, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.829627, y: -0.1621468, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.8910973, y: -0.15336525, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 1.9525671, y: -0.15336525, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.0140371, y: -0.15336525, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.0755074, y: -0.13580239, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.1194146, y: -0.11823952, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.145759, y: -0.100676656, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.1721032, y: -0.07433224, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.1984477, y: -0.030425131, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.1984477, y: 0.013482153, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.2072291, y: 0.022263646, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      _lineColor: {r: 1, g: 1, b: 1, a: 0}
+      _fillColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+      _right: {x: 1, y: 0, z: 0}
+      _up: {x: 0, y: 1, z: 0}
+      _finalized: 1
+    - _points:
+      - position: {x: 2.2423549, y: -0.29386842, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.2599177, y: -0.49584156, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.2774808, y: -0.6100004, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.2950435, y: -0.67147046, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.303825, y: -0.7505035, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.303825, y: -0.81197363, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.303825, y: -0.74172217, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.321388, y: -0.67147046, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.3389506, y: -0.5485304, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.347732, y: -0.5046231, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.3565137, y: -0.44315296, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.3740766, y: -0.3904643, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.3740766, y: -0.3377757, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.3389506, y: -0.3289942, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.2950435, y: -0.32021284, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.2686994, y: -0.3026498, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.2511363, y: -0.29386842, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      _lineColor: {r: 1, g: 1, b: 1, a: 0}
+      _fillColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+      _right: {x: 1, y: 0, z: 0}
+      _up: {x: 0, y: 1, z: 0}
+      _finalized: 1
+    - _points:
+      - position: {x: 2.5760498, y: 0.20667392, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.6375198, y: 0.29448825, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.6726456, y: 0.33839554, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.7516787, y: 0.46133572, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.7868044, y: 0.5052431, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.874619, y: 0.6457462, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.9097447, y: 0.74234205, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.9097447, y: 0.6896532, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.900963, y: 0.62818307, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.874619, y: 0.5315872, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.8658376, y: 0.46133572, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.839493, y: 0.40864724, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.8131487, y: 0.36473984, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.7780228, y: 0.32083267, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.7692418, y: 0.28570694, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.7428973, y: 0.2505812, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.6902084, y: 0.24179965, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.655083, y: 0.2505812, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.6375198, y: 0.2505812, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      _lineColor: {r: 1, g: 1, b: 1, a: 0}
+      _fillColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+      _right: {x: 1, y: 0, z: 0}
+      _up: {x: 0, y: 1, z: 0}
+      _finalized: 1
+    - _points:
+      - position: {x: 2.6287384, y: -0.3026498, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.6463015, y: -0.4255901, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.6463015, y: -0.67147046, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.6638644, y: -0.79441077, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.6726456, y: -0.8295365, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.69899, y: -0.76806635, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.7077715, y: -0.71537775, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.7516787, y: -0.601219, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.7692418, y: -0.5046231, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.7780228, y: -0.46949732, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.7955859, y: -0.44315296, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.8043673, y: -0.39924568, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.7955859, y: -0.35533857, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.7604601, y: -0.3377757, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.7253342, y: -0.3289942, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.6902084, y: -0.32021284, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      - position: {x: 2.6463015, y: -0.3114313, z: 0.0000002682209}
+        normal: {x: -0, y: -0, z: -1}
+        markedForRemoval: 0
+      _lineColor: {r: 1, g: 1, b: 1, a: 0}
+      _fillColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+      _right: {x: 1, y: 0, z: 0}
+      _up: {x: 0, y: 1, z: 0}
+      _finalized: 1
+    _lineColor: {r: 1, g: 1, b: 1, a: 1}
+    _fillColor: {r: 1, g: 0.6273585, b: 0.6273585, a: 1}
+    _mesh: {fileID: 0}
+    _blendMode: 2
+    width: 4
+    xray: 1
+    _modifiers:
+    - _enabled: 1
+      _modifier:
+        _modifierType: OptimizeModifier
+        _modifierName: Optimize Modifier
+        _modifierJson: '{"_epsilon":0.17399999499320985}'
+        _modifier: {fileID: 0}
+    version: 1
+  _activeLayerIndex: 0
+  _drawInGameCameras: 1
+  _drawByStrokeOrder: 0
+  _layerSeparation: 0
+  _inlineModifiers: []
+--- !u!114 &114872994933447022
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1278589708169436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd7746ac75c667a47a09216933b53341, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _destructive: 1

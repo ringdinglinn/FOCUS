@@ -1,0 +1,12 @@
+{
+    "name": "GreasePencilEditor",
+    "references": [
+        "GreasePencil"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}

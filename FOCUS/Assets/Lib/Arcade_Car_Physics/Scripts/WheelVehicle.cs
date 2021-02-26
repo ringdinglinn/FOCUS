@@ -184,7 +184,6 @@ namespace VehicleBehaviour {
 #if MULTIOSCONTROLS
             Debug.Log("[ACP] Using MultiOSControls");
 #endif
-            Debug.Log(referenceManagement.inputManagement);
             if (boostClip != null) {
                 boostSource.clip = boostClip;
             }

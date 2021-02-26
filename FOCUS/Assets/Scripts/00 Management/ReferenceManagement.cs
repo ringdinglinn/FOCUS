@@ -13,4 +13,9 @@ public class MonoBehaviourReferenced : MonoBehaviour {
 public class ReferenceManagement : MonoBehaviour
 {
     public InputManagement inputManagement;
+    [SerializeField] private float BPM;
+
+    public float GetBPM() {
+        return BPM;
+    }
 }
