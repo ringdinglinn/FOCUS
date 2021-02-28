@@ -6,20 +6,23 @@ public class BirchAudioTest : MonoBehaviourReferenced {
 
     private bool up = false;
     private float p = 1f;
-    private Vector3 dist = new Vector3(0,0.5f,0);
+
+    [SerializeField] private float dist = 0.5f;
+
+    private Vector3 offset;
+
 
 
     private void Start() {
         AudioProcessor processor = FindObjectOfType<AudioProcessor>();
         processor.onBeat.AddListener(OnBeatDetected);
-        Debug.Log(processor);
+        offset = new Vector3(0, dist, 0);
         if (Random.Range(0f,1f) < 0.5f) up = true;
         ChangePos();
         RandomizePos();
     }
 
     void OnBeatDetected() {
-        Debug.Log("BEAT!!!!");
         if (Random.Range(0f,1f) <= p) {
             up = !up;
             ChangePos();
@@ -28,9 +31,9 @@ public class BirchAudioTest : MonoBehaviourReferenced {
 
     private void ChangePos() {
         if (up) {
-            gameObject.transform.position += dist;
+            gameObject.transform.position += offset;
         } else {
-            gameObject.transform.position -= dist;
+            gameObject.transform.position -= offset;
         }
     }
 
