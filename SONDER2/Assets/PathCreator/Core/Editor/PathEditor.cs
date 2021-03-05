@@ -37,6 +37,7 @@ namespace PathCreationEditor {
         ScreenSpacePolyLine.MouseInfo pathMouseInfo;
         GlobalDisplaySettings globalDisplaySettings;
         PathHandle.HandleColours splineAnchorColours;
+        PathHandle.HandleColours splineStartAnchorColours;
         PathHandle.HandleColours splineControlColours;
         Dictionary<GlobalDisplaySettings.HandleType, Handles.CapFunction> capFunctions;
         ArcHandle anchorAngleHandle = new ArcHandle ();
@@ -519,6 +520,7 @@ namespace PathCreationEditor {
             bool doTransformHandle = i == handleIndexToDisplayAsTransform;
 
             PathHandle.HandleColours handleColours = (isAnchorPoint) ? splineAnchorColours : splineControlColours;
+            handleColours = (i == 0) ? splineStartAnchorColours : handleColours;
             if (i == handleIndexToDisplayAsTransform) {
                 handleColours.defaultColour = (isAnchorPoint) ? globalDisplaySettings.anchorSelected : globalDisplaySettings.controlSelected;
             }
@@ -662,6 +664,7 @@ namespace PathCreationEditor {
         void UpdateGlobalDisplaySettings () {
             var gds = globalDisplaySettings;
             splineAnchorColours = new PathHandle.HandleColours (gds.anchor, gds.anchorHighlighted, gds.anchorSelected, gds.handleDisabled);
+            splineStartAnchorColours = new PathHandle.HandleColours(gds.startAnchor, gds.startAnchorHighlighted, gds.startAnchorSelected, gds.handleDisabled);
             splineControlColours = new PathHandle.HandleColours (gds.control, gds.controlHighlighted, gds.controlSelected, gds.handleDisabled);
 
             anchorAngleHandle.fillColor = new Color (1, 1, 1, .05f);

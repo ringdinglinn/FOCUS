@@ -19,18 +19,11 @@ public class InputManagement : MonoBehaviourReferenced {
     //                                                                                };
 
     private void Start() {
-        Debug.Log("input manager start!");
         player = ReInput.players.GetPlayer("SYSTEM");
-        Debug.Log("player");
-        Debug.Log(player);
     }
 
 
     public float GetInput(string key) {
         return player.GetAxis(key);
-    }
-
-    private void Update() {
-        Debug.Log("move vertical = " + player.GetAxis("MoveVertical"));
     }
 }

@@ -8,6 +8,8 @@ public class CarAI : MonoBehaviourReferenced {
 
     private WheelVehicle carConroller;
     private PathCreator myPath;
+    private SwitchingBehaviour switchingBehaviour;
+    private Rigidbody rb;
 
     public bool autopilotEnabled;
 
@@ -21,13 +23,20 @@ public class CarAI : MonoBehaviourReferenced {
 
     public bool started = false;
 
+    private float steerTowardsDist = 2;
+
 
     private void Start() {
         carConroller = GetComponent<WheelVehicle>();
+        switchingBehaviour = GetComponent<SwitchingBehaviour>();
+        rb = GetComponent<Rigidbody>();
+        Debug.Log(rb);
+        Debug.Log("id = " + switchingBehaviour.id);
     }
 
     private void CreateStartConfig() {
-        distOnPath = Random.Range(0f, myPath.path.length);
+        //distOnPath = Random.Range(0f, myPath.path.length);
+        distOnPath = 0;
         startPos = myPath.path.GetPointAtDistance(distOnPath, EndOfPathInstruction.Loop);
         startPos += offset;
         startDir = myPath.path.GetDirectionAtDistance(distOnPath, EndOfPathInstruction.Loop);
@@ -46,8 +55,8 @@ public class CarAI : MonoBehaviourReferenced {
             carConroller.Throttle = 0.5f;
             distOnPath += (transform.position - prevPos).magnitude;
             prevPos = transform.position;
-            float angle = Vector3.SignedAngle(transform.forward, myPath.path.GetDirectionAtDistance(distOnPath, EndOfPathInstruction.Loop), Vector3.up);
-            carConroller.Steering = angle;
+            float angle = Vector3.SignedAngle(transform.forward, myPath.path.GetPointAtDistance(distOnPath + steerTowardsDist, EndOfPathInstruction.Loop) - transform.position, Vector3.up);
+            carConroller.InstantSetWheelAngle(angle);
         }
     }
 
@@ -66,13 +75,17 @@ public class CarAI : MonoBehaviourReferenced {
 
     public void EndReached() {
         Debug.Log("end reached");
+        Debug.Log("end reached, started = " + started);
         if (started) Loop();
     }
 
-    private void Loop() {
+    private void Loop() { 
+        Debug.Log("end Loop");
         distOnPath = 0;
         transform.position = myPath.path.GetPointAtDistance(distOnPath);
-        // gotta adjust wheels too
+        rb.velocity = Vector3.zero;
+        float angle = Vector3.SignedAngle(transform.forward, myPath.path.GetPointAtDistance(distOnPath + steerTowardsDist, EndOfPathInstruction.Loop) - transform.position, Vector3.up);
+        carConroller.InstantSetWheelAngle(angle);
         transform.rotation = Quaternion.LookRotation(myPath.path.GetDirectionAtDistance(distOnPath));
     }
 }

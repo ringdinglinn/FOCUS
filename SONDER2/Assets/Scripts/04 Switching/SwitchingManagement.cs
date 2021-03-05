@@ -5,13 +5,17 @@ using UnityEngine;
 public class SwitchingManagement : MonoBehaviourReferenced {
 
     public List<SwitchingBehaviour> allSwitchingBehaviours = new List<SwitchingBehaviour>();
-
     public List<SwitchingBehaviour> eligibleSwitchtingBehaviours = new List<SwitchingBehaviour>();
-
     public SwitchingBehaviour activeCar;
 
     private bool canSwitch = true;
 
+    private bool gonnaSwitch = false;
+
+    private void Start() {
+        AudioProcessor processor = referenceManagement.audioProcessor;
+        processor.onBeat.AddListener(OnBeatDetected);
+    }
 
     public void AddToAllSwitchingBehaviours(SwitchingBehaviour sb) {
         allSwitchingBehaviours.Add(sb);
@@ -28,7 +32,6 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     }
 
     private void SwitchToCar(SwitchingBehaviour newSB) {
-        Debug.Log("Switch to car");
         activeCar.SwitchOutOfCar();
         eligibleSwitchtingBehaviours.Clear();
         foreach (SwitchingBehaviour sb in eligibleSwitchtingBehaviours) {
@@ -41,10 +44,15 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     private void Update() {
         if (GetInput("SwitchCar") != 0) {
             if (eligibleSwitchtingBehaviours.Count != 0 && canSwitch) {
-                SwitchToCar(eligibleSwitchtingBehaviours[0]);
-                StartCoroutine(SwitchCoolDown());
+                gonnaSwitch = true;
             }
         }
+    }
+
+    private void Switch() {
+        SwitchToCar(eligibleSwitchtingBehaviours[0]);
+        StartCoroutine(SwitchCoolDown());
+        gonnaSwitch = false;
     }
 
     IEnumerator SwitchCoolDown() {
@@ -55,5 +63,9 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
     private float GetInput(string input) {
         return referenceManagement.inputManagement.GetInput(input);
+    }
+
+    private void OnBeatDetected() {
+        if (gonnaSwitch) Switch();
     }
 }

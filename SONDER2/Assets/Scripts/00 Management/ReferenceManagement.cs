@@ -16,9 +16,9 @@ public class ReferenceManagement : MonoBehaviour
     public SwitchingManagement switchingManagement;
     public Camera1stPerson cam;
     public PathManagement pathManagement;
-    [SerializeField] private float BPM;
-
+    public SwitchingBehaviour initialCarSB;
     public AudioProcessor audioProcessor;
+    [SerializeField] private float BPM;
 
     public float GetBPM() {
         return BPM;

@@ -29,6 +29,11 @@ namespace PathCreation
         public Color anchorHighlighted = new Color(1, 0.57f, 0.4f);
         public Color anchorSelected = Color.white;
 
+        [Header("Start Anchor Colour")]
+        public Color startAnchor = new Color(0.6f, 0.2f, 1f);
+        public Color startAnchorHighlighted = new Color(0.4f, 0.1f, 0.8f);
+        public Color startAnchorSelected = Color.white;
+
         [Header("Control Colours")]
         public Color control = new Color(0.35f, 0.6f, 1, 0.85f);
         public Color controlHighlighted = new Color(0.8f, 0.67f, 0.97f);

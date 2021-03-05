@@ -17,6 +17,8 @@ public class Camera1stPerson : MonoBehaviourReferenced
     private Vector3 prevTargetPos;
     private Vector3 catchUpVelocity = Vector3.zero;
 
+    private Vector3 prevPos;
+
     [SerializeField] private float velocityDamping = 0.1f;
     [SerializeField] private float catchUpDamping = 0.1f;
 
@@ -25,18 +27,18 @@ public class Camera1stPerson : MonoBehaviourReferenced
     private bool camIsOn = true;
     Camera cam;
 
-    private bool switching;
+    private bool switching = false;
     
 
     private void Start() {
         cam = gameObject.GetComponent<Camera>();
-
+        translateTarget = referenceManagement.initialCarSB.camTranslateTarget.transform;
+        rotTarget = referenceManagement.initialCarSB.camRotTarget.transform;
+        prevPos = transform.position;
     }
 
     private void FixedUpdate() {
-        if (!switching) InertiaMovement();
-        else SwitchingMovement();
-        Debug.Log("switching = " + switching);
+        InertiaMovement();
     }
 
     public void SwitchCar(Transform tt, Transform rt) {
@@ -48,23 +50,16 @@ public class Camera1stPerson : MonoBehaviourReferenced
 
     private void SwitchingMovement() {
         targetPos = translateTarget.position;
-
-        // Velocity
         targetVelocity = targetPos - prevTargetPos;
-        velocity = Vector3.Lerp(velocity, targetVelocity, 0.3f);
+        prevTargetPos = targetPos;
 
-        Vector3 pos = Vector3.Lerp(transform.position, targetPos, 0.2f);
+        Vector3 currentVelocity = transform.position - prevPos;
+        prevPos = transform.position;
 
         Vector3 distToTarget = targetPos - transform.position;
-        catchUpVelocity = distToTarget / catchUpDamping;
+        catchUpVelocity = distToTarget;
 
-        catchUpVelocity = Vector3.ClampMagnitude(catchUpVelocity, (targetPos - pos).magnitude);
-
-        // Set Camera X
-        Vector3 newCamPos = pos + catchUpVelocity;
-
-
-        transform.position = newCamPos;
+        transform.position = Vector3.SmoothDamp(transform.position, transform.position + targetVelocity + catchUpVelocity, ref currentVelocity, 0.05f);
 
         if ((transform.position - translateTarget.position).sqrMagnitude <= 0.05f) {
             switching = false;
@@ -86,7 +81,6 @@ public class Camera1stPerson : MonoBehaviourReferenced
         velocity = Vector3.Lerp(velocity, targetVelocity, velocityDamping * Time.deltaTime);
         if (!inRegion) {
             velocity = targetVelocity;
-            Debug.Log("out of region");
         }
 
         // Catch Up

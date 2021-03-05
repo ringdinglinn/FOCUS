@@ -36,23 +36,23 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         viewCone = GetComponentInChildren<ViewCone>().gameObject;
         if (isInitialPlayer) {
             SwitchIntoCar();
-            referenceManagement.cam.SwitchCar(camTranslateTarget.transform, camRotTarget.transform);
         }
         else SwitchOutOfCar();
         GetPathInfo();
     }
 
     public void SwitchIntoCar() {
-
         carAI.SwitchOffAutopilot();
         viewCone.SetActive(true);
         ChangeColorToInvisible();
         switchingManagement.activeCar = this;
+        wheelVehicle.IsPlayer = true;
     }
 
     public void SwitchOutOfCar() {
         carAI.SwitchOnAutopilot();
         viewCone.SetActive(false);
+        wheelVehicle.IsPlayer = false;
     }
 
     public void CarBecomesVisible(SwitchingBehaviour car) {
@@ -68,7 +68,6 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         mats[0] = windowMat;
         mats[1] = visibleMat;
         meshRenderer.materials = mats;
-        Debug.Log("change color to visible");
     }
 
     public void ChangeColorToInvisible() {

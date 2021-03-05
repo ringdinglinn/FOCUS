@@ -118,7 +118,7 @@ namespace VehicleBehaviour {
 
         // When IsPlayer is false you can use this to control the steering
         float steering;
-        public float Steering { get{ return steering; } set{ steering = Mathf.Clamp(value, -1f, 1f); } } 
+        public float Steering { get{ return steering; } set{ steering = value; } } 
 
         // When IsPlayer is false you can use this to control the throttle
         float throttle;
@@ -179,11 +179,16 @@ namespace VehicleBehaviour {
         Rigidbody _rb;
         WheelCollider[] wheels;
 
+        // References
+        SwitchingBehaviour switchingBehaviour;
+
         // Init rigidbody, center of mass, wheels and more
         void Start() {
 #if MULTIOSCONTROLS
             Debug.Log("[ACP] Using MultiOSControls");
 #endif
+            switchingBehaviour = GetComponent<SwitchingBehaviour>();
+
             if (boostClip != null) {
                 boostSource.clip = boostClip;
             }
@@ -335,6 +340,12 @@ namespace VehicleBehaviour {
             
             // Downforce
             _rb.AddForce(-transform.up * speed * downforce);
+        }
+
+        public void InstantSetWheelAngle(float angle) {
+            foreach (WheelCollider wheel in turnWheel) {
+                wheel.steerAngle = angle;
+            }
         }
 
         // Reposition the car to the start position
