@@ -12,12 +12,28 @@ public class MonoBehaviourReferenced : MonoBehaviour {
 
 public class ReferenceManagement : MonoBehaviour
 {
+    [Header("Managers")]
     public InputManagement inputManagement;
     public SwitchingManagement switchingManagement;
-    public Camera1stPerson cam;
     public PathManagement pathManagement;
+
+    [Header("Player Items")]
+    public Camera1stPerson cam;
     public SwitchingBehaviour initialCarSB;
+
+    [Header("Audio")]
     public AudioProcessor audioProcessor;
+
+    [Header("Automation")]
+    public GameObject streetlight;
+
+    [Header("UI")]
+    public GameObject switchImgObj;
+
+    [Header("Sounds")]
+    public AudioSource switchSound;
+    
+
     [SerializeField] private float BPM;
 
     public float GetBPM() {

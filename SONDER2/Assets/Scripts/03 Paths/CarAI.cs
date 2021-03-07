@@ -7,6 +7,7 @@ using PathCreation;
 public class CarAI : MonoBehaviourReferenced {
 
     private WheelVehicle carConroller;
+    private PathBehaviour pathBehaviour;
     private PathCreator myPath;
     private SwitchingBehaviour switchingBehaviour;
     private Rigidbody rb;
@@ -25,13 +26,15 @@ public class CarAI : MonoBehaviourReferenced {
 
     private float steerTowardsDist = 2;
 
+    [SerializeField] int pathID;
+
 
     private void Start() {
         carConroller = GetComponent<WheelVehicle>();
         switchingBehaviour = GetComponent<SwitchingBehaviour>();
         rb = GetComponent<Rigidbody>();
-        Debug.Log(rb);
-        Debug.Log("id = " + switchingBehaviour.id);
+        GetPathInfo();
+        CreateStartConfig();
     }
 
     private void CreateStartConfig() {
@@ -60,7 +63,7 @@ public class CarAI : MonoBehaviourReferenced {
         }
     }
 
-    public void SetPath(PathCreator p) {
+    private void SetPath(PathCreator p) {
         myPath = p;
         CreateStartConfig();
     }
@@ -74,18 +77,20 @@ public class CarAI : MonoBehaviourReferenced {
     }
 
     public void EndReached() {
-        Debug.Log("end reached");
-        Debug.Log("end reached, started = " + started);
         if (started) Loop();
     }
 
     private void Loop() { 
-        Debug.Log("end Loop");
         distOnPath = 0;
         transform.position = myPath.path.GetPointAtDistance(distOnPath);
         rb.velocity = Vector3.zero;
         float angle = Vector3.SignedAngle(transform.forward, myPath.path.GetPointAtDistance(distOnPath + steerTowardsDist, EndOfPathInstruction.Loop) - transform.position, Vector3.up);
         carConroller.InstantSetWheelAngle(angle);
         transform.rotation = Quaternion.LookRotation(myPath.path.GetDirectionAtDistance(distOnPath));
+    }
+
+    private void GetPathInfo() {
+        pathBehaviour = referenceManagement.pathManagement.GetMyPath(pathID);
+        SetPath(pathBehaviour.GetPath());
     }
 }

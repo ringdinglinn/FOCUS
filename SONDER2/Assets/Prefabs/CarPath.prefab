@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5166045283741281591}
   - component: {fileID: 5166045283741281590}
   - component: {fileID: 2094541617338773154}
+  - component: {fileID: 976487726142670005}
   m_Layer: 0
   m_Name: CarPath
   m_TagString: Untagged
@@ -67,7 +68,7 @@ MonoBehaviour:
       - 0
       globalNormalsAngle: 0
       flipNormals: 0
-    vertexPathUpToDate: 0
+    vertexPathUpToDate: 1
     vertexPathMaxAngleError: 0.3
     vertexPathMinVertexSpacing: 0.01
     showTransformTool: 1
@@ -122,6 +123,19 @@ MonoBehaviour:
   undersideMaterial: {fileID: 2100000, guid: c1d8d882244c5344fa86a8fd23246f81, type: 2}
   textureTiling: 1
   meshHolder: {fileID: 0}
+--- !u!114 &976487726142670005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5166045283741281593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c60080005c054b16b61463614164de5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  referenceManagement: {fileID: 0}
 --- !u!1 &5166045285261638867
 GameObject:
   m_ObjectHideFlags: 0

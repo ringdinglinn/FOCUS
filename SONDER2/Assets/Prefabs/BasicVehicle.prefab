@@ -5307,6 +5307,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   referenceManagement: {fileID: 0}
+  autopilotEnabled: 0
+  started: 0
 --- !u!114 &114356753913500666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20102,7 +20104,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3518561471893541787
 Transform:
   m_ObjectHideFlags: 0
@@ -20129,7 +20131,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 47.746483
+  m_Intensity: 795774.7
   m_Range: 60
   m_SpotAngle: 63.319427
   m_InnerSpotAngle: 56.243893
@@ -20198,12 +20200,12 @@ MonoBehaviour:
   m_PointlightHDType: 0
   m_SpotLightShape: 0
   m_AreaLightShape: 0
-  m_Intensity: 600
+  m_Intensity: 10000000
   m_EnableSpotReflector: 0
   m_LuxAtDistance: 1
   m_InnerSpotPercent: 0
   m_LightDimmer: 1
-  m_VolumetricDimmer: 1
+  m_VolumetricDimmer: 3.2
   m_LightUnit: 0
   m_FadeDistance: 10000
   m_AffectDiffuse: 1
@@ -20509,7 +20511,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6116738130034448871
 Transform:
   m_ObjectHideFlags: 0
@@ -20536,7 +20538,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 47.746483
+  m_Intensity: 795774.7
   m_Range: 60
   m_SpotAngle: 63.319427
   m_InnerSpotAngle: 56.243893
@@ -20605,12 +20607,12 @@ MonoBehaviour:
   m_PointlightHDType: 0
   m_SpotLightShape: 0
   m_AreaLightShape: 0
-  m_Intensity: 600
+  m_Intensity: 10000000
   m_EnableSpotReflector: 0
   m_LuxAtDistance: 1
   m_InnerSpotPercent: 0
   m_LightDimmer: 1
-  m_VolumetricDimmer: 1
+  m_VolumetricDimmer: 3.2
   m_LightUnit: 0
   m_FadeDistance: 10000
   m_AffectDiffuse: 1

@@ -12,6 +12,8 @@ public class PathBehaviour : MonoBehaviourReferenced {
     private GameObject startTrigger;
     private GameObject endTrigger;
 
+    [SerializeField] float speedLimit;
+
     private void OnEnable() {
         path = GetComponent<PathCreator>();
         pathManagement = referenceManagement.pathManagement;
@@ -51,5 +53,9 @@ public class PathBehaviour : MonoBehaviourReferenced {
         else {
             return null;
         }
+    }
+
+    public float GetSpeedLimit() {
+        return speedLimit;
     }
 }

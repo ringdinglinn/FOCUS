@@ -38,7 +38,6 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
             SwitchIntoCar();
         }
         else SwitchOutOfCar();
-        GetPathInfo();
     }
 
     public void SwitchIntoCar() {
@@ -75,11 +74,5 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         mats[0] = windowMat;
         mats[1] = invisibleMat;
         meshRenderer.materials = mats;
-    }
-
-    private void GetPathInfo() {
-        pathBehaviour = referenceManagement.pathManagement.GetMyPath(id);
-        myPath = pathBehaviour.GetPath();
-        carAI.SetPath(myPath);
     }
 }

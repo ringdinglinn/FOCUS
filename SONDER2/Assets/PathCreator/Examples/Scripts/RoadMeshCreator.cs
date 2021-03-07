@@ -15,19 +15,36 @@ namespace PathCreation.Examples {
         public Material undersideMaterial;
         public float textureTiling = 1;
 
-        [SerializeField, HideInInspector]
+        [SerializeField]
         GameObject meshHolder;
+        const string meshHolderName = "Road Mesh Holder";
 
         MeshFilter meshFilter;
         MeshRenderer meshRenderer;
         Mesh mesh;
+        MeshCollider coll;
+
+        private void Awake() {
+            meshHolder = transform.Find(meshHolderName).gameObject != null ? transform.Find(meshHolderName).gameObject: null;
+        }
 
         protected override void PathUpdated () {
             if (pathCreator != null) {
                 AssignMeshComponents ();
                 AssignMaterials ();
                 CreateRoadMesh ();
+                CreateCollider();
             }
+        }
+
+        void CreateCollider() {
+            if (meshHolder.GetComponent<MeshCollider>() == null) {
+                coll = meshHolder.AddComponent<MeshCollider>();
+            } else if (coll == null) {
+                coll = meshHolder.GetComponent<MeshCollider>();
+            }
+            coll.sharedMesh = null;
+            coll.sharedMesh = mesh;
         }
 
         void CreateRoadMesh () {
@@ -119,9 +136,11 @@ namespace PathCreation.Examples {
 
         // Add MeshRenderer and MeshFilter components to this gameobject if not already attached
         void AssignMeshComponents () {
-
-            if (meshHolder == null) {
-                meshHolder = new GameObject ("Road Mesh Holder");
+            if (transform.Find(meshHolderName) == null) {
+                meshHolder = new GameObject(meshHolderName);
+                meshHolder.transform.parent = gameObject.transform;
+            } else {
+                meshHolder = transform.Find(meshHolderName).gameObject;
             }
 
             meshHolder.transform.rotation = Quaternion.identity;
@@ -142,6 +161,8 @@ namespace PathCreation.Examples {
                 mesh = new Mesh ();
             }
             meshFilter.sharedMesh = mesh;
+
+            Debug.Log("mesh = " + mesh);
         }
 
         void AssignMaterials () {
