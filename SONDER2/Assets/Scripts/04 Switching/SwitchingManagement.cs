@@ -8,7 +8,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     public List<SwitchingBehaviour> allSwitchingBehaviours = new List<SwitchingBehaviour>();
     public List<SwitchingBehaviour> eligibleSwitchtingBehaviours = new List<SwitchingBehaviour>();
     public SwitchingBehaviour activeCar;
-    private SwitchingBehaviour aboutToSwitchToCar;
+    private SwitchingBehaviour selectedCar;
 
     private Camera cam;
     private GameObject switchImgObj;
@@ -53,39 +53,40 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     private void Update() {
         if (GetInput("SwitchCar") != 0) {
             if (eligibleSwitchtingBehaviours.Count != 0 && canSwitch) {
-                ReadyToSwitch();
+                SelectSwitchCar();
             }
         }
 
         if (gonnaSwitch) {
             bool inSight = false;
             foreach (SwitchingBehaviour sb in eligibleSwitchtingBehaviours) {
-                if (sb == aboutToSwitchToCar) inSight = true;
+                if (sb == selectedCar) inSight = true;
             }
             if (!inSight) {
-                UnreadyToSwitch();
+                DeselectSwitchCar();
                 return;
             }
             DrawSwitchGUI();
         }
     }
 
-    private void ReadyToSwitch() {
+    private void SelectSwitchCar() {
         gonnaSwitch = true;
-        aboutToSwitchToCar = eligibleSwitchtingBehaviours[0];
+        selectedCar = eligibleSwitchtingBehaviours[0];
         EnableSwitchGUI();
+        referenceManagement.selectedSwitchCar.Play();
     }
 
-    private void UnreadyToSwitch() {
-        aboutToSwitchToCar = null;
+    private void DeselectSwitchCar() {
+        selectedCar = null;
         gonnaSwitch = false;
         DisableSwitchGUI();
     }
 
     private void Switch() {
-        SwitchToCar(aboutToSwitchToCar);
+        SwitchToCar(selectedCar);
         StartCoroutine(SwitchCoolDown());
-        UnreadyToSwitch();
+        DeselectSwitchCar();
         referenceManagement.switchSound.Play();
     }
 
@@ -115,8 +116,8 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
     private void DrawSwitchGUI() {
         Debug.Log("draw switch gui");
-        Vector3 bounds = aboutToSwitchToCar.meshRenderer.bounds.extents;
-        Vector3 pos = aboutToSwitchToCar.meshRenderer.bounds.center;
+        Vector3 bounds = selectedCar.meshRenderer.bounds.extents;
+        Vector3 pos = selectedCar.meshRenderer.bounds.center;
         Vector3[] boundingVerts = new Vector3[8];
         float factorX = 1;
         float factorY = 1;

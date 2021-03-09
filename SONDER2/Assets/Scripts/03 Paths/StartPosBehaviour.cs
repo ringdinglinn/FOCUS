@@ -4,17 +4,26 @@ using UnityEngine;
 using UnityEditor;
 using PathCreation;
 
-[ExecuteAlways]
 public class StartPosBehaviour : MonoBehaviour {
 
-    bool snapped = false;
     public PathCreator myPath;
-    float dist = 0;
-    float speed = 5f;
 
-    private void Update() {
-        transform.position = myPath.path.GetPointAtDistance(dist);
-        dist += speed * Time.deltaTime;
+    private List<Vector3> startPosList = new List<Vector3>();
+
+    public void MoveStartPos(int index, Vector3 pos) {
+        startPosList[index] = pos;
+    }
+
+    public List<Vector3> GetList() {
+        return startPosList;
+    }
+
+    public void AddStartPos() {
+        startPosList.Add(myPath.path.GetPointAtDistance(0));
+    }
+
+    public void DeleteStartPos(int i) {
+        startPosList.RemoveAt(i);
     }
 }
 

@@ -32,6 +32,7 @@ public class ReferenceManagement : MonoBehaviour
 
     [Header("Sounds")]
     public AudioSource switchSound;
+    public AudioSource selectedSwitchCar;
     
 
     [SerializeField] private float BPM;
