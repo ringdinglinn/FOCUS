@@ -10,15 +10,34 @@ public class StreetlampAudioTest : MonoBehaviourReferenced {
 
     private Light myLight;
 
+    private bool onSubBeat;
+
 
     private void Start() {
-        AudioProcessor processor = referenceManagement.audioProcessor;
-        processor.onBeat.AddListener(OnBeatDetected);
+        //AudioProcessor processor = referenceManagement.audioProcessor;
+        BeatDetector beatDetector = referenceManagement.beatDetector;
+        beatDetector.bdOnBeatFull.AddListener(OnFullBeatDetected);
+        beatDetector.bdOnBeatSubD.AddListener(OnSubDBeatDetected);
         myLight = GetComponentInChildren<Light>();
+        //onSubBeat = Random.Range(0f, 1f) <= 0.66f ? true : false;
     }
 
-    void OnBeatDetected() {
-        if (Random.Range(0f,1f) <= p) {
+    void OnFullBeatDetected() {
+        //if (Random.Range(0f, 1f) <= p) {
+        //    Flicker();
+        //}
+
+        if (!onSubBeat) {
+            Flicker();
+        }
+    }
+
+    void OnSubDBeatDetected() {
+        //if (Random.Range(0f, 1f) <= p) {
+        //    Flicker();
+        //}
+
+        if (onSubBeat) {
             Flicker();
         }
     }
@@ -29,7 +48,7 @@ public class StreetlampAudioTest : MonoBehaviourReferenced {
     }
 
     IEnumerator SwitchBackOn() {
-        float waitTime = Random.Range(0.2f, 0.5f);
+        float waitTime = Random.Range(0.1f, 0.2f);
         yield return new WaitForSeconds(waitTime);
         myLight.enabled = true;
     }

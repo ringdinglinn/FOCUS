@@ -24,20 +24,24 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
 
     public int id;
 
-    public bool isInitialPlayer;
+    public bool isInitialCar = false;
 
     private void Start() {
+        CollectReferences();
+    }
+
+    private void OnEnable() {
+        CollectReferences();
+    }
+
+    public void CollectReferences() {
         wheelVehicle = GetComponent<WheelVehicle>();
-        wheelVehicle.IsPlayer = isInitialPlayer;
+        wheelVehicle.IsPlayer = isInitialCar;
         carAI = GetComponent<CarAI>();
         switchingManagement = referenceManagement.switchingManagement;
         id = switchingManagement.allSwitchingBehaviours.Count;
         switchingManagement.AddToAllSwitchingBehaviours(this);
         viewCone = GetComponentInChildren<ViewCone>().gameObject;
-        if (isInitialPlayer) {
-            SwitchIntoCar();
-        }
-        else SwitchOutOfCar();
     }
 
     public void SwitchIntoCar() {

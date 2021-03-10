@@ -19,8 +19,11 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     private bool gonnaSwitch = false;
 
     private void Start() {
-        AudioProcessor processor = referenceManagement.audioProcessor;
-        processor.onBeat.AddListener(OnBeatDetected);
+        //AudioProcessor processor = referenceManagement.audioProcessor;
+        //processor.onBeat.AddListener(OnBeatDetected);
+        BeatDetector beatDetector = referenceManagement.beatDetector;
+        beatDetector.bdOnBeatSubD.AddListener(OnSubDBeatDetected);
+        beatDetector.bdOnBeatFull.AddListener(OnFullBeatDetected);
         cam = referenceManagement.cam.GetComponent<Camera>();
         switchImgObj = referenceManagement.switchImgObj;
         switchImgTransform = switchImgObj.GetComponent<RectTransform>();
@@ -48,6 +51,12 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         }
         referenceManagement.cam.SwitchCar(newSB.camTranslateTarget.transform, newSB.camRotTarget.transform);
         newSB.SwitchIntoCar();
+    }
+
+    public void SetUpInitialCar(SwitchingBehaviour initSB) {
+        referenceManagement.cam.SwitchCar(initSB.camTranslateTarget.transform, initSB.camRotTarget.transform);
+        initSB.isInitialCar = true;
+        initSB.SwitchIntoCar();
     }
 
     private void Update() {
@@ -100,12 +109,15 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         return referenceManagement.inputManagement.GetInput(input);
     }
 
-    private void OnBeatDetected() {
+    private void OnFullBeatDetected() {
+        //if (gonnaSwitch) Switch();
+    }
+
+    private void OnSubDBeatDetected() {
         if (gonnaSwitch) Switch();
     }
 
     private void EnableSwitchGUI() {
-        Debug.Log("enable switch gui");
         switchImgObj.SetActive(true);
         DrawSwitchGUI();
     }
@@ -115,7 +127,6 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     }
 
     private void DrawSwitchGUI() {
-        Debug.Log("draw switch gui");
         Vector3 bounds = selectedCar.meshRenderer.bounds.extents;
         Vector3 pos = selectedCar.meshRenderer.bounds.center;
         Vector3[] boundingVerts = new Vector3[8];

@@ -23,9 +23,11 @@ public class ReferenceManagement : MonoBehaviour
 
     [Header("Audio")]
     public AudioProcessor audioProcessor;
+    public BeatDetector beatDetector;
 
     [Header("Automation")]
     public GameObject streetlight;
+    public GameObject carPrefab;
 
     [Header("UI")]
     public GameObject switchImgObj;
@@ -36,8 +38,13 @@ public class ReferenceManagement : MonoBehaviour
     
 
     [SerializeField] private float BPM;
+    [SerializeField] private float BeatSubdivisions;
 
     public float GetBPM() {
         return BPM;
+    }
+
+    public float GetSubdivisions() {
+        return BeatSubdivisions;
     }
 }

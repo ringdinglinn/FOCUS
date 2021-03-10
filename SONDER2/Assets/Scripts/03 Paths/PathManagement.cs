@@ -17,4 +17,8 @@ public class PathManagement : MonoBehaviourReferenced {
     public PathBehaviour GetMyPath(int id) {
         return paths[id];
     }
+
+    public List<PathBehaviour> GetAllPaths() {
+        return paths;
+    }
 }

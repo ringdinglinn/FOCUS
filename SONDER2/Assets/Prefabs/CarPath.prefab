@@ -147,6 +147,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myPath: {fileID: 5166045283741281591}
+  startPosList: []
+  initialPosIndex: -1
+  pathID: 0
 --- !u!114 &5166045283741281591
 MonoBehaviour:
   m_ObjectHideFlags: 0

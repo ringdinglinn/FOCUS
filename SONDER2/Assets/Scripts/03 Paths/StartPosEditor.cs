@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using PathCreation;
+using UnityEditor.SceneManagement;
 
 [CustomEditor(typeof(StartPosBehaviour))]
 public class StartPosEditor : Editor {
 
-    //private Vector3 pos = Vector3.zero;
+    SerializedProperty startPosListSO;
+    SerializedProperty initialPosIndexSO;
 
     private StartPosBehaviour startPosBehaviour;
     private PathCreator myPath;
@@ -26,20 +28,38 @@ public class StartPosEditor : Editor {
         startPosBehaviour = (StartPosBehaviour)target;
         startPosList = startPosBehaviour.GetList();
         myPath = startPosBehaviour.myPath;
+        startPosListSO = serializedObject.FindProperty("startPosList");
+        initialPosIndexSO = serializedObject.FindProperty("initialPosIndex");
     }
 
+    private static GUILayoutOption miniButtonWidth = GUILayout.Width(30f);
+
     public override void OnInspectorGUI() {
-        DrawDefaultInspector();
-        startPosBehaviour = (StartPosBehaviour)target;
+
+        serializedObject.Update();
+        EditorGUILayout.PropertyField(initialPosIndexSO);
 
         for (int i = 0; i < startPosList.Count; i++) {
-            if (GUILayout.Button($"Delete Start Position {i}")) {
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.PropertyField(startPosListSO.GetArrayElementAtIndex(i));
+            if (GUILayout.Button($"⊗", miniButtonWidth)) {
                 Undo.RecordObject(startPosBehaviour, "Delete Start Pos");
                 startPosBehaviour.DeleteStartPos(i);
+                serializedObject.ApplyModifiedProperties();
                 if (myPath != null) {
                     Draw();
                 }
             }
+            if (GUILayout.Button($"★", miniButtonWidth)) {
+                Undo.RecordObject(startPosBehaviour, "Mark As Initial Point");
+                startPosBehaviour.MarkAsInitialPos(i);
+                serializedObject.ApplyModifiedProperties();
+                if (myPath != null) {
+                    Draw();
+                }
+            }
+            serializedObject.ApplyModifiedProperties();
+            EditorGUILayout.EndHorizontal();
         }
 
         if (GUILayout.Button("Add Start Position", GUILayout.Height(80))) {
@@ -49,7 +69,11 @@ public class StartPosEditor : Editor {
                 Draw();
             }
         }
-        
+
+        if (GUI.changed) {
+            EditorUtility.SetDirty(startPosBehaviour);
+            EditorSceneManager.MarkSceneDirty(startPosBehaviour.gameObject.scene);
+        }
     }
 
     private void OnSceneGUI() {
@@ -65,7 +89,8 @@ public class StartPosEditor : Editor {
         for (int i = 0; i < startPosList.Count; i++) {
             Vector3 pos = startPosList[i];
             Vector3 initPos = pos;
-            Handles.color = Color.red;
+            Color flagCol = i == startPosBehaviour.GetInitialPosIndex() ? Color.blue : Color.red;
+            Handles.color = flagCol;
             pos = Handles.FreeMoveHandle(pos, Quaternion.Euler(0, 0, 0), HandleUtility.GetHandleSize(new Vector3(0, 0, 0)) * 0.2f, Vector3.zero, Handles.CircleHandleCap);
             pos = myPath.path.GetClosestPointOnPath(pos);
             Handles.Label(pos, $"Start Pos {i}");
@@ -78,9 +103,12 @@ public class StartPosEditor : Editor {
             Handles.BeginGUI();
             Handles.color = Color.white;
             Handles.DrawSolidRectangleWithOutline(rect1, Color.white, Color.white);
-            Handles.DrawSolidRectangleWithOutline(rect2, Color.red, Color.white);
+            Handles.DrawSolidRectangleWithOutline(rect2, flagCol, Color.white);
             Handles.EndGUI();
-            if (initPos != pos) startPosBehaviour.MoveStartPos(i, pos);
+            if (initPos != pos) {
+                Undo.RecordObject(startPosBehaviour, "Move Start Pos");
+                startPosBehaviour.MoveStartPos(i, pos);
+            }
         }
     }
 }

@@ -5157,10 +5157,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   referenceManagement: {fileID: 0}
-  isPlayer: 1
-  throttleInput: Vertical
+  isPlayer: 0
+  throttleInput: MoveVertical
   brakeInput: Button3
-  turnInput: Horizontal
+  turnInput: MoveHorizontal
   jumpInput: Button0
   driftInput: Button1
   boostInput: Button2
@@ -5293,7 +5293,7 @@ MonoBehaviour:
   camRotTarget: {fileID: 9162481712970016909}
   camTranslateTarget: {fileID: 2474092420525005858}
   id: 0
-  isInitialPlayer: 0
+  isInitialCar: 0
 --- !u!114 &2449730331452780726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5307,8 +5307,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   referenceManagement: {fileID: 0}
-  autopilotEnabled: 0
+  autopilotEnabled: 1
   started: 0
+  pathID: 0
 --- !u!114 &114356753913500666
 MonoBehaviour:
   m_ObjectHideFlags: 0

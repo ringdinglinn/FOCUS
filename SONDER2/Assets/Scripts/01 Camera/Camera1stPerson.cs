@@ -32,8 +32,8 @@ public class Camera1stPerson : MonoBehaviourReferenced
 
     private void Start() {
         cam = gameObject.GetComponent<Camera>();
-        translateTarget = referenceManagement.initialCarSB.camTranslateTarget.transform;
-        rotTarget = referenceManagement.initialCarSB.camRotTarget.transform;
+        //translateTarget = referenceManagement.initialCarSB.camTranslateTarget.transform;
+        //rotTarget = referenceManagement.initialCarSB.camRotTarget.transform;
         prevPos = transform.position;
     }
 
@@ -110,26 +110,5 @@ public class Camera1stPerson : MonoBehaviourReferenced
         if (other.gameObject.CompareTag("PlayerRegion")) {
             inRegion = true;
         }
-    }
-
-
-    bool switchCoolDown;
-
-    private void Update() {
-        if (referenceManagement.inputManagement.GetInput("SwitchCam") != 0 && !switchCoolDown) {
-            camIsOn = !camIsOn;
-            switchCoolDown = true;
-            StartCoroutine(SwitchCoolDown());
-            if (camIsOn) {
-                cam.depth = 1;
-            } else {
-                cam.depth = -1;
-            }
-        }
-    }
-
-    IEnumerator SwitchCoolDown() {
-        yield return new WaitForSeconds(0.5f);
-        switchCoolDown = false;
     }
 }

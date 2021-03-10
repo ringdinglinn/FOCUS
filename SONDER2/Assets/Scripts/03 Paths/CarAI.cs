@@ -12,7 +12,7 @@ public class CarAI : MonoBehaviourReferenced {
     private SwitchingBehaviour switchingBehaviour;
     private Rigidbody rb;
 
-    public bool autopilotEnabled;
+    public bool autopilotEnabled = true;
 
     private Vector3 startPos;
     private Vector3 startDir;
@@ -26,7 +26,8 @@ public class CarAI : MonoBehaviourReferenced {
 
     private float steerTowardsDist = 2;
 
-    [SerializeField] int pathID;
+
+    [SerializeField] private int pathID;
 
 
     private void Start() {
@@ -34,19 +35,17 @@ public class CarAI : MonoBehaviourReferenced {
         switchingBehaviour = GetComponent<SwitchingBehaviour>();
         rb = GetComponent<Rigidbody>();
         GetPathInfo();
-        CreateStartConfig();
-    }
-
-    private void CreateStartConfig() {
-        //distOnPath = Random.Range(0f, myPath.path.length);
-        distOnPath = 0;
-        startPos = myPath.path.GetPointAtDistance(distOnPath, EndOfPathInstruction.Loop);
-        startPos += offset;
-        startDir = myPath.path.GetDirectionAtDistance(distOnPath, EndOfPathInstruction.Loop);
         SetToStartConfig();
     }
 
+    public void CreateStartConfig(Vector3 pos, Vector3 dir) {
+        startPos = pos;
+        startPos += offset;
+        startDir = dir;
+    }
+
     public void SetToStartConfig() {
+        distOnPath = myPath.path.GetClosestDistanceAlongPath(startPos);
         transform.position = startPos;
         transform.rotation = Quaternion.LookRotation(startDir);
         prevPos = transform.position;
@@ -65,7 +64,10 @@ public class CarAI : MonoBehaviourReferenced {
 
     private void SetPath(PathCreator p) {
         myPath = p;
-        CreateStartConfig();
+    }
+
+    public void SetPathID(int id) {
+        pathID = id;
     }
 
     public void SwitchOnAutopilot() {

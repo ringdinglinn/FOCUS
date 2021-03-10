@@ -6,6 +6,7 @@ using PathCreation;
 public class PathBehaviour : MonoBehaviourReferenced {
 	private PathCreator path;
     private PathManagement pathManagement;
+    private StartPosBehaviour startPosBehaviour;
 
     private int id;
 
@@ -16,6 +17,7 @@ public class PathBehaviour : MonoBehaviourReferenced {
 
     private void OnEnable() {
         path = GetComponent<PathCreator>();
+        startPosBehaviour = GetComponent<StartPosBehaviour>();
         pathManagement = referenceManagement.pathManagement;
         pathManagement.AddToPaths(this);
     }
@@ -57,6 +59,10 @@ public class PathBehaviour : MonoBehaviourReferenced {
 
     public float GetSpeedLimit() {
         return speedLimit;
+    }
+
+    public StartPosBehaviour GetStartPosBehaviour() {
+        return startPosBehaviour;
     }
 }
 
