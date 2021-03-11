@@ -14,7 +14,6 @@ public class StreetlampAudioTest : MonoBehaviourReferenced {
 
 
     private void Start() {
-        //AudioProcessor processor = referenceManagement.audioProcessor;
         BeatDetector beatDetector = referenceManagement.beatDetector;
         beatDetector.bdOnBeatFull.AddListener(OnFullBeatDetected);
         beatDetector.bdOnBeatSubD.AddListener(OnSubDBeatDetected);
@@ -23,13 +22,13 @@ public class StreetlampAudioTest : MonoBehaviourReferenced {
     }
 
     void OnFullBeatDetected() {
-        //if (Random.Range(0f, 1f) <= p) {
-        //    Flicker();
-        //}
-
-        if (!onSubBeat) {
+        if (Random.Range(0f, 1f) <= p) {
             Flicker();
         }
+
+        //if (!onSubBeat) {
+        //    Flicker();
+        //}
     }
 
     void OnSubDBeatDetected() {
@@ -37,9 +36,9 @@ public class StreetlampAudioTest : MonoBehaviourReferenced {
         //    Flicker();
         //}
 
-        if (onSubBeat) {
-            Flicker();
-        }
+        //if (onSubBeat) {
+        //    Flicker();
+        //}
     }
 
     void Flicker() {

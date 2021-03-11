@@ -24,6 +24,7 @@ public class ReferenceManagement : MonoBehaviour
     [Header("Audio")]
     public AudioProcessor audioProcessor;
     public BeatDetector beatDetector;
+    public List<Material> treeAudioMats;
 
     [Header("Automation")]
     public GameObject streetlight;
