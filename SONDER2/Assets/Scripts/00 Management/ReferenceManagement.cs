@@ -32,12 +32,18 @@ public class ReferenceManagement : MonoBehaviour
 
     [Header("UI")]
     public GameObject switchImgObj;
+    public GameObject perceptionBorderObj;
 
     [Header("Sounds")]
     public AudioSource switchSound;
     public AudioSource selectedSwitchCar;
-    
 
+    [Range(0.0f, 1.0f)]
+    public float switchViewWidth = 0.8f;
+    [Range(0.0f, 1.0f)]
+    public float switchViewHeight = 0.8f;
+    public float switchViewRange = 200;
+    
     [SerializeField] private float BPM;
     [SerializeField] private float BeatSubdivisions;
 

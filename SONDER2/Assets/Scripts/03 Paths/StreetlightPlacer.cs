@@ -22,7 +22,6 @@ public class StreetlightPlacer : MonoBehaviourReferenced {
     }
 
     private void PlaceLights() {
-        Debug.Log("place light");
         float dist = 0;
         float offset = roadMeshCreator.roadWidth;
         while (myPath.path.length > dist) {

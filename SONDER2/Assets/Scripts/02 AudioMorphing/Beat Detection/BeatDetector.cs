@@ -38,7 +38,6 @@ public class BeatDetector : MonoBehaviourReferenced {
             beatTimer -= beatInterval;
             beatCountFull++;
             bdOnBeatFull.Invoke();
-            Debug.Log("Full");
         }
 
         // subdivided beat
@@ -50,7 +49,6 @@ public class BeatDetector : MonoBehaviourReferenced {
             beatSubD = true;
             beatCountSubD++;
             bdOnBeatSubD.Invoke();
-            Debug.Log("SubD");
         }
     }
 }

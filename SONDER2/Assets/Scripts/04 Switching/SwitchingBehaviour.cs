@@ -8,7 +8,6 @@ using VehicleBehaviour;
 public class SwitchingBehaviour : MonoBehaviourReferenced {
     private CarAI carAI;
     private WheelVehicle wheelVehicle;
-    private GameObject viewCone;
     private SwitchingManagement switchingManagement;
     private PathCreator myPath;
 
@@ -19,16 +18,14 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     public Material invisibleMat;
     public Material windowMat;
 
+    public BoxCollider boxCollider;
+
     public GameObject camRotTarget;
     public GameObject camTranslateTarget;
 
     public int id;
 
     public bool isInitialCar = false;
-
-    private void Start() {
-        CollectReferences();
-    }
 
     private void OnEnable() {
         CollectReferences();
@@ -41,12 +38,10 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         switchingManagement = referenceManagement.switchingManagement;
         id = switchingManagement.allSwitchingBehaviours.Count;
         switchingManagement.AddToAllSwitchingBehaviours(this);
-        viewCone = GetComponentInChildren<ViewCone>().gameObject;
     }
 
     public void SwitchIntoCar() {
         carAI.SwitchOffAutopilot();
-        viewCone.SetActive(true);
         ChangeColorToInvisible();
         switchingManagement.activeCar = this;
         wheelVehicle.IsPlayer = true;
@@ -54,16 +49,7 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
 
     public void SwitchOutOfCar() {
         carAI.SwitchOnAutopilot();
-        viewCone.SetActive(false);
         wheelVehicle.IsPlayer = false;
-    }
-
-    public void CarBecomesVisible(SwitchingBehaviour car) {
-        switchingManagement.AddToEligibleSwitchingBehaviours(car);
-    }
-
-    public void CarBecomesInvisible(SwitchingBehaviour car) {
-        switchingManagement.RemoveFromEligibleSwitchingBehaviours(car);
     }
 
     public void ChangeColorToVisible() {

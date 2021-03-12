@@ -161,8 +161,6 @@ namespace PathCreation.Examples {
                 mesh = new Mesh ();
             }
             meshFilter.sharedMesh = mesh;
-
-            Debug.Log("mesh = " + mesh);
         }
 
         void AssignMaterials () {

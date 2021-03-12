@@ -7,6 +7,7 @@ public class CarManagement : MonoBehaviourReferenced {
 
     PathManagement pathManagement;
     List<PathBehaviour> pathBehaviours;
+    List<SwitchingBehaviour> allSwitchingBehaviours = new List<SwitchingBehaviour>();
 
     private GameObject carPrefab;
 
@@ -31,14 +32,19 @@ public class CarManagement : MonoBehaviourReferenced {
                 Vector3 dir = path.path.GetDirectionAtDistance(path.path.GetClosestDistanceAlongPath(pos));
                 GameObject car = Instantiate(carPrefab, startPosList[j], Quaternion.LookRotation(dir));
                 CarAI carAI = car.GetComponent<CarAI>();
+                SwitchingBehaviour sb = car.GetComponent<SwitchingBehaviour>();
+                allSwitchingBehaviours.Add(sb);
                 carAI.SetPathID(i);
                 carAI.CreateStartConfig(pos, dir);
                 if (!setInitial && j == initPosIndex) {
-                    Debug.Log("initial car");
                     setInitial = true;
-                    referenceManagement.switchingManagement.SetUpInitialCar(car.GetComponent<SwitchingBehaviour>());
+                    referenceManagement.switchingManagement.SetUpInitialCar(sb);
                 }
             }
         }
+    }
+
+    public List<SwitchingBehaviour> getAllSwitchingBehaviours() {
+        return allSwitchingBehaviours;
     }
 }

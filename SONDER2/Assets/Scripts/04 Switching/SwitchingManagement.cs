@@ -6,49 +6,52 @@ using UnityEngine.UI;
 public class SwitchingManagement : MonoBehaviourReferenced {
 
     public List<SwitchingBehaviour> allSwitchingBehaviours = new List<SwitchingBehaviour>();
-    public List<SwitchingBehaviour> eligibleSwitchtingBehaviours = new List<SwitchingBehaviour>();
     public SwitchingBehaviour activeCar;
     private SwitchingBehaviour selectedCar;
+    private SwitchingBehaviour markedCar;
 
     private Camera cam;
     private GameObject switchImgObj;
     private RectTransform switchImgTransform;
+    private Image switchImg;
+    private GameObject perceptionBorderObj;
+    private RectTransform perceptionBorderTransform;
 
-    private bool canSwitch = true;
+    private float switchUIPadding = 10;
 
-    private bool gonnaSwitch = false;
+    private float perceptionW;
+    private float perceptionH;
+    private float perceptionR;
+    private List<SwitchingBehaviour> SBsInFrame = new List<SwitchingBehaviour>();
+
+    private CarManagement carManagement;
+
+    private bool selectCarNow = false;
+
+    private bool hasSelectedCar = false;
+
 
     private void Start() {
-        //AudioProcessor processor = referenceManagement.audioProcessor;
-        //processor.onBeat.AddListener(OnBeatDetected);
         BeatDetector beatDetector = referenceManagement.beatDetector;
         beatDetector.bdOnBeatSubD.AddListener(OnSubDBeatDetected);
         beatDetector.bdOnBeatFull.AddListener(OnFullBeatDetected);
         cam = referenceManagement.cam.GetComponent<Camera>();
         switchImgObj = referenceManagement.switchImgObj;
         switchImgTransform = switchImgObj.GetComponent<RectTransform>();
+        switchImg = switchImgObj.GetComponent<Image>();
+        perceptionBorderObj = referenceManagement.perceptionBorderObj;
+        perceptionBorderTransform = perceptionBorderObj.GetComponent<RectTransform>();
+        perceptionW = referenceManagement.switchViewWidth;
+        perceptionH = referenceManagement.switchViewHeight;
+        perceptionR = referenceManagement.switchViewRange;
     }
 
     public void AddToAllSwitchingBehaviours(SwitchingBehaviour sb) {
         allSwitchingBehaviours.Add(sb);
     }
 
-    public void AddToEligibleSwitchingBehaviours(SwitchingBehaviour sb) {
-        eligibleSwitchtingBehaviours.Add(sb);
-        sb.ChangeColorToVisible();
-    }
-
-    public void RemoveFromEligibleSwitchingBehaviours(SwitchingBehaviour sb) {
-        eligibleSwitchtingBehaviours.Remove(sb);
-        sb.ChangeColorToInvisible();
-    }
-
     private void SwitchToCar(SwitchingBehaviour newSB) {
         activeCar.SwitchOutOfCar();
-        eligibleSwitchtingBehaviours.Clear();
-        foreach (SwitchingBehaviour sb in eligibleSwitchtingBehaviours) {
-            sb.ChangeColorToInvisible();
-        }
         referenceManagement.cam.SwitchCar(newSB.camTranslateTarget.transform, newSB.camRotTarget.transform);
         newSB.SwitchIntoCar();
     }
@@ -60,85 +63,88 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     }
 
     private void Update() {
-        if (GetInput("SwitchCar") != 0) {
-            if (eligibleSwitchtingBehaviours.Count != 0 && canSwitch) {
-                SelectSwitchCar();
+        SearchForCars();
+
+        if (GetInput("SwitchCar") != 0 && !hasSelectedCar) {
+            if (markedCar != null) {
+                selectCarNow = true;
             }
         }
 
-        if (gonnaSwitch) {
-            bool inSight = false;
-            foreach (SwitchingBehaviour sb in eligibleSwitchtingBehaviours) {
-                if (sb == selectedCar) inSight = true;
-            }
-            if (!inSight) {
-                DeselectSwitchCar();
-                return;
-            }
-            DrawSwitchGUI();
+        if (selectCarNow) {
+            SelectCar();
+            selectCarNow = false;
+        }
+
+        if (hasSelectedCar) {
+            switchImgObj.SetActive(true);
+            HandleSwitchGUI(CarScreenPos(selectedCar), Color.white);
+        } else {
+            switchImgObj.SetActive(false);
         }
     }
 
-    private void SelectSwitchCar() {
-        gonnaSwitch = true;
-        selectedCar = eligibleSwitchtingBehaviours[0];
-        EnableSwitchGUI();
-        referenceManagement.selectedSwitchCar.Play();
+    private void SearchForCars() {
+        SBsInFrame.Clear();
+        markedCar = null;
+        // 1 Draw Perception Frame
+        float w = cam.pixelWidth * perceptionW;
+        float h = cam.pixelHeight * perceptionH;
+        float originX = (cam.pixelWidth / 2) - w / 2;
+        float originY = (cam.pixelHeight / 2) - h / 2;
+        perceptionBorderTransform.anchoredPosition = new Vector2(cam.pixelWidth / 2, cam.pixelHeight / 2);
+        perceptionBorderTransform.sizeDelta = new Vector2(cam.pixelWidth * perceptionW, cam.pixelHeight * perceptionH);
+
+        float dist = Mathf.Infinity;
+        for (int i = 0; i < allSwitchingBehaviours.Count; i++) {
+            if (allSwitchingBehaviours[i] != activeCar) {
+                // check if other car is visible
+                bool isVisible = allSwitchingBehaviours[i].meshRenderer.IsVisibleFrom(cam);
+                float[,] scrPos = CarScreenPos(allSwitchingBehaviours[i]);
+                //check if other car is close enough
+                bool inRange = scrPos[4, 0] <= perceptionR ? true : false;
+                //check if points are in perceptionFrame
+                bool inFrame = false;
+                for (int j = 0; j < 4; j++) {
+                    if (scrPos[j,0] > originX && scrPos[j,0] < originX + w && scrPos[j,1] > originY && scrPos[j, 1] < originY + h) {
+                        inFrame = true;
+                    }
+                }
+                if (isVisible && inRange && inFrame) {
+                    SBsInFrame.Add(allSwitchingBehaviours[i]);
+                    //evaluate closest car
+                    if (scrPos[4,0] <= dist) {
+                        dist = scrPos[4, 0];
+                        markedCar = allSwitchingBehaviours[i];
+                    }
+                }
+            }
+        }
     }
 
-    private void DeselectSwitchCar() {
-        selectedCar = null;
-        gonnaSwitch = false;
-        DisableSwitchGUI();
+    private void HandleSwitchGUI(float [,] scrPos1, Color col) {
+        //get x1, y1, x2, y2
+        float[] scrPos = new float[] { scrPos1[0, 0], scrPos1[0, 1], scrPos1[3, 0], scrPos1[3, 1] };
+        float x = scrPos[0];
+        float y = scrPos[1];
+        float w = scrPos[2] - x;
+        float h = scrPos[3] - y;
+
+        float padding = switchUIPadding;
+
+        switchImg.color = col;
+        switchImgTransform.anchoredPosition = new Vector2(x - padding, y - padding);
+        switchImgTransform.sizeDelta = new Vector2(w + 2 * padding, h + 2 * padding);
     }
 
-    private void Switch() {
-        SwitchToCar(selectedCar);
-        StartCoroutine(SwitchCoolDown());
-        DeselectSwitchCar();
-        referenceManagement.switchSound.Play();
-    }
+    private float[,] CarScreenPos(SwitchingBehaviour sb) {
+        Vector3[] boundingVerts;
+        boundingVerts = sb.boxCollider.GetVerticesOfBoxCollider();
 
-    IEnumerator SwitchCoolDown() {
-        canSwitch = false;
-        yield return new WaitForSeconds(2);
-        canSwitch = true;
-    }
-
-    private float GetInput(string input) {
-        return referenceManagement.inputManagement.GetInput(input);
-    }
-
-    private void OnFullBeatDetected() {
-        //if (gonnaSwitch) Switch();
-    }
-
-    private void OnSubDBeatDetected() {
-        if (gonnaSwitch) Switch();
-    }
-
-    private void EnableSwitchGUI() {
-        switchImgObj.SetActive(true);
-        DrawSwitchGUI();
-    }
-
-    private void DisableSwitchGUI() {
-        switchImgObj.SetActive(false);
-    }
-
-    private void DrawSwitchGUI() {
-        Vector3 bounds = selectedCar.meshRenderer.bounds.extents;
-        Vector3 pos = selectedCar.meshRenderer.bounds.center;
-        Vector3[] boundingVerts = new Vector3[8];
-        float factorX = 1;
-        float factorY = 1;
-        float factorZ = 1;
+        float sumZ = 0;
         for (int i = 0; i < 8; i++) {
-            factorZ = i % 2 == 0 ? 1 : -1;
-            factorY = (int)(i / 2) % 2 == 0 ? 1 : -1;
-            factorX = (int)(i / 4) % 2 == 0 ? 1 : -1;
-            boundingVerts[i] = pos + new Vector3(factorX * bounds.x, factorY * bounds.y, factorZ * bounds.z);
             boundingVerts[i] = cam.WorldToScreenPoint(boundingVerts[i]);
+            sumZ += boundingVerts[i].z;
         }
 
         float x1 = Mathf.Infinity;
@@ -149,13 +155,40 @@ public class SwitchingManagement : MonoBehaviourReferenced {
             y1 = boundingVerts[i].y < y1 ? boundingVerts[i].y : y1;
             x1 = boundingVerts[i].x < x1 ? boundingVerts[i].x : x1;
             x2 = boundingVerts[i].x > x2 ? boundingVerts[i].x : x2;
-            y2 = boundingVerts[i].x > y2 ? boundingVerts[i].y : y2;
+            y2 = boundingVerts[i].y > y2 ? boundingVerts[i].y : y2;
         }
 
-        float w = x2 - x1;
-        float h = y2 - y1;
+        float averageZ = sumZ / 8;
 
-        switchImgTransform.anchoredPosition = new Vector2(x1, y1);
-        switchImgTransform.sizeDelta = new Vector2(w, h);
+        return new float[,] { { x1, y1 }, { x1, y2 }, { x2, y1 }, { x2, y2 } , { averageZ, 0 } };
+    }
+
+    private void SelectCar() {
+        hasSelectedCar = true;
+        selectedCar = markedCar;
+        referenceManagement.selectedSwitchCar.Play();
+    }
+
+    private void DeselectCar() {
+        selectedCar = null;
+        hasSelectedCar = false;
+    }
+
+    private void Switch() {
+        SwitchToCar(selectedCar);
+        DeselectCar();
+        referenceManagement.switchSound.Play();
+    }
+
+    private float GetInput(string input) {
+        return referenceManagement.inputManagement.GetInput(input);
+    }
+
+    private void OnFullBeatDetected() {
+        if (hasSelectedCar) Switch();
+    }
+
+    private void OnSubDBeatDetected() {
+        //if (hasSelectedCar) Switch();
     }
 }
