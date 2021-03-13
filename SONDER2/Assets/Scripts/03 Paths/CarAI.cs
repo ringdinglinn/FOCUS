@@ -26,8 +26,12 @@ public class CarAI : MonoBehaviourReferenced {
 
     private float steerTowardsDist = 2;
 
-
     [SerializeField] private int pathID;
+
+    private Transform startTunnel;
+    private Transform endTunnel;
+
+    private Camera1stPerson cam;
 
 
     private void Start() {
@@ -36,6 +40,9 @@ public class CarAI : MonoBehaviourReferenced {
         rb = GetComponent<Rigidbody>();
         GetPathInfo();
         SetToStartConfig();
+        startTunnel = pathBehaviour.startTunnel.transform;
+        endTunnel = pathBehaviour.endTunnel.transform;
+        cam = referenceManagement.cam;
     }
 
     public void CreateStartConfig(Vector3 pos, Vector3 dir) {
@@ -82,13 +89,27 @@ public class CarAI : MonoBehaviourReferenced {
         if (started) Loop();
     }
 
-    private void Loop() { 
-        distOnPath = 0;
-        transform.position = myPath.path.GetPointAtDistance(distOnPath);
-        rb.velocity = Vector3.zero;
+    private void Loop() {
+        Vector3 pos = endTunnel.InverseTransformPoint(transform.position);
+        pos = startTunnel.TransformPoint(pos);
+
+        Vector3 dir = endTunnel.InverseTransformDirection(transform.forward);
+        dir = startTunnel.TransformDirection(dir);
+
+        Vector3 vel = endTunnel.InverseTransformDirection(rb.velocity);
+        vel = startTunnel.TransformDirection(vel);
+
+        if (!autopilotEnabled)
+        cam.Loop(transform.position, pos);
+
+        transform.position = pos;
+        transform.rotation = Quaternion.LookRotation(dir);
+        rb.velocity = vel;
+
         float angle = Vector3.SignedAngle(transform.forward, myPath.path.GetPointAtDistance(distOnPath + steerTowardsDist, EndOfPathInstruction.Loop) - transform.position, Vector3.up);
         carConroller.InstantSetWheelAngle(angle);
-        transform.rotation = Quaternion.LookRotation(myPath.path.GetDirectionAtDistance(distOnPath));
+
+        distOnPath = myPath.path.GetClosestDistanceAlongPath(pos);
     }
 
     private void GetPathInfo() {

@@ -1,30 +1,31 @@
 ﻿<Properties StartupConfiguration="{281EEECF-89B9-6D0B-978A-5FDC6B8E6CBA}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/04 Switching/SwitchingManagement.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/03 Paths/PathLoopTriggerBehaviour.cs">
     <Files>
-      <File FileName="Assets/Lib/Arcade_Car_Physics/Scripts/WheelVehicle.cs" Line="178" Column="46" IsPinned="True" />
-      <File FileName="Assets/Scripts/00 Management/ReferenceManagement.cs" Line="45" Column="40" />
+      <File FileName="Assets/Lib/Arcade_Car_Physics/Scripts/WheelVehicle.cs" Line="1" Column="1" IsPinned="True" />
+      <File FileName="Assets/Scripts/03 Paths/StartPosEditor.cs" />
+      <File FileName="Assets/Scripts/00 Management/ReferenceManagement.cs" />
       <File FileName="Assets/Scripts/00 Management/InputManagement.cs" />
-      <File FileName="Assets/Scripts/01 Camera/Camera1stPerson.cs" Line="77" Column="1" />
-      <File FileName="Assets/Scripts/03 Paths/PathBehaviour.cs" />
-      <File FileName="Assets/Scripts/03 Paths/CarAI.cs" Line="58" Column="67" />
-      <File FileName="Assets/Scripts/04 Switching/SwitchingBehaviour.cs" Line="21" Column="36" />
-      <File FileName="Assets/Scripts/04 Switching/SwitchingManagement.cs" Line="80" Column="42" />
-      <File FileName="Assets/Scripts/03 Paths/StartPosBehaviour.cs" Line="44" Column="1" />
-      <File FileName="Assets/Scripts/03 Paths/StartPosEditor.cs" Line="84" Column="13" />
-      <File FileName="Assets/Scripts/03 Paths/PathManagement.cs" Line="22" Column="22" />
-      <File FileName="Assets/Scripts/02 AudioMorphing/StreetlampAudioTest.cs" Line="38" Column="1" />
-      <File FileName="Assets/Scripts/02 AudioMorphing/Beat Detection/BeatDetector.cs" Line="34" Column="26" />
-      <File FileName="Assets/Scripts/02 AudioMorphing/Beat Detection/AudioProcessor.cs" Line="314" Column="1" />
-      <File FileName="Assets/Scripts/02 AudioMorphing/TreeAudioScript.cs" Line="23" Column="1" />
-      <File FileName="Assets/Scripts/00 Management/CarManagement.cs" Line="33" Column="104" />
-      <File FileName="Assets/Scripts/03 Paths/StreetlightPlacer.cs" Line="25" Column="1" />
-      <File FileName="Assets/Scripts/Z_ Utilities/ColliderExtensions.cs" Line="19" Column="65" />
-      <File FileName="Assets/Scripts/Z_ Utilities/RendererExtensions.cs" Line="6" Column="73" />
+      <File FileName="Assets/Scripts/01 Camera/Camera1stPerson.cs" />
+      <File FileName="Assets/Scripts/03 Paths/PathBehaviour.cs" Line="57" Column="10" />
+      <File FileName="Assets/Scripts/03 Paths/CarAI.cs" />
+      <File FileName="Assets/Scripts/04 Switching/SwitchingBehaviour.cs" />
+      <File FileName="Assets/Scripts/04 Switching/SwitchingManagement.cs" />
+      <File FileName="Assets/Scripts/03 Paths/StartPosBehaviour.cs" />
+      <File FileName="Assets/Scripts/03 Paths/PathManagement.cs" />
+      <File FileName="Assets/Scripts/02 AudioMorphing/StreetlampAudioTest.cs" />
+      <File FileName="Assets/Scripts/02 AudioMorphing/Beat Detection/BeatDetector.cs" />
+      <File FileName="Assets/Scripts/02 AudioMorphing/Beat Detection/AudioProcessor.cs" />
+      <File FileName="Assets/Scripts/02 AudioMorphing/TreeAudioScript.cs" />
+      <File FileName="Assets/Scripts/00 Management/CarManagement.cs" />
+      <File FileName="Assets/Scripts/03 Paths/StreetlightPlacer.cs" />
+      <File FileName="Assets/Scripts/Z_ Utilities/ColliderExtensions.cs" />
+      <File FileName="Assets/Scripts/Z_ Utilities/RendererExtensions.cs" />
+      <File FileName="Assets/Scripts/03 Paths/PathLoopTriggerBehaviour.cs" Line="14" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="a705add0-3ff3-4ef2-a6e7-cf6a71fef889" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="0ddf787b-f68c-4016-9a23-09d965faf3e1" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/linn/Documents/01 ZHdK/Semester VI/FOCUS/_ Repo/SONDER2/Assets/Scripts/03 Paths/StartPosEditor.cs" relfile="Assets/Scripts/03 Paths/StartPosEditor.cs" line="14" column="1" />

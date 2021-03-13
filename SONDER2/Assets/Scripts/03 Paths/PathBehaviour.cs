@@ -15,6 +15,9 @@ public class PathBehaviour : MonoBehaviourReferenced {
 
     [SerializeField] float speedLimit;
 
+    public GameObject startTunnel;
+    public GameObject endTunnel;
+
     private void OnEnable() {
         path = GetComponent<PathCreator>();
         startPosBehaviour = GetComponent<StartPosBehaviour>();
@@ -25,7 +28,7 @@ public class PathBehaviour : MonoBehaviourReferenced {
     private void Start() {
         startTrigger = GetChildWithName(gameObject, "StartTrigger");
         endTrigger = GetChildWithName(gameObject, "EndTrigger");
-        SetUpTriggers();
+        //SetUpTriggers();
     }
 
     public void SetID(int newID) {

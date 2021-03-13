@@ -24,49 +24,47 @@ public class Camera1stPerson : MonoBehaviourReferenced
 
     private bool inRegion = true;
 
-    private bool camIsOn = true;
     Camera cam;
 
-    private bool switching = false;
-    
+    private int frameCounter = 0;
+
+    private int loopFrames = 5;
+    private int loopCounter = 0;
+    private bool looping = false;
+    private Vector3 loopOffset = Vector3.zero;
+    private Vector3 loopTargetPos = Vector3.zero;
 
     private void Start() {
         cam = gameObject.GetComponent<Camera>();
-        //translateTarget = referenceManagement.initialCarSB.camTranslateTarget.transform;
-        //rotTarget = referenceManagement.initialCarSB.camRotTarget.transform;
         prevPos = transform.position;
     }
 
     private void FixedUpdate() {
         InertiaMovement();
+        if (looping) {
+            Debug.Log($"cam loop, frameCounter: {frameCounter}");
+            transform.position = loopTargetPos - loopOffset;
+            looping = false;
+            //Debug.Break();
+        }
+        Debug.Log($"frameCounter: {frameCounter++}");
+    }
+
+    private IEnumerator StopLooping() {
+        loopCounter = loopFrames;
+        while (loopCounter > 0) {
+            loopCounter--;
+            yield return new WaitForFixedUpdate();
+        }
+        looping = false;
     }
 
     public void SwitchCar(Transform tt, Transform rt) {
         translateTarget = tt;
         rotTarget = rt;
-        switching = true;
         prevTargetPos = translateTarget.position;
     }
 
-    private void SwitchingMovement() {
-        targetPos = translateTarget.position;
-        targetVelocity = targetPos - prevTargetPos;
-        prevTargetPos = targetPos;
-
-        Vector3 currentVelocity = transform.position - prevPos;
-        prevPos = transform.position;
-
-        Vector3 distToTarget = targetPos - transform.position;
-        catchUpVelocity = distToTarget;
-
-        transform.position = Vector3.SmoothDamp(transform.position, transform.position + targetVelocity + catchUpVelocity, ref currentVelocity, 0.05f);
-
-        if ((transform.position - translateTarget.position).sqrMagnitude <= 0.05f) {
-            switching = false;
-        }
-
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotTarget.rotation, 0.05f);
-    }
 
     private void InertiaMovement() {
         HandleTranslation();
@@ -93,6 +91,7 @@ public class Camera1stPerson : MonoBehaviourReferenced
 
         // Set prev to get Velocity on next frame
         prevTargetPos = targetPos;
+        Debug.Log($"handle translation, frameCounter: {frameCounter}");
     }
 
     private void HandleRotation() {
@@ -110,5 +109,11 @@ public class Camera1stPerson : MonoBehaviourReferenced
         if (other.gameObject.CompareTag("PlayerRegion")) {
             inRegion = true;
         }
+    }
+
+    public void Loop(Vector3 startPos, Vector3 endPos) {
+        loopOffset = startPos - transform.position;
+        loopTargetPos = endPos;
+        looping = true;
     }
 }
