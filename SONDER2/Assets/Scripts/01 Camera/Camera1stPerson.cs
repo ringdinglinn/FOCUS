@@ -25,6 +25,7 @@ public class Camera1stPerson : MonoBehaviourReferenced
     private bool inRegion = true;
 
     Camera cam;
+    AudioListener audioListener;
 
     private int frameCounter = 0;
 
@@ -34,8 +35,11 @@ public class Camera1stPerson : MonoBehaviourReferenced
     private Vector3 loopOffset = Vector3.zero;
     private Vector3 loopTargetPos = Vector3.zero;
 
-    private void Start() {
-        cam = gameObject.GetComponent<Camera>();
+    private bool isCloneCam;
+
+    private void OnEnable() {
+        cam = GetComponent<Camera>();
+        audioListener = GetComponent<AudioListener>();
         prevPos = transform.position;
     }
 
@@ -43,11 +47,17 @@ public class Camera1stPerson : MonoBehaviourReferenced
         InertiaMovement();
         if (looping) {
             Debug.Log($"cam loop, frameCounter: {frameCounter}");
-            transform.position = loopTargetPos - loopOffset;
+            Debug.Log($"loopOffset = {loopOffset}");
+            transform.position = loopTargetPos;
+            HandleRotation();
             looping = false;
             //Debug.Break();
         }
-        Debug.Log($"frameCounter: {frameCounter++}");
+    }
+
+    private void Update() {
+        //transform.position = translateTarget.position;
+        //HandleRotation();
     }
 
     private IEnumerator StopLooping() {
@@ -60,9 +70,24 @@ public class Camera1stPerson : MonoBehaviourReferenced
     }
 
     public void SwitchCar(Transform tt, Transform rt) {
+        Debug.Log("Switch car!");
         translateTarget = tt;
         rotTarget = rt;
         prevTargetPos = translateTarget.position;
+    }
+
+    public void SetAsCloneCam() {
+        isCloneCam = true;
+        cam.depth = -1;
+        cam.enabled = false;
+        audioListener.enabled = false;
+    }
+
+    public void SwitchToClone() {
+        isCloneCam = false;
+        cam.depth = 1;
+        cam.enabled = true;
+        audioListener.enabled = true;
     }
 
 
@@ -91,7 +116,6 @@ public class Camera1stPerson : MonoBehaviourReferenced
 
         // Set prev to get Velocity on next frame
         prevTargetPos = targetPos;
-        Debug.Log($"handle translation, frameCounter: {frameCounter}");
     }
 
     private void HandleRotation() {
@@ -111,9 +135,13 @@ public class Camera1stPerson : MonoBehaviourReferenced
         }
     }
 
-    public void Loop(Vector3 startPos, Vector3 endPos) {
-        loopOffset = startPos - transform.position;
+    public void Loop(Vector3 endPos) {
         loopTargetPos = endPos;
+        prevTargetPos = endPos;
         looping = true;
+    }
+
+    public Vector3 GetCurrentOffset() {
+        return translateTarget.position - transform.position;
     }
 }

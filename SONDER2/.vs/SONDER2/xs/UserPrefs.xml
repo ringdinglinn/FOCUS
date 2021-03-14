@@ -1,13 +1,12 @@
 ﻿<Properties StartupConfiguration="{281EEECF-89B9-6D0B-978A-5FDC6B8E6CBA}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/03 Paths/PathLoopTriggerBehaviour.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/03 Paths/TunnelTriggerBehaviour.cs">
     <Files>
-      <File FileName="Assets/Lib/Arcade_Car_Physics/Scripts/WheelVehicle.cs" Line="1" Column="1" IsPinned="True" />
+      <File FileName="Assets/Lib/Arcade_Car_Physics/Scripts/WheelVehicle.cs" Line="241" Column="18" IsPinned="True" />
+      <File FileName="Assets/Scripts/01 Camera/Camera1stPerson.cs" />
       <File FileName="Assets/Scripts/03 Paths/StartPosEditor.cs" />
       <File FileName="Assets/Scripts/00 Management/ReferenceManagement.cs" />
-      <File FileName="Assets/Scripts/00 Management/InputManagement.cs" />
-      <File FileName="Assets/Scripts/01 Camera/Camera1stPerson.cs" />
-      <File FileName="Assets/Scripts/03 Paths/PathBehaviour.cs" Line="57" Column="10" />
-      <File FileName="Assets/Scripts/03 Paths/CarAI.cs" />
+      <File FileName="Assets/Scripts/03 Paths/PathBehaviour.cs" />
+      <File FileName="Assets/Scripts/03 Paths/CarAI.cs" Line="36" Column="26" />
       <File FileName="Assets/Scripts/04 Switching/SwitchingBehaviour.cs" />
       <File FileName="Assets/Scripts/04 Switching/SwitchingManagement.cs" />
       <File FileName="Assets/Scripts/03 Paths/StartPosBehaviour.cs" />
@@ -20,12 +19,13 @@
       <File FileName="Assets/Scripts/03 Paths/StreetlightPlacer.cs" />
       <File FileName="Assets/Scripts/Z_ Utilities/ColliderExtensions.cs" />
       <File FileName="Assets/Scripts/Z_ Utilities/RendererExtensions.cs" />
-      <File FileName="Assets/Scripts/03 Paths/PathLoopTriggerBehaviour.cs" Line="14" Column="1" />
+      <File FileName="Assets/Scripts/03 Paths/PathLoopTriggerBehaviour.cs" />
+      <File FileName="Assets/Scripts/03 Paths/TunnelTriggerBehaviour.cs" Line="7" Column="7" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="0ddf787b-f68c-4016-9a23-09d965faf3e1" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="8886e63e-0784-495c-92fa-a54a313e9137" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/linn/Documents/01 ZHdK/Semester VI/FOCUS/_ Repo/SONDER2/Assets/Scripts/03 Paths/StartPosEditor.cs" relfile="Assets/Scripts/03 Paths/StartPosEditor.cs" line="14" column="1" />

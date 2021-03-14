@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 2577202265941041940}
   - component: {fileID: 1471503191138921649}
   - component: {fileID: 3715226781236631675}
+  - component: {fileID: 8363766579599621374}
+  - component: {fileID: 5760106087050140503}
   m_Layer: 0
   m_Name: Env-Tunnel
   m_TagString: Untagged
@@ -25,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2922800299432163758}
-  m_LocalRotation: {x: -0.6969467, y: -0.11943784, z: -0.11943788, w: 0.69694656}
+  m_LocalRotation: {x: -0.6969466, y: -0.11943799, z: -0.11943799, w: 0.6969466}
   m_LocalPosition: {x: 87.5, y: -0.63999987, z: -136.6}
   m_LocalScale: {x: 41.221138, y: 41.221138, z: 41.221138}
   m_Children: []
@@ -58,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: a379c2851203d4b6fa7a01ef0d8bca12, type: 3}
+  - {fileID: 2100000, guid: ba5579a3269fb488789ca14ad71c59a9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -79,3 +81,29 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &8363766579599621374
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2922800299432163758}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0037502, y: 1.2527398, z: 0.2057568}
+  m_Center: {x: -0.15887916, y: 0.7860902, z: 0.1028784}
+--- !u!114 &5760106087050140503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2922800299432163758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a3bcb93079c040c490657dc8585900a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  referenceManagement: {fileID: 0}

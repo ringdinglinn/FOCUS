@@ -57,6 +57,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     }
 
     public void SetUpInitialCar(SwitchingBehaviour initSB) {
+        Debug.Log("SetUpInitialCar");
         referenceManagement.cam.SwitchCar(initSB.camTranslateTarget.transform, initSB.camRotTarget.transform);
         initSB.isInitialCar = true;
         initSB.SwitchIntoCar();

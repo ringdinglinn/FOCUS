@@ -16,6 +16,7 @@ public class ReferenceManagement : MonoBehaviour
     public InputManagement inputManagement;
     public SwitchingManagement switchingManagement;
     public PathManagement pathManagement;
+    public CarManagement carManagement;
 
     [Header("Player Items")]
     public Camera1stPerson cam;
@@ -26,9 +27,10 @@ public class ReferenceManagement : MonoBehaviour
     public BeatDetector beatDetector;
     public List<Material> treeAudioMats;
 
-    [Header("Automation")]
+    [Header("Prefabs")]
     public GameObject streetlight;
     public GameObject carPrefab;
+    public GameObject camPrefab;
 
     [Header("UI")]
     public GameObject switchImgObj;
