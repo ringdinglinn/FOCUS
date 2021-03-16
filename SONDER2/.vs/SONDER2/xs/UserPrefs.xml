@@ -1,19 +1,19 @@
 ﻿<Properties StartupConfiguration="{281EEECF-89B9-6D0B-978A-5FDC6B8E6CBA}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/00 Management/InputManagement.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/04 Switching/SwitchingManagement.cs">
     <Files>
       <File FileName="Assets/Scripts/03 Paths/PathManagement.cs" Line="14" Column="6" />
       <File FileName="Assets/Scripts/03 Paths/PathBehaviour.cs" Line="51" Column="1" />
       <File FileName="Assets/PathCreator/Core/Runtime/Objects/BezierPath.cs" Line="230" Column="59" />
       <File FileName="Assets/PathCreator/Core/Runtime/Objects/PathCreator.cs" Line="65" Column="1" />
-      <File FileName="Assets/Scripts/03 Paths/CarAI.cs" Line="122" Column="32" />
-      <File FileName="Assets/Scripts/01 Camera/Camera1stPerson.cs" Line="65" Column="1" />
-      <File FileName="Assets/Scripts/04 Switching/SwitchingManagement.cs" Line="211" Column="10" />
-      <File FileName="Assets/Scripts/04 Switching/SwitchingBehaviour.cs" Line="42" Column="30" />
-      <File FileName="Assets/Lib/Arcade_Car_Physics/Scripts/WheelVehicle.cs" />
+      <File FileName="Assets/Scripts/03 Paths/CarAI.cs" Line="209" Column="1" />
+      <File FileName="Assets/Scripts/01 Camera/Camera1stPerson.cs" Line="123" Column="1" />
+      <File FileName="Assets/Scripts/04 Switching/SwitchingManagement.cs" Line="73" Column="61" />
+      <File FileName="Assets/Scripts/04 Switching/SwitchingBehaviour.cs" Line="43" Column="44" />
+      <File FileName="Assets/Lib/Arcade_Car_Physics/Scripts/WheelVehicle.cs" Line="378" Column="51" />
       <File FileName="Assets/Scripts/03 Paths/TunnelBehaviour.cs" />
       <File FileName="Assets/Scripts/03 Paths/StartPosEditor.cs" />
       <File FileName="Assets/Scripts/00 Management/ReferenceManagement.cs" />
-      <File FileName="Assets/Scripts/00 Management/CarManagement.cs" Line="56" Column="54" />
+      <File FileName="Assets/Scripts/00 Management/CarManagement.cs" Line="117" Column="33" />
       <File FileName="Assets/PathCreator/Core/Editor/PathEditor.cs" Line="734" Column="24" />
       <File FileName="Assets/Scripts/00 Management/InputManagement.cs" Line="30" Column="1" />
     </Files>

@@ -114,9 +114,9 @@ public class CarManagement : MonoBehaviourReferenced {
         allPathBehaviours[oldCar.PathID].endTunnel.CarIsDestroyed(oldCar);
         if (isActiveCar) {
             referenceManagement.cam = newCar.cam;
+            cameraChanged.Invoke();
             switchingManagement.SetActiveCar(newSB);
             Destroy(oldCar.cam.gameObject);
-            cameraChanged.Invoke();
         }
         Destroy(oldCar.gameObject);
     }
