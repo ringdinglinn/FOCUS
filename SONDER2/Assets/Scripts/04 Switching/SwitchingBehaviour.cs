@@ -37,18 +37,20 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         carAI = GetComponent<CarAI>();
         switchingManagement = referenceManagement.switchingManagement;
         id = switchingManagement.allSwitchingBehaviours.Count;
-        switchingManagement.AddToAllSwitchingBehaviours(this);
     }
 
-    public void SwitchIntoCar() {
+    public void SwitchIntoCar(Camera1stPerson cam) {
+        Debug.Log($"assigned cam = {cam}");
         carAI.SwitchOffAutopilot();
         ChangeColorToInvisible();
+        carAI.cam = cam;
         switchingManagement.activeCar = this;
         wheelVehicle.IsPlayer = true;
     }
 
     public void SwitchOutOfCar() {
         carAI.SwitchOnAutopilot();
+        carAI.cam = null;
         wheelVehicle.IsPlayer = false;
     }
 

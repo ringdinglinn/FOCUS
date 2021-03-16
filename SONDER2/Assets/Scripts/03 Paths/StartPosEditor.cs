@@ -24,6 +24,7 @@ public class StartPosEditor : Editor {
     private float flagWidth = 15;
     private float flagHeight = 10;
 
+
     void OnEnable() {
         startPosBehaviour = (StartPosBehaviour)target;
         startPosList = startPosBehaviour.GetList();

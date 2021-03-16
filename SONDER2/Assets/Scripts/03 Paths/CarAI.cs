@@ -6,6 +6,8 @@ using PathCreation;
 
 public class CarAI : MonoBehaviourReferenced {
 
+    private CarManagement carManagement;
+
     private WheelVehicle wheelVehicle;
     private PathBehaviour pathBehaviour;
     private PathCreator myPath;
@@ -15,10 +17,16 @@ public class CarAI : MonoBehaviourReferenced {
     public bool autopilotEnabled = true;
 
     private bool isClone = false;
+    private bool hasClone = false;
+    public bool HasClone {
+        get { return hasClone; }
+    }
 
     private WheelVehicle originalCarWV;
     private Transform originalCarTransform;
     private Rigidbody originalCarRB;
+    private CarAI originalCarAI;
+    private Transform origCamTransform;
 
     private CarAI clone;
 
@@ -34,33 +42,45 @@ public class CarAI : MonoBehaviourReferenced {
 
     private float steerTowardsDist = 2;
 
-    [SerializeField] private int pathID;
+    private int pathID;
+
+    public int id;
+    public int PathID {
+        get { return pathID; }
+        set { pathID = value;
+            GetPathInfo(); }
+    }
 
     private Transform startTunnel;
     private Transform endTunnel;
 
-    private Camera1stPerson cam;
+    public Camera1stPerson cam;
 
     private bool inTunnel;
     public bool InTunnel {
         get {
                 return inTunnel;
         } set {
-                TunnelStateChange(value);
                 inTunnel = value;
         }
     }
 
+    private bool inTunnelWithActiveCar;
+
     private void OnEnable() {
         wheelVehicle = GetComponent<WheelVehicle>();
         switchingBehaviour = GetComponent<SwitchingBehaviour>();
+        id = switchingBehaviour.id;
         rb = GetComponent<Rigidbody>();
     }
 
     private void Start() {
-        startTunnel = pathBehaviour.startTunnel.transform;
-        endTunnel = pathBehaviour.endTunnel.transform;
-        cam = referenceManagement.cam;
+        if (pathBehaviour.startTunnel != null) startTunnel = pathBehaviour.startTunnel.transform;
+        if (pathBehaviour.endTunnel != null) endTunnel = pathBehaviour.endTunnel.transform;
+        carManagement = referenceManagement.carManagement;
+        if (isClone) {
+            SetCloneTransform();
+        }
     }
 
     public void CreateStartConfig(Vector3 pos, Vector3 dir) {
@@ -84,18 +104,11 @@ public class CarAI : MonoBehaviourReferenced {
             prevPos = transform.position;
             float angle = Vector3.SignedAngle(transform.forward, myPath.path.GetPointAtDistance(distOnPath + steerTowardsDist, EndOfPathInstruction.Loop) - transform.position, Vector3.up);
             wheelVehicle.InstantSetWheelAngle(angle);
-        } else if (isClone) {
-            CloneMovement();
-        }
+        } 
     }
 
     private void SetPath(PathCreator p) {
         myPath = p;
-    }
-
-    public void SetPathID(int id) {
-        pathID = id;
-        GetPathInfo();
     }
 
     public void SwitchOnAutopilot() {
@@ -106,31 +119,39 @@ public class CarAI : MonoBehaviourReferenced {
         autopilotEnabled = false;
     }
 
-    public void EndReached() {
-        if (started) Loop();
+    public void ActiveCarHasReachedPortal() {
+        StartCoroutine(WaitToChangeToClone());
+    }
+
+    private IEnumerator WaitToChangeToClone() {
+        yield return new WaitForEndOfFrame();
+        ChangeToClone();
+    }
+
+    public void PortalReached() {
+        if (!autopilotEnabled) {
+            carManagement.ActiveCarHasReachedPortal(this);
+        } else if (!inTunnelWithActiveCar){
+            Loop();
+        }
     }
 
     private void Loop() {
         Vector3 pos = TransformPointToStart(transform.position);
         Vector3 dir = TransformDirectionToStart(transform.forward);
         Vector3 vel = TransformDirectionToStart(rb.velocity);
-
-        if (!autopilotEnabled) {
-            Vector3 camTargetPos = switchingBehaviour.camTranslateTarget.transform.position;
-            camTargetPos = TransformPointToStart(camTargetPos);
-            Vector3 currentCamPos = cam.transform.position;
-            currentCamPos = TransformPointToStart(currentCamPos);
-            cam.Loop(currentCamPos);
-        }
+        Vector3 angVel = TransformDirectionToStart(rb.angularVelocity);
 
         transform.position = pos;
         transform.rotation = Quaternion.LookRotation(dir);
         rb.velocity = vel;
+        rb.angularVelocity = angVel;
 
         float angle = Vector3.SignedAngle(transform.forward, myPath.path.GetPointAtDistance(distOnPath + steerTowardsDist, EndOfPathInstruction.Loop) - transform.position, Vector3.up);
         wheelVehicle.InstantSetWheelAngle(angle);
 
         distOnPath = myPath.path.GetClosestDistanceAlongPath(pos);
+        prevPos = TransformPointToStart(prevPos);
     }
 
     private Vector3 TransformPointToStart(Vector3 pos) {
@@ -145,55 +166,69 @@ public class CarAI : MonoBehaviourReferenced {
         return dir;
     }
 
-    private void TunnelStateChange(bool b) {
-        if (b) {
-            EnterTunnel();
-        } else {
-            ExitTunnel();
-        }
+    private void ChangeToClone() {
+        Debug.Log($"{gameObject.name} changes to clone");
+        carManagement.ChangeToClone(!autopilotEnabled, this, clone);
     }
 
-    public void StartClone(WheelVehicle wv, Transform transform, Rigidbody rb) {
-        autopilotEnabled = false;
+    public void MakeMainCar(bool isActiveCar) {
+        isClone = false;
+        if (isActiveCar) cam.MakeMainCarCamera();
+    }
+
+    public void StartClone(bool isActiveCar, WheelVehicle wv, Transform transform, Rigidbody rb, CarAI carAI) {
+        autopilotEnabled = !isActiveCar;
+        wheelVehicle.IsPlayer = isActiveCar;
         originalCarWV = wv;
         originalCarTransform = transform;
         originalCarRB = rb;
+        originalCarAI = carAI;
+        if (isActiveCar) origCamTransform = carAI.cam.transform;
         isClone = true;
     }
 
-    private void CloneMovement() {
+    private void SetCloneTransform() {
         Vector3 pos = TransformPointToStart(originalCarTransform.position);
         Vector3 dir = TransformDirectionToStart(originalCarTransform.forward);
         Vector3 vel = TransformDirectionToStart(originalCarRB.velocity);
+        Vector3 angVel = TransformDirectionToStart(originalCarRB.angularVelocity);
         transform.position = pos;
         transform.rotation = Quaternion.LookRotation(dir);
         rb.velocity = vel;
+        rb.angularVelocity = angVel;
+        distOnPath = myPath.path.GetClosestDistanceAlongPath(transform.position);
+        prevPos = TransformPointToStart(originalCarAI.GetPrevPos());
     }
 
     private void CreateClone() {
+        Debug.Log($"{gameObject.name} creates clone");
+        hasClone = true;
         clone = referenceManagement.carManagement.CreateCarClone(pathID);
-        clone.StartClone(wheelVehicle, transform, rb);
-        CreateCloneCam();
+        clone.StartClone(!autopilotEnabled, wheelVehicle, transform, rb, this);
+        if (!autopilotEnabled) CreateCloneCam();
     }
 
     private void CreateCloneCam() {
-        GameObject cloneCamObj = Instantiate(referenceManagement.camPrefab, Vector3.zero, Quaternion.identity);
+        Vector3 pos = TransformPointToStart(cam.transform.position);
+        Vector3 dir = TransformDirectionToStart(cam.transform.forward);
+        GameObject cloneCamObj = Instantiate(referenceManagement.camPrefab, pos, Quaternion.LookRotation(dir));
         Camera1stPerson cloneCam = cloneCamObj.GetComponent<Camera1stPerson>();
         cloneCam.SetAsCloneCam();
         cloneCam.SwitchCar(clone.switchingBehaviour.camTranslateTarget.transform, clone.switchingBehaviour.camRotTarget.transform);
+        clone.cam = cloneCam;
     }
 
-    private void EnterTunnel() {
-        Debug.Log($"{switchingBehaviour.id} has entered tunnel");
-        if (!autopilotEnabled) CreateClone();
-    }
-
-    private void ExitTunnel() {
-        Debug.Log($"{switchingBehaviour.id} has exited tunnel");
+    public void ActiveCarHasEnteredTunnel() {
+        inTunnelWithActiveCar = true;
+        CreateClone();
     }
 
     private void GetPathInfo() {
         pathBehaviour = referenceManagement.pathManagement.GetMyPath(pathID);
         SetPath(pathBehaviour.GetPath());
+    }
+
+    public Vector3 GetPrevPos() {
+        return prevPos;
     }
 }

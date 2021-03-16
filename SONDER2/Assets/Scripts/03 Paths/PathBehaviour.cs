@@ -9,26 +9,35 @@ public class PathBehaviour : MonoBehaviourReferenced {
     private StartPosBehaviour startPosBehaviour;
 
     private int id;
+    public int Id {
+        get { return id; }
+    }
 
     private GameObject startTrigger;
     private GameObject endTrigger;
 
     [SerializeField] float speedLimit;
 
-    public GameObject startTunnel;
-    public GameObject endTunnel;
+    public TunnelBehaviour startTunnel;
+    public TunnelBehaviour endTunnel;
+
+    public int tunnelPoints = 0;
 
     private void OnEnable() {
         path = GetComponent<PathCreator>();
         startPosBehaviour = GetComponent<StartPosBehaviour>();
         pathManagement = referenceManagement.pathManagement;
         pathManagement.AddToPaths(this);
+        if (startTunnel != null && endTunnel != null) MakeStartAndEndIdentical();
     }
 
     private void Start() {
         startTrigger = GetChildWithName(gameObject, "StartTrigger");
         endTrigger = GetChildWithName(gameObject, "EndTrigger");
-        //SetUpTriggers();
+    }
+
+    private void MakeStartAndEndIdentical() {
+        path.EditorData.bezierPath.MakeStartAndEndIdentical(tunnelPoints, startTunnel.transform, endTunnel.transform);
     }
 
     public void SetID(int newID) {
@@ -37,16 +46,6 @@ public class PathBehaviour : MonoBehaviourReferenced {
 
     public PathCreator GetPath() {
         return path;
-    }
-
-    private void SetUpTriggers() {
-        PlaceTrigger(startTrigger, path.path.GetPointAtDistance(0), path.path.GetDirectionAtDistance(0));
-        PlaceTrigger(endTrigger, path.path.GetPointAtDistance(path.path.length - 0.1f), path.path.GetDirectionAtDistance(path.path.length - 0.1f));
-    }
-
-    private void PlaceTrigger(GameObject obj, Vector3 pos, Vector3 dir) {
-        obj.transform.position = pos;
-        obj.transform.rotation = Quaternion.LookRotation(dir);
     }
 
     GameObject GetChildWithName(GameObject obj, string name) {
@@ -67,6 +66,7 @@ public class PathBehaviour : MonoBehaviourReferenced {
     public StartPosBehaviour GetStartPosBehaviour() {
         return startPosBehaviour;
     }
+
 }
 
 [ExecuteInEditMode]

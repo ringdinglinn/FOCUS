@@ -11,7 +11,7 @@ public class PathLoopTriggerBehaviour : MonoBehaviourReferenced {
             if (isColliding) return;
             isColliding = true;
             carAI = other.gameObject.GetComponentInParent<CarAI>();
-            carAI.EndReached();
+            carAI.PortalReached();
             StartCoroutine(SetIsCollidingFalse());
         }
     }

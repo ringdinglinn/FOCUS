@@ -224,6 +224,19 @@ namespace PathCreation {
             }
         }
 
+        public void MakeStartAndEndIdentical(int n, Transform startTunnel, Transform endTunnel) {
+            if (n * 2 <= points.Count) {
+                for (int i = 0; i < n; i++) {
+                    Vector3 pos = points[points.Count - n + i];
+                    Debug.Log($"i = {i}, i0 = {points.Count - n + i}");
+                    pos = endTunnel.InverseTransformPoint(pos);
+                    pos = startTunnel.TransformPoint(pos);
+                    points[i] = pos;
+                }
+            }
+            NotifyPathModified();
+        }
+
         /// Add new anchor point to end of the path
         public void AddSegmentToEnd (Vector3 anchorPos) {
             if (isClosed) {

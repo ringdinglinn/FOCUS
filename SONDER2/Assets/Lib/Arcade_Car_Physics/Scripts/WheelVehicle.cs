@@ -122,7 +122,10 @@ namespace VehicleBehaviour {
 
         // When IsPlayer is false you can use this to control the throttle
         float throttle;
-        public float Throttle { get{ return throttle; } set{ throttle = Mathf.Clamp(value, -1f, 1f); } } 
+        public float Throttle { get{ return throttle; } set{ throttle = Mathf.Clamp(value, -1f, 1f); } }
+
+        float angle;
+        public float Angle { get { return angle; } set { angle = value; } }
 
         // Like your own car handbrake, if it's true the car will not move
         [SerializeField] bool handbrake;

@@ -37,6 +37,12 @@ public class Camera1stPerson : MonoBehaviourReferenced
 
     private bool isCloneCam;
 
+    float targetRange = 2;
+    bool isInTargetRange;
+    public bool IsInTargetRange {
+        get { return isInTargetRange; }
+    }
+
     private void OnEnable() {
         cam = GetComponent<Camera>();
         audioListener = GetComponent<AudioListener>();
@@ -46,18 +52,14 @@ public class Camera1stPerson : MonoBehaviourReferenced
     private void FixedUpdate() {
         InertiaMovement();
         if (looping) {
-            Debug.Log($"cam loop, frameCounter: {frameCounter}");
-            Debug.Log($"loopOffset = {loopOffset}");
             transform.position = loopTargetPos;
             HandleRotation();
             looping = false;
-            //Debug.Break();
         }
     }
 
     private void Update() {
-        //transform.position = translateTarget.position;
-        //HandleRotation();
+        isInTargetRange = (translateTarget.transform.position - transform.position).sqrMagnitude <= Mathf.Pow(targetRange, 2) ? true : false;
     }
 
     private IEnumerator StopLooping() {
@@ -70,7 +72,6 @@ public class Camera1stPerson : MonoBehaviourReferenced
     }
 
     public void SwitchCar(Transform tt, Transform rt) {
-        Debug.Log("Switch car!");
         translateTarget = tt;
         rotTarget = rt;
         prevTargetPos = translateTarget.position;
@@ -79,11 +80,11 @@ public class Camera1stPerson : MonoBehaviourReferenced
     public void SetAsCloneCam() {
         isCloneCam = true;
         cam.depth = -1;
-        cam.enabled = false;
+        //cam.enabled = false;
         audioListener.enabled = false;
     }
 
-    public void SwitchToClone() {
+    public void MakeMainCarCamera() {
         isCloneCam = false;
         cam.depth = 1;
         cam.enabled = true;

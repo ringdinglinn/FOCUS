@@ -5,12 +5,13 @@ using UnityEngine.UI;
 
 public class SwitchingManagement : MonoBehaviourReferenced {
 
-    public List<SwitchingBehaviour> allSwitchingBehaviours = new List<SwitchingBehaviour>();
+    public List<SwitchingBehaviour> allSwitchingBehaviours;
     public SwitchingBehaviour activeCar;
     private SwitchingBehaviour selectedCar;
     private SwitchingBehaviour markedCar;
 
     private Camera cam;
+    private Camera1stPerson camController;
     private GameObject switchImgObj;
     private RectTransform switchImgTransform;
     private Image switchImg;
@@ -29,13 +30,17 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     private bool selectCarNow = false;
 
     private bool hasSelectedCar = false;
+    private bool canSelectCar = true;
+
+    bool carsCreated;
 
 
     private void Start() {
         BeatDetector beatDetector = referenceManagement.beatDetector;
         beatDetector.bdOnBeatSubD.AddListener(OnSubDBeatDetected);
         beatDetector.bdOnBeatFull.AddListener(OnFullBeatDetected);
-        cam = referenceManagement.cam.GetComponent<Camera>();
+        camController = referenceManagement.cam;
+        cam = camController.GetComponent<Camera>();
         switchImgObj = referenceManagement.switchImgObj;
         switchImgTransform = switchImgObj.GetComponent<RectTransform>();
         switchImg = switchImgObj.GetComponent<Image>();
@@ -44,29 +49,49 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         perceptionW = referenceManagement.switchViewWidth;
         perceptionH = referenceManagement.switchViewHeight;
         perceptionR = referenceManagement.switchViewRange;
+        allSwitchingBehaviours = referenceManagement.carManagement.GetAllSwitchingBehaviours();
     }
 
-    public void AddToAllSwitchingBehaviours(SwitchingBehaviour sb) {
-        allSwitchingBehaviours.Add(sb);
+    private void OnEnable() {
+        referenceManagement.carManagement.cameraChanged.AddListener(OnCameraChanged);
+        referenceManagement.carManagement.carsCreated.AddListener(OnCarsCreated);
+    }
+
+    private void OnDisable() {
+        referenceManagement.carManagement.cameraChanged.RemoveListener(OnCameraChanged);
+        referenceManagement.carManagement.carsCreated.RemoveListener(OnCarsCreated);
+
+    }
+
+    private void OnCarsCreated() {
+        carsCreated = true;
+        allSwitchingBehaviours = referenceManagement.carManagement.GetAllSwitchingBehaviours();
+    }
+
+    private void OnCameraChanged() {
+        cam = referenceManagement.cam.GetComponent<Camera>();
+        camController = cam.GetComponent<Camera1stPerson>();
     }
 
     private void SwitchToCar(SwitchingBehaviour newSB) {
         activeCar.SwitchOutOfCar();
         referenceManagement.cam.SwitchCar(newSB.camTranslateTarget.transform, newSB.camRotTarget.transform);
-        newSB.SwitchIntoCar();
+        newSB.SwitchIntoCar(camController);
     }
 
     public void SetUpInitialCar(SwitchingBehaviour initSB) {
-        Debug.Log("SetUpInitialCar");
         referenceManagement.cam.SwitchCar(initSB.camTranslateTarget.transform, initSB.camRotTarget.transform);
         initSB.isInitialCar = true;
-        initSB.SwitchIntoCar();
+        initSB.SwitchIntoCar(camController);
     }
 
     private void Update() {
-        SearchForCars();
 
-        if (GetInput("SwitchCar") != 0 && !hasSelectedCar) {
+        if (carsCreated) {
+            SearchForCars();
+        }
+
+        if (GetInput("SwitchCar") && !hasSelectedCar && canSelectCar) {
             if (markedCar != null) {
                 selectCarNow = true;
             }
@@ -168,6 +193,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         hasSelectedCar = true;
         selectedCar = markedCar;
         referenceManagement.selectedSwitchCar.Play();
+        canSelectCar = false;
     }
 
     private void DeselectCar() {
@@ -175,14 +201,36 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         hasSelectedCar = false;
     }
 
-    private void Switch() {
-        SwitchToCar(selectedCar);
-        DeselectCar();
-        referenceManagement.switchSound.Play();
+    private IEnumerator SelectCoolDown() {
+        while (!camController.IsInTargetRange) {
+            yield return new WaitForEndOfFrame();
+        }
+        canSelectCar = true;
     }
 
-    private float GetInput(string input) {
-        return referenceManagement.inputManagement.GetInput(input);
+    private void Switch() {
+        SwitchToCar(selectedCar);
+        activeCar = selectedCar;
+        DeselectCar();
+        referenceManagement.switchSound.Play();
+        selectedCar = null;
+        StartCoroutine(SelectCoolDown());
+    }
+
+    bool switchInUse = false;
+    private bool GetInput(string input) {
+        if (referenceManagement.inputManagement.GetInput(input) != 0) {
+            if (switchInUse == false) {
+                switchInUse = true;
+                return true;
+            }
+            else {
+                return false;
+            }
+        } else {
+            switchInUse = false;
+            return false;
+        }
     }
 
     private void OnFullBeatDetected() {
@@ -191,5 +239,9 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
     private void OnSubDBeatDetected() {
         //if (hasSelectedCar) Switch();
+    }
+
+    public void SetActiveCar(SwitchingBehaviour activeCar) {
+        this.activeCar = activeCar;
     }
 }
