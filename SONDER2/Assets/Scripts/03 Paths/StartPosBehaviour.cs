@@ -12,12 +12,16 @@ public class StartPosBehaviour : MonoBehaviour {
     private List<Vector3> startPosList;
 
     [SerializeField]
+    private List<Vector3> streetlightMarkers;
+
+    [SerializeField]
     private int initialPosIndex = -1;
 
     public int pathID;
 
     public StartPosBehaviour() {
         startPosList = new List<Vector3>();
+        streetlightMarkers = new List<Vector3>();
     }
 
 
@@ -25,12 +29,24 @@ public class StartPosBehaviour : MonoBehaviour {
         startPosList[index] = pos;
     }
 
-    public List<Vector3> GetList() {
+    public void MoveStreetlightMarker(int index, Vector3 pos) {
+        streetlightMarkers[index] = pos;
+    }
+
+    public List<Vector3> GetStartPosList() {
         return startPosList;
+    }
+
+    public List<Vector3> GetStreetlightMarkerList() {
+        return streetlightMarkers;
     }
 
     public void AddStartPos() {
         startPosList.Add(myPath.path.GetPointAtDistance(0));
+    }
+
+    public void AddStreetlightMarker() {
+        streetlightMarkers.Add(myPath.path.GetPointAtDistance(0));
     }
 
     public void DeleteStartPos(int i) {
@@ -38,6 +54,10 @@ public class StartPosBehaviour : MonoBehaviour {
         if (i == initialPosIndex) {
             initialPosIndex = -1;
         }
+    }
+
+    public void DeleteStreetlightMarker(int i) {
+        streetlightMarkers.RemoveAt(i);
     }
 
     public void MarkAsInitialPos(int i) {

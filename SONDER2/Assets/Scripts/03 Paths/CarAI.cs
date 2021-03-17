@@ -183,7 +183,12 @@ public class CarAI : MonoBehaviourReferenced {
         originalCarTransform = transform;
         originalCarRB = rb;
         originalCarAI = carAI;
-        if (isActiveCar) origCamTransform = carAI.cam.transform;
+        if (isActiveCar) {
+            origCamTransform = carAI.cam.transform;
+            switchingBehaviour.SetHeadlightsActiveCar();
+        } else {
+            switchingBehaviour.SetHeadlightsInactiveCar();
+        }
         isClone = true;
     }
 

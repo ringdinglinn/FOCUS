@@ -12,8 +12,6 @@ public class CarManagement : MonoBehaviourReferenced {
     List<SwitchingBehaviour> allSwitchingBehaviours = new List<SwitchingBehaviour>();
     List<CarAI> allCarAIs = new List<CarAI>();
 
-    List<CarAI> carClones = new List<CarAI>();
-
     public UnityEvent cameraChanged;
     public UnityEvent carsCreated;
 
@@ -39,11 +37,13 @@ public class CarManagement : MonoBehaviourReferenced {
         bool setInitial = false;
         for (int i = 0; i < allPathBehaviours.Count; i++) {
 
-            List<Vector3> startPosList = allPathBehaviours[i].GetStartPosBehaviour().GetList();
+            List<Vector3> startPosList = allPathBehaviours[i].GetStartPosBehaviour().GetStartPosList();
             int initPosIndex = allPathBehaviours[i].GetStartPosBehaviour().GetInitialPosIndex();
             PathCreator path = allPathBehaviours[i].GetPath();
 
             for (int j = 0; j < startPosList.Count; j++) {
+                // adjust start position
+                startPosList[j] = path.path.GetClosestPointOnPath(startPosList[j]);
 
                 // find start position
                 Vector3 pos = startPosList[j];

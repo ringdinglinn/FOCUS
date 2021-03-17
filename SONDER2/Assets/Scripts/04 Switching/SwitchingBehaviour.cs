@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using PathCreation;
 using VehicleBehaviour;
+using UnityEngine.Rendering.HighDefinition;
 
 
 public class SwitchingBehaviour : MonoBehaviourReferenced {
@@ -22,6 +23,11 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
 
     public GameObject camRotTarget;
     public GameObject camTranslateTarget;
+
+    public HDAdditionalLightData headlight1;
+    public HDAdditionalLightData headlight2;
+    private float activeCarVolumetric = 0.5f;
+    private float inactiveCarVolumetric = 3.5f;
 
     public int id;
 
@@ -46,12 +52,26 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         carAI.cam = cam;
         switchingManagement.activeCar = this;
         wheelVehicle.IsPlayer = true;
+
+        SetHeadlightsActiveCar();
     }
 
     public void SwitchOutOfCar() {
         carAI.SwitchOnAutopilot();
         carAI.cam = null;
         wheelVehicle.IsPlayer = false;
+
+        SetHeadlightsInactiveCar();
+    }
+
+    public void SetHeadlightsActiveCar() {
+        headlight1.volumetricDimmer = activeCarVolumetric;
+        headlight2.volumetricDimmer = activeCarVolumetric;
+    }
+
+    public void SetHeadlightsInactiveCar() {
+        headlight1.volumetricDimmer = inactiveCarVolumetric;
+        headlight2.volumetricDimmer = inactiveCarVolumetric;
     }
 
     public void ChangeColorToVisible() {

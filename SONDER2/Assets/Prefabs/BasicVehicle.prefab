@@ -5292,6 +5292,8 @@ MonoBehaviour:
   boxCollider: {fileID: 1918709712}
   camRotTarget: {fileID: 9162481712970016909}
   camTranslateTarget: {fileID: 2474092420525005858}
+  headlight1: {fileID: 7309495314784279257}
+  headlight2: {fileID: 8172697537446575392}
   id: 0
   isInitialCar: 0
 --- !u!114 &2449730331452780726
@@ -5309,7 +5311,8 @@ MonoBehaviour:
   referenceManagement: {fileID: 0}
   autopilotEnabled: 1
   started: 0
-  pathID: 0
+  id: 0
+  cam: {fileID: 0}
 --- !u!114 &114356753913500666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20100,7 +20103,7 @@ GameObject:
   - component: {fileID: 1540285574568265616}
   - component: {fileID: 8172697537446575392}
   m_Layer: 0
-  m_Name: Spot Light (1)
+  m_Name: Spot Light 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20507,7 +20510,7 @@ GameObject:
   - component: {fileID: 2704815416637232599}
   - component: {fileID: 7309495314784279257}
   m_Layer: 0
-  m_Name: Spot Light
+  m_Name: Spot Light 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21085,12 +21088,12 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 1ac7728d7094f411d82a22272558d44c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.001
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1ac7728d7094f411d82a22272558d44c,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.021
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1ac7728d7094f411d82a22272558d44c,
         type: 3}

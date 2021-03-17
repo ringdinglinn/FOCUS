@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using PathCreation;
+using PathCreation.Examples;
 
 public class PathBehaviour : MonoBehaviourReferenced {
 	private PathCreator path;
     private PathManagement pathManagement;
     private StartPosBehaviour startPosBehaviour;
+    private RoadMeshCreator roadMeshCreator;
 
     private int id;
     public int Id {
@@ -26,9 +28,13 @@ public class PathBehaviour : MonoBehaviourReferenced {
     private void OnEnable() {
         path = GetComponent<PathCreator>();
         startPosBehaviour = GetComponent<StartPosBehaviour>();
+        roadMeshCreator = GetComponent<RoadMeshCreator>();
         pathManagement = referenceManagement.pathManagement;
         pathManagement.AddToPaths(this);
-        if (startTunnel != null && endTunnel != null) MakeStartAndEndIdentical();
+        if (startTunnel != null && endTunnel != null) {
+            MakeStartAndEndIdentical();
+            roadMeshCreator.PathAdjusted();
+        }
     }
 
     private void Start() {

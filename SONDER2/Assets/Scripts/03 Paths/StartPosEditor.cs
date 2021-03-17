@@ -10,6 +10,7 @@ public class StartPosEditor : Editor {
 
     SerializedProperty startPosListSO;
     SerializedProperty initialPosIndexSO;
+    SerializedProperty streetlightMarkerListSO;
 
     private StartPosBehaviour startPosBehaviour;
     private PathCreator myPath;
@@ -17,6 +18,7 @@ public class StartPosEditor : Editor {
     private PathBehaviour pathBehaviour;
 
     private List<Vector3> startPosList = new List<Vector3>();
+    private List<Vector3> streetlightMarkers = new List<Vector3>();
     private Camera sceneCam;
 
     private float lineWidth = 2;
@@ -27,10 +29,12 @@ public class StartPosEditor : Editor {
 
     void OnEnable() {
         startPosBehaviour = (StartPosBehaviour)target;
-        startPosList = startPosBehaviour.GetList();
+        startPosList = startPosBehaviour.GetStartPosList();
+        streetlightMarkers = startPosBehaviour.GetStreetlightMarkerList();
         myPath = startPosBehaviour.myPath;
         startPosListSO = serializedObject.FindProperty("startPosList");
         initialPosIndexSO = serializedObject.FindProperty("initialPosIndex");
+        streetlightMarkerListSO = serializedObject.FindProperty("streetlightMarkers");
     }
 
     private static GUILayoutOption miniButtonWidth = GUILayout.Width(30f);
@@ -38,6 +42,9 @@ public class StartPosEditor : Editor {
     public override void OnInspectorGUI() {
 
         serializedObject.Update();
+
+        // -------- start pos gui ---------
+
         EditorGUILayout.PropertyField(initialPosIndexSO);
 
         for (int i = 0; i < startPosList.Count; i++) {
@@ -48,7 +55,7 @@ public class StartPosEditor : Editor {
                 startPosBehaviour.DeleteStartPos(i);
                 serializedObject.ApplyModifiedProperties();
                 if (myPath != null) {
-                    Draw();
+                    DrawStartPos();
                 }
             }
             if (GUILayout.Button($"★", miniButtonWidth)) {
@@ -56,7 +63,7 @@ public class StartPosEditor : Editor {
                 startPosBehaviour.MarkAsInitialPos(i);
                 serializedObject.ApplyModifiedProperties();
                 if (myPath != null) {
-                    Draw();
+                    DrawStartPos();
                 }
             }
             serializedObject.ApplyModifiedProperties();
@@ -67,9 +74,37 @@ public class StartPosEditor : Editor {
             Undo.RecordObject(startPosBehaviour, "Add Start Pos");
             startPosBehaviour.AddStartPos();
             if (myPath != null) {
-                Draw();
+                DrawStartPos();
             }
         }
+
+        // -------- streetlight marker gui ---------
+
+        for (int i = 0; i < streetlightMarkers.Count; i++) {
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.PropertyField(streetlightMarkerListSO.GetArrayElementAtIndex(i));
+            if (GUILayout.Button($"⊗", miniButtonWidth)) {
+                Undo.RecordObject(startPosBehaviour, "Delete Streetlight Marker");
+                startPosBehaviour.DeleteStreetlightMarker(i);
+                serializedObject.ApplyModifiedProperties();
+                if (myPath != null) {
+                    DrawStreetlightMarkers();
+                }
+            }
+
+            serializedObject.ApplyModifiedProperties();
+            EditorGUILayout.EndHorizontal();
+        }
+
+        if (GUILayout.Button("Add Streetlight Marker", GUILayout.Height(80))) {
+            Undo.RecordObject(startPosBehaviour, "Add Streetlight Marker");
+            startPosBehaviour.AddStreetlightMarker();
+            if (myPath != null) {
+                DrawStreetlightMarkers();
+            }
+        }
+
+        // --------- save changes --------
 
         if (GUI.changed) {
             EditorUtility.SetDirty(startPosBehaviour);
@@ -79,14 +114,15 @@ public class StartPosEditor : Editor {
 
     private void OnSceneGUI() {
         if (myPath != null) {
-            Draw();
+            DrawStartPos();
+            DrawStreetlightMarkers();
         }
         else {
             Debug.LogError("No Path Assigned To StartPosBehaviour");
         }
     }
 
-    private void Draw() {
+    private void DrawStartPos() {
         for (int i = 0; i < startPosList.Count; i++) {
             Vector3 pos = startPosList[i];
             Vector3 initPos = pos;
@@ -96,7 +132,7 @@ public class StartPosEditor : Editor {
             pos = myPath.path.GetClosestPointOnPath(pos);
             Handles.Label(pos, $"Start Pos {i}");
 
-            //line
+            // flag
             sceneCam = SceneView.lastActiveSceneView.camera;
             Vector3 screenPos = sceneCam.WorldToScreenPoint(pos);
             Rect rect1 = new Rect(screenPos.x / 2 - lineWidth / 2, (sceneCam.pixelHeight - screenPos.y) / 2 - lineHeight, lineWidth, lineHeight);
@@ -109,6 +145,22 @@ public class StartPosEditor : Editor {
             if (initPos != pos) {
                 Undo.RecordObject(startPosBehaviour, "Move Start Pos");
                 startPosBehaviour.MoveStartPos(i, pos);
+            }
+        }
+    }
+
+    private void DrawStreetlightMarkers() {
+        for (int i = 0; i < streetlightMarkers.Count; i++) {
+            Vector3 pos = streetlightMarkers[i];
+            Vector3 initPos = pos;
+            Handles.color = Color.white;
+            pos = Handles.FreeMoveHandle(pos, Quaternion.Euler(0, 0, 0), HandleUtility.GetHandleSize(new Vector3(0, 0, 0)) * 0.1f, Vector3.zero, Handles.RectangleHandleCap);
+            pos = myPath.path.GetClosestPointOnPath(pos);
+            Handles.Label(pos, $"Streetlight Marker {i}");
+
+            if (initPos != pos) {
+                Undo.RecordObject(startPosBehaviour, "Move Streetlight Marker");
+                startPosBehaviour.MoveStreetlightMarker(i, pos);
             }
         }
     }

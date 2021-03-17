@@ -32,6 +32,8 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
                     }
                 }
             } 
+        } else if (other.gameObject.CompareTag("Streetlight")) {
+            Debug.Log("Streetlight in Trigger");
         }
     }
 

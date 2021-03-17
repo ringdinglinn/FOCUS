@@ -28,6 +28,10 @@ namespace PathCreation.Examples {
             meshHolder = transform.Find(meshHolderName).gameObject != null ? transform.Find(meshHolderName).gameObject: null;
         }
 
+        public void PathAdjusted() {
+            PathUpdated();
+        }
+
         protected override void PathUpdated () {
             if (pathCreator != null) {
                 AssignMeshComponents ();
