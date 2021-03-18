@@ -132,11 +132,40 @@ public class CarAI : MonoBehaviourReferenced {
         if (!autopilotEnabled) {
             carManagement.ActiveCarHasReachedPortal(this);
         } else if (!inTunnelWithActiveCar){
-            Loop();
+            if (startTunnel != null) TunnelLoop();
+            else Loop();
         }
     }
 
     private void Loop() {
+        Vector3 vel = rb.velocity;
+        Vector3 dir0 = myPath.path.GetDirectionAtDistance(distOnPath);
+        float angle = Vector3.SignedAngle(dir0, vel, Vector3.up);
+
+        distOnPath = 2;
+        Vector3 pos = myPath.path.GetPointAtDistance(distOnPath);
+        Vector3 dir = myPath.path.GetDirectionAtDistance(distOnPath);
+        vel = RotatePointAroundPivot(vel, pos, angle);
+
+        rb.velocity = vel;
+        
+        transform.position = pos;
+        transform.rotation = Quaternion.LookRotation(dir);
+
+        prevPos = myPath.path.GetPointAtDistance(0);
+
+        float angle2 = Vector3.SignedAngle(transform.forward, myPath.path.GetPointAtDistance(distOnPath + steerTowardsDist, EndOfPathInstruction.Loop) - transform.position, Vector3.up);
+        wheelVehicle.InstantSetWheelAngle(angle2);
+    }
+
+    private Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot, float angle) {
+         Vector3  dir = point - pivot; // get point direction relative to pivot
+         dir = Quaternion.Euler(0,angle,0)* dir; // rotate it
+         point = dir + pivot; // calculate rotated point
+         return point; // return it
+    }
+
+private void TunnelLoop() {
         Vector3 pos = TransformPointToStart(transform.position);
         Vector3 dir = TransformDirectionToStart(transform.forward);
         Vector3 vel = TransformDirectionToStart(rb.velocity);

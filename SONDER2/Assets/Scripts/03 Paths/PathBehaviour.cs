@@ -25,6 +25,8 @@ public class PathBehaviour : MonoBehaviourReferenced {
 
     public int tunnelPoints = 0;
 
+    public bool autoSetUpTriggers;
+
     private void OnEnable() {
         path = GetComponent<PathCreator>();
         startPosBehaviour = GetComponent<StartPosBehaviour>();
@@ -40,6 +42,17 @@ public class PathBehaviour : MonoBehaviourReferenced {
     private void Start() {
         startTrigger = GetChildWithName(gameObject, "StartTrigger");
         endTrigger = GetChildWithName(gameObject, "EndTrigger");
+        if (autoSetUpTriggers) SetUpTriggers();
+    }
+
+    private void SetUpTriggers() {
+        PlaceTrigger(startTrigger, path.path.GetPointAtDistance(0), path.path.GetDirectionAtDistance(0));
+        PlaceTrigger(endTrigger, path.path.GetPointAtDistance(path.path.length - 0.1f), path.path.GetDirectionAtDistance(path.path.length - 0.1f));
+    }
+
+    private void PlaceTrigger(GameObject obj, Vector3 pos, Vector3 dir) {
+        obj.transform.position = pos;
+        obj.transform.rotation = Quaternion.LookRotation(dir);
     }
 
     private void MakeStartAndEndIdentical() {
