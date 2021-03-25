@@ -14,8 +14,6 @@ public class GearManagement : MonoBehaviourReferenced {
         get { return currentGear; }
     }
 
-    private bool[] gearsPressable = new bool[6];
-
     InputManagement inputManagement;
     CarManagement carManagement;
     GameObject gearTextGoalObj;
@@ -37,6 +35,8 @@ public class GearManagement : MonoBehaviourReferenced {
 
     EventInstance startGearShift;
     EventInstance stopGearShift;
+
+    private int queuedGearStopSounds = 0;
 
     private void OnEnable() {
         referenceManagement.beatDetector.bdOnBar.AddListener(OnBar);
@@ -78,44 +78,7 @@ public class GearManagement : MonoBehaviourReferenced {
         gearTextGoal.text = (i+1).ToString();
     }
 
-    private void GoalGearReached() {
-        Debug.Log("very good");
-    }
-
-    private void SetPressableGears() {
-        ResetPressableGears();
-        if (currentGear == 0) {
-            gearsPressable[1] = true;
-        } else if (currentGear == gearsPressable.Length - 1) {
-            gearsPressable[gearsPressable.Length - 2] = true;
-        } else {
-            for (int i = 1; i < gearsPressable.Length - 1; i++) {
-                gearsPressable[i - 1] = true;
-                gearsPressable[i + 1] = true;
-            }
-        }
-    }
-
-    private void ResetPressableGears() {
-        for (int i = 0; i < gearsPressable.Length; i++) {
-            gearsPressable[i] = false;
-        }
-    }
-
-    private void StartConfig() {
-        for (int i = 0; i < gearsPressable.Length; i++) {
-            gearsPressable[i] = true;
-        }
-        clutchDown = true;
-    }
-
     public void SetCurrentGear(int i) {
-        //if (gearsPressable[i] && clutchDown) {
-        //currentGear = i;
-        //SetPressableGears();
-        //gearTextCurrent.text = (i + 1).ToString();
-        //if (currentGear == goalGear) GoalGearReached();
-        //}
         currentGear = i;
         DisplayGear();
     }
@@ -161,11 +124,6 @@ public class GearManagement : MonoBehaviourReferenced {
     }
 
     private void Update() {
-        //for (int i = 0; i < 6; i++) {
-        //    if (inputManagement.GetInputBool(Inputs.gears[i])) {
-        //        SetCurrentGear(i);
-        //    }
-        //}
         clutchDown = inputManagement.GetInputBool(Inputs.clutch);
         if (inputManagement.GetInputButton(Inputs.up)) ChangeGear(-0.5f);
         if (inputManagement.GetInputButton(Inputs.down)) ChangeGear(0.5f);
