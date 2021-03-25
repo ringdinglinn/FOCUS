@@ -4,6 +4,7 @@ using UnityEngine;
 using PathCreation;
 using VehicleBehaviour;
 using UnityEngine.Rendering.HighDefinition;
+using TMPro;
 
 
 public class SwitchingBehaviour : MonoBehaviourReferenced {
@@ -33,6 +34,8 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
 
     public bool isInitialCar = false;
 
+    public TMP_Text gearText;
+
     private void OnEnable() {
         CollectReferences();
     }
@@ -52,6 +55,7 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         carAI.cam = cam;
         switchingManagement.activeCar = this;
         wheelVehicle.IsPlayer = true;
+        gearText.gameObject.SetActive(switchingManagement.HasMarkedCar);
 
         SetHeadlightsActiveCar();
     }
@@ -60,6 +64,7 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         carAI.SwitchOnAutopilot();
         carAI.cam = null;
         wheelVehicle.IsPlayer = false;
+        gearText.gameObject.SetActive(false);
 
         SetHeadlightsInactiveCar();
     }
@@ -86,5 +91,9 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         mats[0] = windowMat;
         mats[1] = invisibleMat;
         meshRenderer.materials = mats;
+    }
+
+    public int GetGear() {
+        return carAI.CurrentGear;
     }
 }

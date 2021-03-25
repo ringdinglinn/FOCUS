@@ -5,13 +5,14 @@ using UnityEngine;
 public class BeatDetector : MonoBehaviourReferenced {
 	private static BeatDetector BDInstance;
 	private float bpm;
-	private float beatInterval, beatTimer, beatIntervalSubD, beatTimerSubD;
+	private float beatInterval, beatTimer, beatIntervalSubD, beatTimerSubD, barInterval, barTimer;
     private float subD;
-	public bool beatFull, beatSubD;
-	public int beatCountFull, beatCountSubD;
+	public bool beatFull, beatSubD, bar;
+	public int beatCountFull, beatCountSubD, barCount;
 
     public BDOnBeatEventHandler bdOnBeatFull;
     public BDOnBeatEventHandler bdOnBeatSubD;
+    public BDOnBeatEventHandler bdOnBar;
 
     protected override void Awake() {
 		base.Awake();
@@ -49,6 +50,17 @@ public class BeatDetector : MonoBehaviourReferenced {
             beatSubD = true;
             beatCountSubD++;
             bdOnBeatSubD.Invoke();
+        }
+
+        // bar
+        bar = false;
+        barInterval = beatInterval * 4;
+        barTimer += Time.deltaTime;
+        if (barTimer >= barInterval) {
+            barTimer -= barInterval;
+            bar = true;
+            barCount++;
+            bdOnBar.Invoke();
         }
     }
 }

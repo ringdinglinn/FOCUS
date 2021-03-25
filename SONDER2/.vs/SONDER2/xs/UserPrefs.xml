@@ -1,37 +1,18 @@
 ﻿<Properties StartupConfiguration="{281EEECF-89B9-6D0B-978A-5FDC6B8E6CBA}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/03 Paths/CarAI.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/06 Cars/GearManagement.cs">
     <Files>
-      <File FileName="Assets/Scripts/00 Management/CarManagement.cs" Line="40" Column="101" />
-      <File FileName="Assets/Scripts/03 Paths/PathManagement.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/03 Paths/PathBehaviour.cs" Line="39" Column="1" />
-      <File FileName="Assets/PathCreator/Core/Runtime/Objects/BezierPath.cs" Line="1" Column="1" />
-      <File FileName="Assets/PathCreator/Core/Runtime/Objects/PathCreator.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/03 Paths/CarAI.cs" Line="155" Column="53" />
-      <File FileName="Assets/Scripts/01 Camera/Camera1stPerson.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/04 Switching/SwitchingManagement.cs" Line="73" Column="61" />
-      <File FileName="Assets/Scripts/04 Switching/SwitchingBehaviour.cs" Line="64" Column="36" />
-      <File FileName="Assets/Lib/Arcade_Car_Physics/Scripts/WheelVehicle.cs" />
-      <File FileName="Assets/Scripts/03 Paths/TunnelBehaviour.cs" Line="36" Column="18" />
-      <File FileName="Assets/Scripts/03 Paths/StartPosEditor.cs" Line="77" Column="32" />
-      <File FileName="Assets/Scripts/03 Paths/StartPosBehaviour.cs" Line="15" Column="45" />
-      <File FileName="Assets/Scripts/00 Management/ReferenceManagement.cs" Line="1" Column="1" />
-      <File FileName="Assets/PathCreator/Core/Editor/PathEditor.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/00 Management/InputManagement.cs" />
-      <File FileName="Assets/PathCreator/Examples/Scripts/RoadMeshCreator.cs" Line="31" Column="33" />
-      <File FileName="Assets/PathCreator/Examples/Scripts/PathSceneTool.cs" Line="29" Column="44" />
-      <File FileName="Assets/Scripts/03 Paths/StreetlightPlacer.cs" Line="50" Column="31" />
+      <File FileName="Assets/Scripts/00 Management/ReferenceManagement.cs" Line="22" Column="42" />
+      <File FileName="Assets/Scripts/06 Cars/CarAI.cs" Line="310" Column="30" />
+      <File FileName="Assets/Scripts/04 Switching/SwitchingBehaviour.cs" Line="99" Column="2" />
+      <File FileName="Assets/Scripts/04 Switching/SwitchingManagement.cs" />
+      <File FileName="Assets/Scripts/00 Management/CarManagement.cs" />
+      <File FileName="Assets/Scripts/00 Management/MusicManagement.cs" Line="68" Column="52" />
+      <File FileName="Assets/Scripts/06 Cars/GearManagement.cs" Line="1" Column="1" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="SONDER2" expanded="True" selected="True" />
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="036d0dd4-0155-4b52-8ed1-8bf71a1b6a34" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="4eb49ddc-3e39-4243-93c2-86a2a5eac086" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/linn/Documents/01 ZHdK/Semester VI/FOCUS/_ Repo/SONDER2/Assets/Scripts/03 Paths/StartPosEditor.cs" relfile="Assets/Scripts/03 Paths/StartPosEditor.cs" line="15" column="1" />

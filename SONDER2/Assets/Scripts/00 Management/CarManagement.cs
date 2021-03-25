@@ -70,6 +70,7 @@ public class CarManagement : MonoBehaviourReferenced {
                 if (!setInitial && j == initPosIndex) {
                     setInitial = true;
                     carAI.cam = referenceManagement.cam;
+                    carAI.SetUpInititalCar();
                     referenceManagement.switchingManagement.SetUpInitialCar(sb);
                 }
             }
@@ -119,5 +120,15 @@ public class CarManagement : MonoBehaviourReferenced {
             Destroy(oldCar.cam.gameObject);
         }
         Destroy(oldCar.gameObject);
+    }
+
+    public void ActiveCarGearChanged(int gear) {
+        for (int i = 0; i < allCarAIs.Count; i++) {
+            if (allCarAIs[i].CurrentGear == gear && switchingManagement.MarkedCar != allCarAIs[i].GetSwitchingBehaviour()) {
+                int newGear = Random.Range(1, 6);
+                if (newGear >= gear) newGear++;
+                allCarAIs[i].SetGear(newGear);
+            }
+        }
     }
 }

@@ -2,13 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class SwitchingManagement : MonoBehaviourReferenced {
 
     public List<SwitchingBehaviour> allSwitchingBehaviours;
+    private GearManagement gearManagement;
     public SwitchingBehaviour activeCar;
     private SwitchingBehaviour selectedCar;
     private SwitchingBehaviour markedCar;
+    public SwitchingBehaviour MarkedCar {
+        get {   return markedCar; }
+        set {   if (markedCar != value) MarkedCarChanged(value);
+                markedCar = value;
+        }
+    }
 
     private Camera cam;
     private Camera1stPerson camController;
@@ -29,11 +37,19 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
     private bool selectCarNow = false;
 
+    private bool hasMarkedCar = false;
+    public bool HasMarkedCar {
+        get { return hasMarkedCar; }
+        set { if (value != hasMarkedCar) MarkedCarValueChanged(value);
+            hasMarkedCar = value;
+        }
+    }
     private bool hasSelectedCar = false;
     private bool canSelectCar = true;
 
     bool carsCreated;
 
+    public UnityEvent CarSwitchedEvent;
 
     private void Start() {
         BeatDetector beatDetector = referenceManagement.beatDetector;
@@ -50,6 +66,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         perceptionH = referenceManagement.switchViewHeight;
         perceptionR = referenceManagement.switchViewRange;
         allSwitchingBehaviours = referenceManagement.carManagement.GetAllSwitchingBehaviours();
+        gearManagement = referenceManagement.gearManagement;
     }
 
     private void OnEnable() {
@@ -91,8 +108,12 @@ public class SwitchingManagement : MonoBehaviourReferenced {
             SearchForCars();
         }
 
-        if (GetInput("SwitchCar") && !hasSelectedCar && canSelectCar) {
-            if (markedCar != null) {
+        if (HasMarkedCar && !hasSelectedCar) {
+            HandleSwitchGUI(CarScreenPos(MarkedCar), Color.white);
+        }
+
+        if (/*GetInput("SwitchCar") && */ !hasSelectedCar && canSelectCar) {
+            if (HasMarkedCar && MarkedCar.GetGear() == gearManagement.CurrentGear) {
                 selectCarNow = true;
             }
         }
@@ -101,18 +122,11 @@ public class SwitchingManagement : MonoBehaviourReferenced {
             SelectCar();
             selectCarNow = false;
         }
-
-        if (hasSelectedCar) {
-            switchImgObj.SetActive(true);
-            HandleSwitchGUI(CarScreenPos(selectedCar), Color.white);
-        } else {
-            switchImgObj.SetActive(false);
-        }
     }
 
     private void SearchForCars() {
         SBsInFrame.Clear();
-        markedCar = null;
+        MarkedCar = null;
         // 1 Draw Perception Frame
         float w = cam.pixelWidth * perceptionW;
         float h = cam.pixelHeight * perceptionH;
@@ -141,10 +155,22 @@ public class SwitchingManagement : MonoBehaviourReferenced {
                     //evaluate closest car
                     if (scrPos[4,0] <= dist) {
                         dist = scrPos[4, 0];
-                        markedCar = allSwitchingBehaviours[i];
+                        MarkedCar = allSwitchingBehaviours[i];
                     }
                 }
             }
+        }
+        HasMarkedCar = markedCar != null ? true : false;
+    }
+
+    private void MarkedCarValueChanged(bool b) {
+        switchImgObj.SetActive(b);
+        activeCar.gearText.gameObject.SetActive(b);
+    }
+
+    private void MarkedCarChanged(SwitchingBehaviour sb) {
+        if (sb != null) {
+            activeCar.gearText.text = sb.GetGear().ToString();
         }
     }
 
@@ -215,6 +241,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         referenceManagement.switchSound.Play();
         selectedCar = null;
         StartCoroutine(SelectCoolDown());
+        CarSwitchedEvent.Invoke();
     }
 
     bool switchInUse = false;
