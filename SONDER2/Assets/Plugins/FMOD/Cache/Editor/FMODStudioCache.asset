@@ -1,5 +1,74 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8585984055295137872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/07 flashing/drum
+  m_EditorClassIdentifier: 
+  Path: event:/07 flashing/drum
+  guid: 6ec6171c72aacf48856d08784f724dac
+  Banks:
+  - {fileID: 6439672478953253675}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 500
+--- !u!114 &-3254684972366380190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/03 gear shifting/start
+  m_EditorClassIdentifier: 
+  Path: event:/03 gear shifting/start
+  guid: 14dd156788b5c84ebd98ce929a16e8bb
+  Banks:
+  - {fileID: 6439672478953253675}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 500
+--- !u!114 &-1659560387250991972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/07 flashing/headlight-on
+  m_EditorClassIdentifier: 
+  Path: event:/07 flashing/headlight-on
+  guid: d1200d6816949046b5e9bf24d56df9f3
+  Banks:
+  - {fileID: 6439672478953253675}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 2389
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17,13 +86,38 @@ MonoBehaviour:
   - {fileID: 6439672478953253675}
   EditorEvents:
   - {fileID: 5325216400067029388}
+  - {fileID: 3632914375190064057}
+  - {fileID: -3254684972366380190}
   EditorParameters: []
   MasterBanks:
   - {fileID: 6439672478953253675}
   StringsBanks:
   - {fileID: 8796192020974241982}
-  stringsBankWriteTime: 637522632930000000
+  stringsBankWriteTime: 637523757320000000
   cacheVersion: 6
+--- !u!114 &3632914375190064057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/03 gear shifting/stop
+  m_EditorClassIdentifier: 
+  Path: event:/03 gear shifting/stop
+  guid: 051951d07e2f214a894e1627283788a0
+  Banks:
+  - {fileID: 6439672478953253675}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 1020
 --- !u!114 &5325216400067029388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42,11 +136,11 @@ MonoBehaviour:
   - {fileID: 6439672478953253675}
   IsStream: 1
   Is3D: 0
-  IsOneShot: 1
+  IsOneShot: 0
   Parameters: []
   MinDistance: 0
   MaxDistance: 0
-  Length: 98822
+  Length: 194920
 --- !u!114 &6439672478953253675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,10 +156,32 @@ MonoBehaviour:
   Path: ../../04 Sound/FMOD/FOCUS/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637522632930000000
+  lastModified: 637523757320000000
   LoadResult: 0
   FileSizes: []
   Exists: 1
+--- !u!114 &6547832788413418032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/03 gear shifting/drum
+  m_EditorClassIdentifier: 
+  Path: event:/03 gear shifting/drum
+  guid: 522016c9892f984aa3b098fb2878a069
+  Banks: []
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 1367
 --- !u!114 &8796192020974241982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,9 +197,9 @@ MonoBehaviour:
   Path: ../../04 Sound/FMOD/FOCUS/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637522632930000000
+  lastModified: 637523757320000000
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 742
+    Value: 952
   Exists: 1

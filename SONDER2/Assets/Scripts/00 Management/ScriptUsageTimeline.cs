@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using UnityEngine;
 
-class ScriptUsageTimeline : MonoBehaviour {
+class ScriptUsageTimeline : MonoBehaviourReferenced {
     // Variables that are modified in the callback need to be part of a seperate class.
     // This class needs to be 'blittable' otherwise it can't be pinned in memory.
     [StructLayout(LayoutKind.Sequential)]
@@ -17,14 +17,11 @@ class ScriptUsageTimeline : MonoBehaviour {
     FMOD.Studio.EVENT_CALLBACK beatCallback;
     FMOD.Studio.EventInstance musicInstance;
 
-    [FMODUnity.EventRef]
-    public string track1name = "";
-
     FMOD.Studio.EventInstance track1;
 
     void Start() {
 
-        track1 = FMODUnity.RuntimeManager.CreateInstance(track1name);
+        track1 = FMODUnity.RuntimeManager.CreateInstance(referenceManagement.track1);
 
         timelineInfo = new TimelineInfo();
 
@@ -42,9 +39,9 @@ class ScriptUsageTimeline : MonoBehaviour {
     }
 
     void OnDestroy() {
-        musicInstance.setUserData(IntPtr.Zero);
-        musicInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-        musicInstance.release();
+        track1.setUserData(IntPtr.Zero);
+        track1.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        track1.release();
         timelineHandle.Free();
     }
 
@@ -66,13 +63,11 @@ class ScriptUsageTimeline : MonoBehaviour {
                 case FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_BEAT: {
                         var parameter = (FMOD.Studio.TIMELINE_BEAT_PROPERTIES)Marshal.PtrToStructure(parameterPtr, typeof(FMOD.Studio.TIMELINE_BEAT_PROPERTIES));
                         timelineInfo.currentMusicBar = parameter.bar;
-                        Debug.Log($"currentMusicBar = {parameter.bar}");
                     }
                     break;
                 case FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_MARKER: {
                         var parameter = (FMOD.Studio.TIMELINE_MARKER_PROPERTIES)Marshal.PtrToStructure(parameterPtr, typeof(FMOD.Studio.TIMELINE_MARKER_PROPERTIES));
                         timelineInfo.lastMarker = parameter.name;
-                        Debug.Log($"lastMarker = {(string)parameter.name}");
                     }
                     break;
             }

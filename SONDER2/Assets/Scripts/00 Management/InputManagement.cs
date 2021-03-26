@@ -8,8 +8,6 @@ public class InputManagement : MonoBehaviourReferenced {
     [SerializeField] private int playerID = 0;
     [SerializeField] private Player player;
 
-
-
     private void Start() {
         player = ReInput.players.GetPlayer("SYSTEM");
     }
@@ -39,6 +37,7 @@ public static class Inputs {
     public static string left = "Left";
     public static string down = "Down";
     public static string right = "Right";
+    public static string flash = "Flash";
 
     public static string[] gears = { gear0, gear1, gear2, gear3, gear4, gear5 };
     public static string[] directions = { up, left, down, right };

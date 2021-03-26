@@ -6,7 +6,7 @@
 [LOG] OutputCoreAudio::init                    : Maximum hardware read size: 1024 samples, Software buffer size: 512 samples, Number of software buffers: 4.
 [LOG] Thread::initThread                       : Init FMOD stream thread. Affinity: 0x8000000000000003, Priority: 0xFFFF7FFB, Stack Size: 98304, Semaphore: No, Sleep Time: 10, Looping: Yes.
 [LOG] Thread::initThread                       : Init FMOD mixer thread. Affinity: 0x8000000000000001, Priority: 0xFFFF7FFA, Stack Size: 81920, Semaphore: Yes, Sleep Time: 0, Looping: Yes.
-[LOG] AsyncManager::init                       : manager 0x7fd00cd46008 isAsync 0 updatePeriod 0.02
+[LOG] AsyncManager::init                       : manager 0x7fa66e3b8e08 isAsync 0 updatePeriod 0.02
 [LOG] AsyncManager::init                       : done
 [LOG] PlaybackSystem::init                     : 
 [LOG] Thread::initThread                       : Init FMOD Studio sample load thread. Affinity: 0x8000000000000003, Priority: 0xFFFF7FFD, Stack Size: 98304, Semaphore: No, Sleep Time: 1, Looping: No.
@@ -15,11 +15,72 @@
 [LOG] Manager::init                            : done.
 [LOG] Manager::readBank                        : fileversion = 125, compatVersion = 119 (oldest = 44, newest = 135)
 [LOG] Manager::readBank                        : fileversion = 125, compatVersion = 119 (oldest = 44, newest = 135)
+[LOG] SoundI::release                          : focus-track3 (0x7fa68c5ed418)
+[LOG] SoundI::release                          :     focus-track3 (0x7fa64fc8a048)
+[LOG] SoundI::release                          :     focus-track3 (0x7fa64fc9f028)
+[LOG] SoundI::release                          :  (0x7fa66fc79a18)
+[LOG] SoundI::release                          :     gear-stop_01 (0x7fa66fc47558)
+[LOG] SoundI::release                          :  (0x7fa66ec1e0d8)
+[LOG] SoundI::release                          :     gear-stop_02 (0x7fa64eff1868)
+[LOG] SoundI::release                          :  (0x7fa65ce29798)
+[LOG] SoundI::release                          :     gear-stop_03 (0x7fa64f2600b8)
+[LOG] SoundI::release                          :  (0x7fa68d39ad48)
+[LOG] SoundI::release                          :     gear-stop_04 (0x7fa68eef7488)
+[LOG] SoundI::release                          :  (0x7fa66fc6cd78)
+[LOG] SoundI::release                          :     gear-stop_05 (0x7fa66fcefe88)
+[LOG] SoundI::release                          :  (0x7fa66fc16ef8)
+[LOG] SoundI::release                          :     gear-stop_06 (0x7fa66fcbc728)
+[LOG] SoundI::release                          :  (0x7fa66fc1dba8)
+[LOG] SoundI::release                          :     gear-stop_07 (0x7fa66fca0268)
+[LOG] SoundI::release                          :  (0x7fa68eec3638)
+[LOG] SoundI::release                          :     gear-stop_08 (0x7fa66ef9c818)
+[LOG] SoundI::release                          :  (0x7fa66fc4a988)
+[LOG] SoundI::release                          :     gear-stop_09 (0x7fa66fc9e028)
+[LOG] SoundI::release                          :  (0x7fa68a26c9b8)
+[LOG] SoundI::release                          :     gear-stop_10 (0x7fa68a217158)
+[LOG] SoundI::release                          :  (0x7fa65cfdbd18)
+[LOG] SoundI::release                          :     gear-stop_11 (0x7fa68ee93cc8)
+[LOG] SoundI::release                          :  (0x7fa68d3e9e48)
+[LOG] SoundI::release                          :     gear-stop_12 (0x7fa65cfd1678)
+[LOG] SoundI::release                          :  (0x7fa64f24fa28)
+[LOG] SoundI::release                          :     gear-stop_13 (0x7fa66fc09848)
+[LOG] SoundI::release                          :  (0x7fa68d3e30b8)
+[LOG] SoundI::release                          :     gear-stop_14 (0x7fa68eef4b78)
+[LOG] SoundI::release                          :  (0x7fa66fc069a8)
+[LOG] SoundI::release                          :     gear-stop_15 (0x7fa66fceca28)
+[LOG] SoundI::release                          :  (0x7fa66fc3f568)
+[LOG] SoundI::release                          :     gear-stop_16 (0x7fa66fcacfd8)
+[LOG] SoundI::release                          :  (0x7fa66effce98)
+[LOG] SoundI::release                          :     gear-start_01 (0x7fa65cf64fd8)
+[LOG] SoundI::release                          :  (0x7fa6fd750eb8)
+[LOG] SoundI::release                          :     gear-start_02 (0x7fa66fc37688)
+[LOG] SoundI::release                          :  (0x7fa66fc23248)
+[LOG] SoundI::release                          :     gear-start_03 (0x7fa65cffbb58)
+[LOG] SoundI::release                          :  (0x7fa64efb1d88)
+[LOG] SoundI::release                          :     gear-start_04 (0x7fa68eefab68)
+[LOG] SoundI::release                          :  (0x7fa65cf605f8)
+[LOG] SoundI::release                          :     gear-start_05 (0x7fa68a2061a8)
+[LOG] SoundI::release                          :  (0x7fa68a2ab748)
+[LOG] SoundI::release                          :     gear-start_06 (0x7fa68d3c5e18)
+[LOG] SoundI::release                          :  (0x7fa68a2d9908)
+[LOG] SoundI::release                          :     gear-start_07 (0x7fa68a2f7a88)
+[LOG] SoundI::release                          :  (0x7fa65ca17168)
+[LOG] SoundI::release                          :     gear-drum_1 (0x7fa64f2225b8)
+[LOG] SoundI::release                          :  (0x7fa66ef0d568)
+[LOG] SoundI::release                          :     flashing_headlight-on_1 (0x7fa65cff79f8)
+[LOG] Thread::callback                         : FMOD Studio update thread finished.
+[LOG] Thread::callback                         : FMOD Studio bank load thread finished.
+[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
+[LOG] Thread::callback                         : FMOD Studio sample load thread finished.
+[LOG] LiveUpdate::release                      : 
+[LOG] LiveUpdate::reset                        : Reset connection (reason Disconnected)
+[LOG] Thread::callback                         : FMOD stream thread finished.
+[LOG] Thread::callback                         : FMOD mixer thread finished.
+[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
+[LOG] SystemI::close                           : Closed.
 [LOG] Manager::readBank                        : fileversion = 125, compatVersion = 119 (oldest = 44, newest = 135)
 [LOG] Manager::readBank                        : fileversion = 125, compatVersion = 119 (oldest = 44, newest = 135)
 [LOG] Manager::readBank                        : fileversion = 125, compatVersion = 119 (oldest = 44, newest = 135)
-[LOG] Manager::readBank                        : fileversion = 125, compatVersion = 119 (oldest = 44, newest = 135)
-[LOG] PlaybackSystem::acquireMasterBus         : Setting master channel group format to 6
 [LOG] Thread::callback                         : FMOD Studio bank load thread finished.
 [LOG] Thread::callback                         : FMOD Studio sample load thread finished.
 [LOG] LiveUpdate::release                      : 
@@ -27,3 +88,5 @@
 [LOG] Thread::callback                         : FMOD stream thread finished.
 [LOG] Thread::callback                         : FMOD mixer thread finished.
 [LOG] SystemI::close                           : Closed.
+[LOG] Thread::callback                         : FMOD nonblocking thread (0) finished.
+[LOG] Thread::callback                         : FMOD file thread finished.

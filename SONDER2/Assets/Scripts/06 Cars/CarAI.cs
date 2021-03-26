@@ -149,7 +149,7 @@ public class CarAI : MonoBehaviourReferenced {
     #region -------------------------------------------------- GEARS -------------------------------------------------------
 
     private void SelectRandomGear() {
-        currentGear = Random.Range(1, 7);
+        currentGear = Random.Range(2, 7);
     }
 
     public void SetGear(int gear) {

@@ -20,6 +20,7 @@ public class GearManagement : MonoBehaviourReferenced {
     TMP_Text gearTextGoal;
     GameObject gearTextCurrentObj;
     TMP_Text gearTextCurrent;
+    BeatDetector beatDetector;
 
     private int barCounter = 0;
     private int gearInterval = 3;
@@ -37,19 +38,22 @@ public class GearManagement : MonoBehaviourReferenced {
     EventInstance stopGearShift;
 
     private int queuedGearStopSounds = 0;
+    private float queueSoundProbability = 1f;
 
     private void OnEnable() {
         referenceManagement.beatDetector.bdOnBar.AddListener(OnBar);
+        referenceManagement.beatDetector.bdOnBeatFull.AddListener(OnBeat);
+        referenceManagement.beatDetector.bdOnBeatSubD.AddListener(OnSubBeat);
         inputManagement = referenceManagement.inputManagement;
         carManagement = referenceManagement.carManagement;
+        beatDetector = referenceManagement.beatDetector;
         gearTextGoalObj = referenceManagement.gearTextGoalObj;
         gearTextGoal = gearTextGoalObj.GetComponent<TMP_Text>();
         gearTextCurrentObj = referenceManagement.gearTextCurrentObj;
         gearTextCurrent = gearTextCurrentObj.GetComponent<TMP_Text>();
         gearSprites = referenceManagement.gearSprites;
         gearImage = referenceManagement.gearImage;
-        StartConfig();
-        SetCurrentGear(0);
+        SetCurrentGear(1);
         SetRandomGoalGear();
         clutchDown = false;
 
@@ -59,6 +63,8 @@ public class GearManagement : MonoBehaviourReferenced {
 
     private void OnDisable() {
         referenceManagement.beatDetector.bdOnBar.RemoveListener(OnBar);
+        referenceManagement.beatDetector.bdOnBeatFull.RemoveListener(OnBeat);
+        referenceManagement.beatDetector.bdOnBeatSubD.RemoveListener(OnSubBeat);
     }
 
     private void OnBar() {
@@ -67,6 +73,13 @@ public class GearManagement : MonoBehaviourReferenced {
             barCounter = 0;
             SetRandomGoalGear();
         }
+    }
+
+    private void OnBeat() {
+    }
+
+    private void OnSubBeat() {
+        //PlayQueuedStopGearSound();
     }
 
     private void SetRandomGoalGear() {
@@ -78,22 +91,29 @@ public class GearManagement : MonoBehaviourReferenced {
         gearTextGoal.text = (i+1).ToString();
     }
 
-    public void SetCurrentGear(int i) {
+    public void SetCurrentGear(float i) {
+        i = Mathf.Clamp(i,1,6);
         currentGear = i;
         DisplayGear();
+        CheckIfFullGear();
+    }
+
+    private void InstantChangeGear(float a) {
+        PlayStartGearSound();
+        if (clutchDown && !gearCoolDown) {
+            ChangeGear(a);
+            StartCoroutine(GearCoolDown());
+            PlayStopGearSound();
+        }
     }
 
     private void ChangeGear(float a) {
-        if (clutchDown && !gearCoolDown) {
-            if (currentGear % 2f == 0 && a == 0.5f) return;
-            if (currentGear % 2f == 1 && a == -0.5f) return;
-            if ((currentGear % 2f != 1.5f && currentGear % 2 != 0.5f) && (a == 2 || a == -2f)) return;
-            currentGear += a;
-            currentGear = Mathf.Clamp(currentGear, 1f, 6f);
-            StartCoroutine(GearCoolDown());
-            DisplayGear();
-            CheckIfFullGear();
-        }
+        if (currentGear % 2f == 0 && a == 0.5f) return;
+        if (currentGear % 2f == 1 && a == -0.5f) return;
+        if ((currentGear % 2f != 1.5f && currentGear % 2 != 0.5f) && (a == 2 || a == -2f)) return;
+        SetCurrentGear(currentGear + a);
+        DisplayGear();
+        //QueueStopGearSound();
     }
 
     private void DisplayGear() {
@@ -120,14 +140,34 @@ public class GearManagement : MonoBehaviourReferenced {
         gearCoolDown = true;
         yield return new WaitForSeconds(0.2f);
         gearCoolDown = false;
-
     }
 
     private void Update() {
         clutchDown = inputManagement.GetInputBool(Inputs.clutch);
-        if (inputManagement.GetInputButton(Inputs.up)) ChangeGear(-0.5f);
-        if (inputManagement.GetInputButton(Inputs.down)) ChangeGear(0.5f);
-        if (inputManagement.GetInputButton(Inputs.left)) ChangeGear(-2f);
-        if (inputManagement.GetInputButton(Inputs.right)) ChangeGear(2f);
+        if (inputManagement.GetInputButton(Inputs.up)) InstantChangeGear(-0.5f);
+        if (inputManagement.GetInputButton(Inputs.down)) InstantChangeGear(0.5f);
+        if (inputManagement.GetInputButton(Inputs.left)) InstantChangeGear(-2f);
+        if (inputManagement.GetInputButton(Inputs.right)) InstantChangeGear(2f);
+    }
+
+    private void PlayStartGearSound() {
+        //startGearShift.start();
+    }
+
+    private void QueueStopGearSound() {
+        if (Random.Range(0f,1f) <= queueSoundProbability) {
+            queuedGearStopSounds++;
+        }
+    }
+
+    private void PlayQueuedStopGearSound() {
+        if (queuedGearStopSounds > 0) {
+            stopGearShift.start();
+            queuedGearStopSounds--;
+        }
+    }
+
+    public void PlayStopGearSound() {
+        //stopGearShift.start();
     }
 }

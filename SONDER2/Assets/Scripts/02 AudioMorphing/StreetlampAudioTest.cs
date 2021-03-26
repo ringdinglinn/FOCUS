@@ -18,27 +18,15 @@ public class StreetlampAudioTest : MonoBehaviourReferenced {
         beatDetector.bdOnBeatFull.AddListener(OnFullBeatDetected);
         beatDetector.bdOnBeatSubD.AddListener(OnSubDBeatDetected);
         myLight = GetComponentInChildren<Light>();
-        //onSubBeat = Random.Range(0f, 1f) <= 0.66f ? true : false;
     }
 
     void OnFullBeatDetected() {
         if (Random.Range(0f, 1f) <= p) {
             Flicker();
         }
-
-        //if (!onSubBeat) {
-        //    Flicker();
-        //}
     }
 
     void OnSubDBeatDetected() {
-        //if (Random.Range(0f, 1f) <= p) {
-        //    Flicker();
-        //}
-
-        //if (onSubBeat) {
-        //    Flicker();
-        //}
     }
 
     void Flicker() {

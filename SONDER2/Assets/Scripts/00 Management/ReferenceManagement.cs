@@ -31,6 +31,7 @@ public class ReferenceManagement : MonoBehaviour
     public List<Material> treeAudioMats;
     [SerializeField] private float BPM;
     [SerializeField] private float BeatSubdivisions;
+    [SerializeField] private float BeatWindow;
 
     public float GetBPM() {
         return BPM;
@@ -38,6 +39,10 @@ public class ReferenceManagement : MonoBehaviour
 
     public float GetSubdivisions() {
         return BeatSubdivisions;
+    }
+
+    public float GetBeatWindow() {
+        return BeatWindow;
     }
 
     [Header("Prefabs")]
@@ -51,6 +56,7 @@ public class ReferenceManagement : MonoBehaviour
     public GameObject gearTextGoalObj;
     public GameObject gearTextCurrentObj;
     public Image gearImage;
+    public GameObject beatIndicatorObj;
     public List<Sprite> gearSprites;
 
     [Header("Sounds")]
@@ -60,8 +66,15 @@ public class ReferenceManagement : MonoBehaviour
     public VoiceClipBehaviour voiceClipBehaviour;
 
     [FMODUnity.EventRef]
+    public string track1;
+    [FMODUnity.EventRef]
     public string gearShiftStart;
+    [FMODUnity.EventRef]
     public string gearShiftStop;
+    [FMODUnity.EventRef]
+    public string headlightsFlash;
+    [FMODUnity.EventRef]
+    public string playerDrum;
 
     [Header("Switching")]
     [Range(0.0f, 1.0f)]
