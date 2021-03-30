@@ -62,16 +62,19 @@ public class SwitchingManagement : MonoBehaviourReferenced {
             flash = value;
         }
     }
-    public List<bool> flashRecord = new List<bool>(); //list of flashes where long falshes are true and short flashes are false
-    private float currentFlashInterval = 0;
+    public FlashType[] flashRecord = new FlashType[3];
+    FlashType[] signalPattern;
+    private float currentFlashDuration = 0;
     private bool measureFlash = false;
     private bool identicalFlashes = false;
+    private int signalProgressPos;
     EventInstance headlightsFlash;
     EventInstance drum;
 
     private float beatWindow;
     private float beatInterval;
     private float beatIntervalSubD;
+
 
     private void Start() {
         BeatDetector beatDetector = referenceManagement.beatDetector;
@@ -203,10 +206,11 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
     private void MarkedCarChanged(SwitchingBehaviour sb) {
         if (sb != null) {
-            //activeCar.gearText.text = sb.GetGear().ToString();
-            DisplayMarkedCarSignalPattern(sb);
-            sb.DisplaySignalPattern();
-            HardResetFlashRecord();
+            signalProgressPos = 0;
+            signalPattern = sb.GetSignal();
+            DisplayMarkedCarSignalPattern(); // this car displays text
+            sb.DisplaySignalPattern(); // marked car flashes light
+            ResetFlashRecord();
         }
     }
 
@@ -252,7 +256,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     }
 
     private void SelectCar() {
-        HardResetFlashRecord();
+        ResetFlashRecord();
         hasSelectedCar = true;
         selectedCar = MarkedCar;
         referenceManagement.selectedSwitchCar.Play();
@@ -303,98 +307,84 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         activeCar.SetFlash(b);
         if (b) {
             gearManagement.PlayStopGearSound();
+            measureFlash = true;
+            StartCoroutine(MeasureFlashDuration());
+        } else {
             measureFlash = false;
-            //if (HasMarkedCar) {
-                StartCoroutine(HandleMeasureFlashInterval());
-            //}
-            //headlightsFlash.start();
-            //drum.start();
         }
     }
 
-    IEnumerator HandleMeasureFlashInterval() {
-        yield return new WaitForEndOfFrame();
-        measureFlash = true;
-        StartCoroutine(MeasureFlashInterval());
-    }
-
-    IEnumerator MeasureFlashInterval() {
+    IEnumerator MeasureFlashDuration() {
+        currentFlashDuration = 0;
         while (measureFlash) {
             yield return new WaitForEndOfFrame();
-            currentFlashInterval += Time.deltaTime;
+            currentFlashDuration += Time.deltaTime;
         }
         RecordFlashes();
     }
 
     private void RecordFlashes() {
-        flashRecord.Add(true);
-        if (flashRecord.Count > 1) {
-            SetInterval();
+        Debug.Log("RecordFlashes");
+        FlashType flashType = FlashType.None;
+        // check if new duration is long or short
+        Debug.Log($"current flash duration = {currentFlashDuration}");
+        Debug.Log($"beatIntervalSubD = {beatIntervalSubD}, beatInterval = {beatInterval}");
+        if (currentFlashDuration >= beatIntervalSubD - beatWindow / 2 && currentFlashDuration <= beatIntervalSubD + beatWindow / 2) {
+            flashType = FlashType.Short;
+        } else if (currentFlashDuration >= beatInterval - beatWindow / 2 && currentFlashDuration <= beatInterval + beatWindow / 2) {
+            flashType = FlashType.Long;
         }
-    }
 
-    private void SetInterval() {
-        if (currentFlashInterval <= beatInterval + beatWindow / 2 && currentFlashInterval >= beatInterval - beatWindow / 2) {
-            flashRecord[flashRecord.Count - 2] = true;
-            EvaluateFlashes();
-        }
-        else if (currentFlashInterval <= beatIntervalSubD + beatWindow / 2 && currentFlashInterval >= beatIntervalSubD - beatWindow / 2) {
-            flashRecord[flashRecord.Count - 2] = false;
-            EvaluateFlashes();
-        }
-        else if (currentFlashInterval > beatInterval + beatWindow / 2) {
+        Debug.Log($"FlashType = {flashType}");
+        if (flashType != FlashType.None) {
+            for (int i = 0; i < flashRecord.Length - 1; i++) {
+                flashRecord[i] = flashRecord[i + 1];
+            }
+            flashRecord[flashRecord.Length - 1] = flashType;
+            if (HasMarkedCar) EvaluateFlashRecord();
+        } else {
             ResetFlashRecord();
         }
-        currentFlashInterval = 0;
+
+        DisplayMarkedCarSignalPattern();
     }
 
-    private void HardResetFlashRecord() {
-        flashRecord.Clear();
-    }
-
-    private void ResetFlashRecord() {
-        bool lastValue = flashRecord[flashRecord.Count - 1];
-        flashRecord.Clear();
-        flashRecord.Add(lastValue);
-    }
-
-    private void EvaluateFlashes() {
-        activeCar.gearText.text = "";
-        if (HasMarkedCar) {
-            identicalFlashes = false;
-            int length = markedCar.signalPattern.Count;
-            if (length <= flashRecord.Count) {
-                int diff = flashRecord.Count - length;
-                bool unidentical = false;
-                for (int i = diff; i < flashRecord.Count - 1; i++) {
-                    Debug.Log($"signal Pattern {markedCar.signalPattern[i - diff]}");
-                    if (flashRecord[i] != markedCar.signalPattern[i - diff]) unidentical = true;
-                    MarkedCarSignalPatternChar(markedCar.signalPattern[i - diff], !unidentical);
-                }
-                MarkedCarSignalPatternChar(markedCar.signalPattern[length-1], false);
-                identicalFlashes = !unidentical;
+    private void EvaluateFlashRecord() {
+        if (flashRecord[flashRecord.Length - 1] == signalPattern[signalProgressPos]) {
+            signalProgressPos++;
+            if (signalProgressPos >= signalPattern.Length) {
+                identicalFlashes = true;
+                ResetFlashRecord();
             }
         }
     }
 
-    private void UpdateHitSignals() {
+    private void DisplayMarkedCarSignalPattern() {
         activeCar.gearText.text = "";
-
-    }
-
-    private void DisplayMarkedCarSignalPattern(SwitchingBehaviour sb) {
-        activeCar.gearText.text = "";
-        for (int i = 0; i < sb.signalPattern.Count; i++) {
-            activeCar.gearText.text += sb.signalPattern[i] ? "-" : ".";
+        for (int i = 0; i < signalProgressPos; i++) {
+            activeCar.gearText.text += "<color=#ffffff>";
+            if (signalPattern[i] == FlashType.Long) {
+                activeCar.gearText.text += "-";
+            } else {
+                activeCar.gearText.text += ".";
+            }
+        }
+        for (int i = signalProgressPos; i < signalPattern.Length; i++) {
+            activeCar.gearText.text += "<color=#ff8587>";
+            if (signalPattern[i] == FlashType.Long) {
+                activeCar.gearText.text += "-";
+            }
+            else {
+                activeCar.gearText.text += ".";
+            }
         }
     }
 
-    private void MarkedCarSignalPatternChar(bool b, bool hit) {
-        Debug.Log($"MarkedCarSignalPatternChar, hit {hit}");
-        string color = "<color=#ffffff>";
-        if (!hit) color = "<color=#ff8587>";
-        activeCar.gearText.text += color;
-        activeCar.gearText.text += b ? "-" : ".";
+    private void ResetFlashRecord() {
+        signalProgressPos = 0;
+        for (int i = 0; i < flashRecord.Length; i++) {
+            flashRecord[i] = 0;
+        }
     }
 
     private void OnFullBeatDetected() {
@@ -409,3 +399,5 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         this.activeCar = activeCar;
     }
 }
+
+public enum FlashType { None, Short, Long };

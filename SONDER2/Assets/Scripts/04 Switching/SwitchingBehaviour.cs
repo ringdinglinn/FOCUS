@@ -13,6 +13,7 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     private SwitchingManagement switchingManagement;
     private PathCreator myPath;
     private GearManagement gearManagement;
+    private BeatDetector beatDetector;
 
     private PathBehaviour pathBehaviour;
 
@@ -36,7 +37,7 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
 
     public TMP_Text gearText;
 
-    public List<bool> signalPattern = new List<bool>(); // list where long signal is true and short signal is false
+    FlashType[] signalPattern = new FlashType[3];
     private int signalPatternMin = 3;
     private int signalPatternMax = 3;
     private float longSignalP = 0.5f;
@@ -47,7 +48,11 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     bool beatSubD;
 
     bool flash = false;
+    bool flashOn = false;
     bool signalCoolDown = false;
+
+    float beatInterval;
+    float beatIntervalSubD;
 
     private void OnEnable() {
         CollectReferences();
@@ -70,6 +75,9 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         switchingManagement = referenceManagement.switchingManagement;
         id = switchingManagement.allSwitchingBehaviours.Count;
         gearManagement = referenceManagement.gearManagement;
+        beatDetector = referenceManagement.beatDetector;
+        beatInterval = beatDetector.BeatInterval;
+        beatIntervalSubD = beatDetector.BeatIntervalSubD;
     }
 
     public void SwitchIntoCar(Camera1stPerson cam) {
@@ -125,11 +133,9 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     }
 
     private void GenerateSignalPattern() {
-        signalPattern.Clear();
-        int length = Random.Range(signalPatternMin, signalPatternMax + 1);
-        for (int i = 0; i < length; i++) {
-            bool hit = Random.Range(0.0f, 1.0f) <= longSignalP ? true : false;
-            signalPattern.Add(hit);
+        for (int i = 0; i < signalPattern.Length; i++) {
+            FlashType flash = Random.Range(0.0f, 1.0f) <= longSignalP ? FlashType.Long : FlashType.Short;
+            signalPattern[i] = flash;
         }
     }
 
@@ -141,19 +147,23 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     }
 
     IEnumerator Signal() {
-        for (int i = 0; i < signalPattern.Count; i++) {
-            if (signalPattern[i]) {
-                while (!beatFull) {
-                    yield return new WaitForEndOfFrame();
-                }
-                StartCoroutine(FlashHeadlight());
-            } else {
-                while (!beatSubD) {
-                    yield return new WaitForEndOfFrame();
-                }
-                StartCoroutine(FlashHeadlight());
+        for (int i = 0; i < signalPattern.Length; i++) {
+            while (!beatSubD || flashOn) {
+                yield return new WaitForEndOfFrame();
             }
-            beatFull = false;
+            StartCoroutine(FlashHeadlight(signalPattern[i]));
+            //if (signalPattern[i] == FlashType.Long) {
+            //    while (!beatFull) {
+            //        yield return new WaitForEndOfFrame();
+            //    }
+            //    StartCoroutine(FlashHeadlight(FlashType.Long));
+            //} else {
+            //    while (!beatSubD) {
+            //        yield return new WaitForEndOfFrame();
+            //    }
+            //    StartCoroutine(FlashHeadlight(FlashType.Short));
+            //}
+            //beatFull = false;
             beatSubD = false;
         }
     }
@@ -179,17 +189,30 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         }
     }
 
-    IEnumerator FlashHeadlight() {
+    int numberOfFlashesDeployed = 0;
+    IEnumerator FlashHeadlight(FlashType flashType) {
+        int myNr = numberOfFlashesDeployed++;
+        flashOn = true;
+
         headlight1.intensity = headlightDefaultIntensity * 4f;
         headlight2.intensity = headlightDefaultIntensity * 4f;
         headlight1.range = headlightDefaultRange * 4f;
         headlight2.range = headlightDefaultRange * 4f;
-        float time = Random.Range(0.1f, 0.2f);
+
+        float time = beatIntervalSubD;
+        if (flashType == FlashType.Long) {
+            time = beatInterval;
+        }
         yield return new WaitForSeconds(time);
+
         headlight1.intensity = headlightDefaultIntensity;
         headlight2.intensity = headlightDefaultIntensity;
         headlight1.range = headlightDefaultRange;
         headlight2.range = headlightDefaultRange;
+
+        beatSubD = false;
+        flashOn = false;
+
     }
 
     IEnumerator ResetBeatValue() {
@@ -206,5 +229,9 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     private void HandleBeatSubD() {
         beatSubD = true;
         StartCoroutine(ResetBeatValue());
+    }
+
+    public FlashType[] GetSignal() {
+        return signalPattern;
     }
 }
