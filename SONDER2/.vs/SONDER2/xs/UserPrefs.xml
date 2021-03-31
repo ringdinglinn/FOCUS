@@ -2,24 +2,14 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/04 Switching/SwitchingManagement.cs">
     <Files>
       <File FileName="Assets/Scripts/04 Switching/SwitchingManagement.cs" Line="357" Column="36" />
-      <File FileName="Assets/Scripts/02 AudioMorphing/Beat Detection/BeatDetector.cs" />
-      <File FileName="Assets/Scripts/00 Management/ReferenceManagement.cs" />
-      <File FileName="Assets/Scripts/06 Cars/CarAI.cs" />
-      <File FileName="Assets/Scripts/04 Switching/SwitchingBehaviour.cs" />
-      <File FileName="Assets/Scripts/00 Management/CarManagement.cs" />
-      <File FileName="Assets/Scripts/02 AudioMorphing/StreetlampAudioTest.cs" />
-      <File FileName="Assets/Scripts/00 Management/ScriptUsageTimeline.cs" />
-      <File FileName="Assets/Scripts/00 Management/GearManagement.cs" />
-      <File FileName="Assets/Scripts/00 Management/InputManagement.cs" />
+      <File FileName="Assets/Scripts/04 Switching/SwitchingBehaviour.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="a91e37cc-ed98-4210-a3bd-3ea21abe6770" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="1dea4385-8ad0-40e6-a076-f73899274634" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/linn/Documents/01 ZHdK/Semester VI/FOCUS/_ Repo/SONDER2/Assets/Scripts/03 Paths/StartPosEditor.cs" relfile="Assets/Scripts/03 Paths/StartPosEditor.cs" line="15" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>

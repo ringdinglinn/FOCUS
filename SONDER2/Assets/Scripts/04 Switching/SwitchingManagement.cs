@@ -64,8 +64,12 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     }
     public FlashType[] flashRecord = new FlashType[3];
     FlashType[] signalPattern;
+    float[] flashRecordDurations = new float[]{ -1, -1, -1 };
     private float currentFlashDuration = 0;
     private bool measureFlash = false;
+    private float currentFlashInterval = 0;
+    private bool measureInterval = false;
+    private float resetInterval = 1f;
     private bool identicalFlashes = false;
     private int signalProgressPos;
     EventInstance headlightsFlash;
@@ -74,6 +78,10 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     private float beatWindow;
     private float beatInterval;
     private float beatIntervalSubD;
+
+    public RectTransform debugImage1;
+    public RectTransform debugImage2;
+    public RectTransform debugImage3;
 
 
     private void Start() {
@@ -97,6 +105,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         beatIntervalSubD = beatDetector.BeatIntervalSubD;
         headlightsFlash = RuntimeManager.CreateInstance(referenceManagement.headlightsFlash);
         drum = RuntimeManager.CreateInstance(referenceManagement.playerDrum);
+        UpdateDebugUI();
     }
 
     private void OnEnable() {
@@ -211,6 +220,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
             DisplayMarkedCarSignalPattern(); // this car displays text
             sb.DisplaySignalPattern(); // marked car flashes light
             ResetFlashRecord();
+            ResetFlashRecordDurations();
         }
     }
 
@@ -308,54 +318,134 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         if (b) {
             gearManagement.PlayStopGearSound();
             measureFlash = true;
+            measureInterval = false;
             StartCoroutine(MeasureFlashDuration());
         } else {
             measureFlash = false;
+            measureInterval = true;
+            StartCoroutine(MeasureFlashInterval());
         }
     }
 
     IEnumerator MeasureFlashDuration() {
         currentFlashDuration = 0;
         while (measureFlash) {
+            Debug.Log("Measure Flash Duration");
             yield return new WaitForEndOfFrame();
             currentFlashDuration += Time.deltaTime;
         }
+        Debug.Log($"Measure Flash Duration, currentFalshDuration = {currentFlashDuration}");
         RecordFlashes();
     }
 
+    IEnumerator MeasureFlashInterval() {
+        currentFlashInterval = 0;
+        while (measureInterval) {
+            Debug.Log("Measure Flash Interval");
+            yield return new WaitForEndOfFrame();
+            currentFlashInterval += Time.deltaTime;
+        }
+        if (currentFlashInterval >= resetInterval) ResetFlashRecordDurations();
+    }
+
     private void RecordFlashes() {
-        Debug.Log("RecordFlashes");
+        // flash types
+        Debug.Log($"RecordFlashes, currentFlashDuration = {currentFlashDuration}");
         FlashType flashType = FlashType.None;
-        // check if new duration is long or short
-        Debug.Log($"current flash duration = {currentFlashDuration}");
-        Debug.Log($"beatIntervalSubD = {beatIntervalSubD}, beatInterval = {beatInterval}");
+            // check if new duration is long or short
+
         if (currentFlashDuration >= beatIntervalSubD - beatWindow / 2 && currentFlashDuration <= beatIntervalSubD + beatWindow / 2) {
             flashType = FlashType.Short;
         } else if (currentFlashDuration >= beatInterval - beatWindow / 2 && currentFlashDuration <= beatInterval + beatWindow / 2) {
             flashType = FlashType.Long;
         }
-
-        Debug.Log($"FlashType = {flashType}");
         if (flashType != FlashType.None) {
             for (int i = 0; i < flashRecord.Length - 1; i++) {
                 flashRecord[i] = flashRecord[i + 1];
             }
             flashRecord[flashRecord.Length - 1] = flashType;
-            if (HasMarkedCar) EvaluateFlashRecord();
         } else {
             ResetFlashRecord();
         }
+
+
+        // flash duration
+        for (int i = 0; i < flashRecord.Length - 1; i++) {
+            flashRecordDurations[i] = flashRecordDurations[i + 1];
+        }
+        flashRecordDurations[flashRecordDurations.Length - 1] = currentFlashDuration;
+
+        EvaluateFlashRecord();
 
         DisplayMarkedCarSignalPattern();
     }
 
     private void EvaluateFlashRecord() {
-        if (flashRecord[flashRecord.Length - 1] == signalPattern[signalProgressPos]) {
-            signalProgressPos++;
-            if (signalProgressPos >= signalPattern.Length) {
-                identicalFlashes = true;
-                ResetFlashRecord();
+        Debug.Log("EvaluateFlashRecord");
+        // flash record type
+
+        //if (flashRecord[flashRecord.Length - 1] == signalPattern[signalProgressPos]) {
+        //    signalProgressPos++;
+        //    if (signalProgressPos >= signalPattern.Length) {
+        //        identicalFlashes = true;
+        //        ResetFlashRecord();
+        //    }
+        //}
+
+        // flash record duration
+        bool correct = true;
+        float baseLength;
+
+
+        if (signalPattern[0] == FlashType.Short) {
+            baseLength = flashRecordDurations[0];
+        } else {
+            baseLength = flashRecordDurations[0] / 2f;
+        }
+
+        UpdateDebugUI();
+        if (flashRecordDurations[0] == -1) return;
+
+        for (int i = 1; i < flashRecordDurations.Length; i++) {
+            float factor = signalPattern[i] == FlashType.Short ? 1 : 2;
+            if (flashRecordDurations[i] <= factor * baseLength * 1.5f && flashRecordDurations[i] >= factor * baseLength * 0.5f) {
+                // hello
+            } else {
+                correct = false;
             }
+        }
+        if (correct && HasMarkedCar) identicalFlashes = true;
+    }
+
+    private void UpdateDebugUI() {
+        if (flashRecordDurations[0] == -1) {
+            Debug.Log("nr 0 is -1");
+            debugImage1.sizeDelta = new Vector2(debugImage1.sizeDelta.x, 100);
+            debugImage1.GetComponent<Image>().color = Color.red;
+        } else {
+            Debug.Log($"nr 0, flashDuration {flashRecordDurations[0]}");
+            debugImage1.sizeDelta = new Vector2(debugImage1.sizeDelta.x, 100 * flashRecordDurations[0]);
+            debugImage1.GetComponent<Image>().color = Color.white;
+        }
+
+        if (flashRecordDurations[1] == -1) {
+            Debug.Log("nr 1 is -1");
+            debugImage2.sizeDelta = new Vector2(debugImage2.sizeDelta.x, 100);
+            debugImage2.GetComponent<Image>().color = Color.red;
+        } else {
+            Debug.Log($"nr 1, flashDuration {flashRecordDurations[1]}");
+            debugImage2.sizeDelta = new Vector2(debugImage2.sizeDelta.x, 100 * flashRecordDurations[1]);
+            debugImage2.GetComponent<Image>().color = Color.white;
+        }
+
+        if (flashRecordDurations[2] == -1) {
+            Debug.Log("nr 1 is -1");
+            debugImage3.sizeDelta = new Vector2(debugImage3.sizeDelta.x, 100);
+            debugImage3.GetComponent<Image>().color = Color.red;
+        } else {
+            Debug.Log($"nr 1, flashDuration {flashRecordDurations[2]}");
+            debugImage3.sizeDelta = new Vector2(debugImage3.sizeDelta.x, 100 * flashRecordDurations[2]);
+            debugImage3.GetComponent<Image>().color = Color.white;
         }
     }
 
@@ -385,6 +475,13 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         for (int i = 0; i < flashRecord.Length; i++) {
             flashRecord[i] = 0;
         }
+    }
+
+    private void ResetFlashRecordDurations() {
+        for (int i = 0; i < flashRecordDurations.Length; i++) {
+            flashRecordDurations[i] = -1f;
+        }
+        UpdateDebugUI();
     }
 
     private void OnFullBeatDetected() {
