@@ -82,4 +82,8 @@ public class ReferenceManagement : MonoBehaviour
     [Range(0.0f, 1.0f)]
     public float switchViewHeight = 0.8f;
     public float switchViewRange = 200;
+
+    [Header("Sprites")]
+    public List<Texture> morseSingalTex;
+    public Material morseSingalMat;
 }

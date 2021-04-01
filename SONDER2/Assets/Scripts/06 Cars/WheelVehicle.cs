@@ -219,12 +219,6 @@ namespace VehicleBehaviour {
         // Visual feedbacks and boost regen
         void Update()
         {
-            foreach (ParticleSystem gasParticle in gasParticles)
-            {
-                gasParticle.Play();
-                ParticleSystem.EmissionModule em = gasParticle.emission;
-                em.rateOverTime = handbrake ? 0 : Mathf.Lerp(em.rateOverTime.constant, Mathf.Clamp(150.0f * throttle, 30.0f, 100.0f), 0.1f);
-            }
 
             if (isPlayer && allowBoost) {
                 boost += Time.deltaTime * boostRegen;
@@ -315,11 +309,6 @@ namespace VehicleBehaviour {
                     boostSource.Play();
                 }
             } else {
-                if (boostParticles.Length > 0 && boostParticles[0].isPlaying) {
-                    foreach (ParticleSystem boostParticle in boostParticles) {
-                        boostParticle.Stop();
-                    }
-                }
 
                 if (boostSource != null && boostSource.isPlaying) {
                     boostSource.Stop();

@@ -5,19 +5,27 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using FMODUnity;
 using FMOD.Studio;
+using System;
 
 public class SwitchingManagement : MonoBehaviourReferenced {
 
     public List<SwitchingBehaviour> allSwitchingBehaviours;
     private GearManagement gearManagement;
-    public SwitchingBehaviour activeCar;
+    private SwitchingBehaviour activeCar;
+    public SwitchingBehaviour ActiveCar {
+        get { return activeCar; }
+        set {
+                if (activeCar != value) ActiveCarChanged(value);
+                activeCar = value;
+            }
+    }
     private SwitchingBehaviour selectedCar;
     private SwitchingBehaviour markedCar;
     private SwitchingBehaviour prevMarkedCar;
     public SwitchingBehaviour MarkedCar {
         get {   return markedCar; }
         set {
-                if (prevMarkedCar != value) MarkedCarChanged(value);
+                if (markedCar != value) MarkedCarChanged(value);
                 markedCar = value;
         }
     }
@@ -70,18 +78,15 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     private bool measureInterval = false;
     private float resetInterval = 1f;
     private bool identicalFlashes = false;
-    private int signalProgressPos;
-    EventInstance headlightsFlash;
-    EventInstance drum;
-
-    private float beatWindow;
-    private float beatInterval;
-    private float beatIntervalSubD;
+    Material morseSignalMat;
+    List<Texture> morseSignalTex;
 
     public RectTransform debugImage1;
     public RectTransform debugImage2;
     public RectTransform debugImage3;
 
+    private float currentSDSpeed = 0;
+    public float signalDisplayAmplitude = 1f;
 
     private void Start() {
         BeatDetector beatDetector = referenceManagement.beatDetector;
@@ -99,12 +104,9 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         perceptionR = referenceManagement.switchViewRange;
         allSwitchingBehaviours = referenceManagement.carManagement.GetAllSwitchingBehaviours();
         gearManagement = referenceManagement.gearManagement;
-        beatWindow = referenceManagement.GetBeatWindow();
-        beatInterval = beatDetector.BeatInterval;
-        beatIntervalSubD = beatDetector.BeatIntervalSubD;
-        headlightsFlash = RuntimeManager.CreateInstance(referenceManagement.headlightsFlash);
-        drum = RuntimeManager.CreateInstance(referenceManagement.playerDrum);
-        UpdateDebugUI();
+        morseSignalMat = referenceManagement.morseSingalMat;
+        morseSignalTex = referenceManagement.morseSingalTex;
+        //UpdateDebugUI();
     }
 
     private void OnEnable() {
@@ -152,8 +154,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
             HandleSwitchGUI(CarScreenPos(MarkedCar), Color.white);
         }
 
-        if (/*GetInput("SwitchCar") && */ !hasSelectedCar && canSelectCar) {
-            /*if (HasMarkedCar && MarkedCar.GetGear() == gearManagement.CurrentGear) {*/
+        if (!hasSelectedCar && canSelectCar) {
             if (identicalFlashes) {
                 selectCarNow = true;
             }
@@ -165,11 +166,16 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         }
 
         identicalFlashes = false;
+
+        float value = activeCar.morseSingalRenderer.materials[0].GetFloat("Clarity");
+        value += currentSDSpeed * Time.deltaTime;
+        value = Mathf.Clamp(value, 0.05f, 2);
+        activeCar.morseSingalRenderer.materials[0].SetFloat("Clarity", value);
     }
 
     private void SearchForCars() {
         SBsInFrame.Clear();
-        markedCar = null;
+        SwitchingBehaviour sb = null;
         // 1 Draw Perception Frame
         float w = cam.pixelWidth * perceptionW;
         float h = cam.pixelHeight * perceptionH;
@@ -198,29 +204,40 @@ public class SwitchingManagement : MonoBehaviourReferenced {
                     //evaluate closest car
                     if (scrPos[4,0] <= dist) {
                         dist = scrPos[4, 0];
-                        MarkedCar = allSwitchingBehaviours[i];
-                    }
+                        sb = allSwitchingBehaviours[i];
+                    } 
                 }
             }
         }
-        HasMarkedCar = MarkedCar != null ? true : false;
-        prevMarkedCar = MarkedCar;
+        HasMarkedCar = sb != null ? true : false;
+        MarkedCar = sb;
     }
 
     private void MarkedCarValueChanged(bool b) {
         switchImgObj.SetActive(b);
-        activeCar.gearText.gameObject.SetActive(b);
+        ChangeSignalDisplay(b);
+    }
+
+    private void ChangeSignalDisplay(bool b) {
+
     }
 
     private void MarkedCarChanged(SwitchingBehaviour sb) {
+        if (markedCar != null && sb == null) {
+            currentSDSpeed = signalDisplayAmplitude;
+        } else if (markedCar == null && sb != null) {
+            currentSDSpeed = -1f * signalDisplayAmplitude;
+        } else if (markedCar != null && sb != null) {
+
+        }
         if (sb != null) {
-            signalProgressPos = 0;
             signalPattern = sb.GetSignal();
             DisplayMarkedCarSignalPattern(); // this car displays text
             sb.DisplaySignalPattern(); // marked car flashes light
             ResetFlashRecordDurations();
         }
     }
+
 
     private void HandleSwitchGUI(float [,] scrPos1, Color col) {
         //get x1, y1, x2, y2
@@ -285,7 +302,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
     private void Switch() {
         SwitchToCar(selectedCar);
-        activeCar = selectedCar;
+        ActiveCar = selectedCar;
         DeselectCar();
         referenceManagement.switchSound.Play();
         selectedCar = null;
@@ -293,26 +310,8 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         CarSwitchedEvent.Invoke();
     }
 
-    bool switchInUse = false;
-    private bool GetInput(string input) {
-
-        if (referenceManagement.inputManagement.GetInput(input) != 0) {
-            if (switchInUse == false) {
-                switchInUse = true;
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-        else {
-            switchInUse = false;
-            return false;
-        }
-    }
-
     private void FlashValueChanged(bool b) {
-        activeCar.SetFlash(b);
+        ActiveCar.SetFlash(b);
         if (b) {
             gearManagement.PlayStopGearSound();
             measureFlash = true;
@@ -351,11 +350,13 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         flashRecordDurations[flashRecordDurations.Length - 1] = currentFlashDuration;
 
         EvaluateFlashRecord();
-
         DisplayMarkedCarSignalPattern();
+        //UpdateDebugUI();
     }
 
     private void EvaluateFlashRecord() {
+        if (flashRecordDurations[0] == -1) return;
+
         bool correct = true;
         float baseLength;
 
@@ -365,14 +366,9 @@ public class SwitchingManagement : MonoBehaviourReferenced {
             baseLength = flashRecordDurations[0] / 2f;
         }
 
-        UpdateDebugUI();
-        if (flashRecordDurations[0] == -1) return;
-
         for (int i = 1; i < flashRecordDurations.Length; i++) {
             float factor = signalPattern[i] == FlashType.Short ? 1 : 2;
-            if (flashRecordDurations[i] <= factor * baseLength * 1.5f && flashRecordDurations[i] >= factor * baseLength * 0.5f) {
-                // hello 
-            } else { // <- too lazy to invert logic expression
+            if (!(flashRecordDurations[i] <= factor * baseLength * 1.5f && flashRecordDurations[i] >= factor * baseLength * 0.5f)) {
                 correct = false;
             }
         }
@@ -406,31 +402,24 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     }
 
     private void DisplayMarkedCarSignalPattern() {
-        activeCar.gearText.text = "";
-        for (int i = 0; i < signalProgressPos; i++) {
-            activeCar.gearText.text += "<color=#ffffff>";
+        string digits = "";
+        for (int i = 0; i < 3; i++) {
+            string digit = "0";
             if (signalPattern[i] == FlashType.Long) {
-                activeCar.gearText.text += "-";
-            } else {
-                activeCar.gearText.text += ".";
+                digit = "1";
             }
+            digits += digit;
         }
-        for (int i = signalProgressPos; i < signalPattern.Length; i++) {
-            activeCar.gearText.text += "<color=#ff8587>";
-            if (signalPattern[i] == FlashType.Long) {
-                activeCar.gearText.text += "-";
-            }
-            else {
-                activeCar.gearText.text += ".";
-            }
-        }
+        int index = Convert.ToInt32(digits, 2);
+
+        activeCar.morseSingalRenderer.materials[0].SetTexture("BaseTexture", morseSignalTex[index]);
     }
 
     private void ResetFlashRecordDurations() {
         for (int i = 0; i < flashRecordDurations.Length; i++) {
             flashRecordDurations[i] = -1f;
         }
-        UpdateDebugUI();
+        //UpdateDebugUI();
     }
 
     private void OnFullBeatDetected() {
@@ -441,8 +430,16 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         //if (hasSelectedCar) Switch();
     }
 
-    public void SetActiveCar(SwitchingBehaviour activeCar) {
-        this.activeCar = activeCar;
+    public void SetActiveCar(SwitchingBehaviour sb) {
+        ActiveCar = sb;
+    }
+
+    private void ActiveCarChanged(SwitchingBehaviour sb) {
+        if (activeCar != null) {
+            activeCar.morseSignalDisplay.SetActive(false);
+        }
+        Debug.Log($"active car changed, {sb}");
+        sb.morseSignalDisplay.SetActive(true);
     }
 }
 

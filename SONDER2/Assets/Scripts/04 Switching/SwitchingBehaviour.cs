@@ -5,6 +5,7 @@ using PathCreation;
 using VehicleBehaviour;
 using UnityEngine.Rendering.HighDefinition;
 using TMPro;
+using UnityEngine.UI;
 
 
 public class SwitchingBehaviour : MonoBehaviourReferenced {
@@ -18,9 +19,8 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     private PathBehaviour pathBehaviour;
 
     public MeshRenderer meshRenderer;
-    public Material visibleMat;
-    public Material invisibleMat;
-    public Material windowMat;
+    public GameObject morseSignalDisplay;
+    public MeshRenderer morseSingalRenderer;
 
     public BoxCollider boxCollider;
 
@@ -34,8 +34,6 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
 
     public int id;
     public bool isInitialCar = false;
-
-    public TMP_Text gearText;
 
     FlashType[] signalPattern = new FlashType[3];
     private int signalPatternMin = 3;
@@ -82,11 +80,9 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
 
     public void SwitchIntoCar(Camera1stPerson cam) {
         carAI.SwitchOffAutopilot();
-        ChangeColorToInvisible();
         carAI.cam = cam;
-        switchingManagement.activeCar = this;
+        switchingManagement.ActiveCar = this;
         wheelVehicle.IsPlayer = true;
-        gearText.gameObject.SetActive(switchingManagement.HasMarkedCar);
 
         SetHeadlightsActiveCar();
     }
@@ -95,7 +91,6 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         carAI.SwitchOnAutopilot();
         carAI.cam = null;
         wheelVehicle.IsPlayer = false;
-        gearText.gameObject.SetActive(false);
         int newGear = Random.Range(1, 6);
         if (newGear >= gearManagement.CurrentGear) newGear++;
         carAI.SetGear(newGear);
@@ -112,20 +107,6 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     public void SetHeadlightsInactiveCar() {
         headlight1.volumetricDimmer = inactiveCarVolumetric;
         headlight2.volumetricDimmer = inactiveCarVolumetric;
-    }
-
-    public void ChangeColorToVisible() {
-        Material[] mats = new Material[2];
-        mats[0] = windowMat;
-        mats[1] = visibleMat;
-        meshRenderer.materials = mats;
-    }
-
-    public void ChangeColorToInvisible() {
-        Material[] mats = new Material[2];
-        mats[0] = windowMat;
-        mats[1] = invisibleMat;
-        meshRenderer.materials = mats;
     }
 
     public int GetGear() {
@@ -152,18 +133,6 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
                 yield return new WaitForEndOfFrame();
             }
             StartCoroutine(FlashHeadlight(signalPattern[i]));
-            //if (signalPattern[i] == FlashType.Long) {
-            //    while (!beatFull) {
-            //        yield return new WaitForEndOfFrame();
-            //    }
-            //    StartCoroutine(FlashHeadlight(FlashType.Long));
-            //} else {
-            //    while (!beatSubD) {
-            //        yield return new WaitForEndOfFrame();
-            //    }
-            //    StartCoroutine(FlashHeadlight(FlashType.Short));
-            //}
-            //beatFull = false;
             beatSubD = false;
         }
     }
@@ -189,9 +158,7 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         }
     }
 
-    int numberOfFlashesDeployed = 0;
     IEnumerator FlashHeadlight(FlashType flashType) {
-        int myNr = numberOfFlashesDeployed++;
         flashOn = true;
 
         headlight1.intensity = headlightDefaultIntensity * 4f;

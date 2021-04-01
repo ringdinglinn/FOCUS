@@ -102,7 +102,7 @@ public class CarAI : MonoBehaviourReferenced {
     #region ------------------------------------------------ AUTOPILOT -----------------------------------------------------
 
     private void AutoPilot() {
-        wheelVehicle.Throttle = 0.5f;
+        wheelVehicle.Throttle = 0.1f;
         distOnPath += (transform.position - prevPos).magnitude;
         prevPos = transform.position;
         float angle = Vector3.SignedAngle(transform.forward, myPath.path.GetPointAtDistance(distOnPath + steerTowardsDist, EndOfPathInstruction.Loop) - transform.position, Vector3.up);
