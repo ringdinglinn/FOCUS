@@ -9,14 +9,14 @@ public class CarAI : MonoBehaviourReferenced {
     private CarManagement carManagement;
 
     private WheelVehicle wheelVehicle;
-    private PathBehaviour pathBehaviour;
+    public PathBehaviour pathBehaviour;
     private PathCreator myPath;
     private SwitchingBehaviour switchingBehaviour;
     private Rigidbody rb;
 
     public bool autopilotEnabled = true;
 
-    private bool isClone = false;
+    public bool isClone = false;
     private bool hasClone = false;
     public bool HasClone {
         get { return hasClone; }
@@ -42,7 +42,7 @@ public class CarAI : MonoBehaviourReferenced {
 
     private float steerTowardsDist = 2;
 
-    private int pathID;
+    public int pathID;
 
     public int id;
     public int PathID {
@@ -50,6 +50,7 @@ public class CarAI : MonoBehaviourReferenced {
         set { pathID = value;
             GetPathInfo(); }
     }
+    public int manualPathID;
 
     private Transform startTunnel;
     private Transform endTunnel;
@@ -72,18 +73,22 @@ public class CarAI : MonoBehaviourReferenced {
         get { return currentGear;  }
     }
 
+    public bool dontLoop = false;
+
+
     private void OnEnable() {
         wheelVehicle = GetComponent<WheelVehicle>();
         switchingBehaviour = GetComponent<SwitchingBehaviour>();
+        carManagement = referenceManagement.carManagement;
         id = switchingBehaviour.id;
         rb = GetComponent<Rigidbody>();
-        SelectRandomGear();
+        carManagement.AddCarManagement(this);
+        if (!carManagement.carsGenerated && switchingBehaviour.isInitialCar) PathID = manualPathID; 
     }
 
     private void Start() {
         if (pathBehaviour.startTunnel != null) startTunnel = pathBehaviour.startTunnel.transform;
         if (pathBehaviour.endTunnel != null) endTunnel = pathBehaviour.endTunnel.transform;
-        carManagement = referenceManagement.carManagement;
         if (isClone) {
             SetCloneTransform();
         }
@@ -102,7 +107,12 @@ public class CarAI : MonoBehaviourReferenced {
     #region ------------------------------------------------ AUTOPILOT -----------------------------------------------------
 
     private void AutoPilot() {
-        wheelVehicle.Throttle = 0.1f;
+        if (rb.velocity.sqrMagnitude < Mathf.Pow(pathBehaviour.GetSpeedLimit(),2)) {
+            wheelVehicle.Throttle = 0.5f;
+        } else if (rb.velocity.sqrMagnitude > Mathf.Pow(pathBehaviour.GetSpeedLimit(),2)) {
+            wheelVehicle.Throttle = 0.0f;
+            wheelVehicle.BrakeForce = 0.1f;
+        }
         distOnPath += (transform.position - prevPos).magnitude;
         prevPos = transform.position;
         float angle = Vector3.SignedAngle(transform.forward, myPath.path.GetPointAtDistance(distOnPath + steerTowardsDist, EndOfPathInstruction.Loop) - transform.position, Vector3.up);
@@ -141,6 +151,8 @@ public class CarAI : MonoBehaviourReferenced {
 
     private void GetPathInfo() {
         pathBehaviour = referenceManagement.pathManagement.GetMyPath(pathID);
+        if (pathBehaviour.endTunnel != null) endTunnel = pathBehaviour.endTunnel.transform;
+        if (pathBehaviour.startTunnel != null) startTunnel = pathBehaviour.startTunnel.transform;
         SetPath(pathBehaviour.GetPath());
     }
 
@@ -171,11 +183,14 @@ public class CarAI : MonoBehaviourReferenced {
     }
 
     public void PortalReached() {
-        if (!autopilotEnabled) {
-            carManagement.ActiveCarHasReachedPortal(this);
-        } else if (!inTunnelWithActiveCar){
-            if (startTunnel != null) TunnelLoop();
-            else Loop();
+        if (!dontLoop) {
+            if (!autopilotEnabled) {
+                carManagement.ActiveCarHasReachedPortal(this);
+            }
+            else if (!inTunnelWithActiveCar && !dontLoop) {
+                if (startTunnel != null) TunnelLoop();
+                else Loop();
+            }
         }
     }
 
@@ -207,7 +222,8 @@ public class CarAI : MonoBehaviourReferenced {
          return point; // return it
     }
 
-private void TunnelLoop() {
+    private void TunnelLoop() {
+        dontLoop = true;
         Vector3 pos = TransformPointToStart(transform.position);
         Vector3 dir = TransformDirectionToStart(transform.forward);
         Vector3 vel = TransformDirectionToStart(rb.velocity);
@@ -238,7 +254,6 @@ private void TunnelLoop() {
     }
 
     private void ChangeToClone() {
-        Debug.Log($"{gameObject.name} changes to clone");
         carManagement.ChangeToClone(!autopilotEnabled, this, clone);
     }
 
@@ -249,6 +264,7 @@ private void TunnelLoop() {
 
     public void StartClone(bool isActiveCar, WheelVehicle wv, Transform transform, Rigidbody rb, CarAI carAI) {
         autopilotEnabled = !isActiveCar;
+        dontLoop = true;
         wheelVehicle.IsPlayer = isActiveCar;
         originalCarWV = wv;
         originalCarTransform = transform;
@@ -277,7 +293,6 @@ private void TunnelLoop() {
     }
 
     private void CreateClone() {
-        Debug.Log($"{gameObject.name} creates clone");
         hasClone = true;
         clone = referenceManagement.carManagement.CreateCarClone(pathID);
         clone.StartClone(!autopilotEnabled, wheelVehicle, transform, rb, this);
@@ -295,8 +310,11 @@ private void TunnelLoop() {
     }
 
     public void ActiveCarHasEnteredTunnel() {
-        inTunnelWithActiveCar = true;
-        CreateClone();
+        Debug.Log($"Car AI, active car had entered tunnel, dontLoop = {dontLoop}");
+        if (!dontLoop) {
+            inTunnelWithActiveCar = true;
+            CreateClone();
+        }
     }
 
     #endregion

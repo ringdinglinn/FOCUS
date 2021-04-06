@@ -13,8 +13,8 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     private WheelVehicle wheelVehicle;
     private SwitchingManagement switchingManagement;
     private PathCreator myPath;
-    private GearManagement gearManagement;
     private BeatDetector beatDetector;
+    private CarManagement carManagement;
 
     private PathBehaviour pathBehaviour;
 
@@ -36,8 +36,6 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     public bool isInitialCar = false;
 
     FlashType[] signalPattern = new FlashType[3];
-    private int signalPatternMin = 3;
-    private int signalPatternMax = 3;
     private float longSignalP = 0.5f;
     private float headlightDefaultIntensity;
     private float headlightDefaultRange;
@@ -59,6 +57,7 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         referenceManagement.beatDetector.bdOnBeatSubD.AddListener(HandleBeatSubD);
         headlightDefaultIntensity = headlight1.intensity;
         headlightDefaultRange = headlight1.range;
+        carManagement.AddSwitchingBehaviour(this);
     }
 
     private void OnDisable() {
@@ -68,11 +67,11 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
 
     public void CollectReferences() {
         wheelVehicle = GetComponent<WheelVehicle>();
-        wheelVehicle.IsPlayer = isInitialCar;
+        wheelVehicle.IsPlayer = false;
         carAI = GetComponent<CarAI>();
+        carManagement = referenceManagement.carManagement;
         switchingManagement = referenceManagement.switchingManagement;
         id = switchingManagement.allSwitchingBehaviours.Count;
-        gearManagement = referenceManagement.gearManagement;
         beatDetector = referenceManagement.beatDetector;
         beatInterval = beatDetector.BeatInterval;
         beatIntervalSubD = beatDetector.BeatIntervalSubD;
@@ -80,20 +79,23 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
 
     public void SwitchIntoCar(Camera1stPerson cam) {
         carAI.SwitchOffAutopilot();
+        Debug.Log($"car ai cam = {carAI.cam}");
+        Debug.Log($"this cam = {cam}");
         carAI.cam = cam;
         switchingManagement.ActiveCar = this;
         wheelVehicle.IsPlayer = true;
+        if (isInitialCar && carManagement.manualInitialCar) wheelVehicle.IsPlayer = false;
 
         SetHeadlightsActiveCar();
     }
 
     public void SwitchOutOfCar() {
-        carAI.SwitchOnAutopilot();
+        Debug.Log($"Switch Out of car, {gameObject.name}");
+        if (!(carManagement.manualInitialCar && isInitialCar)) {
+            carAI.SwitchOnAutopilot();
+        }
         carAI.cam = null;
         wheelVehicle.IsPlayer = false;
-        int newGear = Random.Range(1, 6);
-        if (newGear >= gearManagement.CurrentGear) newGear++;
-        carAI.SetGear(newGear);
 
         SetHeadlightsInactiveCar();
         GenerateSignalPattern();
@@ -200,5 +202,9 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
 
     public FlashType[] GetSignal() {
         return signalPattern;
+    }
+
+    public CarAI GetCarAI() {
+        return carAI;
     }
 }

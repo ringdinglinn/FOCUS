@@ -117,7 +117,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Clarity: 0
+    - Clarity: 2
     - Vector1_231EF832: 4000
     - _AORemapMax: 1
     - _AORemapMin: 0
@@ -242,7 +242,7 @@ Material:
     - _ZWrite: 0
     m_Colors:
     - AlbedoTint: {r: 1, g: 1, b: 1, a: 0}
-    - BloomColor: {r: 2, g: 0.5254902, b: 0.4627451, a: 0}
+    - BloomColor: {r: 2, g: 0.16753922, b: 0.21728471, a: 0}
     - Color_1E24BF8F: {r: 1, g: 0, b: 0, a: 0}
     - Tint: {r: 0.9528302, g: 0.04943931, b: 0.08445318, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}

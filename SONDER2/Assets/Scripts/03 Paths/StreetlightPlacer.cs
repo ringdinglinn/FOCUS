@@ -15,6 +15,8 @@ public class StreetlightPlacer : MonoBehaviourReferenced {
 
     private List<Vector3> streetlightMarkers;
 
+    private GameObject parentObject;
+
     private void Start() {
         origStreetlight = referenceManagement.streetlight;
         pathBehaviour = GetComponent<PathBehaviour>();
@@ -23,7 +25,8 @@ public class StreetlightPlacer : MonoBehaviourReferenced {
         myPath = pathBehaviour.GetPath();
 
         streetlightMarkers = startPosBehaviour.GetStreetlightMarkerList();
-        Debug.Log($"n of markers = {streetlightMarkers.Count}, path {pathBehaviour.Id}");
+
+        parentObject = GameObject.Find("Streetlights");
 
         PlaceLights();
     }
@@ -46,7 +49,8 @@ public class StreetlightPlacer : MonoBehaviourReferenced {
             Vector3 pos = myPath.path.GetPointAtDistance(dist);
             Vector3 dir = offsetDir * (-1);
             pos = pos + offsetDir * offset;
-            Instantiate(origStreetlight, pos, Quaternion.LookRotation(dir));
+            GameObject obj = Instantiate(origStreetlight, pos, Quaternion.LookRotation(dir));
+            obj.transform.SetParent(parentObject.transform);
             dist += intervall;
         }
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TunnelBehaviour : MonoBehaviourReferenced {
-    private List<CarAI> carsInTunnel = new List<CarAI>();
+    public List<CarAI> carsInTunnel = new List<CarAI>();
     private int id;
 
     private int endTunnelID;
@@ -24,16 +24,16 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
         if (other.gameObject.CompareTag("Car")) {
             CarAI carAI;
             carAI = other.GetComponentInParent<CarAI>();
-            if (carAI.PathID == endTunnelID) {
-                carsInTunnel.Add(carAI);
-                if (!carAI.autopilotEnabled) {
-                    foreach (CarAI car in carsInTunnel) {
-                        car.ActiveCarHasEnteredTunnel();
-                    }
+            bool carInList = false;
+            foreach (CarAI car in carsInTunnel) if (car == carAI) carInList = true;
+            Debug.Log("Trigger entered");
+            if (!carInList && !carAI.dontLoop) carsInTunnel.Add(carAI);
+            if (!carAI.autopilotEnabled) {
+                foreach (CarAI car in carsInTunnel) {
+                    Debug.Log("Trigger entered foreach");
+                    car.ActiveCarHasEnteredTunnel();
                 }
-            } 
-        } else if (other.gameObject.CompareTag("Streetlight")) {
-            Debug.Log("Streetlight in Trigger");
+            }
         }
     }
 
@@ -41,6 +41,7 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
         if (other.gameObject.CompareTag("Car")) {
             CarAI carAI;
             carAI = other.GetComponentInParent<CarAI>();
+            carAI.dontLoop = false;
             if (carAI.PathID == endTunnelID) {
                 carsInTunnel.Remove(carAI);
             }

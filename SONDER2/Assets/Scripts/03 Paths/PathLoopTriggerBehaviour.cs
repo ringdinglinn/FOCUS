@@ -8,6 +8,7 @@ public class PathLoopTriggerBehaviour : MonoBehaviourReferenced {
 
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag("Car")) {
+            Debug.Log("car entered portal");
             if (isColliding) return;
             isColliding = true;
             carAI = other.gameObject.GetComponentInParent<CarAI>();

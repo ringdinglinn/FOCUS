@@ -8,9 +8,8 @@ public class PathManagement : MonoBehaviourReferenced {
     private List<TunnelBehaviour> tunnels = new List<TunnelBehaviour>();
 
     public void AddToPaths(PathBehaviour pb) {
-        pb.SetID(paths.Count);
         paths.Add(pb);
-        if (pb.endTunnel != null) pb.endTunnel.SetEndTunnelID(pb.Id);
+        if (pb.endTunnel != null) pb.endTunnel.SetEndTunnelID(pb.id);
     }
 
     public void AddToTunnels(TunnelBehaviour tunnel) {
@@ -19,7 +18,13 @@ public class PathManagement : MonoBehaviourReferenced {
     }
 
     public PathBehaviour GetMyPath(int id) {
-        return paths[id];
+        for (int i = 0; i < paths.Count; i++) {
+            if (paths[i].id == id) {
+                return paths[i];
+            }
+        }
+        Debug.LogError("Path not Found");
+        return null;
     }
 
     public List<PathBehaviour> GetAllPaths() {

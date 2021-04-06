@@ -53,12 +53,15 @@ public class GearManagement : MonoBehaviourReferenced {
         gearTextCurrent = gearTextCurrentObj.GetComponent<TMP_Text>();
         gearSprites = referenceManagement.gearSprites;
         gearImage = referenceManagement.gearImage;
-        SetCurrentGear(1);
         SetRandomGoalGear();
         clutchDown = false;
 
         startGearShift = FMODUnity.RuntimeManager.CreateInstance(referenceManagement.gearShiftStart);
         stopGearShift = FMODUnity.RuntimeManager.CreateInstance(referenceManagement.gearShiftStop);
+    }
+
+    private void Start() {
+        SetCurrentGear(1);
     }
 
     private void OnDisable() {
@@ -122,7 +125,6 @@ public class GearManagement : MonoBehaviourReferenced {
             var regex = new Regex("([-+]?[0-9]*\\.?[0-9]+)");
 
             if (float.Parse(regex.Match(name).ToString()) == currentGear) {
-                Debug.Log("selected sprite");
                 gearImage.sprite = gearSprites[i];
                 return;
             }

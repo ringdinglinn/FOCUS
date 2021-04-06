@@ -1,16 +1,35 @@
 ﻿<Properties StartupConfiguration="{281EEECF-89B9-6D0B-978A-5FDC6B8E6CBA}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/06 Cars/CarAI.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/00 Management/CarManagement.cs">
     <Files>
-      <File FileName="Assets/Scripts/04 Switching/SwitchingManagement.cs" Line="427" Column="6" />
-      <File FileName="Assets/Scripts/04 Switching/SwitchingBehaviour.cs" Line="22" Column="41" />
-      <File FileName="Assets/Scripts/00 Management/ReferenceManagement.cs" Line="88" Column="36" />
-      <File FileName="Assets/Scripts/06 Cars/WheelVehicle.cs" Line="28" Column="33" />
-      <File FileName="Assets/Scripts/06 Cars/CarAI.cs" Line="105" Column="36" />
+      <File FileName="Assets/Scripts/04 Switching/SwitchingManagement.cs" Line="442" Column="1" />
+      <File FileName="Assets/Scripts/04 Switching/SwitchingBehaviour.cs" Line="85" Column="91" />
+      <File FileName="Assets/Scripts/00 Management/ReferenceManagement.cs" Line="80" Column="1" />
+      <File FileName="Assets/Scripts/06 Cars/CarAI.cs" Line="109" Column="41" />
+      <File FileName="Assets/Scripts/03 Paths/PathManagement.cs" Line="24" Column="1" />
+      <File FileName="Assets/Scripts/00 Management/CarManagement.cs" Line="95" Column="34" />
+      <File FileName="Assets/Scripts/03 Paths/StreetlightPlacer.cs" Line="17" Column="1" />
+      <File FileName="Assets/Scripts/00 Management/GearManagement.cs" Line="128" Column="1" />
+      <File FileName="Assets/PathCreator/Core/Runtime/Objects/PathCreator.cs" Line="20" Column="1" />
+      <File FileName="Assets/PathCreator/Core/Runtime/Objects/BezierPath.cs" Line="82" Column="17" />
+      <File FileName="Assets/PathCreator/Core/Runtime/Objects/VertexPath.cs" Line="112" Column="1" />
+      <File FileName="Assets/PathCreator/Core/Editor/PathEditor.cs" Line="190" Column="64" />
+      <File FileName="Assets/Scripts/00 Management/TravelManagement.cs" Line="62" Column="61" />
+      <File FileName="Assets/Scripts/08 Journey/JounreyTrigger.cs" Line="24" Column="6" />
+      <File FileName="Assets/Scripts/03 Paths/PathBehaviour.cs" Line="59" Column="22" />
+      <File FileName="Assets/Scripts/03 Paths/TunnelBehaviour.cs" Line="45" Column="78" />
+      <File FileName="Assets/Scripts/03 Paths/PathLoopTriggerBehaviour.cs" Line="15" Column="1" />
     </Files>
+    <Pads>
+      <Pad Id="MonoDevelop.UnitTesting.TestPad">
+        <State name="__root__">
+          <Node name="Unity" expanded="True" selected="True" />
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="1dea4385-8ad0-40e6-a076-f73899274634" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="2aade84d-04c8-43ce-a89e-82ac326e6b18" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

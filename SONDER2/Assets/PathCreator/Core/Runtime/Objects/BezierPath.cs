@@ -40,7 +40,7 @@ namespace PathCreation {
  [SerializeField, HideInInspector]
  List<float> perAnchorNormalsAngle;
  [SerializeField, HideInInspector]
- float globalNormalsAngle;
+ float globalNormalsAngle = 0;
  [SerializeField, HideInInspector]
  bool flipNormals;
 
@@ -52,6 +52,7 @@ namespace PathCreation {
  ///<param name="isClosed"> Should the end point connect back to the start point? </param>
  ///<param name="space"> Determines if the path is in 3d space, or clamped to the xy/xz plane </param>
  public BezierPath (Vector3 centre, bool isClosed = false, PathSpace space = PathSpace.xyz) {
+
 
  Vector3 dir = (space == PathSpace.xz) ? Vector3.forward : Vector3.up;
  float width = 2;
@@ -228,7 +229,6 @@ namespace PathCreation {
             if (n * 2 <= points.Count) {
                 for (int i = 0; i < n; i++) {
                     Vector3 pos = points[points.Count - n + i];
-                    Debug.Log($"i = {i}, i0 = {points.Count - n + i}");
                     pos = endTunnel.InverseTransformPoint(pos);
                     pos = startTunnel.TransformPoint(pos);
                     points[i] = pos;
@@ -457,8 +457,8 @@ namespace PathCreation {
             }
             set {
                 if (value != globalNormalsAngle) {
-                    globalNormalsAngle = value;
-                    NotifyPathModified ();
+                    globalNormalsAngle = 0;
+                    NotifyPathModified();
                 }
             }
         }

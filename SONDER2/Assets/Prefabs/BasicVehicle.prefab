@@ -550,6 +550,7 @@ MonoBehaviour:
   autopilotEnabled: 1
   started: 0
   id: 0
+  manualPathID: 0
   cam: {fileID: 0}
 --- !u!114 &114356753913500666
 MonoBehaviour:
@@ -1406,7 +1407,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2474092420525005858}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.267, y: 0.772, z: -0.057}
+  m_LocalPosition: {x: -0.24, y: 0.772, z: 0.04}
   m_LocalScale: {x: 0.83333325, y: 0.83333325, z: 0.83333325}
   m_Children: []
   m_Father: {fileID: 4898148274632070}

@@ -20,6 +20,7 @@ public class ReferenceManagement : MonoBehaviour
     public CarManagement carManagement;
     public VoiceClipManagement voiceClipManagement;
     public GearManagement gearManagement;
+    public JourneyManagement journeyManagement;
 
     [Header("Player Items")]
     public Camera1stPerson cam;
@@ -75,6 +76,8 @@ public class ReferenceManagement : MonoBehaviour
     public string headlightsFlash;
     [FMODUnity.EventRef]
     public string playerDrum;
+    [FMODUnity.EventRef]
+    public string radioStatic;
 
     [Header("Switching")]
     [Range(0.0f, 1.0f)]
@@ -86,4 +89,8 @@ public class ReferenceManagement : MonoBehaviour
     [Header("Sprites")]
     public List<Texture> morseSingalTex;
     public Material morseSingalMat;
+
+    [Header("Journey")]
+    public GameObject introLoopTrigger;
+    public GameObject alternatePath0;
 }

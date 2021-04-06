@@ -88,11 +88,12 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     private float currentSDSpeed = 0;
     public float signalDisplayAmplitude = 1f;
 
+    EventInstance radioStatic;
+
     private void Start() {
         BeatDetector beatDetector = referenceManagement.beatDetector;
         beatDetector.bdOnBeatSubD.AddListener(OnSubDBeatDetected);
         beatDetector.bdOnBeatFull.AddListener(OnFullBeatDetected);
-        camController = referenceManagement.cam;
         cam = camController.GetComponent<Camera>();
         switchImgObj = referenceManagement.switchImgObj;
         switchImgTransform = switchImgObj.GetComponent<RectTransform>();
@@ -106,12 +107,14 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         gearManagement = referenceManagement.gearManagement;
         morseSignalMat = referenceManagement.morseSingalMat;
         morseSignalTex = referenceManagement.morseSingalTex;
-        //UpdateDebugUI();
+        radioStatic = RuntimeManager.CreateInstance(referenceManagement.radioStatic);
+        radioStatic.start();
     }
 
     private void OnEnable() {
         referenceManagement.carManagement.cameraChanged.AddListener(OnCameraChanged);
         referenceManagement.carManagement.carsCreated.AddListener(OnCarsCreated);
+        camController = referenceManagement.cam;
     }
 
     private void OnDisable() {
@@ -171,6 +174,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         value += currentSDSpeed * Time.deltaTime;
         value = Mathf.Clamp(value, 0.05f, 2);
         activeCar.morseSingalRenderer.materials[0].SetFloat("Clarity", value);
+        radioStatic.setParameterByName("SignalStrength", value);
     }
 
     private void SearchForCars() {
@@ -404,10 +408,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     private void DisplayMarkedCarSignalPattern() {
         string digits = "";
         for (int i = 0; i < 3; i++) {
-            string digit = "0";
-            if (signalPattern[i] == FlashType.Long) {
-                digit = "1";
-            }
+            string digit = signalPattern[i] == FlashType.Short ? "0" : "1";
             digits += digit;
         }
         int index = Convert.ToInt32(digits, 2);
@@ -438,7 +439,6 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         if (activeCar != null) {
             activeCar.morseSignalDisplay.SetActive(false);
         }
-        Debug.Log($"active car changed, {sb}");
         sb.morseSignalDisplay.SetActive(true);
     }
 }

@@ -10,10 +10,7 @@ public class PathBehaviour : MonoBehaviourReferenced {
     private StartPosBehaviour startPosBehaviour;
     private RoadMeshCreator roadMeshCreator;
 
-    private int id;
-    public int Id {
-        get { return id; }
-    }
+    public int id;
 
     private GameObject startTrigger;
     private GameObject endTrigger;
