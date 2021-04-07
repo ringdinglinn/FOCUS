@@ -14,6 +14,7 @@ public class CarManagement : MonoBehaviourReferenced {
 
     public UnityEvent cameraChanged;
     public UnityEvent carsCreated;
+    public UnityEvent allSBChanged;
 
     private GameObject carPrefab;
 
@@ -25,8 +26,9 @@ public class CarManagement : MonoBehaviourReferenced {
     private GameObject parentObj;
 
     private SwitchingBehaviour initialCar = null;
-    public bool manualInitialCar;
+    private bool manualInitialCar = true;
     public bool carsGenerated = false;
+
 
     private void OnEnable() {
         pathManagement = referenceManagement.pathManagement;
@@ -48,6 +50,7 @@ public class CarManagement : MonoBehaviourReferenced {
 
             List<Vector3> startPosList = allPathBehaviours[i].GetStartPosBehaviour().GetStartPosList();
             int initPosIndex = allPathBehaviours[i].GetStartPosBehaviour().GetInitialPosIndex();
+            Debug.Log($"initPosIndex = {initPosIndex} ");
             PathCreator path = allPathBehaviours[i].GetPath();
 
             for (int j = 0; j < startPosList.Count; j++) {
@@ -78,10 +81,14 @@ public class CarManagement : MonoBehaviourReferenced {
                 if (!setInitial && j == initPosIndex) {
                     setInitial = true;
                     initialCar = sb;
+                    Debug.Log($"initCar Found, j = {j}");
                 }
             }
         }
-        if (initialCar == null) manualInitialCar = true;
+        if (initialCar != null) {
+            manualInitialCar = false;
+            Debug.Log("manual initial car set false");
+        }
         carsCreated.Invoke();
         carsGenerated = true;
     }
@@ -114,29 +121,28 @@ public class CarManagement : MonoBehaviourReferenced {
     }
 
     public void ActiveCarHasReachedPortal(CarAI activeCar) {
-        Debug.Log("car management : active car has reached portal");
-        Debug.Log($"pathBehaviour = {activeCar.pathBehaviour}");
-        Debug.Log($"cars in tunnel = {activeCar.pathBehaviour.endTunnel.GetCarAIsInTunnel().Count}");
-        carAIsInTunnel = activeCar.pathBehaviour.endTunnel.GetCarAIsInTunnel();
+        carAIsInTunnel = activeCar.endTunnel.GetCarAIsInTunnel();
+        Debug.Log("active car has reached tunnel");
         foreach (CarAI car in carAIsInTunnel) {
             Debug.Log("foreach");
             if (car.HasClone) {
+                Debug.Log("has clone");
                 car.ActiveCarHasReachedPortal();
             }
         }
     }
 
     public void ChangeToClone(bool isActiveCar, CarAI oldCar, CarAI newCar) {
+        Debug.Log("car management, change to clone");
         newCar.MakeMainCar(isActiveCar);
         allSwitchingBehaviours.Remove(oldCar.GetComponent<SwitchingBehaviour>());
         allCarAIs.Remove(oldCar);
         allCarAIs.Add(newCar);
         SwitchingBehaviour newSB = newCar.GetComponent<SwitchingBehaviour>();
-        allSwitchingBehaviours.Add(newSB);
         newSB.id = idCounter;                   
         ++idCounter;
         newCar.gameObject.name = carName + (idCounter - 1);
-        oldCar.pathBehaviour.endTunnel.CarIsDestroyed(oldCar);
+        oldCar.endTunnel.CarIsDestroyed(oldCar);
         if (isActiveCar) {
             referenceManagement.cam = newCar.cam;
             cameraChanged.Invoke();
@@ -144,6 +150,7 @@ public class CarManagement : MonoBehaviourReferenced {
             Destroy(oldCar.cam.gameObject);
         }
         Destroy(oldCar.gameObject);
+        allSBChanged.Invoke();
     }
 
     public void ActiveCarGearChanged(int gear) {
@@ -162,5 +169,9 @@ public class CarManagement : MonoBehaviourReferenced {
 
     public void AddSwitchingBehaviour(SwitchingBehaviour sb) {
         allSwitchingBehaviours.Add(sb);
+    }
+
+    public bool GetManualInitialCar() {
+        return manualInitialCar;
     }
 }

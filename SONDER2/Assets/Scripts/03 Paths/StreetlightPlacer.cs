@@ -36,22 +36,25 @@ public class StreetlightPlacer : MonoBehaviourReferenced {
         float end = myPath.path.length;
 
         if (streetlightMarkers.Count != 0) {
-            start = myPath.path.GetClosestDistanceAlongPath(streetlightMarkers[0]);         // currently system only handles start and end, but can be easily adapted
-        }
-        if (streetlightMarkers.Count > 1) {
-            end = myPath.path.GetClosestDistanceAlongPath(streetlightMarkers[1]);
-        }
+            for (int i = 0; i < streetlightMarkers.Count - 1; i++) {
+                if (i % 2 == 0) {
+                    start = myPath.path.GetClosestDistanceAlongPath(streetlightMarkers[i]);
+                    end = myPath.path.GetClosestDistanceAlongPath(streetlightMarkers[i + 1]);
 
-        float dist = start;
-        float offset = roadMeshCreator.roadWidth;
-        while (end > dist) {
-            Vector3 offsetDir = Vector3.Cross(myPath.path.GetDirectionAtDistance(dist), Vector3.up);
-            Vector3 pos = myPath.path.GetPointAtDistance(dist);
-            Vector3 dir = offsetDir * (-1);
-            pos = pos + offsetDir * offset;
-            GameObject obj = Instantiate(origStreetlight, pos, Quaternion.LookRotation(dir));
-            obj.transform.SetParent(parentObject.transform);
-            dist += intervall;
+                    float dist = start;
+                    float offset = roadMeshCreator.roadWidth;
+                    while (end > dist) {
+                        Vector3 offsetDir = Vector3.Cross(myPath.path.GetDirectionAtDistance(dist), Vector3.up);
+                        Vector3 pos = myPath.path.GetPointAtDistance(dist);
+                        Vector3 dir = offsetDir * (-1);
+                        pos = pos + offsetDir * offset;
+                        GameObject obj = Instantiate(origStreetlight, pos, Quaternion.LookRotation(dir));
+                        obj.transform.SetParent(parentObject.transform);
+                        dist += intervall;
+                    }
+
+                }
+            }
         }
     }
 }

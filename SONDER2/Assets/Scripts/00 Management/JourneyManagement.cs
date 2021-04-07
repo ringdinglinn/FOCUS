@@ -12,7 +12,6 @@ public class JourneyManagement : MonoBehaviourReferenced {
     private void OnEnable() {
         switchingManagement = referenceManagement.switchingManagement;
         switchingManagement.CarSwitchedEvent.AddListener(HandleSwitched);
-        introLoopTrigger = referenceManagement.introLoopTrigger;
         pathManagement = referenceManagement.pathManagement;
 
         alternatePath0 = referenceManagement.alternatePath0;
@@ -28,40 +27,21 @@ public class JourneyManagement : MonoBehaviourReferenced {
     }
 
     private void EvaluateSwitch() {
-
-        // into done
         if (nrOfSwitches == 1) {
-            introDone = true;
-            IntroDone();
+            ToLevel1();
         }
     }
 
-    // INTRO
-    private bool introDone;
-    private GameObject introLoopTrigger;
-
-	public void IntroLoopTrigger(CarAI carAI) {
-		if (!introDone) {
-			carAI.SetToStartConfig();
-        }
-    }
-
-    private void IntroDone() {
-        introLoopTrigger.SetActive(false);
-    }
 
     // LEVEL 1
 
-    public void Gate0Trigger(CarAI carAI) {
-        if (!carAI.autopilotEnabled) {
-            CloseGate0();
-        }
+    private void ToLevel1() {
+        pathManagement.GetMyPath(0).TransitionToNextLevel();
+        journeyState = JourneyState.Transition_Intro_1;
     }
 
-    private void CloseGate0() {
-        switchingManagement.ActiveCar.GetCarAI().PathID = 1;
-        alternatePath0.SetActive(true);
-        pathManagement.GetAllPaths()[0].gameObject.SetActive(false);
-    }
-	
+    public enum JourneyState { Intro, Transition_Intro_1, Level1, Transition_1_21, Level21, Transition_21_22, Level22, Transition_22_31, Level31, Transition_31_32, Level32, Transition_32_4, Level4, Outro }
+
+    [SerializeField]
+    private JourneyState journeyState = JourneyState.Intro;
 }

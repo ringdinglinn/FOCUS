@@ -79,19 +79,16 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
 
     public void SwitchIntoCar(Camera1stPerson cam) {
         carAI.SwitchOffAutopilot();
-        Debug.Log($"car ai cam = {carAI.cam}");
-        Debug.Log($"this cam = {cam}");
         carAI.cam = cam;
         switchingManagement.ActiveCar = this;
         wheelVehicle.IsPlayer = true;
-        if (isInitialCar && carManagement.manualInitialCar) wheelVehicle.IsPlayer = false;
+        if (isInitialCar && carManagement.GetManualInitialCar()) wheelVehicle.IsPlayer = false;
 
         SetHeadlightsActiveCar();
     }
 
     public void SwitchOutOfCar() {
-        Debug.Log($"Switch Out of car, {gameObject.name}");
-        if (!(carManagement.manualInitialCar && isInitialCar)) {
+        if (!(carManagement.GetManualInitialCar() && isInitialCar)) {
             carAI.SwitchOnAutopilot();
         }
         carAI.cam = null;

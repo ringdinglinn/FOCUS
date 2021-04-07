@@ -91,6 +91,5 @@ public class ReferenceManagement : MonoBehaviour
     public Material morseSingalMat;
 
     [Header("Journey")]
-    public GameObject introLoopTrigger;
     public GameObject alternatePath0;
 }

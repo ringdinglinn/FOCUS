@@ -6,10 +6,18 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
     public List<CarAI> carsInTunnel = new List<CarAI>();
     private int id;
 
+    public TunnelBehaviour startTunnel;
+    public bool isEndTunnel;
+    public bool isLevelEndTunnel;
+    public bool isLevelStartTunnel;
+
     private int endTunnelID;
+
+    public PathLoopTriggerBehaviour portalTrigger;
 
     private void Start() {
         referenceManagement.pathManagement.AddToTunnels(this);
+        portalTrigger.SetTunnelBehaviour(this);
     }
 
     public void SetID(int id) {
@@ -24,13 +32,16 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
         if (other.gameObject.CompareTag("Car")) {
             CarAI carAI;
             carAI = other.GetComponentInParent<CarAI>();
+            if (isEndTunnel) {
+                Debug.Log("trigger enter, is end tunnel");
+                carAI.startTunnel = startTunnel;
+                carAI.endTunnel = this;
+            }
             bool carInList = false;
             foreach (CarAI car in carsInTunnel) if (car == carAI) carInList = true;
-            Debug.Log("Trigger entered");
             if (!carInList && !carAI.dontLoop) carsInTunnel.Add(carAI);
-            if (!carAI.autopilotEnabled) {
+            if (!carAI.autopilotEnabled && !isLevelEndTunnel && !isLevelStartTunnel) {
                 foreach (CarAI car in carsInTunnel) {
-                    Debug.Log("Trigger entered foreach");
                     car.ActiveCarHasEnteredTunnel();
                 }
             }
@@ -41,9 +52,19 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
         if (other.gameObject.CompareTag("Car")) {
             CarAI carAI;
             carAI = other.GetComponentInParent<CarAI>();
-            carAI.dontLoop = false;
+            Debug.Log($"carAI.endTunnel = {carAI.endTunnel}");
+            Debug.Log($"name = {this}");
+            Debug.Log($"exit tunnel, is end tunnel = {this != carAI.endTunnel}");
+            if (this != carAI.endTunnel) {
+                Debug.Log($"set dont loop to false, {carAI.gameObject.name}");
+            }
+                carAI.dontLoop = false;
             if (carAI.PathID == endTunnelID) {
                 carsInTunnel.Remove(carAI);
+            }
+            if (!carAI.autopilotEnabled && isLevelStartTunnel) {
+                isLevelStartTunnel = false;
+                isEndTunnel = false;
             }
         }
     }

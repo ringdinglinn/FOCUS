@@ -52,8 +52,8 @@ public class CarAI : MonoBehaviourReferenced {
     }
     public int manualPathID;
 
-    private Transform startTunnel;
-    private Transform endTunnel;
+    public TunnelBehaviour startTunnel;
+    public TunnelBehaviour endTunnel;
 
     public Camera1stPerson cam;
 
@@ -83,12 +83,12 @@ public class CarAI : MonoBehaviourReferenced {
         id = switchingBehaviour.id;
         rb = GetComponent<Rigidbody>();
         carManagement.AddCarManagement(this);
-        if (!carManagement.carsGenerated && switchingBehaviour.isInitialCar) PathID = manualPathID; 
     }
 
     private void Start() {
-        if (pathBehaviour.startTunnel != null) startTunnel = pathBehaviour.startTunnel.transform;
-        if (pathBehaviour.endTunnel != null) endTunnel = pathBehaviour.endTunnel.transform;
+        if (carManagement.GetManualInitialCar() && switchingBehaviour.isInitialCar) {
+            PathID = manualPathID;
+        }
         if (isClone) {
             SetCloneTransform();
         }
@@ -151,8 +151,8 @@ public class CarAI : MonoBehaviourReferenced {
 
     private void GetPathInfo() {
         pathBehaviour = referenceManagement.pathManagement.GetMyPath(pathID);
-        if (pathBehaviour.endTunnel != null) endTunnel = pathBehaviour.endTunnel.transform;
-        if (pathBehaviour.startTunnel != null) startTunnel = pathBehaviour.startTunnel.transform;
+        if (pathBehaviour.endTunnel != null) endTunnel = pathBehaviour.endTunnel;
+        if (pathBehaviour.startTunnel != null) startTunnel = pathBehaviour.startTunnel;
         SetPath(pathBehaviour.GetPath());
     }
 
@@ -185,9 +185,26 @@ public class CarAI : MonoBehaviourReferenced {
     public void PortalReached() {
         if (!dontLoop) {
             if (!autopilotEnabled) {
-                carManagement.ActiveCarHasReachedPortal(this);
             }
             else if (!inTunnelWithActiveCar && !dontLoop) {
+
+            }
+        }
+    }
+
+    public void PortalReachedActiveCar() {
+        Debug.Log($"portal reache active car, dontLoop = {dontLoop}");
+        if (!dontLoop) {
+            carManagement.ActiveCarHasReachedPortal(this);
+        }
+    }
+
+    public void PortalReachedInactiveCar() {
+        Debug.Log($"dontLoop = {dontLoop}");
+        if (!dontLoop) {
+            if (!inTunnelWithActiveCar) {
+                Debug.Log($"start tunnel = {startTunnel}");
+                Debug.Log($"end tunnel = {endTunnel}");
                 if (startTunnel != null) TunnelLoop();
                 else Loop();
             }
@@ -229,6 +246,8 @@ public class CarAI : MonoBehaviourReferenced {
         Vector3 vel = TransformDirectionToStart(rb.velocity);
         Vector3 angVel = TransformDirectionToStart(rb.angularVelocity);
 
+        Debug.Log($"pos = {pos}");
+
         transform.position = pos;
         transform.rotation = Quaternion.LookRotation(dir);
         rb.velocity = vel;
@@ -242,18 +261,19 @@ public class CarAI : MonoBehaviourReferenced {
     }
 
     private Vector3 TransformPointToStart(Vector3 pos) {
-        pos = endTunnel.InverseTransformPoint(pos);
-        pos = startTunnel.TransformPoint(pos);
+        pos = endTunnel.transform.InverseTransformPoint(pos);
+        pos = startTunnel.transform.TransformPoint(pos);
         return pos;
     }
 
     private Vector3 TransformDirectionToStart(Vector3 dir) {
-        dir = endTunnel.InverseTransformDirection(dir);
-        dir = startTunnel.TransformDirection(dir);
+        dir = endTunnel.transform.InverseTransformDirection(dir);
+        dir = startTunnel.transform.TransformDirection(dir);
         return dir;
     }
 
     private void ChangeToClone() {
+        Debug.Log("Change To Clone");
         carManagement.ChangeToClone(!autopilotEnabled, this, clone);
     }
 
@@ -263,6 +283,9 @@ public class CarAI : MonoBehaviourReferenced {
     }
 
     public void StartClone(bool isActiveCar, WheelVehicle wv, Transform transform, Rigidbody rb, CarAI carAI) {
+        Debug.Log("start clone");
+        Debug.Log($"origCar startTunnel = {carAI.startTunnel}");
+        Debug.Log($"origCar endTunnel = {carAI.endTunnel}");
         autopilotEnabled = !isActiveCar;
         dontLoop = true;
         wheelVehicle.IsPlayer = isActiveCar;
@@ -270,6 +293,8 @@ public class CarAI : MonoBehaviourReferenced {
         originalCarTransform = transform;
         originalCarRB = rb;
         originalCarAI = carAI;
+        startTunnel = carAI.startTunnel;
+        endTunnel = carAI.endTunnel;
         if (isActiveCar) {
             origCamTransform = carAI.cam.transform;
             switchingBehaviour.SetHeadlightsActiveCar();
@@ -284,6 +309,9 @@ public class CarAI : MonoBehaviourReferenced {
         Vector3 dir = TransformDirectionToStart(originalCarTransform.forward);
         Vector3 vel = TransformDirectionToStart(originalCarRB.velocity);
         Vector3 angVel = TransformDirectionToStart(originalCarRB.angularVelocity);
+        Debug.Log($"clone pos = {pos}");
+        Debug.Log($"start Tunnel = {startTunnel}");
+        Debug.Log($"end Tunnel = {endTunnel}");
         transform.position = pos;
         transform.rotation = Quaternion.LookRotation(dir);
         rb.velocity = vel;
@@ -293,6 +321,7 @@ public class CarAI : MonoBehaviourReferenced {
     }
 
     private void CreateClone() {
+        Debug.Log("create clone");
         hasClone = true;
         clone = referenceManagement.carManagement.CreateCarClone(pathID);
         clone.StartClone(!autopilotEnabled, wheelVehicle, transform, rb, this);
@@ -310,8 +339,9 @@ public class CarAI : MonoBehaviourReferenced {
     }
 
     public void ActiveCarHasEnteredTunnel() {
-        Debug.Log($"Car AI, active car had entered tunnel, dontLoop = {dontLoop}");
+        Debug.Log("active car has enterd tunnel 1");
         if (!dontLoop) {
+            Debug.Log("dont loop");
             inTunnelWithActiveCar = true;
             CreateClone();
         }

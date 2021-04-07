@@ -13,14 +13,7 @@ public class JourneyTrigger : MonoBehaviourReferenced {
 
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag("Car")) {
-            switch (type) {
-                case TriggerType.IntroLoop:
-                    journeyManagement.IntroLoopTrigger(other.GetComponentInParent<CarAI>());
-                    break;
-                case TriggerType.Gate0:
-                    journeyManagement.Gate0Trigger(other.GetComponentInParent<CarAI>());
-                    break;
-            }
+
         }
     }
 

@@ -31,6 +31,7 @@ Transform:
   m_LocalScale: {x: 41.221138, y: 41.221138, z: 41.221138}
   m_Children:
   - {fileID: 8774193050417206677}
+  - {fileID: 2134307785838151212}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90.00001, y: 0, z: -19.449001}
@@ -60,7 +61,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   referenceManagement: {fileID: 0}
-  carsInTunnel: []
+  startTunnel: {fileID: 0}
+  isEndTunnel: 0
+  isLevelEndTunnel: 0
+  isLevelStartTunnel: 0
+  portalTrigger: {fileID: 528448572671357932}
 --- !u!65 &1228949533986281494
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -74,6 +79,64 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0993085, y: 2.2221751, z: 0.017641276}
   m_Center: {x: -0.54965585, y: 0.5845843, z: -0.0051863557}
+--- !u!1 &5206466781616206194
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2134307785838151212}
+  - component: {fileID: 2912582016769699149}
+  - component: {fileID: 528448572671357932}
+  m_Layer: 0
+  m_Name: Portal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2134307785838151212
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5206466781616206194}
+  m_LocalRotation: {x: 0.66944146, y: 0.22770195, z: 0.22770195, w: 0.66944146}
+  m_LocalPosition: {x: -0.219, y: 0.839, z: 0.097}
+  m_LocalScale: {x: 0.33151767, y: 0.2451263, z: 0.024259398}
+  m_Children: []
+  m_Father: {fileID: 2577202265941041940}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 52.430004, y: 90.00001, z: 90.00001}
+--- !u!65 &2912582016769699149
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5206466781616206194}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: -4.5474735e-13, y: 0, z: 0}
+--- !u!114 &528448572671357932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5206466781616206194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d58000008ed664ef5b423a35f3c3cb32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  referenceManagement: {fileID: 0}
 --- !u!1001 &9101365184452948606
 PrefabInstance:
   m_ObjectHideFlags: 0

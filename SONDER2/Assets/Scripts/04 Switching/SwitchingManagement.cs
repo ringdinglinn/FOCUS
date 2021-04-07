@@ -114,13 +114,18 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     private void OnEnable() {
         referenceManagement.carManagement.cameraChanged.AddListener(OnCameraChanged);
         referenceManagement.carManagement.carsCreated.AddListener(OnCarsCreated);
+        referenceManagement.carManagement.allSBChanged.AddListener(OnAllSBChanged);
         camController = referenceManagement.cam;
     }
 
     private void OnDisable() {
         referenceManagement.carManagement.cameraChanged.RemoveListener(OnCameraChanged);
         referenceManagement.carManagement.carsCreated.RemoveListener(OnCarsCreated);
+        referenceManagement.carManagement.allSBChanged.RemoveListener(OnAllSBChanged);
+    }
 
+    private void OnAllSBChanged() {
+        allSwitchingBehaviours = referenceManagement.carManagement.GetAllSwitchingBehaviours();
     }
 
     private void OnCarsCreated() {
