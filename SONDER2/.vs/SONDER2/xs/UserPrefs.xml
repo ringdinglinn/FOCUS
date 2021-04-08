@@ -1,29 +1,15 @@
 ﻿<Properties StartupConfiguration="{281EEECF-89B9-6D0B-978A-5FDC6B8E6CBA}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/03 Paths/TunnelBehaviour.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/04 Switching/SwitchingManagement.cs">
     <Files>
-      <File FileName="Assets/Scripts/04 Switching/SwitchingManagement.cs" Line="128" Column="38" />
-      <File FileName="Assets/Scripts/00 Management/CarManagement.cs" Line="147" Column="1" />
-      <File FileName="Assets/Scripts/04 Switching/SwitchingBehaviour.cs" Line="85" Column="43" />
-      <File FileName="Assets/Scripts/00 Management/ReferenceManagement.cs" />
-      <File FileName="Assets/Scripts/06 Cars/CarAI.cs" Line="328" Column="49" />
-      <File FileName="Assets/Scripts/03 Paths/PathManagement.cs" Line="21" Column="45" />
-      <File FileName="Assets/Scripts/03 Paths/StreetlightPlacer.cs" />
-      <File FileName="Assets/Scripts/00 Management/GearManagement.cs" Line="26" Column="1" />
-      <File FileName="Assets/PathCreator/Core/Runtime/Objects/PathCreator.cs" Line="20" Column="1" />
-      <File FileName="Assets/PathCreator/Core/Runtime/Objects/BezierPath.cs" Line="67" Column="1" />
-      <File FileName="Assets/PathCreator/Core/Runtime/Objects/VertexPath.cs" Line="112" Column="1" />
-      <File FileName="Assets/PathCreator/Core/Editor/PathEditor.cs" Line="190" Column="64" />
-      <File FileName="Assets/Scripts/03 Paths/PathBehaviour.cs" Line="33" Column="1" />
-      <File FileName="Assets/Scripts/03 Paths/TunnelBehaviour.cs" Line="67" Column="37" />
-      <File FileName="Assets/Scripts/03 Paths/PathLoopTriggerBehaviour.cs" Line="24" Column="1" />
-      <File FileName="Assets/Scripts/00 Management/JourneyManagement.cs" Line="39" Column="33" />
-      <File FileName="Assets/Scripts/08 Journey/JourneyTrigger.cs" Line="13" Column="1" />
-      <File FileName="Assets/Scripts/03 Paths/StartPosBehaviour.cs" Line="71" Column="34" />
+      <File FileName="Assets/PathCreator/Examples/Scripts/RoadMeshCreator.cs" Line="79" Column="218" />
+      <File FileName="Assets/PathCreator/Core/Runtime/Objects/VertexPath.cs" Line="25" Column="38" />
+      <File FileName="Assets/Scripts/07 UI/GoalIndicator.cs" Line="12" Column="14" />
+      <File FileName="Assets/Scripts/04 Switching/SwitchingManagement.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="f0e64bb5-24d6-4824-9118-1465c1b60279" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="b673e990-493b-4349-96c5-9de7427e5162" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

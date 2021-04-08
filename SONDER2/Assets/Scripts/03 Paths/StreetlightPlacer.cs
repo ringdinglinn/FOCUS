@@ -11,7 +11,7 @@ public class StreetlightPlacer : MonoBehaviourReferenced {
     private RoadMeshCreator roadMeshCreator;
     private PathCreator myPath;
 
-    private float intervall = 40;
+    private float intervall = 80;
 
     private List<Vector3> streetlightMarkers;
 

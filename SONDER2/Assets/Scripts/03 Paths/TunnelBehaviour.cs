@@ -33,7 +33,7 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
             CarAI carAI;
             carAI = other.GetComponentInParent<CarAI>();
             if (isEndTunnel) {
-                Debug.Log("trigger enter, is end tunnel");
+                Debug.Log($"set end tunnel, {carAI.gameObject.name}, {gameObject.name}");
                 carAI.startTunnel = startTunnel;
                 carAI.endTunnel = this;
             }
@@ -52,13 +52,9 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
         if (other.gameObject.CompareTag("Car")) {
             CarAI carAI;
             carAI = other.GetComponentInParent<CarAI>();
-            Debug.Log($"carAI.endTunnel = {carAI.endTunnel}");
-            Debug.Log($"name = {this}");
-            Debug.Log($"exit tunnel, is end tunnel = {this != carAI.endTunnel}");
             if (this != carAI.endTunnel) {
-                Debug.Log($"set dont loop to false, {carAI.gameObject.name}");
-            }
                 carAI.dontLoop = false;
+            }
             if (carAI.PathID == endTunnelID) {
                 carsInTunnel.Remove(carAI);
             }

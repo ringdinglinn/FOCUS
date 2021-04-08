@@ -17,7 +17,6 @@ public class PathLoopTriggerBehaviour : MonoBehaviourReferenced {
             Debug.Log($"entered portal = {carAI.autopilotEnabled}");
             if (carAI.autopilotEnabled) {
                 Debug.Log($"inactive car portal, tunnel name = {tunnelBehaviour}");
-                carAI.startTunnel = tunnelBehaviour.startTunnel;
                 carAI.PortalReachedInactiveCar();
             } else if (!carAI.autopilotEnabled && !tunnelBehaviour.isLevelStartTunnel && !tunnelBehaviour.isLevelEndTunnel) {
                 Debug.Log($"active car portal, tunnel name = {tunnelBehaviour}");
