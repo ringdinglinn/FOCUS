@@ -3,6 +3,20 @@ using System.Linq;
 using PathCreation.Utility;
 using UnityEngine;
 
+public static class BezierInfo{
+    public static Vector3[] tunnelCoordinates = new Vector3[] {
+        new Vector3(-66.255f, 0, 0),
+        new Vector3(-70f, 0, 0),
+        new Vector3(-80, 0, 0),
+        new Vector3(-146.255f, 0, 0),
+        new Vector3(-200, 0, 53.745f),
+        new Vector3(-200, 0, 120),
+        new Vector3(-200, 0, 130f),
+        new Vector3(-200, 0, 133.745f),
+        new Vector3(-200, 0, 200)
+    };
+}
+
 namespace PathCreation {
     /// A bezier path is a path made by stitching together any number of (cubic) bezier curves.
     /// A single cubic bezier curve is defined by 4 points: anchor1, control1, control2, anchor2
@@ -19,56 +33,57 @@ namespace PathCreation {
         public event System.Action OnModified;
         public enum ControlMode { Aligned, Mirrored, Free, Automatic };
 
- #region Fields
+        #region Fields
 
- [SerializeField, HideInInspector]
- List<Vector3> points;
- [SerializeField, HideInInspector]
- bool isClosed;
- [SerializeField, HideInInspector]
- PathSpace space;
- [SerializeField, HideInInspector]
- ControlMode controlMode;
- [SerializeField, HideInInspector]
- float autoControlLength = .3f;
- [SerializeField, HideInInspector]
- bool boundsUpToDate;
- [SerializeField, HideInInspector]
- Bounds bounds;
+        [SerializeField, HideInInspector]
+        List<Vector3> points;
+        [SerializeField, HideInInspector]
+        bool isClosed;
+        [SerializeField, HideInInspector]
+        PathSpace space;
+        [SerializeField, HideInInspector]
+        ControlMode controlMode;
+        [SerializeField, HideInInspector]
+        float autoControlLength = .3f;
+        [SerializeField, HideInInspector]
+        bool boundsUpToDate;
+        [SerializeField, HideInInspector]
+        Bounds bounds;
 
- // Normals settings
- [SerializeField, HideInInspector]
- List<float> perAnchorNormalsAngle;
- [SerializeField, HideInInspector]
- float globalNormalsAngle = 0;
- [SerializeField, HideInInspector]
- bool flipNormals;
-
- #endregion
-
- #region Constructors
-
- /// <summary> Creates a two-anchor path centred around the given centre point </summary>
- ///<param name="isClosed"> Should the end point connect back to the start point? </param>
- ///<param name="space"> Determines if the path is in 3d space, or clamped to the xy/xz plane </param>
- public BezierPath (Vector3 centre, bool isClosed = false, PathSpace space = PathSpace.xyz) {
+        // Normals settings
+        [SerializeField, HideInInspector]
+        List<float> perAnchorNormalsAngle;
+        [SerializeField, HideInInspector]
+        float globalNormalsAngle = 0;
+        [SerializeField, HideInInspector]
+        bool flipNormals;
 
 
- Vector3 dir = (space == PathSpace.xz) ? Vector3.forward : Vector3.up;
- float width = 2;
- float controlHeight = .5f;
- float controlWidth = 1f;
- points = new List<Vector3> {
- centre + Vector3.left * width,
- centre + Vector3.left * controlWidth + dir * controlHeight,
- centre + Vector3.right * controlWidth - dir * controlHeight,
- centre + Vector3.right * width
- };
 
- perAnchorNormalsAngle = new List<float> () { 0, 0 };
+        #endregion
 
- Space = space;
- IsClosed = isClosed;
+        #region Constructors
+
+        /// <summary> Creates a two-anchor path centred around the given centre point </summary>
+        ///<param name="isClosed"> Should the end point connect back to the start point? </param>
+        ///<param name="space"> Determines if the path is in 3d space, or clamped to the xy/xz plane </param>
+        public BezierPath (Vector3 centre, bool isClosed = false, PathSpace space = PathSpace.xyz) {
+
+            Vector3 dir = (space == PathSpace.xz) ? Vector3.forward : Vector3.up;
+            float width = 2;
+            float controlHeight = .5f;
+            float controlWidth = 1f;
+            points = new List<Vector3> {
+            centre + Vector3.left * width,
+            centre + Vector3.left * controlWidth + dir * controlHeight,
+            centre + Vector3.right * controlWidth - dir * controlHeight,
+            centre + Vector3.right * width
+            };
+
+            perAnchorNormalsAngle = new List<float> () { 0, 0 };
+
+            Space = space;
+            IsClosed = isClosed;
         }
 
         /// <summary> Creates a path from the supplied 3D points </summary>
@@ -268,6 +283,7 @@ namespace PathCreation {
 
         /// Add new anchor point to start of the path
         public void AddSegmentToStart (Vector3 anchorPos) {
+            Debug.Log("Add Segment To Start");
             if (isClosed) {
                 return;
             }
@@ -291,6 +307,28 @@ namespace PathCreation {
                 AutoSetAllAffectedControlPoints (0);
             }
             NotifyPathModified ();
+        }
+
+        public void AddTunnelPointsToStart() {
+            Vector3 xDir = points[0] - points[1];
+            xDir.Normalize();
+            xDir *= -1f;
+            Vector3 zDir  = Vector3.Cross(xDir, Vector3.up);
+            if (zDir.sqrMagnitude != 1) zDir.Normalize();
+            zDir *= -1f;
+
+            Vector3 startPos = points[0];
+
+
+            for (int i = 0; i < BezierInfo.tunnelCoordinates.Length; i++) {
+                Vector3 point = startPos + xDir * BezierInfo.tunnelCoordinates[i].x * 0.4f + zDir * BezierInfo.tunnelCoordinates[i].z * 0.4f;
+                points.Insert(0, point);
+                if (i % 3 == 2) {
+                    perAnchorNormalsAngle.Insert(0, 0.0f);
+                }
+            }
+
+            NotifyPathModified();
         }
 
         /// Insert new anchor point at given position. Automatically place control points around it so as to keep shape of curve the same

@@ -179,6 +179,11 @@ namespace PathCreationEditor {
                         EditorApplication.QueuePlayerLoopUpdate ();
                     }
 
+                    if (GUILayout.Button("Add Tunnel Points to Start")) {
+                        Undo.RecordObject(creator, "Add Tunnel Points to Start");
+                        bezierPath.AddTunnelPointsToStart();
+                    }
+
                     GUILayout.Space (inspectorSectionSpacing);
                 }
 

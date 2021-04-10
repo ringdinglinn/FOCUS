@@ -92,4 +92,8 @@ public class ReferenceManagement : MonoBehaviour
 
     [Header("Journey")]
     public GameObject alternatePath0;
+
+    [Header("TerrainManipulation")]
+    public TerrainManagement terrainManagement;
+    public List<MeshFilter> entryFilters;
 }

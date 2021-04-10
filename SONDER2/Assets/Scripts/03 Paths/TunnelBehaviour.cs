@@ -15,6 +15,14 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
 
     public PathLoopTriggerBehaviour portalTrigger;
 
+    public MeshFilter entryFilter0;
+    public MeshFilter entryFilter1;
+
+    private void OnEnable() {
+        referenceManagement.entryFilters.Add(entryFilter0);
+        referenceManagement.entryFilters.Add(entryFilter1);
+    }
+
     private void Start() {
         referenceManagement.pathManagement.AddToTunnels(this);
         portalTrigger.SetTunnelBehaviour(this);
