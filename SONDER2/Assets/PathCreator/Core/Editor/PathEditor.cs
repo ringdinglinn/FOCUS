@@ -4,6 +4,7 @@ using PathCreation.Utility;
 using UnityEditor;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
+using UnityEditor.SceneManagement;
 
 namespace PathCreationEditor {
     /// Editor class for the creation of Bezier and Vertex paths
@@ -100,6 +101,24 @@ namespace PathCreationEditor {
             }
         }
 
+        public static GameObject InsertPrefab(string path) {
+            string fileLocation = path;
+            GameObject instance;
+
+            // Try and load an existing prefab, if it's null then it does not exist.
+            GameObject barrelPrefab = AssetDatabase.LoadAssetAtPath(fileLocation, typeof(GameObject)) as GameObject;
+
+            if (barrelPrefab != null) {
+                instance = PrefabUtility.InstantiatePrefab(barrelPrefab) as GameObject;
+                Debug.Log("Barrel created!");
+                return instance;
+            }
+            else {
+                Debug.Log("Unable to create barrel.");
+                return null;
+            }
+        }
+
         void DrawBezierPathInspector () {
             using (var check = new EditorGUI.ChangeCheckScope ()) {
                 // Path options:
@@ -179,13 +198,68 @@ namespace PathCreationEditor {
                         EditorApplication.QueuePlayerLoopUpdate ();
                     }
 
+                    GUI.enabled = !bezierPath.hasTunnelPointsStart;
                     if (GUILayout.Button("Add Tunnel Points to Start")) {
-                        Undo.RecordObject(creator, "Add Tunnel Points to Start");
+                        //Undo.RecordObject(creator, "Add Tunnel Points to Start");
                         bezierPath.AddTunnelPointsToStart();
+                        GameObject tunnel = InsertPrefab("Assets/Prefabs/_Env/Env-Tunnel.prefab");
+                        Vector3 pos = bezierPath.GetStartTunnelStartPoint();
+                        Vector3 dir = bezierPath.GetStartTunnelDir();
+                        pos = creator.transform.TransformPoint(pos);
+                        dir = creator.transform.TransformDirection(dir);
+                        tunnel.transform.position = pos;
+                        tunnel.transform.rotation = Quaternion.LookRotation(dir, Vector3.up);
+                        if (!bezierPath.flipped) {
+                            tunnel.transform.RotateAround(tunnel.transform.position, Vector3.up, 90);
+                            tunnel.transform.position += dir * -200 * 0.4f;
+                            tunnel.transform.position += Vector3.Cross(dir, Vector3.up) * -200 * 0.4f;
+                        }
+                        tunnel.transform.position += new Vector3(0, bezierPath.TunnelYOffset, 0);
+                        tunnel.transform.SetParent(creator.transform);
+                        bezierPath.startTunnel = tunnel;
+                        EditorUtility.SetDirty(this);
                     }
 
+                    GUI.enabled = !bezierPath.hasTunnelPointsEnd;
+                    if (GUILayout.Button("Add Tunnel Points to End")) {
+                        //Undo.RecordObject(creator, "Add Tunnel Points to Start");
+                        bezierPath.AddTunnelPointsToEnd();
+                        GameObject tunnel = InsertPrefab("Assets/Prefabs/_Env/Env-Tunnel.prefab");
+                        Vector3 pos = bezierPath.GetEndTunnelStartPoint();
+                        Vector3 dir = bezierPath.GetEndTunnelDir();
+                        pos = creator.transform.TransformPoint(pos);
+                        dir = creator.transform.TransformDirection(dir);
+                        tunnel.transform.position = pos;
+                        tunnel.transform.rotation = Quaternion.LookRotation(dir, Vector3.up);
+                        if (bezierPath.flipped) {
+                            tunnel.transform.RotateAround(tunnel.transform.position, Vector3.up, 90);
+                            tunnel.transform.position += dir * -200 * 0.4f;
+                            tunnel.transform.position += Vector3.Cross(dir, Vector3.up) * -200 * 0.4f;
+                        }
+                        bezierPath.endTunnel = tunnel;
+                        tunnel.transform.position += new Vector3(0, bezierPath.TunnelYOffset, 0);
+                        tunnel.transform.SetParent(creator.transform);
+
+                        EditorUtility.SetDirty(this);
+                    }
+
+                    GUI.enabled = bezierPath.hasTunnelPointsEnd && bezierPath.hasTunnelPointsStart;
+
+                    if (GUILayout.Button("Flip Tunnels")) {
+                        bezierPath.FlipTunnels();
+                        EditorUtility.SetDirty(this);
+                    }
+
+
                     GUILayout.Space (inspectorSectionSpacing);
+
+                    if (GUI.changed) {
+                        EditorUtility.SetDirty(creator);
+                        EditorSceneManager.MarkSceneDirty(creator.gameObject.scene);
+                    }
                 }
+
+                GUI.enabled = true;
 
                 data.showNormals = EditorGUILayout.Foldout (data.showNormals, new GUIContent ("Normals Options"), true, boldFoldoutStyle);
                 if (data.showNormals) {

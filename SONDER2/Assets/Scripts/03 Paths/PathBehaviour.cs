@@ -32,6 +32,22 @@ public class PathBehaviour : MonoBehaviourReferenced {
             MakeStartAndEndIdentical();
             roadMeshCreator.PathAdjusted();
         }
+
+        if (gameObject.name == "CarPath2 (7)") {
+            Debug.Log("OnEnable, points:");
+            for (int i = 0; i < path.bezierPath.NumPoints; i++) {
+                Debug.Log(path.bezierPath.GetPoint(i));
+            }
+        }
+    }
+
+    private void Start() {
+        if (gameObject.name == "CarPath2 (7)") {
+            Debug.Log("Start, points:");
+            for (int i = 0; i < path.bezierPath.NumPoints; i++) {
+                Debug.Log(path.bezierPath.GetPoint(i));
+            }
+        }
     }
 
     private void SetUpTriggers() {

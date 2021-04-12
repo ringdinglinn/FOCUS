@@ -49,6 +49,12 @@ namespace PathCreation {
         bool boundsUpToDate;
         [SerializeField, HideInInspector]
         Bounds bounds;
+        [SerializeField, HideInInspector]
+        public bool hasTunnelPointsStart;
+        [SerializeField, HideInInspector]
+        public bool hasTunnelPointsEnd;
+        [SerializeField, HideInInspector]
+        public bool flipped;
 
         // Normals settings
         [SerializeField, HideInInspector]
@@ -57,6 +63,16 @@ namespace PathCreation {
         float globalNormalsAngle = 0;
         [SerializeField, HideInInspector]
         bool flipNormals;
+
+
+
+        public GameObject startTunnel;
+        public GameObject endTunnel;
+
+        public float TunnelYOffset {
+            get { return tunnelYOffset; }
+        }
+        const float tunnelYOffset = -0.8f;
 
 
 
@@ -145,6 +161,22 @@ namespace PathCreation {
         /// Get world space position of point
         public Vector3 GetPoint (int i) {
             return points[i];
+        }
+
+        public Vector3 GetStartTunnelStartPoint() {
+            return points[9];
+        }
+
+        public Vector3 GetEndTunnelStartPoint() {
+            return points[points.Count - 1 - 9];
+        }
+
+        public Vector3 GetStartTunnelDir() {
+            return (points[10] - points[9]).normalized;
+        }
+
+        public Vector3 GetEndTunnelDir() {
+            return(points[points.Count - 1 - 10] - points[points.Count - 1 - 9]).normalized;
         }
 
         /// Get world space position of point
@@ -310,15 +342,14 @@ namespace PathCreation {
         }
 
         public void AddTunnelPointsToStart() {
+            points[1] = new Vector3(points[1].x, points[0].y, points[1].z);
             Vector3 xDir = points[0] - points[1];
             xDir.Normalize();
             xDir *= -1f;
             Vector3 zDir  = Vector3.Cross(xDir, Vector3.up);
             if (zDir.sqrMagnitude != 1) zDir.Normalize();
-            zDir *= -1f;
-
+            if (!flipped) zDir *= -1f;
             Vector3 startPos = points[0];
-
 
             for (int i = 0; i < BezierInfo.tunnelCoordinates.Length; i++) {
                 Vector3 point = startPos + xDir * BezierInfo.tunnelCoordinates[i].x * 0.4f + zDir * BezierInfo.tunnelCoordinates[i].z * 0.4f;
@@ -327,6 +358,90 @@ namespace PathCreation {
                     perAnchorNormalsAngle.Insert(0, 0.0f);
                 }
             }
+
+            hasTunnelPointsStart = true;
+
+            NotifyPathModified();
+        }
+
+        public void AddTunnelPointsToEnd() {
+            points[points.Count - 2] = new Vector3(points[points.Count - 2].x, points[points.Count - 1].y, points[points.Count - 2].z);
+            Vector3 xDir = points[points.Count - 1] - points[points.Count - 2];
+            xDir.Normalize();
+            xDir *= -1f;
+            Vector3 zDir = Vector3.Cross(xDir, Vector3.up);
+            if (zDir.sqrMagnitude != 1) zDir.Normalize();
+            if (flipped) zDir *= -1f;
+            Vector3 startPos = points[points.Count - 1];
+
+            for (int i = 0; i < BezierInfo.tunnelCoordinates.Length; i++) {
+                Vector3 point = startPos + xDir * BezierInfo.tunnelCoordinates[i].x * 0.4f + zDir * BezierInfo.tunnelCoordinates[i].z * 0.4f;
+                points.Add(point);
+                if (i % 3 == 2) {
+                    perAnchorNormalsAngle.Add(0.0f);
+                }
+            }
+
+            hasTunnelPointsEnd = true;
+
+            NotifyPathModified();
+        }
+
+        public void FlipTunnels() {
+            flipped = !flipped;
+            UpdateStartTunnelPoints(points[9]);
+            UpdateEndTunnelPoints(points[points.Count - 1 - 9]);
+        }
+
+        private void UpdateStartTunnelPoints(Vector3 startPos) {
+            Vector3 xDir = points[9] - points[10];
+            xDir.Normalize();
+            xDir *= -1f;
+            Vector3 zDir = Vector3.Cross(xDir, Vector3.up);
+            if (zDir.sqrMagnitude != 1) zDir.Normalize();
+            if (!flipped) zDir *= -1f;
+
+            for (int i = 0; i < BezierInfo.tunnelCoordinates.Length; i++) {
+                points[BezierInfo.tunnelCoordinates.Length - 1 - i] = startPos + xDir * BezierInfo.tunnelCoordinates[i].x * 0.4f + zDir * BezierInfo.tunnelCoordinates[i].z * 0.4f;
+                if (i % 3 == 2) {
+                    perAnchorNormalsAngle.Insert(0, 0.0f);
+                }
+            }
+
+            startTunnel.transform.localRotation = Quaternion.LookRotation(xDir);
+            startTunnel.transform.localPosition = new Vector3(points[9].x, points[9].y + tunnelYOffset, points[9].z);
+            if (!flipped) {
+                startTunnel.transform.RotateAround(startTunnel.transform.position, Vector3.up, 90);
+                startTunnel.transform.position += xDir * -200 * 0.4f;
+                startTunnel.transform.position += zDir * 200 * 0.4f;
+            }
+
+            NotifyPathModified();
+         }
+
+        private void UpdateEndTunnelPoints(Vector3 startPos) {
+            Vector3 xDir = points[points.Count - 1 - 9] - points[points.Count - 1 - 10];
+            xDir.Normalize();
+            xDir *= -1f;
+            Vector3 zDir = Vector3.Cross(xDir, Vector3.up);
+            if (zDir.sqrMagnitude != 1) zDir.Normalize();
+            if (flipped) zDir *= -1f;
+
+            for (int i = 0; i < BezierInfo.tunnelCoordinates.Length; i++) {
+                points[points.Count - BezierInfo.tunnelCoordinates.Length + i] = startPos + xDir * BezierInfo.tunnelCoordinates[i].x * 0.4f + zDir * BezierInfo.tunnelCoordinates[i].z * 0.4f;
+                if (i % 3 == 2) {
+                    perAnchorNormalsAngle.Insert(0, 0.0f);
+                }
+            }
+
+            endTunnel.transform.localRotation = Quaternion.LookRotation(xDir);
+            endTunnel.transform.localPosition = points[points.Count - 1 - 9];
+            if (flipped) {
+                endTunnel.transform.RotateAround(endTunnel.transform.position, Vector3.up, 90);
+                endTunnel.transform.position += xDir * -200 * 0.4f;
+                endTunnel.transform.position += zDir * 200 * 0.4f;
+            }
+            endTunnel.transform.localPosition += new Vector3(0, tunnelYOffset, 0);
 
             NotifyPathModified();
         }
@@ -399,6 +514,15 @@ namespace PathCreation {
         /// Move an existing point to a new position
         public void MovePoint (int i, Vector3 pointPos, bool suppressPathModifiedEvent = false) {
 
+            if (hasTunnelPointsStart && i < 9) return;
+            if (hasTunnelPointsEnd && i > points.Count - 1 - 9) return;
+
+            if (hasTunnelPointsStart && i == 10) {
+                pointPos.y = points[9].y;
+            } else if (hasTunnelPointsEnd && i == points.Count - 1 - 10) {
+                pointPos.y = points[points.Count - 1 - 9].y;
+            }
+
             if (space == PathSpace.xy) {
                 pointPos.z = 0;
             } else if (space == PathSpace.xz) {
@@ -449,6 +573,14 @@ namespace PathCreation {
                 if (!suppressPathModifiedEvent) {
                     NotifyPathModified ();
                 }
+            }
+
+            if ((i == 9 || i == 10) && hasTunnelPointsStart)
+                UpdateStartTunnelPoints(i == 9 ? pointPos : points[9]);
+            if ((i == points.Count - 1 - 9 || i == points.Count - 1 - 10) && hasTunnelPointsEnd)
+                UpdateEndTunnelPoints(i == points.Count - 1 - 9 ? pointPos : points[points.Count - 1 - 9]);
+            if (!suppressPathModifiedEvent) {
+                NotifyPathModified();
             }
         }
 
