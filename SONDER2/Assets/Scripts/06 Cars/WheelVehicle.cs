@@ -15,6 +15,7 @@ using UnityEngine;
 namespace VehicleBehaviour {
     [RequireComponent(typeof(Rigidbody))]
     public class WheelVehicle : MonoBehaviourReferenced {
+
         
         [Header("Inputs")]
     #if MULTIOSCONTROLS
@@ -184,6 +185,11 @@ namespace VehicleBehaviour {
 
         // References
         SwitchingBehaviour switchingBehaviour;
+        SteeringAssistant steeringAssistant;
+
+        float prevSteering;
+        float autoAngle;
+
 
         // Init rigidbody, center of mass, wheels and more
         void Start() {
@@ -191,6 +197,7 @@ namespace VehicleBehaviour {
             Debug.Log("[ACP] Using MultiOSControls");
 #endif
             switchingBehaviour = GetComponent<SwitchingBehaviour>();
+            steeringAssistant = GetComponent<SteeringAssistant>();
 
             if (boostClip != null) {
                 boostSource.clip = boostClip;
@@ -236,12 +243,18 @@ namespace VehicleBehaviour {
                 // Accelerate & brake
                 if (throttleInput != "" && throttleInput != null)
                 {
-                    throttle = GetInput(throttleInput) - GetInput(brakeInput);
+                    //throttle = GetInput(throttleInput) - GetInput(brakeInput);
                 }
                 // Boost
                 boosting = (GetInput(boostInput) > 0.5f);
                 // Turn
                 steering = turnInputCurve.Evaluate(GetInput(turnInput)) * steerAngle;
+                if (steeringAssistant.GetDirectionAngle() >= 5 && steering < 0) {
+                    steering = 0;
+                } else if (steeringAssistant.GetDirectionAngle() <= -5 && steering > 0) {
+                    steering = 0;
+                }
+
                 // Dirft
                 drift = GetInput(driftInput) > 0 && _rb.velocity.sqrMagnitude > 100;
                 // Jump
@@ -249,9 +262,11 @@ namespace VehicleBehaviour {
             }
 
             // Direction
+            float currentSteerAngle = Mathf.Lerp(steering, autoAngle, 0.1f);
+            prevSteering = currentSteerAngle;
             foreach (WheelCollider wheel in turnWheel)
             {
-                wheel.steerAngle = Mathf.Lerp(wheel.steerAngle, steering, steerSpeed);
+                wheel.steerAngle = currentSteerAngle;
             }
 
             foreach (WheelCollider wheel in wheels)
@@ -338,6 +353,10 @@ namespace VehicleBehaviour {
             foreach (WheelCollider wheel in turnWheel) {
                 wheel.steerAngle = angle;
             }
+        }
+
+        public void SetAutoAngle(float angle) {
+            autoAngle = angle;
         }
 
         // Reposition the car to the start position

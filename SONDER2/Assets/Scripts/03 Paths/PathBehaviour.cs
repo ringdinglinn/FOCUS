@@ -22,31 +22,19 @@ public class PathBehaviour : MonoBehaviourReferenced {
 
     public bool autoSetUpTriggers;
 
-    private void OnEnable() {
+    protected override void Awake() {
+        base.Awake();
         path = GetComponent<PathCreator>();
         startPosBehaviour = GetComponent<StartPosBehaviour>();
         roadMeshCreator = GetComponent<RoadMeshCreator>();
         pathManagement = referenceManagement.pathManagement;
         pathManagement.AddToPaths(this);
+    }
+
+    private void OnEnable() {
         if (startTunnel != null && endTunnel != null) {
             MakeStartAndEndIdentical();
             roadMeshCreator.PathAdjusted();
-        }
-
-        if (gameObject.name == "CarPath2 (7)") {
-            Debug.Log("OnEnable, points:");
-            for (int i = 0; i < path.bezierPath.NumPoints; i++) {
-                Debug.Log(path.bezierPath.GetPoint(i));
-            }
-        }
-    }
-
-    private void Start() {
-        if (gameObject.name == "CarPath2 (7)") {
-            Debug.Log("Start, points:");
-            for (int i = 0; i < path.bezierPath.NumPoints; i++) {
-                Debug.Log(path.bezierPath.GetPoint(i));
-            }
         }
     }
 

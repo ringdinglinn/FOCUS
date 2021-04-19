@@ -110,11 +110,9 @@ namespace PathCreationEditor {
 
             if (barrelPrefab != null) {
                 instance = PrefabUtility.InstantiatePrefab(barrelPrefab) as GameObject;
-                Debug.Log("Barrel created!");
                 return instance;
             }
             else {
-                Debug.Log("Unable to create barrel.");
                 return null;
             }
         }

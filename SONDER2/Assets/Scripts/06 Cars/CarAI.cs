@@ -22,11 +22,9 @@ public class CarAI : MonoBehaviourReferenced {
         get { return hasClone; }
     }
 
-    private WheelVehicle originalCarWV;
     private Transform originalCarTransform;
     private Rigidbody originalCarRB;
     private CarAI originalCarAI;
-    private Transform origCamTransform;
 
     private CarAI clone;
 
@@ -86,7 +84,7 @@ public class CarAI : MonoBehaviourReferenced {
     }
 
     private void Start() {
-        if (carManagement.GetManualInitialCar() && switchingBehaviour.isInitialCar) {
+        if (carManagement.HasManualInitialCar() && switchingBehaviour.isInitialCar) {
             PathID = manualPathID;
         }
         if (isClone) {
@@ -94,10 +92,16 @@ public class CarAI : MonoBehaviourReferenced {
         }
     }
 
+    private void Update() {
+        if (!autopilotEnabled) {
+            AutoPilot();
+        }
+    }
+
     private void FixedUpdate() {
         if (autopilotEnabled) {
             AutoPilot();
-        } 
+        }
     }
 
     public void SetUpInititalCar() {
@@ -108,17 +112,16 @@ public class CarAI : MonoBehaviourReferenced {
 
     private void AutoPilot() {
 
-        wheelVehicle.Throttle = (Mathf.Pow(pathBehaviour.GetSpeedLimit(), 2) - rb.velocity.sqrMagnitude) / 10;
+        wheelVehicle.Throttle = (Mathf.Pow(pathBehaviour.GetSpeedLimit(), 2) - rb.velocity.sqrMagnitude);
 
         distOnPath += (transform.position - prevPos).magnitude;
         prevPos = transform.position;
         float angle = Vector3.SignedAngle(transform.forward, myPath.path.GetPointAtDistance(distOnPath + steerTowardsDist, EndOfPathInstruction.Loop) - transform.position, Vector3.up);
-        wheelVehicle.InstantSetWheelAngle(angle);
 
-        RaycastHit hit;
-        int layerMask = 1 << 9;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 20, layerMask)) {
-            wheelVehicle.Throttle = 1 - Mathf.InverseLerp(0, 20, hit.distance);
+        if (autopilotEnabled) {
+            wheelVehicle.InstantSetWheelAngle(angle);
+        } else {
+            wheelVehicle.SetAutoAngle(angle);
         }
     }
 
@@ -202,7 +205,6 @@ public class CarAI : MonoBehaviourReferenced {
     }
 
     public void PortalReachedInactiveCar() {
-        Debug.Log($"portal reached inactive car, dontLoop = {dontLoop}");
         if (!dontLoop) {
             if (!inTunnelWithActiveCar) {
                 if (startTunnel != null) TunnelLoop();
@@ -246,8 +248,6 @@ public class CarAI : MonoBehaviourReferenced {
         Vector3 vel = TransformDirectionToStart(rb.velocity);
         Vector3 angVel = TransformDirectionToStart(rb.angularVelocity);
 
-        Debug.Log($"pos = {pos}, {gameObject.name}, startTunnel = {startTunnel}");
-
         transform.position = pos;
         transform.rotation = Quaternion.LookRotation(dir);
         rb.velocity = vel;
@@ -281,18 +281,16 @@ public class CarAI : MonoBehaviourReferenced {
         if (isActiveCar) cam.MakeMainCarCamera();
     }
 
-    public void StartClone(bool isActiveCar, WheelVehicle wv, Transform transform, Rigidbody rb, CarAI carAI) {
+    public void StartClone(bool isActiveCar, Transform transform, Rigidbody rb, CarAI carAI) {
         autopilotEnabled = !isActiveCar;
         dontLoop = true;
         wheelVehicle.IsPlayer = isActiveCar;
-        originalCarWV = wv;
         originalCarTransform = transform;
         originalCarRB = rb;
         originalCarAI = carAI;
         startTunnel = carAI.startTunnel;
         endTunnel = carAI.endTunnel;
         if (isActiveCar) {
-            origCamTransform = carAI.cam.transform;
             switchingBehaviour.SetHeadlightsActiveCar();
         } else {
             switchingBehaviour.SetHeadlightsInactiveCar();
@@ -316,7 +314,7 @@ public class CarAI : MonoBehaviourReferenced {
     private void CreateClone() {
         hasClone = true;
         clone = referenceManagement.carManagement.CreateCarClone(pathID);
-        clone.StartClone(!autopilotEnabled, wheelVehicle, transform, rb, this);
+        clone.StartClone(!autopilotEnabled, transform, rb, this);
         if (!autopilotEnabled) CreateCloneCam();
     }
 

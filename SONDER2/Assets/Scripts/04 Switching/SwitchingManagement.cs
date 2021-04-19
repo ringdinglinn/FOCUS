@@ -21,7 +21,6 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     }
     private SwitchingBehaviour selectedCar;
     private SwitchingBehaviour markedCar;
-    private SwitchingBehaviour prevMarkedCar;
     public SwitchingBehaviour MarkedCar {
         get {   return markedCar; }
         set {
@@ -44,8 +43,6 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     private float perceptionH;
     private float perceptionR;
     private List<SwitchingBehaviour> SBsInFrame = new List<SwitchingBehaviour>();
-
-    private CarManagement carManagement;
 
     private bool selectCarNow = false;
 
@@ -358,8 +355,10 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         }
         flashRecordDurations[flashRecordDurations.Length - 1] = currentFlashDuration;
 
-        EvaluateFlashRecord();
-        DisplayMarkedCarSignalPattern();
+        if (markedCar != null) {
+            EvaluateFlashRecord();
+            DisplayMarkedCarSignalPattern();
+        }
         //UpdateDebugUI();
     }
 
@@ -376,7 +375,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         }
 
         for (int i = 1; i < flashRecordDurations.Length; i++) {
-            float factor = signalPattern[i] == FlashType.Short ? 1 : 2;
+            float factor = signalPattern[i] == FlashType.Short ? 1 : 2.5f;
             if (!(flashRecordDurations[i] <= factor * baseLength * 1.5f && flashRecordDurations[i] >= factor * baseLength * 0.5f)) {
                 correct = false;
             }
@@ -438,6 +437,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
     public void SetActiveCar(SwitchingBehaviour sb) {
         ActiveCar = sb;
+        CarSwitchedEvent.Invoke();
     }
 
     private void ActiveCarChanged(SwitchingBehaviour sb) {

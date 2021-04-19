@@ -51,13 +51,18 @@ public class TerrainCutter : MonoBehaviourReferenced
 								scaledSize.x * i,
 								scaledSize.y * j,
 								scaledSize.z * k);
-					// only record the bottom corners
 					if (j == -1)
 					{
 						bottoms[n++] = pos;
-					}
+                        //GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                        //sphere.transform.position = pos;
+                        //sphere.name = "BOTTOM";
+                    }
 					else {
 						tops[m++] = pos;
+						//GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+						//sphere.transform.position = pos;
+						//sphere.name = "TOP";
 					}
 
 					// enable if you want to see the corners we calculated as spheres

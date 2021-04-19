@@ -5,14 +5,14 @@ using UnityEngine;
 public class GoalIndicator : MonoBehaviourReferenced {
 
     SwitchingManagement switchingManagement;
-    Transform activeCar;
+    public Transform activeCar;
 
     private void Start() {
-        switchingManagement = referenceManagement.switchingManagement;
         activeCar = switchingManagement.ActiveCar.transform;
     }
 
     private void OnEnable() {
+        switchingManagement = referenceManagement.switchingManagement;
         switchingManagement.CarSwitchedEvent.AddListener(ActiveCarChanged);
     }
 
@@ -25,6 +25,6 @@ public class GoalIndicator : MonoBehaviourReferenced {
     }
 
     private void Update() {
-        transform.rotation = Quaternion.LookRotation(Vector3.Cross(activeCar.forward, Vector3.up));
+        transform.rotation = Quaternion.LookRotation(activeCar.position - transform.position);
     }
 }

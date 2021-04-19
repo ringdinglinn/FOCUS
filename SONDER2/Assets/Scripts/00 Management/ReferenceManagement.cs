@@ -59,6 +59,7 @@ public class ReferenceManagement : MonoBehaviour
     public Image gearImage;
     public GameObject beatIndicatorObj;
     public List<Sprite> gearSprites;
+    public GameObject youDidItText;
 
     [Header("Sounds")]
     public AudioSource switchSound;
@@ -96,4 +97,9 @@ public class ReferenceManagement : MonoBehaviour
     [Header("TerrainManipulation")]
     public TerrainManagement terrainManagement;
     public List<MeshFilter> entryFilters;
+    public bool cutTerrain;
+
+    [Header("Steering")]
+    public SteerAssitMode steerAssitMode;
+    public float turnAssistStrength = 5;
 }

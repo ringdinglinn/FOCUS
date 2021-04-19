@@ -315,7 +315,6 @@ namespace PathCreation {
 
         /// Add new anchor point to start of the path
         public void AddSegmentToStart (Vector3 anchorPos) {
-            Debug.Log("Add Segment To Start");
             if (isClosed) {
                 return;
             }
@@ -401,11 +400,9 @@ namespace PathCreation {
             if (zDir.sqrMagnitude != 1) zDir.Normalize();
             if (!flipped) zDir *= -1f;
 
+            int normalsCount = 0;
             for (int i = 0; i < BezierInfo.tunnelCoordinates.Length; i++) {
                 points[BezierInfo.tunnelCoordinates.Length - 1 - i] = startPos + xDir * BezierInfo.tunnelCoordinates[i].x * 0.4f + zDir * BezierInfo.tunnelCoordinates[i].z * 0.4f;
-                if (i % 3 == 2) {
-                    perAnchorNormalsAngle.Insert(0, 0.0f);
-                }
             }
 
             startTunnel.transform.localRotation = Quaternion.LookRotation(xDir);
@@ -417,7 +414,11 @@ namespace PathCreation {
             }
 
             NotifyPathModified();
-         }
+        }
+
+        public void StraightenNormals() {
+
+        }
 
         private void UpdateEndTunnelPoints(Vector3 startPos) {
             Vector3 xDir = points[points.Count - 1 - 9] - points[points.Count - 1 - 10];
@@ -427,12 +428,20 @@ namespace PathCreation {
             if (zDir.sqrMagnitude != 1) zDir.Normalize();
             if (flipped) zDir *= -1f;
 
+            int normalsCount = 0;
             for (int i = 0; i < BezierInfo.tunnelCoordinates.Length; i++) {
                 points[points.Count - BezierInfo.tunnelCoordinates.Length + i] = startPos + xDir * BezierInfo.tunnelCoordinates[i].x * 0.4f + zDir * BezierInfo.tunnelCoordinates[i].z * 0.4f;
-                if (i % 3 == 2) {
-                    perAnchorNormalsAngle.Insert(0, 0.0f);
-                }
+                //if (i % 3 == 2) {
+                //    perAnchorNormalsAngle[perAnchorNormalsAngle.Count - 1 - normalsCount] = 0;
+                //    normalsCount++;
+                //}
             }
+
+            //int n = (points.Count - 4) / 3 + 2;
+            //perAnchorNormalsAngle.Clear();
+            //for (int i = 0; i < n; i++) {
+            //    perAnchorNormalsAngle.Add(0f);
+            //}
 
             endTunnel.transform.localRotation = Quaternion.LookRotation(xDir);
             endTunnel.transform.localPosition = points[points.Count - 1 - 9];

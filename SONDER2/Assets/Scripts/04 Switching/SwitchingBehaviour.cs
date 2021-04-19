@@ -82,13 +82,13 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         carAI.cam = cam;
         switchingManagement.ActiveCar = this;
         wheelVehicle.IsPlayer = true;
-        if (isInitialCar && carManagement.GetManualInitialCar()) wheelVehicle.IsPlayer = false;
+        if (isInitialCar && carManagement.HasManualInitialCar()) wheelVehicle.IsPlayer = false;
 
         SetHeadlightsActiveCar();
     }
 
     public void SwitchOutOfCar() {
-        if (!(carManagement.GetManualInitialCar() && isInitialCar)) {
+        if (!(carManagement.HasManualInitialCar() && isInitialCar)) {
             carAI.SwitchOnAutopilot();
         }
         carAI.cam = null;

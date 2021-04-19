@@ -10,6 +10,7 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
     public bool isEndTunnel;
     public bool isLevelEndTunnel;
     public bool isLevelStartTunnel;
+    public TunnelBehaviour nextLevelStartTunnel;
 
     private int endTunnelID;
 
@@ -17,6 +18,8 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
 
     public MeshFilter entryFilter0;
     public MeshFilter entryFilter1;
+
+    private PathBehaviour pathBehaviour;
 
     private void OnEnable() {
         referenceManagement.entryFilters.Add(entryFilter0);
@@ -26,6 +29,7 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
     private void Start() {
         referenceManagement.pathManagement.AddToTunnels(this);
         portalTrigger.SetTunnelBehaviour(this);
+        pathBehaviour = GetComponentInParent<PathBehaviour>();
     }
 
     public void SetID(int id) {
@@ -41,17 +45,32 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
             CarAI carAI;
             carAI = other.GetComponentInParent<CarAI>();
             if (isEndTunnel) {
-                Debug.Log($"set end tunnel, {carAI.gameObject.name}, {gameObject.name}");
                 carAI.startTunnel = startTunnel;
                 carAI.endTunnel = this;
+            }
+            if (isEndTunnel && isLevelEndTunnel && !carAI.autopilotEnabled) {
+                carAI.startTunnel = nextLevelStartTunnel;
+                carAI.endTunnel = this;
+                foreach (CarAI car in carsInTunnel) {
+                    car.startTunnel = nextLevelStartTunnel;
+                }
             }
             bool carInList = false;
             foreach (CarAI car in carsInTunnel) if (car == carAI) carInList = true;
             if (!carInList && !carAI.dontLoop) carsInTunnel.Add(carAI);
-            if (!carAI.autopilotEnabled && !isLevelEndTunnel && !isLevelStartTunnel) {
+
+            if (!carAI.autopilotEnabled && isEndTunnel) {
                 foreach (CarAI car in carsInTunnel) {
                     car.ActiveCarHasEnteredTunnel();
                 }
+            }
+
+            if (!carAI.autopilotEnabled && isLevelEndTunnel) {
+                referenceManagement.journeyManagement.NewLevelReached(pathBehaviour.id);
+            }
+
+            if (!carAI.autopilotEnabled && isLevelStartTunnel) {
+                carAI.PathID = pathBehaviour.id;
             }
         }
     }

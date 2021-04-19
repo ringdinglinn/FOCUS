@@ -50,7 +50,6 @@ public class CarManagement : MonoBehaviourReferenced {
 
             List<Vector3> startPosList = allPathBehaviours[i].GetStartPosBehaviour().GetStartPosList();
             int initPosIndex = allPathBehaviours[i].GetStartPosBehaviour().GetInitialPosIndex();
-            Debug.Log($"initPosIndex = {initPosIndex} ");
             PathCreator path = allPathBehaviours[i].GetPath();
 
             for (int j = 0; j < startPosList.Count; j++) {
@@ -67,6 +66,7 @@ public class CarManagement : MonoBehaviourReferenced {
                 CarAI carAI = car.GetComponent<CarAI>();
                 SwitchingBehaviour sb = car.GetComponent<SwitchingBehaviour>();
                 sb.id = idCounter;
+                Debug.Log($"car {idCounter} instantiated");
                 ++idCounter;
                 car.name = carName + (idCounter - 1);
 
@@ -81,13 +81,11 @@ public class CarManagement : MonoBehaviourReferenced {
                 if (!setInitial && j == initPosIndex) {
                     setInitial = true;
                     initialCar = sb;
-                    Debug.Log($"initCar Found, j = {j}");
                 }
             }
         }
         if (initialCar != null) {
             manualInitialCar = false;
-            Debug.Log("manual initial car set false");
         }
         carsCreated.Invoke();
         carsGenerated = true;
@@ -97,6 +95,7 @@ public class CarManagement : MonoBehaviourReferenced {
         for (int i = 0; i < allSwitchingBehaviours.Count; i++) {
             if (allSwitchingBehaviours[i].isInitialCar) {
                 initialCar = allSwitchingBehaviours[i];
+                manualInitialCar = true;
             }
         }
         CarAI carAI = initialCar.GetCarAI();
@@ -122,18 +121,14 @@ public class CarManagement : MonoBehaviourReferenced {
 
     public void ActiveCarHasReachedPortal(CarAI activeCar) {
         carAIsInTunnel = activeCar.endTunnel.GetCarAIsInTunnel();
-        Debug.Log("active car has reached tunnel");
         foreach (CarAI car in carAIsInTunnel) {
-            Debug.Log("foreach");
             if (car.HasClone) {
-                Debug.Log("has clone");
                 car.ActiveCarHasReachedPortal();
             }
         }
     }
 
     public void ChangeToClone(bool isActiveCar, CarAI oldCar, CarAI newCar) {
-        Debug.Log("car management, change to clone");
         newCar.MakeMainCar(isActiveCar);
         allSwitchingBehaviours.Remove(oldCar.GetComponent<SwitchingBehaviour>());
         allCarAIs.Remove(oldCar);
@@ -171,7 +166,7 @@ public class CarManagement : MonoBehaviourReferenced {
         allSwitchingBehaviours.Add(sb);
     }
 
-    public bool GetManualInitialCar() {
+    public bool HasManualInitialCar() {
         return manualInitialCar;
     }
 }

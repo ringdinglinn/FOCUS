@@ -8,9 +8,12 @@ public class TerrainManagement : MonoBehaviourReferenced {
     public List<TerrainCutter> allTerrainCutters;
 
     IEnumerator Start() {
-        foreach (TerrainCutter tc in allTerrainCutters) {
-            tc.CutHoles();
-            yield return new WaitForSeconds(0f);
+        if (referenceManagement.cutTerrain) {
+            foreach (TerrainCutter tc in allTerrainCutters) {
+                tc.CutHoles();
+
+                yield return new WaitForSeconds(0.5f);
+            }
         }
     }
 }

@@ -7,6 +7,9 @@ public class JourneyManagement : MonoBehaviourReferenced {
 	SwitchingManagement switchingManagement;
     int nrOfSwitches;
 
+    int currentLevelPathID = -1;
+    int levelID = 0;
+
     GameObject alternatePath0;
 
     private void OnEnable() {
@@ -30,6 +33,26 @@ public class JourneyManagement : MonoBehaviourReferenced {
         if (nrOfSwitches == 1) {
             ToLevel1();
         }
+    }
+
+    public void NewLevelReached(int id) {
+        if (id != currentLevelPathID) {
+            levelID++;
+            currentLevelPathID = id;
+            EvaluateNewLevel();
+        }
+    }
+
+    private void EvaluateNewLevel() {
+        //if (currentLevelPathID == 5) {
+        //    StartCoroutine(WaitToQuit());
+        //    referenceManagement.youDidItText.SetActive(true);
+        //}
+    }
+
+    IEnumerator WaitToQuit() {
+        yield return new WaitForSeconds(3f);
+        Application.Quit();
     }
 
 
