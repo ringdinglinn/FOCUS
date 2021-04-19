@@ -19,7 +19,7 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
     public MeshFilter entryFilter0;
     public MeshFilter entryFilter1;
 
-    private PathBehaviour pathBehaviour;
+    public PathBehaviour pathBehaviour;
 
     private void OnEnable() {
         referenceManagement.entryFilters.Add(entryFilter0);
@@ -61,16 +61,13 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
 
             if (!carAI.autopilotEnabled && isEndTunnel) {
                 foreach (CarAI car in carsInTunnel) {
-                    car.ActiveCarHasEnteredTunnel();
+                    car.ActiveCarHasEnteredTunnel(isLevelEndTunnel ? nextLevelStartTunnel.pathBehaviour.id : pathBehaviour.id);
                 }
-            }
-
-            if (!carAI.autopilotEnabled && isLevelEndTunnel) {
-                referenceManagement.journeyManagement.NewLevelReached(pathBehaviour.id);
             }
 
             if (!carAI.autopilotEnabled && isLevelStartTunnel) {
                 carAI.PathID = pathBehaviour.id;
+                Debug.Log($"assigned new path, {pathBehaviour.id}, {carAI.name}");
             }
         }
     }
@@ -98,7 +95,7 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
 
     public void ActiveCarHasReachedPortal() {
         foreach (CarAI car in carsInTunnel) {
-            car.ActiveCarHasEnteredTunnel();
+            car.ActiveCarHasEnteredTunnel(isLevelEndTunnel ? nextLevelStartTunnel.pathBehaviour.id : pathBehaviour.id);
         }
     }
 
