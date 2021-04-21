@@ -124,8 +124,6 @@ public class CarAI : MonoBehaviourReferenced {
         if (autopilotEnabled) {
             wheelVehicle.InstantSetWheelAngle(angle);
         } else {
-            Debug.Log($"dist on path = {distOnPath}, {name}");
-            Debug.DrawRay(transform.position, myPath.path.GetPointAtDistance(distOnPath + steerTowardsDist, EndOfPathInstruction.Loop) - transform.position, Color.yellow);
             wheelVehicle.SetAutoAngle(angle);
         }
     }
