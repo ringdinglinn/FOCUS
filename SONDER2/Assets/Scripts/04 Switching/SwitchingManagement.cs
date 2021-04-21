@@ -137,12 +137,12 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
     private void SwitchToCar(SwitchingBehaviour newSB) {
         activeCar.SwitchOutOfCar();
-        referenceManagement.cam.SwitchCar(newSB.camTranslateTarget.transform, newSB.camRotTarget.transform);
+        referenceManagement.cam.SwitchCar(newSB.camTranslateTarget.transform, newSB.camRotTarget.transform, true);
         newSB.SwitchIntoCar(camController);
     }
 
     public void SetUpInitialCar(SwitchingBehaviour initSB) {
-        referenceManagement.cam.SwitchCar(initSB.camTranslateTarget.transform, initSB.camRotTarget.transform);
+        referenceManagement.cam.SwitchCar(initSB.camTranslateTarget.transform, initSB.camRotTarget.transform, false);
         initSB.isInitialCar = true;
         initSB.SwitchIntoCar(camController);
     }
@@ -300,7 +300,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     }
 
     private IEnumerator SelectCoolDown() {
-        while (!camController.IsInTargetRange) {
+        while (camController.GetLooping()) {
             yield return new WaitForEndOfFrame();
         }
         canSelectCar = true;
@@ -314,6 +314,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         selectedCar = null;
         StartCoroutine(SelectCoolDown());
         CarSwitchedEvent.Invoke();
+        camController.Loop();
     }
 
     private void FlashValueChanged(bool b) {
@@ -349,7 +350,6 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     }
 
     private void RecordFlashes() {
-        // flash duration
         for (int i = 0; i < flashRecordDurations.Length - 1; i++) {
             flashRecordDurations[i] = flashRecordDurations[i + 1];
         }
@@ -359,7 +359,6 @@ public class SwitchingManagement : MonoBehaviourReferenced {
             EvaluateFlashRecord();
             DisplayMarkedCarSignalPattern();
         }
-        //UpdateDebugUI();
     }
 
     private void EvaluateFlashRecord() {
@@ -380,7 +379,12 @@ public class SwitchingManagement : MonoBehaviourReferenced {
                 correct = false;
             }
         }
-        if (correct && HasMarkedCar) identicalFlashes = true;
+        if (correct && HasMarkedCar) {
+            identicalFlashes = true;
+            Debug.Log("identical flashes = true");
+        } else {
+            Debug.Log("identical flashes = false");
+        }
     }
 
     private void UpdateDebugUI() {

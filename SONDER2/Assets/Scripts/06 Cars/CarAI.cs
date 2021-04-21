@@ -112,7 +112,11 @@ public class CarAI : MonoBehaviourReferenced {
     #region ------------------------------------------------ AUTOPILOT -----------------------------------------------------
 
     private void AutoPilot() {
-        throttle = Mathf.Lerp(throttle, Mathf.Pow(pathBehaviour.GetSpeedLimit(), 2) - rb.velocity.sqrMagnitude, 0.001f);
+        //if (!autopilotEnabled) {
+        //    throttle = Mathf.Lerp(throttle, Mathf.Pow(pathBehaviour.GetSpeedLimit(), 2) - rb.velocity.sqrMagnitude, 0.001f);
+        //} else {
+            throttle = Mathf.Pow(pathBehaviour.GetSpeedLimit(), 2) - rb.velocity.sqrMagnitude;
+        //}
         wheelVehicle.Throttle = throttle;
 
         distOnPath += (transform.position - prevPos).magnitude;
@@ -328,7 +332,7 @@ public class CarAI : MonoBehaviourReferenced {
         GameObject cloneCamObj = Instantiate(referenceManagement.camPrefab, pos, Quaternion.LookRotation(dir));
         Camera1stPerson cloneCam = cloneCamObj.GetComponent<Camera1stPerson>();
         cloneCam.SetAsCloneCam();
-        cloneCam.SwitchCar(clone.switchingBehaviour.camTranslateTarget.transform, clone.switchingBehaviour.camRotTarget.transform);
+        cloneCam.SwitchCar(clone.switchingBehaviour.camTranslateTarget.transform, clone.switchingBehaviour.camRotTarget.transform, true);
         clone.cam = cloneCam;
     }
 
