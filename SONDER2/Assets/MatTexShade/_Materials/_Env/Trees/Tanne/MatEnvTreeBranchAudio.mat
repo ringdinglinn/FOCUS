@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: MatEnvTreeBranchAudio
-  m_Shader: {fileID: -6465566751694194690, guid: 87409fa44326b47e9a46f22fb35464f8,
+  m_Shader: {fileID: -6465566751694194690, guid: a19d842d478a04b47b472541354d7358,
     type: 3}
   m_ShaderKeywords: _ALPHATEST_ON _BLENDMODE_ALPHA _DOUBLESIDED_ON _ENABLE_FOG_ON_TRANSPARENT
     _SURFACE_TYPE_TRANSPARENT
@@ -133,15 +133,17 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Beat1: 0
-    - BeatCounter: 217
+    - BeatCounter: 269
     - Vector1_1BF88BD3: 0
     - Vector1_235258A9: 0.1
     - Vector1_35B9A750: 1.79
-    - Vector1_76BE5B8A: 0.001
+    - Vector1_40E2C171: 0
+    - Vector1_76BE5B8A: 0.12
     - Vector1_881A8676: 0.178
     - Vector1_976CCE60: 100
     - Vector1_C6A3131D: -4.4
     - Vector1_E485665B: 0
+    - Vector1_FD692118: 100
     - _AORemapMax: 1
     - _AORemapMin: 0
     - _ATDistance: 1
@@ -264,6 +266,7 @@ Material:
     - _ZTestTransparent: 4
     - _ZWrite: 0
     m_Colors:
+    - Color_4985BE4A: {r: 0, g: 0, b: 0, a: 0}
     - Color_85BBDEB0: {r: 0, g: 0, b: 0, a: 0}
     - Color_9FD76E05: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}

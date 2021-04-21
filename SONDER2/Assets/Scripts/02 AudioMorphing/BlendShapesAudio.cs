@@ -36,7 +36,6 @@ public class BlendShapesAudio : MonoBehaviourReferenced {
 
     IEnumerator Morph() {
         if (routineCounter > routinesEnded) {
-            Debug.Log($"{routineCounter}, {routinesEnded}, dont start yet");
             yield break;
         }
         int myNr = ++routineCounter;
@@ -51,6 +50,5 @@ public class BlendShapesAudio : MonoBehaviourReferenced {
 
         currentShape++;
         routinesEnded = myNr;
-        Debug.Log($"Ended Routine {myNr}, routine counter = {routineCounter}");
     }
 }

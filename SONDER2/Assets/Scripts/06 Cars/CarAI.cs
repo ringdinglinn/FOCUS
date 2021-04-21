@@ -85,7 +85,6 @@ public class CarAI : MonoBehaviourReferenced {
     }
 
     private void Start() {
-        Debug.Log($"start, name = {name}, is clone {isClone}");
         if (carManagement.HasManualInitialCar() && switchingBehaviour.isInitialCar) {
             PathID = manualPathID;
         }
@@ -113,9 +112,8 @@ public class CarAI : MonoBehaviourReferenced {
     #region ------------------------------------------------ AUTOPILOT -----------------------------------------------------
 
     private void AutoPilot() {
-
-        //throttle = Mathf.Lerp(throttle, Mathf.Pow(pathBehaviour.GetSpeedLimit(), 2) - rb.velocity.sqrMagnitude, 0.01f);
-        wheelVehicle.Throttle = Mathf.Pow(pathBehaviour.GetSpeedLimit(), 2) - rb.velocity.sqrMagnitude;
+        throttle = Mathf.Lerp(throttle, Mathf.Pow(pathBehaviour.GetSpeedLimit(), 2) - rb.velocity.sqrMagnitude, 0.001f);
+        wheelVehicle.Throttle = throttle;
 
         distOnPath += (transform.position - prevPos).magnitude;
         prevPos = transform.position;

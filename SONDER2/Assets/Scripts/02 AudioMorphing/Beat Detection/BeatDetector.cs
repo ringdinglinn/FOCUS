@@ -90,7 +90,6 @@ public class BeatDetector : MonoBehaviourReferenced {
     }
 
     private void WithinBeatWindowChanged(bool value) {
-        beatIndicatorObj.SetActive(value);
     }
 }
 

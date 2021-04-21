@@ -50,16 +50,17 @@ public class Camera1stPerson : MonoBehaviourReferenced
     }
 
     private void FixedUpdate() {
-        InertiaMovement();
-        if (looping) {
-            transform.position = loopTargetPos;
-            HandleRotation();
-            looping = false;
-        }
+        //InertiaMovement();
+        //if (looping) {
+        //    transform.position = loopTargetPos;
+        //    HandleRotation();
+        //    looping = false;
+        //}
     }
 
     private void Update() {
         isInTargetRange = (translateTarget.transform.position - transform.position).sqrMagnitude <= Mathf.Pow(targetRange, 2) ? true : false;
+        InertiaMovement();
     }
 
     private IEnumerator StopLooping() {
@@ -120,6 +121,12 @@ public class Camera1stPerson : MonoBehaviourReferenced
     }
 
     private void HandleRotation() {
+        var direction = rotTarget.transform.position - transform.position;
+        transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
+    }
+
+    private void TestFollow() {
+        transform.position = translateTarget.transform.position;
         var direction = rotTarget.transform.position - transform.position;
         transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
     }

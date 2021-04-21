@@ -86,6 +86,7 @@ MonoBehaviour:
   portalTrigger: {fileID: 528448572671357932}
   entryFilter0: {fileID: 946652023418357883}
   entryFilter1: {fileID: 2897044115712433804}
+  pathBehaviour: {fileID: 0}
 --- !u!1 &3690803016014797232
 GameObject:
   m_ObjectHideFlags: 0

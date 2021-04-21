@@ -79,11 +79,16 @@ MonoBehaviour:
       bounds:
         m_Center: {x: 0, y: 0, z: 0}
         m_Extent: {x: 2, y: 0.14433756, z: 0}
+      hasTunnelPointsStart: 0
+      hasTunnelPointsEnd: 0
+      flipped: 0
       perAnchorNormalsAngle:
       - 0
       - 0
       globalNormalsAngle: 0
       flipNormals: 0
+      startTunnel: {fileID: 0}
+      endTunnel: {fileID: 0}
     vertexPathUpToDate: 1
     vertexPathMaxAngleError: 0.3
     vertexPathMinVertexSpacing: 0.01

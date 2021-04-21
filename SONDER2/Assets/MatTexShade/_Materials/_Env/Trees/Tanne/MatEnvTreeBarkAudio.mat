@@ -132,11 +132,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Beat1: 0
-    - BeatCounter: 217
+    - BeatCounter: 269
     - Vector1_1BF88BD3: 0
     - Vector1_235258A9: 0.1
     - Vector1_40E2C171: 0
-    - Vector1_76BE5B8A: 0.02
+    - Vector1_76BE5B8A: 0.12
     - Vector1_881A8676: 0
     - Vector1_E485665B: 0
     - Vector1_FD692118: 100
