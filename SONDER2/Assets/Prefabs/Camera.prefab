@@ -208,4 +208,4 @@ MonoBehaviour:
   rotationSpeed: 10
   velocityDamping: 1.31
   catchUpDamping: 0.83
-  shakeRange: 0.005
+  shakeRange: 0.0027

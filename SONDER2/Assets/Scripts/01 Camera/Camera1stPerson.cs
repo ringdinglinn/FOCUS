@@ -35,7 +35,7 @@ public class Camera1stPerson : MonoBehaviourReferenced {
     private bool isCloneCam;
 
     [Range(0,0.02f)]
-    public float shakeRange = 0.005f;
+    public float shakeRange = 0.003f;
 
     float targetRange = 4f;
     bool isInTargetRange;

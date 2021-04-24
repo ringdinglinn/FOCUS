@@ -50,6 +50,8 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     float beatInterval;
     float beatIntervalSubD;
 
+    public GameObject volumetrics;
+
     private void OnEnable() {
         CollectReferences();
         GenerateSignalPattern();
@@ -145,10 +147,10 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     public void SetFlash(bool b) {
         flash = b;
         if (flash) {
-            headlight1.intensity = headlightDefaultIntensity * 4f;
-            headlight2.intensity = headlightDefaultIntensity * 4f;
-            headlight1.range = headlightDefaultRange * 4f;
-            headlight2.range = headlightDefaultRange * 4f;
+            headlight1.intensity = headlightDefaultIntensity * 20f;
+            headlight2.intensity = headlightDefaultIntensity * 20f;
+            headlight1.range = headlightDefaultRange * 1f;
+            headlight2.range = headlightDefaultRange * 1f;
         } else {
             headlight1.intensity = headlightDefaultIntensity;
             headlight2.intensity = headlightDefaultIntensity;
@@ -159,6 +161,7 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
 
     IEnumerator FlashHeadlight(FlashType flashType) {
         flashOn = true;
+        volumetrics.SetActive(true);
 
         headlight1.intensity = headlightDefaultIntensity * 4f;
         headlight2.intensity = headlightDefaultIntensity * 4f;
@@ -178,6 +181,7 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
 
         beatSubD = false;
         flashOn = false;
+        volumetrics.SetActive(false);
 
     }
 
