@@ -51,6 +51,10 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     float beatIntervalSubD;
 
     public GameObject volumetrics;
+    public MeshRenderer volumetricRenderer0;
+    public MeshRenderer volumetricRenderer1;
+
+    public bool headlightTester;
 
     private void OnEnable() {
         CollectReferences();
@@ -181,8 +185,7 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
 
         beatSubD = false;
         flashOn = false;
-        volumetrics.SetActive(false);
-
+        //volumetrics.SetActive(false);
     }
 
     IEnumerator ResetBeatValue() {
@@ -207,5 +210,13 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
 
     public CarAI GetCarAI() {
         return carAI;
+    }
+
+    private void Update() {
+        if (headlightTester) {
+            Debug.Log($"forward = {transform.forward}");
+            volumetricRenderer0.material.SetVector("ObjectOrientation", transform.forward);
+            volumetricRenderer1.material.SetVector("ObjectOrientation", transform.forward);
+        }
     }
 }

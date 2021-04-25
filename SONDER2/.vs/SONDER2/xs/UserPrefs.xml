@@ -1,6 +1,7 @@
 ﻿<Properties StartupConfiguration="{281EEECF-89B9-6D0B-978A-5FDC6B8E6CBA}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/01 Camera/Camera1stPerson.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/04 Switching/SwitchingBehaviour.cs">
     <Files>
+      <File FileName="Assets/Scripts/04 Switching/SwitchingBehaviour.cs" Line="220" Column="10" />
       <File FileName="Assets/Scripts/04 Switching/SwitchingManagement.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/03 Paths/Editor/StartPosEditor.cs" />
       <File FileName="Assets/Scripts/00 Management/CarManagement.cs" />
@@ -17,16 +18,15 @@
       <File FileName="Assets/PathCreator/Core/Editor/Helper/PathHandle.cs" />
       <File FileName="Assets/PathCreator/Examples/Scripts/RoadMeshCreator.cs" />
       <File FileName="Assets/PathCreator/Core/Runtime/Objects/VertexPath.cs" />
-      <File FileName="Assets/Scripts/01 Camera/Camera1stPerson.cs" Line="54" Column="25" />
+      <File FileName="Assets/Scripts/01 Camera/Camera1stPerson.cs" />
       <File FileName="Assets/Scripts/02 AudioMorphing/BlendShapesAudio.cs" />
       <File FileName="Assets/Scripts/02 AudioMorphing/StreetlampAudioTest.cs" />
       <File FileName="Assets/Scripts/02 AudioMorphing/Beat Detection/BeatDetector.cs" />
-      <File FileName="Assets/Scripts/04 Switching/SwitchingBehaviour.cs" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="abbb9e7c-0850-4443-8a3a-d676a56401d3" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="0edb7155-4106-435b-baa5-c230638d732d" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

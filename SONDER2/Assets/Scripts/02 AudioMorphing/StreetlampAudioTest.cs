@@ -7,6 +7,7 @@ public class StreetlampAudioTest : MonoBehaviourReferenced {
     private float p = 0.5f;
 
     [SerializeField] private float dist = 0.5f;
+    [SerializeField] private GameObject cone;
 
     private Light myLight;
 
@@ -30,13 +31,15 @@ public class StreetlampAudioTest : MonoBehaviourReferenced {
     }
 
     void Flicker() {
-        myLight.enabled = false;
+        //myLight.enabled = false;
+        cone.SetActive(true);
         StartCoroutine(SwitchBackOn());
     }
 
     IEnumerator SwitchBackOn() {
         float waitTime = Random.Range(0.1f, 0.2f);
         yield return new WaitForSeconds(waitTime);
-        myLight.enabled = true;
+        //myLight.enabled = true;
+        cone.SetActive(false);
     }
 }

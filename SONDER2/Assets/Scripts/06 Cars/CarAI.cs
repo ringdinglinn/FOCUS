@@ -334,6 +334,7 @@ public class CarAI : MonoBehaviourReferenced {
         cloneCam.SetAsCloneCam();
         cloneCam.SwitchCar(clone.switchingBehaviour.camTranslateTarget.transform, clone.switchingBehaviour.camRotTarget.transform, true);
         clone.cam = cloneCam;
+        cloneCam.enabled = false;
     }
 
     public void ActiveCarHasEnteredTunnel(int pathID) {
