@@ -205,7 +205,25 @@ public class SwitchingManagement : MonoBehaviourReferenced {
                         inFrame = true;
                     }
                 }
+                bool occluded = false;
                 if (isVisible && inRange && inFrame) {
+                    int layerMask = 1 << 9;
+                    layerMask = ~layerMask;
+                    RaycastHit hit;
+                    // Does the ray intersect any objects excluding the player layer
+                    Vector3 pos = allSwitchingBehaviours[i].transform.position;
+                    Vector3 offset = allSwitchingBehaviours[i].transform.up * 1;
+                    pos += offset;
+                    Vector3 dir = activeCar.transform.position - allSwitchingBehaviours[i].transform.position;
+                    float mag = dir.magnitude;
+                    dir = dir / mag;
+                    if (Physics.Raycast(pos, dir, out hit, mag, layerMask)) {
+                        occluded = true;
+                    } else {
+                        occluded = false;
+                    }
+                }
+                if (isVisible && inRange && inFrame && !occluded) {
                     SBsInFrame.Add(allSwitchingBehaviours[i]);
                     //evaluate closest car
                     if (scrPos[4,0] <= dist) {

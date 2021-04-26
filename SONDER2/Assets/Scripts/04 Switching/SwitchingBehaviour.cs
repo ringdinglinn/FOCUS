@@ -53,6 +53,8 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     public GameObject volumetrics;
     public MeshRenderer volumetricRenderer0;
     public MeshRenderer volumetricRenderer1;
+    MeshFilter volumetricMesh0;
+    MeshFilter volumetricMesh1;
 
     public bool headlightTester;
 
@@ -64,6 +66,13 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         headlightDefaultIntensity = headlight1.intensity;
         headlightDefaultRange = headlight1.range;
         carManagement.AddSwitchingBehaviour(this);
+        volumetricMesh0 = volumetricRenderer0.GetComponent<MeshFilter>();
+        volumetricMesh1 = volumetricRenderer1.GetComponent<MeshFilter>();
+    }
+
+    private void Start() {
+        SetVertexColor(volumetricMesh0.mesh);
+        SetVertexColor(volumetricMesh1.mesh);
     }
 
     private void OnDisable() {
@@ -165,7 +174,9 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
 
     IEnumerator FlashHeadlight(FlashType flashType) {
         flashOn = true;
-        volumetrics.SetActive(true);
+        //volumetrics.SetActive(true);
+        volumetricRenderer0.material.SetInt("_FlashOn", flashOn ? 1 : 0);
+        volumetricRenderer1.material.SetInt("_FlashOn", flashOn ? 1 : 0);
 
         headlight1.intensity = headlightDefaultIntensity * 4f;
         headlight2.intensity = headlightDefaultIntensity * 4f;
@@ -174,7 +185,7 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
 
         float time = beatIntervalSubD;
         if (flashType == FlashType.Long) {
-            time = beatInterval;
+            time = beatInterval * 1.3f;
         }
         yield return new WaitForSeconds(time);
 
@@ -186,6 +197,8 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         beatSubD = false;
         flashOn = false;
         //volumetrics.SetActive(false);
+        volumetricRenderer0.material.SetInt("_FlashOn", flashOn ? 1 : 0);
+        volumetricRenderer1.material.SetInt("_FlashOn", flashOn ? 1 : 0);
     }
 
     IEnumerator ResetBeatValue() {
@@ -213,10 +226,47 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     }
 
     private void Update() {
-        if (headlightTester) {
-            Debug.Log($"forward = {transform.forward}");
-            volumetricRenderer0.material.SetVector("ObjectOrientation", transform.forward);
-            volumetricRenderer1.material.SetVector("ObjectOrientation", transform.forward);
+        float angle = CameraAngle();
+        volumetricRenderer0.material.SetFloat("_CameraAngle", angle);
+        volumetricRenderer1.material.SetFloat("_CameraAngle", angle);
+    }
+
+    float offset = 0;
+
+    private float CameraAngle() {
+        float angle;
+        Vector3 camPos = referenceManagement.cam.transform.position;
+        Vector3 camDir = camPos - (transform.position + transform.forward * offset);
+        //if (headlightTester) Debug.Log($"position = {transform.position}");
+        //if (headlightTester) Debug.Log($"offset position = {transform.position + transform.forward * offset}");
+        //if (headlightTester) Debug.Log($"dir = {(camPos - transform.position).normalized}");
+        //if (headlightTester) Debug.Log($"dir offset = {camDir.normalized}");
+        camDir.Normalize();
+        angle = Vector3.Dot(transform.forward, camDir);
+        //angle = Mathf.Pow(angle, 4);
+        angle *= 0.2f;
+        return angle;
+    }
+
+    private void SetVertexColor(Mesh mesh) {
+        Debug.Log($"Set vertex color");
+        if (mesh.colors.Length != mesh.vertices.Length) {
+            Color[] colors = new Color[mesh.vertices.Length];
+            for (int i = 0; i < mesh.vertices.Length; i++) {
+                colors[i] = transform.localPosition.y < transform.TransformPoint(mesh.vertices[i]).y ? Color.black : Color.white;
+                if (colors[i] == Color.black) Debug.Log("without bounds");
+                else Debug.Log($"within bounds");
+            }
+            mesh.colors = colors;
+        } else {
+            for (int i = 0; i < mesh.vertices.Length; i++) {
+                mesh.colors[i] = transform.localPosition.y < transform.TransformPoint(mesh.vertices[i]).y ? Color.black : Color.white;
+                if (i == 0) {
+                    if (mesh.colors[i] == Color.black) Debug.Log("without bounds");
+                    else Debug.Log($"within bounds");
+                    Debug.Log($"transform.locPos.y = {transform.localPosition.y}, myPos = {transform.TransformPoint(mesh.vertices[i]).y}");
+                }
+            }
         }
     }
 }
