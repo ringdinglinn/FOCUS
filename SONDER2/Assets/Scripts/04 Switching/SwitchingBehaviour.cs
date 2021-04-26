@@ -58,6 +58,10 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
 
     public bool headlightTester;
 
+    public bool isMarkedCar;
+
+    bool displayingSignal;
+
     private void OnEnable() {
         CollectReferences();
         GenerateSignalPattern();
@@ -135,26 +139,48 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     }
 
     public void DisplaySignalPattern() {
-        if (!signalCoolDown) {
-            StartCoroutine(Signal());
-            StartCoroutine(DisplaySignalCoolDown());
-        }
+        if (!displayingSignal) StartCoroutine(Signal());
     }
 
     IEnumerator Signal() {
+        displayingSignal = true;
         for (int i = 0; i < signalPattern.Length; i++) {
-            while (!beatSubD || flashOn) {
-                yield return new WaitForEndOfFrame();
-            }
-            StartCoroutine(FlashHeadlight(signalPattern[i]));
-            beatSubD = false;
-        }
-    }
+            flashOn = true;
+            //volumetrics.SetActive(true);
+            volumetricRenderer0.material.SetInt("_FlashOn", flashOn ? 1 : 0);
+            volumetricRenderer1.material.SetInt("_FlashOn", flashOn ? 1 : 0);
 
-    IEnumerator DisplaySignalCoolDown() {
-        signalCoolDown = true;
-        yield return new WaitForSeconds(8f);
-        signalCoolDown = false;
+            headlight1.intensity = headlightDefaultIntensity * 4f;
+            headlight2.intensity = headlightDefaultIntensity * 4f;
+            headlight1.range = headlightDefaultRange * 4f;
+            headlight2.range = headlightDefaultRange * 4f;
+
+            float time = beatIntervalSubD;
+            if (signalPattern[i] == FlashType.Long) {
+                time = beatInterval * 1.3f;
+            }
+            yield return new WaitForSeconds(time);
+
+            headlight1.intensity = headlightDefaultIntensity;
+            headlight2.intensity = headlightDefaultIntensity;
+            headlight1.range = headlightDefaultRange;
+            headlight2.range = headlightDefaultRange;
+
+            beatSubD = false;
+            flashOn = false;
+            //volumetrics.SetActive(false);
+            volumetricRenderer0.material.SetInt("_FlashOn", flashOn ? 1 : 0);
+            volumetricRenderer1.material.SetInt("_FlashOn", flashOn ? 1 : 0);
+
+            yield return new WaitForSeconds(beatIntervalSubD);
+        }
+        // interval
+        if (isMarkedCar) yield return new WaitForSeconds(beatInterval * 2f);
+
+        displayingSignal = false;
+
+        // restart
+        if (isMarkedCar) StartCoroutine(Signal());
     }
 
     public void SetFlash(bool b) {
@@ -170,35 +196,6 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
             headlight1.range = headlightDefaultRange;
             headlight2.range = headlightDefaultRange;
         }
-    }
-
-    IEnumerator FlashHeadlight(FlashType flashType) {
-        flashOn = true;
-        //volumetrics.SetActive(true);
-        volumetricRenderer0.material.SetInt("_FlashOn", flashOn ? 1 : 0);
-        volumetricRenderer1.material.SetInt("_FlashOn", flashOn ? 1 : 0);
-
-        headlight1.intensity = headlightDefaultIntensity * 4f;
-        headlight2.intensity = headlightDefaultIntensity * 4f;
-        headlight1.range = headlightDefaultRange * 4f;
-        headlight2.range = headlightDefaultRange * 4f;
-
-        float time = beatIntervalSubD;
-        if (flashType == FlashType.Long) {
-            time = beatInterval * 1.3f;
-        }
-        yield return new WaitForSeconds(time);
-
-        headlight1.intensity = headlightDefaultIntensity;
-        headlight2.intensity = headlightDefaultIntensity;
-        headlight1.range = headlightDefaultRange;
-        headlight2.range = headlightDefaultRange;
-
-        beatSubD = false;
-        flashOn = false;
-        //volumetrics.SetActive(false);
-        volumetricRenderer0.material.SetInt("_FlashOn", flashOn ? 1 : 0);
-        volumetricRenderer1.material.SetInt("_FlashOn", flashOn ? 1 : 0);
     }
 
     IEnumerator ResetBeatValue() {
@@ -231,7 +228,7 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         volumetricRenderer1.material.SetFloat("_CameraAngle", angle);
     }
 
-    float offset = 0;
+    float offset = 70;
 
     private float CameraAngle() {
         float angle;

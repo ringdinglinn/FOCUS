@@ -254,10 +254,12 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         } else if (markedCar != null && sb != null) {
 
         }
+        if (markedCar != null) markedCar.isMarkedCar = false;
         if (sb != null) {
+            sb.isMarkedCar = true;
             signalPattern = sb.GetSignal();
+            sb.DisplaySignalPattern();
             DisplayMarkedCarSignalPattern(); // this car displays text
-            sb.DisplaySignalPattern(); // marked car flashes light
             ResetFlashRecordDurations();
         }
     }
