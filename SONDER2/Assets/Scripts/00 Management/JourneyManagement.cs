@@ -14,14 +14,14 @@ public class JourneyManagement : MonoBehaviourReferenced {
 
     private void OnEnable() {
         switchingManagement = referenceManagement.switchingManagement;
-        switchingManagement.CarSwitchedEvent.AddListener(HandleSwitched);
+        switchingManagement.CarChangedEvent.AddListener(HandleSwitched);
         pathManagement = referenceManagement.pathManagement;
 
         alternatePath0 = referenceManagement.alternatePath0;
     }
 
     private void OnDisable() {
-        switchingManagement.CarSwitchedEvent.RemoveListener(HandleSwitched);
+        switchingManagement.CarChangedEvent.RemoveListener(HandleSwitched);
     }
 
     private void HandleSwitched() {

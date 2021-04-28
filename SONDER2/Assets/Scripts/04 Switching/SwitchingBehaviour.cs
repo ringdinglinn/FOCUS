@@ -103,6 +103,7 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         wheelVehicle.IsPlayer = true;
         if (isInitialCar && carManagement.HasManualInitialCar()) wheelVehicle.IsPlayer = false;
 
+        volumetrics.SetActive(false);
         SetHeadlightsActiveCar();
     }
 
@@ -113,6 +114,7 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         carAI.cam = null;
         wheelVehicle.IsPlayer = false;
 
+        volumetrics.SetActive(true);
         SetHeadlightsInactiveCar();
         GenerateSignalPattern();
     }
@@ -150,10 +152,10 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
             volumetricRenderer0.material.SetInt("_FlashOn", flashOn ? 1 : 0);
             volumetricRenderer1.material.SetInt("_FlashOn", flashOn ? 1 : 0);
 
-            headlight1.intensity = headlightDefaultIntensity * 4f;
-            headlight2.intensity = headlightDefaultIntensity * 4f;
-            headlight1.range = headlightDefaultRange * 4f;
-            headlight2.range = headlightDefaultRange * 4f;
+            headlight1.intensity = headlightDefaultIntensity * 10f;
+            headlight2.intensity = headlightDefaultIntensity * 10f;
+            //headlight1.range = headlightDefaultRange * 6f;
+            //headlight2.range = headlightDefaultRange * 6f;
 
             float time = beatIntervalSubD;
             if (signalPattern[i] == FlashType.Long) {
@@ -186,10 +188,10 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     public void SetFlash(bool b) {
         flash = b;
         if (flash) {
-            headlight1.intensity = headlightDefaultIntensity * 20f;
-            headlight2.intensity = headlightDefaultIntensity * 20f;
-            headlight1.range = headlightDefaultRange * 1f;
-            headlight2.range = headlightDefaultRange * 1f;
+            headlight1.intensity = headlightDefaultIntensity * 40f;
+            headlight2.intensity = headlightDefaultIntensity * 40f;
+            headlight1.range = headlightDefaultRange * 4f;
+            headlight2.range = headlightDefaultRange * 4f;
         } else {
             headlight1.intensity = headlightDefaultIntensity;
             headlight2.intensity = headlightDefaultIntensity;

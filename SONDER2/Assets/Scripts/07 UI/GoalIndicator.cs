@@ -13,11 +13,11 @@ public class GoalIndicator : MonoBehaviourReferenced {
 
     private void OnEnable() {
         switchingManagement = referenceManagement.switchingManagement;
-        switchingManagement.CarSwitchedEvent.AddListener(ActiveCarChanged);
+        switchingManagement.CarChangedEvent.AddListener(ActiveCarChanged);
     }
 
     private void OnDisable() {
-        switchingManagement.CarSwitchedEvent.RemoveListener(ActiveCarChanged);
+        switchingManagement.CarChangedEvent.RemoveListener(ActiveCarChanged);
     }
 
     private void ActiveCarChanged() {

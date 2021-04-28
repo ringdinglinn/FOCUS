@@ -315,7 +315,6 @@ public class CarAI : MonoBehaviourReferenced {
         rb.velocity = vel;
         rb.angularVelocity = angVel;
         distOnPath = myPath.path.GetClosestDistanceAlongPath(pos);
-        Debug.Log($"set clone transform, dist on path = {distOnPath}, pos = {pos}, myPath = {myPath.name}");
         prevPos = TransformPointToStart(originalCarAI.GetPrevPos());
     }
 
@@ -332,7 +331,7 @@ public class CarAI : MonoBehaviourReferenced {
         GameObject cloneCamObj = Instantiate(referenceManagement.camPrefab, pos, Quaternion.LookRotation(dir));
         Camera1stPerson cloneCam = cloneCamObj.GetComponent<Camera1stPerson>();
         cloneCam.SetAsCloneCam();
-        cloneCam.SwitchCar(clone.switchingBehaviour.camTranslateTarget.transform, clone.switchingBehaviour.camRotTarget.transform, true);
+        cloneCam.SwitchCar(clone.switchingBehaviour.camTranslateTarget.transform, clone.switchingBehaviour.camRotTarget.transform, true, clone.transform);
         clone.cam = cloneCam;
         cloneCam.enabled = false;
     }

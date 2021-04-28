@@ -11,7 +11,7 @@ public class VoiceClipManagement : MonoBehaviourReferenced {
         voiceClipBehaviour = referenceManagement.voiceClipBehaviour;
         switchingManagement = referenceManagement.switchingManagement;
 
-        switchingManagement.CarSwitchedEvent.AddListener(OnCarSwitchted);
+        switchingManagement.CarChangedEvent.AddListener(OnCarSwitchted);
     }
 
     private void OnCarSwitchted() {

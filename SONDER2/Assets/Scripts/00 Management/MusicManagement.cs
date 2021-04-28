@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
-class ScriptUsageTimeline : MonoBehaviourReferenced {
+class MusicManagement : MonoBehaviourReferenced {
     // Variables that are modified in the callback need to be part of a seperate class.
     // This class needs to be 'blittable' otherwise it can't be pinned in memory.
     [StructLayout(LayoutKind.Sequential)]
@@ -15,9 +17,9 @@ class ScriptUsageTimeline : MonoBehaviourReferenced {
     GCHandle timelineHandle;
 
     FMOD.Studio.EVENT_CALLBACK beatCallback;
-    FMOD.Studio.EventInstance musicInstance;
-
     FMOD.Studio.EventInstance track1;
+
+    int switchNr = 0;
 
     void Start() {
 
@@ -36,6 +38,8 @@ class ScriptUsageTimeline : MonoBehaviourReferenced {
 
         track1.setCallback(beatCallback, FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_BEAT | FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_MARKER);
         track1.start();
+
+        referenceManagement.switchingManagement.CarSwitchedEvent.AddListener(HandleCarSwitched);
     }
 
     void OnDestroy() {
@@ -63,6 +67,7 @@ class ScriptUsageTimeline : MonoBehaviourReferenced {
                 case FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_BEAT: {
                         var parameter = (FMOD.Studio.TIMELINE_BEAT_PROPERTIES)Marshal.PtrToStructure(parameterPtr, typeof(FMOD.Studio.TIMELINE_BEAT_PROPERTIES));
                         timelineInfo.currentMusicBar = parameter.bar;
+                        Debug.Log("Beat!");
                     }
                     break;
                 case FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_MARKER: {
@@ -73,5 +78,10 @@ class ScriptUsageTimeline : MonoBehaviourReferenced {
             }
         }
         return FMOD.RESULT.OK;
+    }
+
+    void HandleCarSwitched() {
+        track1.setParameterByName("SwitchNr", ++switchNr);
+        Debug.Log($"Set parementer evt, {switchNr}");
     }
 }

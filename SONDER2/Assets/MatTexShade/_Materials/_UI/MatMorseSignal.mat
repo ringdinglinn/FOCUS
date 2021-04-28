@@ -117,8 +117,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Boolean_74813C04: 0
     - Clarity: 2
-    - Vector1_231EF832: 4000
+    - Vector1_231EF832: 300
     - _AORemapMax: 1
     - _AORemapMin: 0
     - _ATDistance: 1
@@ -172,6 +173,7 @@ Material:
     - _EnableFogOnTransparent: 1
     - _EnableGeometricSpecularAA: 0
     - _EnergyConservingSpecularColor: 1
+    - _FlashOn: 0
     - _HeightAmplitude: 0.02
     - _HeightCenter: 0.5
     - _HeightMapParametrization: 0

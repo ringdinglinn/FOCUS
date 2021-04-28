@@ -58,6 +58,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
     bool carsCreated;
 
+    public UnityEvent CarChangedEvent;
     public UnityEvent CarSwitchedEvent;
 
     bool flash = false;
@@ -86,6 +87,8 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     public float signalDisplayAmplitude = 1f;
 
     EventInstance radioStatic;
+
+    private Vector3 origScaleMorseDisplay;
 
     private void Start() {
         BeatDetector beatDetector = referenceManagement.beatDetector;
@@ -137,14 +140,15 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
     private void SwitchToCar(SwitchingBehaviour newSB) {
         activeCar.SwitchOutOfCar();
-        referenceManagement.cam.SwitchCar(newSB.camTranslateTarget.transform, newSB.camRotTarget.transform, true);
+        referenceManagement.cam.SwitchCar(newSB.camTranslateTarget.transform, newSB.camRotTarget.transform, true, newSB.transform);
         newSB.SwitchIntoCar(camController);
     }
 
     public void SetUpInitialCar(SwitchingBehaviour initSB) {
-        referenceManagement.cam.SwitchCar(initSB.camTranslateTarget.transform, initSB.camRotTarget.transform, false);
+        referenceManagement.cam.SwitchCar(initSB.camTranslateTarget.transform, initSB.camRotTarget.transform, false, initSB.transform);
         initSB.isInitialCar = true;
         initSB.SwitchIntoCar(camController);
+        origScaleMorseDisplay = initSB.morseSignalDisplay.transform.localScale;
     }
 
     private void Update() {
@@ -177,6 +181,8 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         value = Mathf.Clamp(value, 0.05f, 2);
         activeCar.morseSingalRenderer.materials[0].SetFloat("Clarity", value);
         radioStatic.setParameterByName("SignalStrength", value);
+
+        MorseUIFeedback();
     }
 
     private void SearchForCars() {
@@ -212,7 +218,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
                     RaycastHit hit;
                     // Does the ray intersect any objects excluding the player layer
                     Vector3 pos = allSwitchingBehaviours[i].transform.position;
-                    Vector3 offset = allSwitchingBehaviours[i].transform.up * 1;
+                    Vector3 offset = allSwitchingBehaviours[i].transform.up * 1.5f;
                     pos += offset;
                     Vector3 dir = activeCar.transform.position - allSwitchingBehaviours[i].transform.position;
                     float mag = dir.magnitude;
@@ -333,6 +339,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         referenceManagement.switchSound.Play();
         selectedCar = null;
         StartCoroutine(SelectCoolDown());
+        CarChangedEvent.Invoke();
         CarSwitchedEvent.Invoke();
         camController.Loop();
     }
@@ -349,6 +356,8 @@ public class SwitchingManagement : MonoBehaviourReferenced {
             measureInterval = true;
             StartCoroutine(MeasureFlashInterval());
         }
+
+        activeCar.morseSingalRenderer.materials[0].SetInt("_FlashOn", b ? 1 : 0);
     }
 
     IEnumerator MeasureFlashDuration() {
@@ -401,9 +410,6 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         }
         if (correct && HasMarkedCar) {
             identicalFlashes = true;
-            Debug.Log("identical flashes = true");
-        } else {
-            Debug.Log("identical flashes = false");
         }
     }
 
@@ -451,6 +457,16 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         //UpdateDebugUI();
     }
 
+    private void MorseUIFeedback() {
+        Vector3 scale;
+        if (measureFlash) {
+            scale = origScaleMorseDisplay * 1.5f;
+        } else {
+            scale = origScaleMorseDisplay;
+        }
+        activeCar.morseSignalDisplay.transform.localScale = Vector3.Lerp(activeCar.morseSignalDisplay.transform.localScale, scale, 20 * Time.deltaTime);
+    }
+
     private void OnFullBeatDetected() {
         if (hasSelectedCar) Switch();
     }
@@ -461,7 +477,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
     public void SetActiveCar(SwitchingBehaviour sb) {
         ActiveCar = sb;
-        CarSwitchedEvent.Invoke();
+        CarChangedEvent.Invoke();
     }
 
     private void ActiveCarChanged(SwitchingBehaviour sb) {

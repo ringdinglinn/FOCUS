@@ -5,6 +5,7 @@ using UnityEngine;
 public class Camera1stPerson : MonoBehaviourReferenced {
     public Transform rotTarget;
     public Transform translateTarget;
+    public Transform targetCar;
     [SerializeField] private float translateSpeed;
     [SerializeField] private float rotationSpeed;
 
@@ -51,7 +52,7 @@ public class Camera1stPerson : MonoBehaviourReferenced {
 
     private void Update() {
         if (looping) {
-            BaseMovement();
+            LoopMovement();
             if ((translateTarget.transform.position - transform.position).sqrMagnitude <= Mathf.Pow(targetRange, 2)) {
                 looping = false;
             }
@@ -60,9 +61,10 @@ public class Camera1stPerson : MonoBehaviourReferenced {
         }
     }
 
-    public void SwitchCar(Transform tt, Transform rt, bool shake) {
+    public void SwitchCar(Transform tt, Transform rt, bool shake, Transform tc) {
         translateTarget = tt;
         rotTarget = rt;
+        targetCar = tc;
         prevTargetPos = translateTarget.position;
         this.shake = shake;
     }
@@ -92,22 +94,12 @@ public class Camera1stPerson : MonoBehaviourReferenced {
     }
 
     private void Sloop() {
-        targetPos = translateTarget.position;
+        targetPos = targetCar.InverseTransformPoint(translateTarget.position);
+        Vector3 currentPos = targetCar.InverseTransformPoint(transform.position);
 
-        // Velocity
-        targetVelocity = targetPos - prevTargetPos;
-        velocity = Vector3.Lerp(velocity, targetVelocity, velocityDamping * Time.deltaTime);
+        currentPos = Vector3.Lerp(currentPos, targetPos, 5 * Time.deltaTime);
 
-        // Catch Up
-        Vector3 distToTarget = targetPos - (transform.position + velocity);
-        catchUpVelocity = Vector3.Lerp(catchUpVelocity, distToTarget, catchUpDamping * Time.deltaTime);
-
-        // Set Camera
-        Vector3 newCamPos = transform.position + velocity + catchUpVelocity;
-        transform.position = newCamPos;
-
-        // Set prev to get Velocity on next frame
-        prevTargetPos = targetPos;
+        transform.position = targetCar.TransformPoint(currentPos);
     }
 
     private void HandleTranslation() {
