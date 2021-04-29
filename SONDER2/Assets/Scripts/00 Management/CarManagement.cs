@@ -66,7 +66,6 @@ public class CarManagement : MonoBehaviourReferenced {
                 CarAI carAI = car.GetComponent<CarAI>();
                 SwitchingBehaviour sb = car.GetComponent<SwitchingBehaviour>();
                 sb.id = idCounter;
-                Debug.Log($"car {idCounter} instantiated");
                 ++idCounter;
                 car.name = carName + (idCounter - 1);
 
@@ -140,7 +139,6 @@ public class CarManagement : MonoBehaviourReferenced {
         oldCar.endTunnel.CarIsDestroyed(oldCar);
         if (isActiveCar) {
             referenceManagement.cam = newCar.cam;
-            referenceManagement.cam.enabled = true;
             cameraChanged.Invoke();
             switchingManagement.SetActiveCar(newSB);
             Destroy(oldCar.cam.gameObject);

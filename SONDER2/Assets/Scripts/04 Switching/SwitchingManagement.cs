@@ -136,6 +136,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     private void OnCameraChanged() {
         cam = referenceManagement.cam.GetComponent<Camera>();
         camController = cam.GetComponent<Camera1stPerson>();
+        referenceManagement.canvas.worldCamera = cam;
     }
 
     private void SwitchToCar(SwitchingBehaviour newSB) {

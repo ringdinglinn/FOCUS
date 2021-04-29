@@ -10,12 +10,14 @@ public class PathLoopTriggerBehaviour : MonoBehaviourReferenced {
 
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag("Car")) {
+            Debug.Log($"portal reached, {other.transform.parent.parent.name}");
             if (isColliding) return;
             isColliding = true;
             carAI = other.gameObject.GetComponentInParent<CarAI>();
             if (carAI.autopilotEnabled) {
                 carAI.PortalReachedInactiveCar();
             } else if (!carAI.autopilotEnabled && !tunnelBehaviour.isLevelStartTunnel) {
+                Debug.Log($"portal reached, start command, {other.transform.parent.parent.name}");
                 carAI.PortalReachedActiveCar();
             }
             StartCoroutine(SetIsCollidingFalse());

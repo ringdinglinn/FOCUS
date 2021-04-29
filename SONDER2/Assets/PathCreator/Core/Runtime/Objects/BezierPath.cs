@@ -388,8 +388,8 @@ namespace PathCreation {
 
         public void FlipTunnels() {
             flipped = !flipped;
-            UpdateStartTunnelPoints(points[9]);
-            UpdateEndTunnelPoints(points[points.Count - 1 - 9]);
+            if (hasTunnelPointsStart) UpdateStartTunnelPoints(points[9]);
+            if (hasTunnelPointsEnd) UpdateEndTunnelPoints(points[points.Count - 1 - 9]);
         }
 
         private void UpdateStartTunnelPoints(Vector3 startPos) {

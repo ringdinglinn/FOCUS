@@ -27,6 +27,7 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     public GameObject camRotTarget;
     public GameObject camTranslateTarget;
 
+    public GameObject spotlights;
     public HDAdditionalLightData headlight1;
     public HDAdditionalLightData headlight2;
     private float activeCarVolumetric = 0.5f;
@@ -104,6 +105,7 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         if (isInitialCar && carManagement.HasManualInitialCar()) wheelVehicle.IsPlayer = false;
 
         volumetrics.SetActive(false);
+        spotlights.SetActive(true);
         SetHeadlightsActiveCar();
     }
 
@@ -115,6 +117,7 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         wheelVehicle.IsPlayer = false;
 
         volumetrics.SetActive(true);
+        spotlights.SetActive(false);
         SetHeadlightsInactiveCar();
         GenerateSignalPattern();
     }
@@ -248,23 +251,15 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     }
 
     private void SetVertexColor(Mesh mesh) {
-        Debug.Log($"Set vertex color");
         if (mesh.colors.Length != mesh.vertices.Length) {
             Color[] colors = new Color[mesh.vertices.Length];
             for (int i = 0; i < mesh.vertices.Length; i++) {
                 colors[i] = transform.localPosition.y < transform.TransformPoint(mesh.vertices[i]).y ? Color.black : Color.white;
-                if (colors[i] == Color.black) Debug.Log("without bounds");
-                else Debug.Log($"within bounds");
             }
             mesh.colors = colors;
         } else {
             for (int i = 0; i < mesh.vertices.Length; i++) {
                 mesh.colors[i] = transform.localPosition.y < transform.TransformPoint(mesh.vertices[i]).y ? Color.black : Color.white;
-                if (i == 0) {
-                    if (mesh.colors[i] == Color.black) Debug.Log("without bounds");
-                    else Debug.Log($"within bounds");
-                    Debug.Log($"transform.locPos.y = {transform.localPosition.y}, myPos = {transform.TransformPoint(mesh.vertices[i]).y}");
-                }
             }
         }
     }

@@ -241,7 +241,7 @@ namespace PathCreationEditor {
                         EditorUtility.SetDirty(this);
                     }
 
-                    GUI.enabled = bezierPath.hasTunnelPointsEnd && bezierPath.hasTunnelPointsStart;
+                    GUI.enabled = true;
 
                     if (GUILayout.Button("Flip Tunnels")) {
                         bezierPath.FlipTunnels();

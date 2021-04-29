@@ -17,4 +17,12 @@ public class VoiceClipBehaviour : MonoBehaviourReferenced {
     public void Play() {
         audioSource.Play();
     }
+
+    public void Stop() {
+        audioSource.Stop();
+    }
+
+    public bool IsPlaying() {
+        return audioSource.isPlaying;
+    }
 }

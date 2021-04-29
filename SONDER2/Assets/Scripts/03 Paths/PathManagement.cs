@@ -9,7 +9,6 @@ public class PathManagement : MonoBehaviourReferenced {
 
     public void AddToPaths(PathBehaviour pb) {
         paths.Add(pb);
-        if (pb.endTunnel != null) pb.endTunnel.SetEndTunnelID(pb.id);
     }
 
     public void AddToTunnels(TunnelBehaviour tunnel) {

@@ -74,6 +74,9 @@ public class CarAI : MonoBehaviourReferenced {
 
     public bool dontLoop = false;
 
+    float speedLimit;
+    float targetSpeedLimit;
+
 
     private void OnEnable() {
         wheelVehicle = GetComponent<WheelVehicle>();
@@ -97,6 +100,7 @@ public class CarAI : MonoBehaviourReferenced {
         if (!autopilotEnabled) {
             AutoPilot();
         }
+        speedLimit = Mathf.Lerp(speedLimit, targetSpeedLimit, 0.15f * Time.deltaTime);
     }
 
     private void FixedUpdate() {
@@ -115,7 +119,8 @@ public class CarAI : MonoBehaviourReferenced {
         //if (!autopilotEnabled) {
         //    throttle = Mathf.Lerp(throttle, Mathf.Pow(pathBehaviour.GetSpeedLimit(), 2) - rb.velocity.sqrMagnitude, 0.001f);
         //} else {
-            throttle = Mathf.Pow(pathBehaviour.GetSpeedLimit(), 2) - rb.velocity.sqrMagnitude;
+        if (!autopilotEnabled) Debug.Log($"speedLimit = {speedLimit}");
+            throttle = Mathf.Pow(speedLimit, 2) - rb.velocity.sqrMagnitude;
         //}
         wheelVehicle.Throttle = throttle;
 
@@ -161,11 +166,12 @@ public class CarAI : MonoBehaviourReferenced {
     }
 
     private void GetPathInfo() {
-        Debug.Log($"get path info, {name}, {pathID}");
         pathBehaviour = referenceManagement.pathManagement.GetMyPath(pathID);
         if (pathBehaviour.endTunnel != null) endTunnel = pathBehaviour.endTunnel;
         if (pathBehaviour.startTunnel != null) startTunnel = pathBehaviour.startTunnel;
         SetPath(pathBehaviour.GetPath());
+        speedLimit = pathBehaviour.GetSpeedLimit();
+        targetSpeedLimit = speedLimit;
     }
 
     #endregion
@@ -206,6 +212,7 @@ public class CarAI : MonoBehaviourReferenced {
 
     public void PortalReachedActiveCar() {
         if (!dontLoop) {
+            Debug.Log("portal reached active car");
             carManagement.ActiveCarHasReachedPortal(this);
         }
     }
@@ -299,8 +306,12 @@ public class CarAI : MonoBehaviourReferenced {
         this.PathID = pathID;
         if (isActiveCar) {
             switchingBehaviour.SetHeadlightsActiveCar();
+            switchingBehaviour.spotlights.SetActive(true);
+            switchingBehaviour.volumetrics.SetActive(false);
         } else {
             switchingBehaviour.SetHeadlightsInactiveCar();
+            switchingBehaviour.spotlights.SetActive(false);
+            switchingBehaviour.volumetrics.SetActive(true);
         }
         isClone = true;
     }
@@ -319,6 +330,7 @@ public class CarAI : MonoBehaviourReferenced {
     }
 
     private void CreateClone(int pathID) {
+        Debug.Log($"{name} created clone!");
         hasClone = true;
         clone = referenceManagement.carManagement.CreateCarClone(pathID);
         clone.StartClone(!autopilotEnabled, transform, rb, this, pathID);
@@ -333,7 +345,6 @@ public class CarAI : MonoBehaviourReferenced {
         cloneCam.SetAsCloneCam();
         cloneCam.SwitchCar(clone.switchingBehaviour.camTranslateTarget.transform, clone.switchingBehaviour.camRotTarget.transform, true, clone.transform);
         clone.cam = cloneCam;
-        cloneCam.enabled = false;
     }
 
     public void ActiveCarHasEnteredTunnel(int pathID) {
@@ -356,4 +367,10 @@ public class CarAI : MonoBehaviourReferenced {
     }
 
     #endregion
+
+
+    public void SlowDown() {
+        Debug.Log("Slow down");
+        targetSpeedLimit = 1;
+    }
 }

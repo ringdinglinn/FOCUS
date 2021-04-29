@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-class MusicManagement : MonoBehaviourReferenced {
+public class MusicManagement : MonoBehaviourReferenced {
     // Variables that are modified in the callback need to be part of a seperate class.
     // This class needs to be 'blittable' otherwise it can't be pinned in memory.
     [StructLayout(LayoutKind.Sequential)]
@@ -67,7 +67,6 @@ class MusicManagement : MonoBehaviourReferenced {
                 case FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_BEAT: {
                         var parameter = (FMOD.Studio.TIMELINE_BEAT_PROPERTIES)Marshal.PtrToStructure(parameterPtr, typeof(FMOD.Studio.TIMELINE_BEAT_PROPERTIES));
                         timelineInfo.currentMusicBar = parameter.bar;
-                        Debug.Log("Beat!");
                     }
                     break;
                 case FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_MARKER: {
@@ -83,5 +82,9 @@ class MusicManagement : MonoBehaviourReferenced {
     void HandleCarSwitched() {
         track1.setParameterByName("SwitchNr", ++switchNr);
         Debug.Log($"Set parementer evt, {switchNr}");
+    }
+
+    public void SetVolume(float v) {
+        track1.setParameterByName("Volume", v);
     }
 }

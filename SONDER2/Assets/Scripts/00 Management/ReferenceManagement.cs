@@ -21,6 +21,7 @@ public class ReferenceManagement : MonoBehaviour
     public VoiceClipManagement voiceClipManagement;
     public GearManagement gearManagement;
     public JourneyManagement journeyManagement;
+    public MusicManagement musicManagement;
 
     [Header("Player Items")]
     public Camera1stPerson cam;
@@ -60,6 +61,8 @@ public class ReferenceManagement : MonoBehaviour
     public GameObject beatIndicatorObj;
     public List<Sprite> gearSprites;
     public GameObject youDidItText;
+    public GameObject thankYouText;
+    public Canvas canvas;
 
     [Header("Sounds")]
     public AudioSource switchSound;

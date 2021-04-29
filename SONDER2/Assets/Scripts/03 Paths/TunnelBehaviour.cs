@@ -21,6 +21,11 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
 
     public PathBehaviour pathBehaviour;
 
+    bool isColliding = false;
+
+    public GameObject goalIndicator;
+    public GameObject nextGoalIndicator;
+
     private void OnEnable() {
         referenceManagement.entryFilters.Add(entryFilter0);
         referenceManagement.entryFilters.Add(entryFilter1);
@@ -30,18 +35,19 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
         referenceManagement.pathManagement.AddToTunnels(this);
         portalTrigger.SetTunnelBehaviour(this);
         pathBehaviour = GetComponentInParent<PathBehaviour>();
+        endTunnelID = pathBehaviour.id;
     }
 
     public void SetID(int id) {
         this.id = id;
     }
 
-    public void SetEndTunnelID(int id) {
-        endTunnelID = id;
-    }
-
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag("Car")) {
+            if (isColliding) return;
+            isColliding = true;
+            StartCoroutine(Reset());
+
             CarAI carAI;
             carAI = other.GetComponentInParent<CarAI>();
             if (isEndTunnel) {
@@ -57,19 +63,29 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
             }
             bool carInList = false;
             foreach (CarAI car in carsInTunnel) if (car == carAI) carInList = true;
-            if (!carInList && !carAI.dontLoop) carsInTunnel.Add(carAI);
+            if (!carInList && !carAI.dontLoop && isEndTunnel) carsInTunnel.Add(carAI);
 
             if (!carAI.autopilotEnabled && isEndTunnel) {
                 foreach (CarAI car in carsInTunnel) {
                     car.ActiveCarHasEnteredTunnel(isLevelEndTunnel ? nextLevelStartTunnel.pathBehaviour.id : pathBehaviour.id);
                 }
+                if (goalIndicator != null) {
+                    goalIndicator.SetActive(false);
+                }
+                if (nextGoalIndicator != null) {
+                    nextGoalIndicator.SetActive(true);
+                }
             }
 
             if (!carAI.autopilotEnabled && isLevelStartTunnel) {
                 carAI.PathID = pathBehaviour.id;
-                Debug.Log($"assigned new path, {pathBehaviour.id}, {carAI.name}");
             }
         }
+    }
+
+    IEnumerator Reset() {
+        yield return new WaitForEndOfFrame();
+        isColliding = false;
     }
 
     private void OnTriggerExit(Collider other) {
@@ -79,7 +95,7 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
             if (this != carAI.endTunnel) {
                 carAI.dontLoop = false;
             }
-            if (carAI.PathID == endTunnelID) {
+            if (carAI.pathID == pathBehaviour.id) {
                 carsInTunnel.Remove(carAI);
             }
             if (!carAI.autopilotEnabled && isLevelStartTunnel) {

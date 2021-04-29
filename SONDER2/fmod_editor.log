@@ -6,7 +6,7 @@
 [LOG] OutputCoreAudio::init                    : Maximum hardware read size: 1024 samples, Software buffer size: 512 samples, Number of software buffers: 4.
 [LOG] Thread::initThread                       : Init FMOD stream thread. Affinity: 0x8000000000000003, Priority: 0xFFFF7FFB, Stack Size: 98304, Semaphore: No, Sleep Time: 10, Looping: Yes.
 [LOG] Thread::initThread                       : Init FMOD mixer thread. Affinity: 0x8000000000000001, Priority: 0xFFFF7FFA, Stack Size: 81920, Semaphore: Yes, Sleep Time: 0, Looping: Yes.
-[LOG] AsyncManager::init                       : manager 0x7f80bdb63808 isAsync 0 updatePeriod 0.02
+[LOG] AsyncManager::init                       : manager 0x7fa7ad6b1e08 isAsync 0 updatePeriod 0.02
 [LOG] AsyncManager::init                       : done
 [LOG] PlaybackSystem::init                     : 
 [LOG] Thread::initThread                       : Init FMOD Studio sample load thread. Affinity: 0x8000000000000003, Priority: 0xFFFF7FFD, Stack Size: 98304, Semaphore: No, Sleep Time: 1, Looping: No.
@@ -14,12 +14,169 @@
 [LOG] Thread::initThread                       : Init FMOD Studio bank load thread. Affinity: 0x8000000000000003, Priority: 0xFFFF7FFD, Stack Size: 98304, Semaphore: No, Sleep Time: 1, Looping: No.
 [LOG] Manager::init                            : done.
 [LOG] Manager::readBank                        : fileversion = 125, compatVersion = 119 (oldest = 44, newest = 135)
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0x7fa714f41c78
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0x7fa714f41c78
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0x7fa714ddb628
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0x7fa714ddb628
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0x7fa714f41c78
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0x7fa714f41c78
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0x7fa714ddb628
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0x7fa714ddb628
 [LOG] Manager::readBank                        : fileversion = 125, compatVersion = 119 (oldest = 44, newest = 135)
+[LOG] SystemI::createSound                     : filename = ../../04 Sound/FMOD/FOCUS/Build/Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 0x7fa71b108058 : node = 0x7fa7dcc331c0
+[LOG] SystemI::createSound                     : add node to async list : head = 0x7fa71b5e7a08.  list count = 0
+[LOG] SystemI::createSound                     : filename = ../../04 Sound/FMOD/FOCUS/Build/Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 0x7fa71677cd28 : node = 0x7fa7167c1cf0
+[LOG] SystemI::createSound                     : add node to async list : head = 0x7fa71b5e7a08.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0x7fa71b108058
+[LOG] SystemI::createSoundInternal             :     Create name='../../04 Sound/FMOD/FOCUS/Build/Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 8116320
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 26752
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0x7fa7dcc332d0
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='Focus_03_Loop1_V01-03', format=5, channels=2, frequency=48000, lengthbytes=191968, lengthpcm=786432, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.804269.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0x7fa71b108058
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0x7fa71677cd28
+[LOG] SystemI::createSoundInternal             :     Create name='../../04 Sound/FMOD/FOCUS/Build/Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 8116320
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 26752
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0x7fa7167c1e00
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekposition = 7500
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='Focus_02_Transition1_V01-03', format=5, channels=2, frequency=48000, lengthbytes=190752, lengthpcm=786432, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.563603.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0x7fa71677cd28
 [LOG] Manager::readBank                        : fileversion = 125, compatVersion = 119 (oldest = 44, newest = 135)
+[LOG] SystemI::createSound                     : filename = ../../04 Sound/FMOD/FOCUS/Build/Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 0x7fa719d24138 : node = 0x7fa71a0424a0
+[LOG] SystemI::createSound                     : add node to async list : head = 0x7fa71b5e7a08.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0x7fa719d24138
+[LOG] SystemI::createSoundInternal             :     Create name='../../04 Sound/FMOD/FOCUS/Build/Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 8116320
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 26752
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0x7fa71a0425b0
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='Focus_03_Loop1_V01-03', format=5, channels=2, frequency=48000, lengthbytes=191968, lengthpcm=786432, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.804269.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0x7fa719d24138
+[LOG] SoundI::release                          : Focus_03_Loop1_V01-03 (0x7fa71b108058)
+[LOG] SoundI::release                          :     Focus_03_Loop1_V01-03 (0x7fa71c9e1a18)
+[LOG] SoundI::release                          :     Focus_03_Loop1_V01-03 (0x7fa71c9e1c78)
 [LOG] Manager::readBank                        : fileversion = 125, compatVersion = 119 (oldest = 44, newest = 135)
 [LOG] Manager::readBank                        : fileversion = 125, compatVersion = 119 (oldest = 44, newest = 135)
 [LOG] Manager::readBank                        : fileversion = 125, compatVersion = 119 (oldest = 44, newest = 135)
 [LOG] PlaybackSystem::acquireMasterBus         : Setting master channel group format to 6
+[LOG] SoundI::release                          : Focus_02_Transition1_V01-03 (0x7fa71677cd28)
+[LOG] SoundI::release                          :     Focus_02_Transition1_V01-03 (0x7fa71c9e2798)
+[LOG] SoundI::release                          :     Focus_02_Transition1_V01-03 (0x7fa71c9e29f8)
+[LOG] SystemI::createSound                     : filename = ../../04 Sound/FMOD/FOCUS/Build/Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 0x7fa71a6bd968 : node = 0x7fa71240ef70
+[LOG] SystemI::createSound                     : add node to async list : head = 0x7fa71b5e7a08.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0x7fa71a6bd968
+[LOG] SystemI::createSoundInternal             :     Create name='../../04 Sound/FMOD/FOCUS/Build/Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 8116320
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 26752
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0x7fa71240f080
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='Focus_03_Loop1_V01-03', format=5, channels=2, frequency=48000, lengthbytes=191968, lengthpcm=786432, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.804269.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0x7fa71a6bd968
+[LOG] SoundI::release                          : Focus_03_Loop1_V01-03 (0x7fa719d24138)
+[LOG] SoundI::release                          :     Focus_03_Loop1_V01-03 (0x7fa71a086888)
+[LOG] SoundI::release                          :     Focus_03_Loop1_V01-03 (0x7fa71a0492d8)
+[LOG] SoundI::release                          : Focus_03_Loop1_V01-03 (0x7fa71a6bd968)
+[LOG] SoundI::release                          :     Focus_03_Loop1_V01-03 (0x7fa71a6ae6c8)
+[LOG] SoundI::release                          :     Focus_03_Loop1_V01-03 (0x7fa71a686038)
+[LOG] SoundI::release                          :  (0x7fa7127c4328)
+[LOG] SoundI::release                          :     Focus_03_Loop1_Layer2_V01-03 (0x7fa712718448)
+[LOG] SoundI::release                          : static (0x7fa71b532c48)
+[LOG] SoundI::release                          :     static (0x7fa714df6058)
+[LOG] SoundI::release                          :     static (0x7fa714ddb628)
+[LOG] SoundI::release                          : crackle-base (0x7fa71c7c9978)
+[LOG] SoundI::release                          :     crackle-base (0x7fa719db95f8)
+[LOG] SoundI::release                          :     crackle-base (0x7fa714f41c78)
+[LOG] SoundI::release                          :  (0x7fa712770438)
+[LOG] SoundI::release                          :     Focus_01_Intro_V01-03 (0x7fa71a4437a8)
+[LOG] SoundI::release                          :  (0x7fa71a4cf958)
+[LOG] SoundI::release                          :     gear-stop_01 (0x7fa71276e988)
+[LOG] SoundI::release                          :  (0x7fa712778818)
+[LOG] SoundI::release                          :     gear-stop_02 (0x7fa71a408518)
+[LOG] SoundI::release                          :  (0x7fa712746fc8)
+[LOG] SoundI::release                          :     gear-stop_03 (0x7fa7127c4da8)
+[LOG] SoundI::release                          :  (0x7fa7127680b8)
+[LOG] SoundI::release                          :     gear-stop_04 (0x7fa71a452458)
+[LOG] SoundI::release                          :  (0x7fa712731098)
+[LOG] SoundI::release                          :     gear-stop_05 (0x7fa71278ea58)
+[LOG] SoundI::release                          :  (0x7fa71272c5f8)
+[LOG] SoundI::release                          :     gear-stop_06 (0x7fa7127841f8)
+[LOG] SoundI::release                          :  (0x7fa71a4b3298)
+[LOG] SoundI::release                          :     gear-stop_07 (0x7fa71276e578)
+[LOG] SoundI::release                          :  (0x7fa71274be28)
+[LOG] SoundI::release                          :     gear-stop_08 (0x7fa7127e43e8)
+[LOG] SoundI::release                          :  (0x7fa712712b08)
+[LOG] SoundI::release                          :     gear-stop_09 (0x7fa712770068)
+[LOG] SoundI::release                          :  (0x7fa71277c9c8)
+[LOG] SoundI::release                          :     gear-stop_10 (0x7fa71a4cf788)
+[LOG] SoundI::release                          :  (0x7fa7127ac958)
+[LOG] SoundI::release                          :     gear-stop_11 (0x7fa712711188)
+[LOG] SoundI::release                          :  (0x7fa71a4472d8)
+[LOG] SoundI::release                          :     gear-stop_12 (0x7fa71274dde8)
+[LOG] SoundI::release                          :  (0x7fa712746408)
+[LOG] SoundI::release                          :     gear-stop_13 (0x7fa7127982f8)
+[LOG] SoundI::release                          :  (0x7fa71277cf88)
+[LOG] SoundI::release                          :     gear-stop_14 (0x7fa71a409518)
+[LOG] SoundI::release                          :  (0x7fa712728de8)
+[LOG] SoundI::release                          :     gear-stop_15 (0x7fa712781508)
+[LOG] SoundI::release                          :  (0x7fa71271d4d8)
+[LOG] SoundI::release                          :     gear-stop_16 (0x7fa712772fa8)
+[LOG] SoundI::release                          :  (0x7fa7160d2e78)
+[LOG] SoundI::release                          :     gear-start_01 (0x7fa71274d6f8)
+[LOG] SoundI::release                          :  (0x7fa712736698)
+[LOG] SoundI::release                          :     gear-start_02 (0x7fa712791698)
+[LOG] SoundI::release                          :  (0x7fa71a4b1318)
+[LOG] SoundI::release                          :     gear-start_03 (0x7fa71276a278)
+[LOG] SoundI::release                          :  (0x7fa7127f3e48)
+[LOG] SoundI::release                          :     gear-start_04 (0x7fa712743b08)
+[LOG] SoundI::release                          :  (0x7fa7127a2eb8)
+[LOG] SoundI::release                          :     gear-start_05 (0x7fa71a4f0298)
+[LOG] SoundI::release                          :  (0x7fa712778518)
+[LOG] SoundI::release                          :     gear-start_06 (0x7fa71a461c18)
+[LOG] SoundI::release                          :  (0x7fa712750ff8)
+[LOG] SoundI::release                          :     gear-start_07 (0x7fa71a4cb398)
+[LOG] SoundI::release                          :  (0x7fa718fd67c8)
+[LOG] SoundI::release                          :     crackle-snips-1 (0x7fa712744f08)
+[LOG] SoundI::release                          :  (0x7fa712757378)
+[LOG] SoundI::release                          :     crackle-snips-4 (0x7fa71a47a958)
+[LOG] SoundI::release                          :  (0x7fa71275d118)
+[LOG] SoundI::release                          :     crackle-snips-5 (0x7fa71a480b18)
+[LOG] Thread::callback                         : FMOD Studio update thread finished.
+[LOG] Thread::callback                         : FMOD Studio bank load thread finished.
+[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
+[LOG] Thread::callback                         : FMOD Studio sample load thread finished.
+[LOG] LiveUpdate::release                      : 
+[LOG] LiveUpdate::reset                        : Reset connection (reason Disconnected)
+[LOG] Thread::callback                         : FMOD stream thread finished.
+[LOG] Thread::callback                         : FMOD mixer thread finished.
+[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
+[LOG] SystemI::close                           : Closed.
 [LOG] Thread::callback                         : FMOD Studio bank load thread finished.
 [LOG] Thread::callback                         : FMOD Studio sample load thread finished.
 [LOG] LiveUpdate::release                      : 
@@ -27,3 +184,5 @@
 [LOG] Thread::callback                         : FMOD stream thread finished.
 [LOG] Thread::callback                         : FMOD mixer thread finished.
 [LOG] SystemI::close                           : Closed.
+[LOG] Thread::callback                         : FMOD nonblocking thread (0) finished.
+[LOG] Thread::callback                         : FMOD file thread finished.
