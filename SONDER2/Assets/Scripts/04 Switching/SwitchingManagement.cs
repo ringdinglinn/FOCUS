@@ -213,12 +213,14 @@ public class SwitchingManagement : MonoBehaviourReferenced {
                 }
                 bool occluded = false;
                 if (isVisible && inRange && inFrame) {
-                    int layerMask = 1 << 9;
+                    int layerMask0 = 1 << 9;
+                    int layerMask1 = 1 << 11;
+                    int layerMask = layerMask0 | layerMask1;
                     layerMask = ~layerMask;
                     RaycastHit hit;
                     // Does the ray intersect any objects excluding the player layer
                     Vector3 pos = allSwitchingBehaviours[i].transform.position;
-                    Vector3 offset = allSwitchingBehaviours[i].transform.up * 1.5f;
+                    Vector3 offset = allSwitchingBehaviours[i].transform.up * 1.2f;
                     pos += offset;
                     Vector3 dir = activeCar.transform.position - allSwitchingBehaviours[i].transform.position;
                     float mag = dir.magnitude;

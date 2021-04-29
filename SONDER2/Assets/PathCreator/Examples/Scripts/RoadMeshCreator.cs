@@ -21,12 +21,19 @@ namespace PathCreation.Examples {
 
         [SerializeField]
         GameObject meshHolder;
+        [SerializeField]
+        GameObject meshHolderRaycast;
         const string meshHolderName = "Road Mesh Holder";
+        const string raycastMeshHolderName = "Road Mesh Holder Raycasts";
 
         MeshFilter meshFilter;
         MeshRenderer meshRenderer;
+        MeshFilter meshFilterRaycast;
+        MeshRenderer meshRendererRaycast;
         Mesh mesh;
+        Mesh collMesh;
         MeshCollider coll;
+        MeshCollider raycastColl;
 
         private void Awake() {
             meshHolder = transform.Find(meshHolderName).gameObject != null ? transform.Find(meshHolderName).gameObject: null;
@@ -40,22 +47,33 @@ namespace PathCreation.Examples {
             if (pathCreator != null) {
                 AssignMeshComponents ();
                 AssignMaterials ();
-                CreateRoadMesh ();
+                CreateRoadMesh (0);
+                CreateRoadMesh(barrierHeight);
                 CreateCollider();
             }
         }
 
         void CreateCollider() {
+            // car collider
             if (meshHolder.GetComponent<MeshCollider>() == null) {
                 coll = meshHolder.AddComponent<MeshCollider>();
             } else if (coll == null) {
                 coll = meshHolder.GetComponent<MeshCollider>();
             }
             coll.sharedMesh = null;
-            coll.sharedMesh = mesh;
+            coll.sharedMesh = collMesh;
+
+            // raycast collider
+            if (!meshHolderRaycast.GetComponent<MeshCollider>()) {
+                meshHolderRaycast.AddComponent<MeshCollider>();
+            } else if (raycastColl == null) {
+                raycastColl = meshHolderRaycast.GetComponent<MeshCollider>();
+            }
+            raycastColl.sharedMesh = null;
+            raycastColl.sharedMesh = mesh;
         }
 
-        void CreateRoadMesh () {
+        void CreateRoadMesh (float barrierHeight) {
             Vector3[] verts = new Vector3[path.NumPoints * 20];
             Vector2[] uvs = new Vector2[verts.Length];
             Vector3[] normals = new Vector3[verts.Length];
@@ -173,16 +191,29 @@ namespace PathCreation.Examples {
                 barrierTriIndex += barrierTriangleMap.Length;
             }
 
-            mesh.Clear ();
-            mesh.vertices = verts;
-            mesh.uv = uvs;
-            mesh.normals = normals;
-            mesh.subMeshCount = 4;
-            mesh.SetTriangles(roadTriangles, 0);
-            mesh.SetTriangles(underRoadTriangles, 1);
-            mesh.SetTriangles(sideOfRoadTriangles, 2);
-            mesh.SetTriangles(barrierTriangles, 3);
-            mesh.RecalculateBounds ();
+            if (barrierHeight == 0) {
+                mesh.Clear();
+                mesh.vertices = verts;
+                mesh.uv = uvs;
+                mesh.normals = normals;
+                mesh.subMeshCount = 4;
+                mesh.SetTriangles(roadTriangles, 0);
+                mesh.SetTriangles(underRoadTriangles, 1);
+                mesh.SetTriangles(sideOfRoadTriangles, 2);
+                mesh.SetTriangles(barrierTriangles, 3);
+                mesh.RecalculateBounds();
+            } else {
+                collMesh.Clear();
+                collMesh.vertices = verts;
+                collMesh.uv = uvs;
+                collMesh.normals = normals;
+                collMesh.subMeshCount = 4;
+                collMesh.SetTriangles(roadTriangles, 0);
+                collMesh.SetTriangles(underRoadTriangles, 1);
+                collMesh.SetTriangles(sideOfRoadTriangles, 2);
+                collMesh.SetTriangles(barrierTriangles, 3);
+                collMesh.RecalculateBounds();
+            }
         }
 
         // Add MeshRenderer and MeshFilter components to this gameobject if not already attached
@@ -192,6 +223,13 @@ namespace PathCreation.Examples {
                 meshHolder.transform.parent = gameObject.transform;
             } else {
                 meshHolder = transform.Find(meshHolderName).gameObject;
+            }
+
+            if (transform.Find(raycastMeshHolderName) == null) {
+                meshHolderRaycast = new GameObject(raycastMeshHolderName);
+                meshHolderRaycast.transform.parent = gameObject.transform;
+            } else {
+                meshHolderRaycast = transform.Find(raycastMeshHolderName).gameObject;
             }
 
             meshHolder.transform.rotation = Quaternion.identity;
@@ -206,19 +244,35 @@ namespace PathCreation.Examples {
                 meshHolder.gameObject.AddComponent<MeshRenderer> ();
             }
 
+            if (!meshHolderRaycast.gameObject.GetComponent<MeshFilter>()) {
+                meshHolderRaycast.gameObject.AddComponent<MeshFilter>();
+            }
+            if (!meshHolderRaycast.GetComponent<MeshRenderer>()) {
+                meshHolderRaycast.gameObject.AddComponent<MeshRenderer>();
+            }
+
             meshRenderer = meshHolder.GetComponent<MeshRenderer> ();
             meshFilter = meshHolder.GetComponent<MeshFilter> ();
+
+            meshRendererRaycast = meshHolderRaycast.GetComponent<MeshRenderer>();
+            meshFilterRaycast = meshHolderRaycast.GetComponent<MeshFilter>();
+            
             if (mesh == null) {
                 mesh = new Mesh ();
             }
-            meshFilter.sharedMesh = mesh;
+            if (collMesh == null) {
+                collMesh = new Mesh();
+            }
+            meshFilter.sharedMesh = collMesh;
+            meshFilterRaycast.sharedMesh = mesh;
         }
 
         void AssignMaterials () {
             if (roadMaterial != null && undersideMaterial != null) {
-                meshRenderer.sharedMaterials = new Material[] { roadMaterial, undersideMaterial, undersideMaterial, undersideMaterial };
-                meshRenderer.sharedMaterials[0].mainTextureScale = new Vector3 (1, textureTiling);
+                meshRendererRaycast.sharedMaterials = new Material[] { roadMaterial, undersideMaterial, undersideMaterial, undersideMaterial };
+                meshRendererRaycast.sharedMaterials[0].mainTextureScale = new Vector3 (1, textureTiling);
             }
+            meshRenderer.enabled = false;
         }
 
     }

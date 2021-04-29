@@ -208,7 +208,7 @@ namespace FMODUnity
         {
             if (system.isValid())
             {
-                UnityEngine.Debug.Log("FMOD Studio: Destroying editor system instance");
+                Debug.Log("FMOD Studio: Destroying editor system instance");
                 system.release();
                 system.clearHandle();
             }

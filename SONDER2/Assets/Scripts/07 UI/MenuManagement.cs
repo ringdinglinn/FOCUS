@@ -9,7 +9,8 @@ public class MenuManagement : MonoBehaviourReferenced {
     public Image[] menuItems;
     public Image controlsImg;
     public Image titleImg;
-
+    public Image creditsImg;
+    public Image waitForSignalImg;
 
     InputManagement inputManagement;
 
@@ -18,11 +19,19 @@ public class MenuManagement : MonoBehaviourReferenced {
 
     bool upPressed;
     bool downPressed;
+    bool enterPressed;
+    bool escPressed;
 
     float startClarity = 1.3f;
     float defaultClarity = 0.013f;
     float changedClarity = 0.8f;
     float currentClarity = 0;
+
+    AsyncOperation asyncLoad;
+    bool titleDone = false;
+
+    bool menuActive = true;
+    bool creditsActive = false;
 
     void Start() {
         inputManagement = referenceManagement.inputManagement;
@@ -30,38 +39,49 @@ public class MenuManagement : MonoBehaviourReferenced {
     }
 
     void Update() {
-        if (!inputManagement.GetInputButton(Inputs.down) && downPressed) {
-            ++index;
-            index += total;
-            index %= total;
-            ChangeSelected();
-        }
-        else if (!inputManagement.GetInputButton(Inputs.up) && upPressed) {
-            --index;
-            index += total;
-            index %= total;
-            ChangeSelected();
-        }
-
-        downPressed = inputManagement.GetInputButton(Inputs.down);
-        upPressed = inputManagement.GetInputButton(Inputs.up);
-
-        currentClarity = Mathf.Lerp(currentClarity, defaultClarity, 0.3f);
-        menuItems[index].material.SetFloat("Clarity", currentClarity);
-
-        if (inputManagement.GetInputButton(Inputs.enter)) {
-            switch (index) {
-                case 0:
-                    Play();
-                    break;
-                case 1:
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    Quit();
-                    break;
+        if (menuActive) {
+            if (!inputManagement.GetInputButton(Inputs.down) && downPressed) {
+                ++index;
+                index += total;
+                index %= total;
+                ChangeSelected();
             }
+            else if (!inputManagement.GetInputButton(Inputs.up) && upPressed) {
+                --index;
+                index += total;
+                index %= total;
+                ChangeSelected();
+            }
+
+            downPressed = inputManagement.GetInputButton(Inputs.down);
+            upPressed = inputManagement.GetInputButton(Inputs.up);
+
+            currentClarity = Mathf.Lerp(currentClarity, defaultClarity, 0.3f);
+            menuItems[index].material.SetFloat("Clarity", currentClarity);
+
+            if (!inputManagement.GetInputButton(Inputs.enter) && enterPressed) {
+                switch (index) {
+                    case 0:
+                        Play();
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        Credits();
+                        break;
+                    case 3:
+                        Quit();
+                        break;
+                }
+            }
+
+            enterPressed = inputManagement.GetInputButton(Inputs.enter);
+        } else if (creditsActive) {
+            if (!inputManagement.GetInputButton(Inputs.esc) && escPressed) {
+                BackToMenu();
+            }
+
+            escPressed = inputManagement.GetInputButton(Inputs.esc);
         }
     }
 
@@ -80,6 +100,7 @@ public class MenuManagement : MonoBehaviourReferenced {
     }
 
     void Play() {
+        menuActive = false;
         StartCoroutine(StartInfo());
     }
 
@@ -93,10 +114,39 @@ public class MenuManagement : MonoBehaviourReferenced {
         titleImg.gameObject.SetActive(true);
         yield return new WaitForSeconds(4f);
         titleImg.gameObject.SetActive(false);
-        SceneManager.LoadScene("samplescene5", LoadSceneMode.Single);
+        yield return new WaitForSeconds(0.5f);
+        waitForSignalImg.gameObject.SetActive(true);
+        SceneManager.LoadScene("samplescene5");
+    }
+
+    void Credits() {
+        menuActive = false;
+        menuItems[index].gameObject.SetActive(false);
+        creditsImg.gameObject.SetActive(true);
+        creditsActive = true;
+    }
+
+    void BackToMenu() {
+        creditsActive = false;
+        menuActive = true;
+        creditsImg.gameObject.SetActive(false);
+        menuItems[index].gameObject.SetActive(true);
+        currentClarity = changedClarity;
     }
 
     void Quit() {
+        menuActive = false;
         Application.Quit();
+    }
+
+    IEnumerator LoadAsyncScene() {
+        asyncLoad = SceneManager.LoadSceneAsync("samplescene5");
+        asyncLoad.allowSceneActivation = false;
+        while (!asyncLoad.isDone) {
+            yield return null;
+        }
+        if (titleDone) {
+            asyncLoad.allowSceneActivation = true;
+        }
     }
 }

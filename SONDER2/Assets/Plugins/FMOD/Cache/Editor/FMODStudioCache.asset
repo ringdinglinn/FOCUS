@@ -122,7 +122,7 @@ MonoBehaviour:
   ID:
     data1: 0
     data2: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-7441373539326480177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,7 +162,7 @@ MonoBehaviour:
   ID:
     data1: 0
     data2: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-7229155727770581511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,7 +266,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: 7819668752324467417}
+  - {fileID: 4140688373331587197}
   MinDistance: 0
   MaxDistance: 0
   Length: 31500
@@ -313,6 +313,29 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 1
+--- !u!114 &-4431867687862436938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/04 car switching/flashing
+  m_EditorClassIdentifier: 
+  Path: event:/04 car switching/flashing
+  guid: 255386a84ba4ae46bd522bb531421147
+  Banks:
+  - {fileID: 6439672478953253675}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 4323
 --- !u!114 &-4006201801130163147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -484,12 +507,13 @@ MonoBehaviour:
   - {fileID: 8105051086134622846}
   - {fileID: -452670037128601372}
   - {fileID: -5320980433578855742}
+  - {fileID: -4431867687862436938}
   EditorParameters: []
   MasterBanks:
   - {fileID: 6439672478953253675}
   StringsBanks:
   - {fileID: 8796192020974241982}
-  stringsBankWriteTime: 637552179700000000
+  stringsBankWriteTime: 637552906360000000
   cacheVersion: 6
 --- !u!114 &348409716686923257
 MonoBehaviour:
@@ -586,6 +610,26 @@ MonoBehaviour:
   Name: SignalStrength
   Min: 0
   Max: 2
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
+--- !u!114 &2086645513167527912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/track-1/SwitchNr
+  m_EditorClassIdentifier: 
+  Name: SwitchNr
+  Min: 0
+  Max: 100
   Default: 0
   ID:
     data1: 0
@@ -714,6 +758,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &4140688373331587197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/static/SignalStrength
+  m_EditorClassIdentifier: 
+  Name: SignalStrength
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &4658399620198844611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -733,7 +797,7 @@ MonoBehaviour:
   ID:
     data1: 0
     data2: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &5076727483600883204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -855,7 +919,7 @@ MonoBehaviour:
   Path: ../../04 Sound/FMOD/FOCUS/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637552179700000000
+  lastModified: 637552906360000000
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -941,6 +1005,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &7507306313692708815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/track-1/SignalStrength
+  m_EditorClassIdentifier: 
+  Name: SignalStrength
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &7819668752324467417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -960,7 +1044,7 @@ MonoBehaviour:
   ID:
     data1: 0
     data2: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &8105051086134622846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -981,9 +1065,8 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: -7373451780316236965}
-  - {fileID: 4658399620198844611}
-  - {fileID: -7480157815391275044}
+  - {fileID: 7507306313692708815}
+  - {fileID: 2086645513167527912}
   MinDistance: 0
   MaxDistance: 0
   Length: 155826
@@ -1042,9 +1125,9 @@ MonoBehaviour:
   Path: ../../04 Sound/FMOD/FOCUS/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637552179700000000
+  lastModified: 637552906360000000
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 1152
+    Value: 1158
   Exists: 1
