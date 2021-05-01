@@ -347,6 +347,9 @@ MonoBehaviour:
   referenceManagement: {fileID: 0}
   dist: 0.5
   cone: {fileID: 6863237621894941250}
+  meshRenderer: {fileID: 2938724830048201606}
+  matOn: {fileID: 2100000, guid: e6d676c12e9e142d29bea5befddeefb8, type: 2}
+  matOff: {fileID: 2100000, guid: a0614d01350594831aa57838662037ea, type: 2}
 --- !u!1 &5361400770200847256
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,7 +409,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: -2817527321381966391, guid: e00c9076a84484f55aebf963f8ddd242, type: 3}
-  - {fileID: 2100000, guid: bfc65cc2348ec444bb93d94334d0125f, type: 2}
+  - {fileID: 2100000, guid: e6d676c12e9e142d29bea5befddeefb8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -13,6 +13,10 @@ public class StreetlampAudioTest : MonoBehaviourReferenced {
 
     private bool onSubBeat;
 
+    [SerializeField] MeshRenderer meshRenderer;
+    [SerializeField] Material matOn;
+    [SerializeField] Material matOff;
+
 
     private void Start() {
         BeatDetector beatDetector = referenceManagement.beatDetector;
@@ -33,6 +37,7 @@ public class StreetlampAudioTest : MonoBehaviourReferenced {
     void Flicker() {
         //myLight.enabled = false;
         cone.SetActive(true);
+        meshRenderer.materials[1] = matOff;
         StartCoroutine(SwitchBackOn());
     }
 
@@ -41,5 +46,6 @@ public class StreetlampAudioTest : MonoBehaviourReferenced {
         yield return new WaitForSeconds(waitTime);
         //myLight.enabled = true;
         cone.SetActive(false);
+        meshRenderer.materials[1] = matOn;
     }
 }

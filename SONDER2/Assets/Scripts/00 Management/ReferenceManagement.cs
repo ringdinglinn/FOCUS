@@ -82,6 +82,10 @@ public class ReferenceManagement : MonoBehaviour
     public string playerDrum;
     [FMODUnity.EventRef]
     public string radioStatic;
+    [FMODUnity.EventRef]
+    public string flashShort;
+    [FMODUnity.EventRef]
+    public string flashLong;
 
     [Header("Switching")]
     [Range(0.0f, 1.0f)]

@@ -90,6 +90,8 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
     private Vector3 origScaleMorseDisplay;
 
+    public bool inTunnel;
+
     private void Start() {
         BeatDetector beatDetector = referenceManagement.beatDetector;
         beatDetector.bdOnBeatSubD.AddListener(OnSubDBeatDetected);
@@ -244,6 +246,10 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         }
         HasMarkedCar = sb != null ? true : false;
         MarkedCar = sb;
+        if (inTunnel) {
+            MarkedCar = null;
+            HasMarkedCar = false;
+        }
     }
 
     private void MarkedCarValueChanged(bool b) {
@@ -263,9 +269,9 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         } else if (markedCar != null && sb != null) {
 
         }
-        if (markedCar != null) markedCar.isMarkedCar = false;
+        if (markedCar != null) markedCar.IsMarkedCar = false;
         if (sb != null) {
-            sb.isMarkedCar = true;
+            sb.IsMarkedCar = true;
             signalPattern = sb.GetSignal();
             sb.DisplaySignalPattern();
             DisplayMarkedCarSignalPattern(); // this car displays text

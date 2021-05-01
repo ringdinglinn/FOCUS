@@ -119,7 +119,6 @@ public class CarAI : MonoBehaviourReferenced {
         //if (!autopilotEnabled) {
         //    throttle = Mathf.Lerp(throttle, Mathf.Pow(pathBehaviour.GetSpeedLimit(), 2) - rb.velocity.sqrMagnitude, 0.001f);
         //} else {
-        if (!autopilotEnabled) Debug.Log($"speedLimit = {speedLimit}");
             throttle = Mathf.Pow(speedLimit, 2) - rb.velocity.sqrMagnitude;
         //}
         wheelVehicle.Throttle = throttle;

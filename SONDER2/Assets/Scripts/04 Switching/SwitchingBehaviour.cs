@@ -6,6 +6,7 @@ using VehicleBehaviour;
 using UnityEngine.Rendering.HighDefinition;
 using TMPro;
 using UnityEngine.UI;
+using FMODUnity;
 
 
 public class SwitchingBehaviour : MonoBehaviourReferenced {
@@ -57,9 +58,17 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     MeshFilter volumetricMesh0;
     MeshFilter volumetricMesh1;
 
+    FMOD.Studio.EventInstance flashShort;
+    FMOD.Studio.EventInstance flashLong;
+
     public bool headlightTester;
 
-    public bool isMarkedCar;
+    private bool isMarkedCar;
+    public bool IsMarkedCar {
+        get { return isMarkedCar; }
+        set { if (value != isMarkedCar) MarkedCarValueChanged(value);
+            isMarkedCar = value; }
+    }
 
     bool displayingSignal;
 
@@ -73,6 +82,8 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         carManagement.AddSwitchingBehaviour(this);
         volumetricMesh0 = volumetricRenderer0.GetComponent<MeshFilter>();
         volumetricMesh1 = volumetricRenderer1.GetComponent<MeshFilter>();
+        flashShort = RuntimeManager.CreateInstance(referenceManagement.flashShort);
+        flashLong = RuntimeManager.CreateInstance(referenceManagement.flashLong);
     }
 
     private void Start() {
@@ -162,7 +173,10 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
 
             float time = beatIntervalSubD;
             if (signalPattern[i] == FlashType.Long) {
-                time = beatInterval * 1.3f;
+                time = beatInterval * 1.0f;
+                flashLong.start();
+            } else {
+                flashShort.start();
             }
             yield return new WaitForSeconds(time);
 
@@ -177,7 +191,7 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
             volumetricRenderer0.material.SetInt("_FlashOn", flashOn ? 1 : 0);
             volumetricRenderer1.material.SetInt("_FlashOn", flashOn ? 1 : 0);
 
-            yield return new WaitForSeconds(beatIntervalSubD);
+            yield return new WaitForSeconds(beatInterval);
         }
         // interval
         if (isMarkedCar) yield return new WaitForSeconds(beatInterval * 2f);
@@ -262,5 +276,19 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
                 mesh.colors[i] = transform.localPosition.y < transform.TransformPoint(mesh.vertices[i]).y ? Color.black : Color.white;
             }
         }
+    }
+
+    void MarkedCarValueChanged(bool b) {
+        if (!b) {
+            StopSignal();
+        }
+    }
+
+    void StopSignal() {
+        StopCoroutine(Signal());
+        flashShort.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        flashLong.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        volumetricRenderer0.material.SetInt("_FlashOn", 0);
+        volumetricRenderer1.material.SetInt("_FlashOn", 0);
     }
 }

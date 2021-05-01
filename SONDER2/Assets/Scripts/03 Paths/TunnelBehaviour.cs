@@ -26,6 +26,8 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
     public GameObject goalIndicator;
     public GameObject nextGoalIndicator;
 
+    SwitchingManagement switchingManagement;
+
     private void OnEnable() {
         referenceManagement.entryFilters.Add(entryFilter0);
         referenceManagement.entryFilters.Add(entryFilter1);
@@ -36,6 +38,7 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
         portalTrigger.SetTunnelBehaviour(this);
         pathBehaviour = GetComponentInParent<PathBehaviour>();
         endTunnelID = pathBehaviour.id;
+        switchingManagement = referenceManagement.switchingManagement;
     }
 
     public void SetID(int id) {
@@ -80,6 +83,10 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
             if (!carAI.autopilotEnabled && isLevelStartTunnel) {
                 carAI.PathID = pathBehaviour.id;
             }
+
+            if (!carAI.autopilotEnabled) {
+                switchingManagement.inTunnel = true;
+            }
         }
     }
 
@@ -101,6 +108,9 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
             if (!carAI.autopilotEnabled && isLevelStartTunnel) {
                 isLevelStartTunnel = false;
                 isEndTunnel = false;
+            }
+            if (!carAI.autopilotEnabled) {
+                switchingManagement.inTunnel = false;
             }
         }
     }
