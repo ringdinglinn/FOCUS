@@ -1,36 +1,38 @@
 ﻿<Properties StartupConfiguration="{281EEECF-89B9-6D0B-978A-5FDC6B8E6CBA}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/04 Switching/SwitchingBehaviour.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/06 Cars/Editor/CarVisualsEditor.cs">
     <Files>
       <File FileName="Assets/Scripts/99 Utilities/RendererExtensions.cs" Line="10" Column="2" />
-      <File FileName="Assets/Scripts/04 Switching/SwitchingManagement.cs" Line="275" Column="1" />
-      <File FileName="Assets/Scripts/00 Management/MusicManagement.cs" Line="26" Column="86" />
-      <File FileName="Assets/Plugins/FMOD/src/Editor/EditorUtils.cs" Line="205" Column="32" />
-      <File FileName="Assets/Scripts/07 UI/MenuManagement.cs" Line="143" Column="65" />
-      <File FileName="Assets/Scripts/00 Management/InputManagement.cs" Line="41" Column="42" />
-      <File FileName="Assets/Scripts/00 Management/ReferenceManagement.cs" Line="85" Column="25" />
-      <File FileName="Assets/PathCreator/Examples/Scripts/RoadMeshCreator.cs" Line="65" Column="1" />
-      <File FileName="Assets/Scripts/00 Management/CarManagement.cs" Line="69" Column="1" />
-      <File FileName="Assets/Scripts/06 Cars/CarAI.cs" Line="122" Column="1" />
+      <File FileName="Assets/Scripts/04 Switching/SwitchingManagement.cs" />
+      <File FileName="Assets/Scripts/00 Management/MusicManagement.cs" />
+      <File FileName="Assets/Plugins/FMOD/src/Editor/EditorUtils.cs" />
+      <File FileName="Assets/Scripts/07 UI/MenuManagement.cs" />
+      <File FileName="Assets/Scripts/00 Management/InputManagement.cs" />
+      <File FileName="Assets/Scripts/00 Management/ReferenceManagement.cs" />
+      <File FileName="Assets/PathCreator/Examples/Scripts/RoadMeshCreator.cs" />
+      <File FileName="Assets/Scripts/00 Management/CarManagement.cs" />
+      <File FileName="Assets/Scripts/06 Cars/CarAI.cs" />
       <File FileName="Assets/Scripts/04 Switching/SwitchingBehaviour.cs" Line="197" Column="77" />
-      <File FileName="Assets/Scripts/03 Paths/TunnelBehaviour.cs" Line="90" Column="10" />
-      <File FileName="Assets/Scripts/03 Paths/PathManagement.cs" Line="12" Column="1" />
-      <File FileName="Assets/Scripts/05 Voices/VoiceClipManagement.cs" Line="25" Column="1" />
-      <File FileName="Assets/Scripts/05 Voices/VoiceClipBehaviour.cs" Line="26" Column="38" />
-      <File FileName="Assets/Scripts/03 Paths/PathLoopTriggerBehaviour.cs" Line="19" Column="67" />
-      <File FileName="Assets/PathCreator/Core/Runtime/Objects/PathCreator.cs" Line="1" Column="1" />
-      <File FileName="Assets/PathCreator/Core/Editor/PathEditor.cs" Line="244" Column="40" />
-      <File FileName="Assets/PathCreator/Core/Runtime/Objects/BezierPath.cs" Line="389" Column="32" />
-      <File FileName="Assets/Scripts/08 Journey/JourneyTrigger.cs" Line="28" Column="45" />
-      <File FileName="Assets/Scripts/00 Management/JourneyManagement.cs" Line="64" Column="6" />
-      <File FileName="Assets/Scripts/01 Camera/Camera1stPerson.cs" Line="107" Column="1" />
-      <File FileName="Assets/Scripts/02 AudioMorphing/StreetlampAudioTest.cs" Line="50" Column="1" />
-      <File FileName="Assets/Scripts/99 Utilities/Editor/ScreenshotTool.cs" Line="13" Column="7" />
-      <File FileName="Assets/Plugins/FMOD/src/Editor/EventManager.cs" Line="374" Column="1" />
+      <File FileName="Assets/Scripts/03 Paths/TunnelBehaviour.cs" />
+      <File FileName="Assets/Scripts/03 Paths/PathManagement.cs" />
+      <File FileName="Assets/Scripts/05 Voices/VoiceClipManagement.cs" />
+      <File FileName="Assets/Scripts/05 Voices/VoiceClipBehaviour.cs" />
+      <File FileName="Assets/Scripts/03 Paths/PathLoopTriggerBehaviour.cs" />
+      <File FileName="Assets/PathCreator/Core/Runtime/Objects/PathCreator.cs" />
+      <File FileName="Assets/PathCreator/Core/Editor/PathEditor.cs" />
+      <File FileName="Assets/PathCreator/Core/Runtime/Objects/BezierPath.cs" />
+      <File FileName="Assets/Scripts/08 Journey/JourneyTrigger.cs" />
+      <File FileName="Assets/Scripts/00 Management/JourneyManagement.cs" />
+      <File FileName="Assets/Scripts/01 Camera/Camera1stPerson.cs" />
+      <File FileName="Assets/Scripts/02 AudioMorphing/StreetlampAudioTest.cs" />
+      <File FileName="Assets/Scripts/99 Utilities/Editor/ScreenshotTool.cs" />
+      <File FileName="Assets/Plugins/FMOD/src/Editor/EventManager.cs" />
+      <File FileName="Assets/Scripts/06 Cars/CarVisuals.cs" Line="16" Column="2" />
+      <File FileName="Assets/Scripts/06 Cars/Editor/CarVisualsEditor.cs" Line="4" Column="8" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="857c93e2-6a9d-4645-8bfa-9a5682ad2235" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="28491929-b659-4259-8bc9-af892b620554" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/linn/Documents/01 ZHdK/Semester VI/FOCUS/_ Repo/SONDER2/Assets/Scripts/04 Switching/SwitchingManagement.cs" relfile="Assets/Scripts/04 Switching/SwitchingManagement.cs" line="193" column="1" />
