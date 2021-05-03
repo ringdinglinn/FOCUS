@@ -63,6 +63,10 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
 
     public bool headlightTester;
 
+    public MeshRenderer[] headlightCubes;
+    public Material frontlightMat;
+    public Material frontlightMatDull;
+
     private bool isMarkedCar;
     public bool IsMarkedCar {
         get { return isMarkedCar; }
@@ -115,9 +119,7 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         wheelVehicle.IsPlayer = true;
         if (isInitialCar && carManagement.HasManualInitialCar()) wheelVehicle.IsPlayer = false;
 
-        volumetrics.SetActive(false);
-        spotlights.SetActive(true);
-        SetHeadlightsActiveCar();
+        SetActiveCarValues();
     }
 
     public void SwitchOutOfCar() {
@@ -127,6 +129,20 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         carAI.cam = null;
         wheelVehicle.IsPlayer = false;
 
+        SetInactiveCarValues();
+
+        foreach (MeshRenderer mr in headlightCubes) mr.material = frontlightMat;
+    }
+
+    public void SetActiveCarValues() {
+        volumetrics.SetActive(false);
+        spotlights.SetActive(true);
+        SetHeadlightsActiveCar();
+
+        foreach (MeshRenderer mr in headlightCubes) mr.material = frontlightMatDull;
+    }
+
+    public void SetInactiveCarValues() {
         volumetrics.SetActive(true);
         spotlights.SetActive(false);
         SetHeadlightsInactiveCar();

@@ -41,10 +41,10 @@ namespace VehicleBehaviour {
 
         [Header("Wheels")]
         [SerializeField] WheelCollider[] driveWheel;
-        public WheelCollider[] DriveWheel { get { return driveWheel; } }
+        public WheelCollider[] DriveWheel { get { return driveWheel; } set { driveWheel = value; } }
         [SerializeField] WheelCollider[] turnWheel;
 
-        public WheelCollider[] TurnWheel { get { return turnWheel; } }
+        public WheelCollider[] TurnWheel { get { return turnWheel; } set { turnWheel = value; } }
 
         // This code checks if the car is grounded only when needed and the data is old enough
         bool isGrounded = false;
@@ -215,6 +215,8 @@ namespace VehicleBehaviour {
             }
 
             wheels = GetComponentsInChildren<WheelCollider>();
+            //turnWheel[0] = wheels[0];
+            //turnWheel[1] = wheels[1];
 
             // Set the motor torque to a non null value because 0 means the wheels won't turn no matter what
             foreach (WheelCollider wheel in wheels)

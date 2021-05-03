@@ -13,6 +13,7 @@ public class CarAI : MonoBehaviourReferenced {
     private PathCreator myPath;
     private SwitchingBehaviour switchingBehaviour;
     private Rigidbody rb;
+    private CarVisuals carVisuals;
 
     public bool autopilotEnabled = true;
 
@@ -84,7 +85,17 @@ public class CarAI : MonoBehaviourReferenced {
         carManagement = referenceManagement.carManagement;
         id = switchingBehaviour.id;
         rb = GetComponent<Rigidbody>();
+        carVisuals = GetComponent<CarVisuals>();
+        //RemoveSpareWheels();
         carManagement.AddCarManagement(this);
+    }
+
+    private void RemoveSpareWheels() {
+        for (int i = 0; i < carVisuals.wheels.Count; i++) {
+            if (i != (int)carVisuals.myCar) {
+                Destroy(carVisuals.wheels[i]);
+            }
+        }
     }
 
     private void Start() {
@@ -304,13 +315,9 @@ public class CarAI : MonoBehaviourReferenced {
         endTunnel = carAI.endTunnel;
         this.PathID = pathID;
         if (isActiveCar) {
-            switchingBehaviour.SetHeadlightsActiveCar();
-            switchingBehaviour.spotlights.SetActive(true);
-            switchingBehaviour.volumetrics.SetActive(false);
+            switchingBehaviour.SetActiveCarValues();
         } else {
-            switchingBehaviour.SetHeadlightsInactiveCar();
-            switchingBehaviour.spotlights.SetActive(false);
-            switchingBehaviour.volumetrics.SetActive(true);
+            switchingBehaviour.SetInactiveCarValues();
         }
         isClone = true;
     }

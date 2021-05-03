@@ -230,6 +230,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
                     dir = dir / mag;
                     if (Physics.Raycast(pos, dir, out hit, mag, layerMask)) {
                         occluded = true;
+                        Debug.DrawRay(pos, dir * hit.distance, Color.red);
                     } else {
                         occluded = false;
                     }
