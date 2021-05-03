@@ -812,7 +812,7 @@ MonoBehaviour:
   wheels:
   - {fileID: 2383167943945795484}
   - {fileID: 4727882342648062678}
-  myCar: 1
+  myCar: 0
 --- !u!1 &1671426575577570
 GameObject:
   m_ObjectHideFlags: 0
@@ -1586,12 +1586,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4054765068363661439}
   m_Layer: 9
-  m_Name: Wheels1
+  m_Name: Wheels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4054765068363661439
 Transform:
   m_ObjectHideFlags: 0
@@ -1699,7 +1699,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8455795860465832498
 Transform:
   m_ObjectHideFlags: 0
@@ -2784,7 +2784,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 008cf22dc5e3c493981f00d4bf2096ec,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 008cf22dc5e3c493981f00d4bf2096ec,
         type: 3}
@@ -3155,7 +3155,7 @@ PrefabInstance:
     - target: {fileID: 8271874276269777816, guid: 4c4e664eabaec4e0795019d62e1227f8,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8755078487253989666, guid: 4c4e664eabaec4e0795019d62e1227f8,
         type: 3}
