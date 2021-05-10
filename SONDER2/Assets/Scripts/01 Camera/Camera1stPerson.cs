@@ -44,9 +44,12 @@ public class Camera1stPerson : MonoBehaviourReferenced {
         get { return isInTargetRange; }
     }
 
+    SwitchingManagement switchingManagement;
+
     private void OnEnable() {
         cam = GetComponent<Camera>();
         audioListener = GetComponent<AudioListener>();
+        switchingManagement = referenceManagement.switchingManagement;
         prevPos = transform.position;
     }
 
@@ -54,6 +57,7 @@ public class Camera1stPerson : MonoBehaviourReferenced {
         if (looping) {
             LoopMovement();
             if ((translateTarget.transform.position - transform.position).sqrMagnitude <= Mathf.Pow(targetRange, 2)) {
+                switchingManagement.ActiveCar.SetActiveCarValues();
                 looping = false;
             }
         } else {

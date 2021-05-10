@@ -28,6 +28,8 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     public GameObject camRotTarget;
     public GameObject camTranslateTarget;
 
+    public GameObject armaturenBrett;
+
     public GameObject spotlights;
     public HDAdditionalLightData headlight1;
     public HDAdditionalLightData headlight2;
@@ -119,7 +121,7 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         wheelVehicle.IsPlayer = true;
         if (isInitialCar && carManagement.HasManualInitialCar()) wheelVehicle.IsPlayer = false;
 
-        SetActiveCarValues();
+        //SetActiveCarValues();
     }
 
     public void SwitchOutOfCar() {
@@ -131,15 +133,17 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
 
         SetInactiveCarValues();
 
-        foreach (MeshRenderer mr in headlightCubes) mr.material = frontlightMat;
     }
 
     public void SetActiveCarValues() {
         volumetrics.SetActive(false);
         spotlights.SetActive(true);
         SetHeadlightsActiveCar();
+        armaturenBrett.SetActive(true);
+        meshRenderer.gameObject.SetActive(false);
 
         foreach (MeshRenderer mr in headlightCubes) mr.material = frontlightMatDull;
+
     }
 
     public void SetInactiveCarValues() {
@@ -147,6 +151,10 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         spotlights.SetActive(false);
         SetHeadlightsInactiveCar();
         GenerateSignalPattern();
+        armaturenBrett.SetActive(false);
+        meshRenderer.gameObject.SetActive(true);
+
+        foreach (MeshRenderer mr in headlightCubes) mr.material = frontlightMat;
     }
 
     public void SetHeadlightsActiveCar() {

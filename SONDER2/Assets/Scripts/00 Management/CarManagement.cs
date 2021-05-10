@@ -65,6 +65,7 @@ public class CarManagement : MonoBehaviourReferenced {
                 car.transform.SetParent(parentObj.transform);
                 CarAI carAI = car.GetComponent<CarAI>();
                 SwitchingBehaviour sb = car.GetComponent<SwitchingBehaviour>();
+                CarVisuals carVisuals = car.GetComponent<CarVisuals>();
                 sb.id = idCounter;
                 ++idCounter;
                 car.name = carName + (idCounter - 1);
@@ -81,6 +82,10 @@ public class CarManagement : MonoBehaviourReferenced {
                     setInitial = true;
                     initialCar = sb;
                 }
+
+                // randomize visuals
+                carVisuals.SetCarVisuals(Random.Range(0, carVisuals.allCarConfigs.Count));
+                carVisuals.UpdateVisuals();
             }
         }
         if (initialCar != null) {

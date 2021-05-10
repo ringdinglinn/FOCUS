@@ -82,11 +82,11 @@ public class CarAI : MonoBehaviourReferenced {
     private void OnEnable() {
         wheelVehicle = GetComponent<WheelVehicle>();
         switchingBehaviour = GetComponent<SwitchingBehaviour>();
+        carVisuals = GetComponent<CarVisuals>();
         carManagement = referenceManagement.carManagement;
         id = switchingBehaviour.id;
         rb = GetComponent<Rigidbody>();
-        carVisuals = GetComponent<CarVisuals>();
-        //RemoveSpareWheels();
+        if (carVisuals != null) carVisuals = GetComponent<CarVisuals>();
         carManagement.AddCarManagement(this);
     }
 
@@ -304,7 +304,7 @@ public class CarAI : MonoBehaviourReferenced {
         if (isActiveCar) cam.MakeMainCarCamera();
     }
 
-    public void StartClone(bool isActiveCar, Transform transform, Rigidbody rb, CarAI carAI, int pathID) {
+    public void StartClone(bool isActiveCar, Transform transform, Rigidbody rb, CarAI carAI, int pathID, int myCar) {
         autopilotEnabled = !isActiveCar;
         dontLoop = true;
         wheelVehicle.IsPlayer = isActiveCar;
@@ -314,6 +314,9 @@ public class CarAI : MonoBehaviourReferenced {
         startTunnel = carAI.startTunnel;
         endTunnel = carAI.endTunnel;
         this.PathID = pathID;
+        carVisuals = GetComponent<CarVisuals>();
+        carVisuals.SetCarVisuals(myCar);
+        carVisuals.UpdateVisuals();
         if (isActiveCar) {
             switchingBehaviour.SetActiveCarValues();
         } else {
@@ -336,10 +339,9 @@ public class CarAI : MonoBehaviourReferenced {
     }
 
     private void CreateClone(int pathID) {
-        Debug.Log($"{name} created clone!");
         hasClone = true;
         clone = referenceManagement.carManagement.CreateCarClone(pathID);
-        clone.StartClone(!autopilotEnabled, transform, rb, this, pathID);
+        clone.StartClone(!autopilotEnabled, transform, rb, this, pathID, (int)carVisuals.myCar);
         if (!autopilotEnabled) CreateCloneCam();
     }
 

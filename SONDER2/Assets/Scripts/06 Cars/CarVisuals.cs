@@ -4,32 +4,50 @@ using UnityEngine;
 
 
 public class CarVisuals : MonoBehaviourReferenced {
-	public List<GameObject> carModels = new List<GameObject>();
-	public List<GameObject> wheels = new List<GameObject>();
+	public List<CarConfig> allCarConfigs = new List<CarConfig>();
+	[HideInInspector]
+	public List<WheelCollider> wheels = new List<WheelCollider>();
 
 	VehicleBehaviour.WheelVehicle wv;
 	SwitchingBehaviour switchingBehaviour;
 
-	public enum car { car1, car2 };
+	public enum car { car0, car1, car2, car3, car4, car5, car6, car7 };
 	public car myCar;
 
-	public void SetCarModel(int i) {
-		foreach (GameObject obj in carModels) {
-			obj.SetActive(false);
+	public void UpdateVisuals() {
+		foreach (CarConfig cc in allCarConfigs) {
+			cc.gameObject.SetActive(false);
         }
-		foreach (GameObject obj in wheels) {
-			obj.SetActive(false);
-		}
-		carModels[i].SetActive(true);
-		wheels[i].SetActive(true);
+		allCarConfigs[(int)myCar].gameObject.SetActive(true);
+		ConfigReferences();
 	}
+
+	public void SetCarVisuals(int i) {
+		myCar = (car)i;
+    }
 
 	private void OnEnable() {
 		switchingBehaviour = GetComponent<SwitchingBehaviour>();
 		wv = GetComponent<VehicleBehaviour.WheelVehicle>();
-        SetCarModel((int)myCar);
-        switchingBehaviour.meshRenderer = carModels[(int)myCar].GetComponent<MeshRenderer>();
-		wv.TurnWheel = new WheelCollider[] { wheels[(int)myCar].transform.GetChild(0).GetComponentInChildren<WheelCollider>(), wheels[(int)myCar].transform.GetChild(1).GetComponentInChildren<WheelCollider>() };
-		wv.DriveWheel = new WheelCollider[] { wheels[(int)myCar].transform.GetChild(2).GetComponentInChildren<WheelCollider>(), wheels[(int)myCar].transform.GetChild(3).GetComponentInChildren<WheelCollider>() };
+        UpdateVisuals();
+	}
+
+	private void ConfigReferences() {
+		CarConfig carConfig = allCarConfigs[(int)myCar];
+		switchingBehaviour.meshRenderer = carConfig.meshRenderer;
+		switchingBehaviour.boxCollider = carConfig.boxCollider;
+		switchingBehaviour.camRotTarget = carConfig.camRotTarget;
+		switchingBehaviour.camTranslateTarget = carConfig.camTranslateTarget;
+		switchingBehaviour.spotlights = carConfig.spotlights;
+		switchingBehaviour.headlight1 = carConfig.headlight1;
+		switchingBehaviour.headlight2 = carConfig.headlight2;
+		switchingBehaviour.volumetrics = carConfig.volumetrics;
+		switchingBehaviour.volumetricRenderer0 = carConfig.volumetricRenderer0;
+		switchingBehaviour.volumetricRenderer1 = carConfig.volumetricRenderer1;
+		switchingBehaviour.headlightCubes = carConfig.headlightCubes.ToArray();
+		switchingBehaviour.armaturenBrett = carConfig.armaturenbrett;
+		wv.TurnWheel = new WheelCollider[] { carConfig.wheels[0], carConfig.wheels[1] };
+		wv.DriveWheel = new WheelCollider[] { carConfig.wheels[0], carConfig.wheels[1] };
+		wheels = carConfig.wheels;
 	}
 }
