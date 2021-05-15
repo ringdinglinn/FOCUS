@@ -4,13 +4,12 @@ using UnityEngine;
 using PathCreation;
 using VehicleBehaviour;
 using UnityEngine.Rendering.HighDefinition;
-using TMPro;
-using UnityEngine.UI;
 using FMODUnity;
 
 
 public class SwitchingBehaviour : MonoBehaviourReferenced {
     private CarAI carAI;
+    private CarVisuals carVisuals;
     private WheelVehicle wheelVehicle;
     private SwitchingManagement switchingManagement;
     private PathCreator myPath;
@@ -28,7 +27,8 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     public GameObject camRotTarget;
     public GameObject camTranslateTarget;
 
-    public GameObject armaturenBrett;
+    public GameObject armaturenbrett;
+    public GameObject armaturenbrett2;
 
     public GameObject spotlights;
     public HDAdditionalLightData headlight1;
@@ -78,6 +78,8 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
 
     bool displayingSignal;
 
+    public int variation;
+
     private void OnEnable() {
         CollectReferences();
         GenerateSignalPattern();
@@ -90,6 +92,7 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         volumetricMesh1 = volumetricRenderer1.GetComponent<MeshFilter>();
         flashShort = RuntimeManager.CreateInstance(referenceManagement.flashShort);
         flashLong = RuntimeManager.CreateInstance(referenceManagement.flashLong);
+        carVisuals = GetComponent<CarVisuals>();
     }
 
     private void Start() {
@@ -100,6 +103,7 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     private void OnDisable() {
         referenceManagement.beatDetector.bdOnBeatFull.RemoveListener(HandleBeatFull);
         referenceManagement.beatDetector.bdOnBeatSubD.RemoveListener(HandleBeatSubD);
+        carManagement.RemoveSwitchingBehaviour(this);
     }
 
     public void CollectReferences() {
@@ -114,14 +118,18 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         beatIntervalSubD = beatDetector.BeatIntervalSubD;
     }
 
-    public void SwitchIntoCar(Camera1stPerson cam) {
+    public void SwitchIntoCar(Camera1stPerson cam, bool isInitialCar, int variation) {
+        if (variation == this.variation) {
+            carVisuals.SetCarVisuals((int)carVisuals.myCar, variation == 0 ? 1 : 0);
+        }
+        carVisuals.UpdateVisuals(true);
         carAI.SwitchOffAutopilot();
         carAI.cam = cam;
         switchingManagement.ActiveCar = this;
         wheelVehicle.IsPlayer = true;
         if (isInitialCar && carManagement.HasManualInitialCar()) wheelVehicle.IsPlayer = false;
 
-        //SetActiveCarValues();
+        if (isInitialCar) SetActiveCarValues();
     }
 
     public void SwitchOutOfCar() {
@@ -132,18 +140,17 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         wheelVehicle.IsPlayer = false;
 
         SetInactiveCarValues();
-
     }
 
     public void SetActiveCarValues() {
         volumetrics.SetActive(false);
         spotlights.SetActive(true);
         SetHeadlightsActiveCar();
-        armaturenBrett.SetActive(true);
+        GameObject obj = variation == 0 ? armaturenbrett : armaturenbrett2;
+        obj.SetActive(true);
         meshRenderer.gameObject.SetActive(false);
 
         foreach (MeshRenderer mr in headlightCubes) mr.material = frontlightMatDull;
-
     }
 
     public void SetInactiveCarValues() {
@@ -151,7 +158,7 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         spotlights.SetActive(false);
         SetHeadlightsInactiveCar();
         GenerateSignalPattern();
-        armaturenBrett.SetActive(false);
+        armaturenbrett.SetActive(false);
         meshRenderer.gameObject.SetActive(true);
 
         foreach (MeshRenderer mr in headlightCubes) mr.material = frontlightMat;
@@ -314,5 +321,9 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         flashLong.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         volumetricRenderer0.material.SetInt("_FlashOn", 0);
         volumetricRenderer1.material.SetInt("_FlashOn", 0);
+    }
+
+    public CarVisuals GetCarVisuals() {
+        return carVisuals;
     }
 }

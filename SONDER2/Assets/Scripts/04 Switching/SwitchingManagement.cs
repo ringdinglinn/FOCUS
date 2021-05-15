@@ -6,6 +6,8 @@ using UnityEngine.Events;
 using FMODUnity;
 using FMOD.Studio;
 using System;
+using UnityEngine.Rendering.HighDefinition;
+using UnityEngine.Rendering;
 
 public class SwitchingManagement : MonoBehaviourReferenced {
 
@@ -36,6 +38,8 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     private Image switchImg;
     private GameObject perceptionBorderObj;
     private RectTransform perceptionBorderTransform;
+    public Volume postProcessVolume;
+    public MotionBlur motionBlur;
 
     private float switchUIPadding = 10;
 
@@ -87,15 +91,20 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     public float signalDisplayAmplitude = 1f;
 
     EventInstance radioStatic;
+    EventInstance switchEvt;
+    EventInstance flashOn;
+    EventInstance flashOff;
+    EventInstance flashHum;
 
     private Vector3 origScaleMorseDisplay;
 
     public bool inTunnel;
 
+
     private void Start() {
         BeatDetector beatDetector = referenceManagement.beatDetector;
-        beatDetector.bdOnBeatSubD.AddListener(OnSubDBeatDetected);
-        beatDetector.bdOnBeatFull.AddListener(OnFullBeatDetected);
+        beatDetector.bdOnBeatSubD.AddListener(HandleSubDBeatDetected);
+        beatDetector.bdOnBeatFull.AddListener(HandleFullBeatDetected);
         cam = camController.GetComponent<Camera>();
         switchImgObj = referenceManagement.switchImgObj;
         switchImgTransform = switchImgObj.GetComponent<RectTransform>();
@@ -111,22 +120,30 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         morseSignalTex = referenceManagement.morseSingalTex;
         radioStatic = RuntimeManager.CreateInstance(referenceManagement.radioStatic);
         radioStatic.start();
+        switchEvt = RuntimeManager.CreateInstance(referenceManagement.switchDone);
+        postProcessVolume = referenceManagement.postProcess;
+        postProcessVolume.profile.TryGet(out motionBlur);
+        flashOn = RuntimeManager.CreateInstance(referenceManagement.flashOn);
+        flashOff = RuntimeManager.CreateInstance(referenceManagement.flashOff);
+        flashHum = RuntimeManager.CreateInstance(referenceManagement.flashHum);
+        flashHum.start();
+        flashHum.setParameterByName("HumStrength", 0f);
     }
 
     private void OnEnable() {
         referenceManagement.carManagement.cameraChanged.AddListener(OnCameraChanged);
         referenceManagement.carManagement.carsCreated.AddListener(OnCarsCreated);
-        referenceManagement.carManagement.allSBChanged.AddListener(OnAllSBChanged);
+        referenceManagement.carManagement.allSBChanged.AddListener(HandleAllSBChanged);
         camController = referenceManagement.cam;
     }
 
     private void OnDisable() {
         referenceManagement.carManagement.cameraChanged.RemoveListener(OnCameraChanged);
         referenceManagement.carManagement.carsCreated.RemoveListener(OnCarsCreated);
-        referenceManagement.carManagement.allSBChanged.RemoveListener(OnAllSBChanged);
+        referenceManagement.carManagement.allSBChanged.RemoveListener(HandleAllSBChanged);
     }
 
-    private void OnAllSBChanged() {
+    private void HandleAllSBChanged() {
         allSwitchingBehaviours = referenceManagement.carManagement.GetAllSwitchingBehaviours();
     }
 
@@ -144,13 +161,13 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     private void SwitchToCar(SwitchingBehaviour newSB) {
         activeCar.SwitchOutOfCar();
         referenceManagement.cam.SwitchCar(newSB.camTranslateTarget.transform, newSB.camRotTarget.transform, true, newSB.transform);
-        newSB.SwitchIntoCar(camController);
+        newSB.SwitchIntoCar(camController, false, activeCar.variation);
     }
 
     public void SetUpInitialCar(SwitchingBehaviour initSB) {
         referenceManagement.cam.SwitchCar(initSB.camTranslateTarget.transform, initSB.camRotTarget.transform, false, initSB.transform);
         initSB.isInitialCar = true;
-        initSB.SwitchIntoCar(camController);
+        initSB.SwitchIntoCar(camController, true, UnityEngine.Random.Range(0, 2));
         origScaleMorseDisplay = initSB.morseSignalDisplay.transform.localScale;
     }
 
@@ -200,8 +217,9 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         perceptionBorderTransform.sizeDelta = new Vector2(cam.pixelWidth * perceptionW, cam.pixelHeight * perceptionH);
 
         float dist = Mathf.Infinity;
+        Debug.Log($"allSBS.Count = {allSwitchingBehaviours.Count}");
         for (int i = 0; i < allSwitchingBehaviours.Count; i++) {
-            if (allSwitchingBehaviours[i] != activeCar) {
+            if (allSwitchingBehaviours[i] != activeCar && allSwitchingBehaviours[i].gameObject.activeSelf) {
                 // check if other car is visible
                 bool isVisible = allSwitchingBehaviours[i].meshRenderer.IsVisibleFrom(cam);
                 float[,] scrPos = CarScreenPos(allSwitchingBehaviours[i]);
@@ -255,11 +273,6 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
     private void MarkedCarValueChanged(bool b) {
         switchImgObj.SetActive(b);
-        ChangeSignalDisplay(b);
-    }
-
-    private void ChangeSignalDisplay(bool b) {
-
     }
 
     private void MarkedCarChanged(SwitchingBehaviour sb) {
@@ -279,7 +292,6 @@ public class SwitchingManagement : MonoBehaviourReferenced {
             ResetFlashRecordDurations();
         }
     }
-
 
     private void HandleSwitchGUI(float [,] scrPos1, Color col) {
         //get x1, y1, x2, y2
@@ -346,12 +358,21 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         SwitchToCar(selectedCar);
         ActiveCar = selectedCar;
         DeselectCar();
-        referenceManagement.switchSound.Play();
+        //referenceManagement.switchSound.Play();
         selectedCar = null;
         StartCoroutine(SelectCoolDown());
         CarChangedEvent.Invoke();
         CarSwitchedEvent.Invoke();
-        camController.Loop();
+        float timeTilBar = referenceManagement.beatDetector.GetTimeUntilBar();
+        camController.Loop(timeTilBar < 0.8f ? timeTilBar + referenceManagement.beatDetector.GetBarInterval() : timeTilBar);
+        motionBlur.intensity.value = 10000f;
+    }
+
+    public void SwitchDone() {
+        ActiveCar.SetActiveCarValues();
+        Debug.Log($"Switch Done");
+        switchEvt.start();
+        motionBlur.intensity.value = 1f;
     }
 
     private void FlashValueChanged(bool b) {
@@ -361,10 +382,15 @@ public class SwitchingManagement : MonoBehaviourReferenced {
             measureFlash = true;
             measureInterval = false;
             StartCoroutine(MeasureFlashDuration());
-        } else {
+            flashOn.start();
+            flashHum.setParameterByName("HumStrength", 1f);
+        }
+        else {
             measureFlash = false;
             measureInterval = true;
             StartCoroutine(MeasureFlashInterval());
+            flashOff.start();
+            flashHum.setParameterByName("HumStrength", 0f);
         }
 
         activeCar.morseSingalRenderer.materials[0].SetInt("_FlashOn", b ? 1 : 0);
@@ -464,7 +490,6 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         for (int i = 0; i < flashRecordDurations.Length; i++) {
             flashRecordDurations[i] = -1f;
         }
-        //UpdateDebugUI();
     }
 
     private void MorseUIFeedback() {
@@ -477,12 +502,20 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         activeCar.morseSignalDisplay.transform.localScale = Vector3.Lerp(activeCar.morseSignalDisplay.transform.localScale, scale, 20 * Time.deltaTime);
     }
 
-    private void OnFullBeatDetected() {
+    private void HandleFullBeatDetected() {
         if (hasSelectedCar) Switch();
     }
 
-    private void OnSubDBeatDetected() {
+    private void HandleSubDBeatDetected() {
         //if (hasSelectedCar) Switch();
+    }
+
+    private void HandleBarDetected() {
+        Debug.Log("BAR!");
+    }
+
+    public void TimelineBarDetected() {
+        Debug.Log("TIMELINE BAR!");
     }
 
     public void SetActiveCar(SwitchingBehaviour sb) {

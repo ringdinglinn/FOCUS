@@ -22,7 +22,6 @@ public class PathManagement : MonoBehaviourReferenced {
                 return paths[i];
             }
         }
-        Debug.LogError($"Path not Found, pathID = {id}");
         return null;
     }
 

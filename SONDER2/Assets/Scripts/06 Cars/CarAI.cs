@@ -14,6 +14,7 @@ public class CarAI : MonoBehaviourReferenced {
     private SwitchingBehaviour switchingBehaviour;
     private Rigidbody rb;
     private CarVisuals carVisuals;
+    private LevelManagement levelManagement;
 
     public bool autopilotEnabled = true;
 
@@ -78,6 +79,7 @@ public class CarAI : MonoBehaviourReferenced {
     float speedLimit;
     float targetSpeedLimit;
 
+    private int dangleNr;
 
     private void OnEnable() {
         wheelVehicle = GetComponent<WheelVehicle>();
@@ -87,15 +89,12 @@ public class CarAI : MonoBehaviourReferenced {
         id = switchingBehaviour.id;
         rb = GetComponent<Rigidbody>();
         if (carVisuals != null) carVisuals = GetComponent<CarVisuals>();
-        carManagement.AddCarManagement(this);
+        carManagement.AddCarAI(this);
+        levelManagement = referenceManagement.levelManagement;
     }
 
-    private void RemoveSpareWheels() {
-        for (int i = 0; i < carVisuals.wheels.Count; i++) {
-            if (i != (int)carVisuals.myCar) {
-                Destroy(carVisuals.wheels[i]);
-            }
-        }
+    private void OnDisable() {
+        carManagement.RemoveCarAI(this);
     }
 
     private void Start() {
@@ -127,11 +126,7 @@ public class CarAI : MonoBehaviourReferenced {
     #region ------------------------------------------------ AUTOPILOT -----------------------------------------------------
 
     private void AutoPilot() {
-        //if (!autopilotEnabled) {
-        //    throttle = Mathf.Lerp(throttle, Mathf.Pow(pathBehaviour.GetSpeedLimit(), 2) - rb.velocity.sqrMagnitude, 0.001f);
-        //} else {
-            throttle = Mathf.Pow(speedLimit, 2) - rb.velocity.sqrMagnitude;
-        //}
+        throttle = Mathf.Pow(speedLimit, 2) - rb.velocity.sqrMagnitude;
         wheelVehicle.Throttle = throttle;
 
         distOnPath += (transform.position - prevPos).magnitude;
@@ -164,6 +159,8 @@ public class CarAI : MonoBehaviourReferenced {
     }
 
     public void SetToStartConfig() {
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
         distOnPath = myPath.path.GetClosestDistanceAlongPath(startPos);
         transform.position = startPos;
         transform.rotation = Quaternion.LookRotation(startDir);
@@ -202,27 +199,21 @@ public class CarAI : MonoBehaviourReferenced {
 
 
     public void ActiveCarHasReachedPortal() {
-        StartCoroutine(WaitToChangeToClone());
-    }
-
-    private IEnumerator WaitToChangeToClone() {
-        yield return new WaitForEndOfFrame();
+        Debug.Log($"car ai, active car has reached portal");
+        //StartCoroutine(WaitToChangeToClone());
         ChangeToClone();
     }
 
-    public void PortalReached() {
-        if (!dontLoop) {
-            if (!autopilotEnabled) {
-            }
-            else if (!inTunnelWithActiveCar && !dontLoop) {
-
-            }
-        }
+    private IEnumerator WaitToChangeToClone() {
+        Debug.Log($"wait to change to clone");
+        yield return new WaitForSeconds(Time.deltaTime * 2);
+        Debug.Log($"wait to change to clone 2");
+        ChangeToClone();
     }
 
     public void PortalReachedActiveCar() {
         if (!dontLoop) {
-            Debug.Log("portal reached active car");
+            levelManagement.CheckIfNextLevel();
             carManagement.ActiveCarHasReachedPortal(this);
         }
     }
@@ -296,15 +287,18 @@ public class CarAI : MonoBehaviourReferenced {
     }
 
     private void ChangeToClone() {
+        Debug.Log("car ai change to clone");
         carManagement.ChangeToClone(!autopilotEnabled, this, clone);
     }
 
     public void MakeMainCar(bool isActiveCar) {
         isClone = false;
         if (isActiveCar) cam.MakeMainCarCamera();
+        carVisuals.SetDangle(dangleNr);
     }
 
-    public void StartClone(bool isActiveCar, Transform transform, Rigidbody rb, CarAI carAI, int pathID, int myCar) {
+    public void StartClone(bool isActiveCar, Transform transform, Rigidbody rb, CarAI carAI, Vector3 startPos, Vector3 startDir, int pathID, int myCar, int v, int dangleNr) {
+        Debug.Log("start clone");
         autopilotEnabled = !isActiveCar;
         dontLoop = true;
         wheelVehicle.IsPlayer = isActiveCar;
@@ -314,14 +308,20 @@ public class CarAI : MonoBehaviourReferenced {
         startTunnel = carAI.startTunnel;
         endTunnel = carAI.endTunnel;
         this.PathID = pathID;
+        this.dangleNr = dangleNr;
         carVisuals = GetComponent<CarVisuals>();
-        carVisuals.SetCarVisuals(myCar);
-        carVisuals.UpdateVisuals();
+        carVisuals.SetCarVisuals(myCar, v);
+        carVisuals.UpdateVisuals(isActiveCar);
         if (isActiveCar) {
+            Debug.Log("is active car, set active car values");
             switchingBehaviour.SetActiveCarValues();
         } else {
             switchingBehaviour.SetInactiveCarValues();
         }
+
+        this.startPos = startPos;
+        this.startDir = startDir;
+
         isClone = true;
     }
 
@@ -341,7 +341,7 @@ public class CarAI : MonoBehaviourReferenced {
     private void CreateClone(int pathID) {
         hasClone = true;
         clone = referenceManagement.carManagement.CreateCarClone(pathID);
-        clone.StartClone(!autopilotEnabled, transform, rb, this, pathID, (int)carVisuals.myCar);
+        clone.StartClone(!autopilotEnabled, transform, rb, this, startPos, startDir, pathID, (int)carVisuals.myCar, carVisuals.variation, carVisuals.dangleNr);
         if (!autopilotEnabled) CreateCloneCam();
     }
 

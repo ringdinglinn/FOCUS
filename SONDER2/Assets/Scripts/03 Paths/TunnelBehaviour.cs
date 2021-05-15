@@ -12,7 +12,6 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
     public bool isLevelStartTunnel;
     public TunnelBehaviour nextLevelStartTunnel;
 
-    private int endTunnelID;
 
     public PathLoopTriggerBehaviour portalTrigger;
 
@@ -27,18 +26,16 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
     public GameObject nextGoalIndicator;
 
     SwitchingManagement switchingManagement;
+    LevelManagement levelManagement;
 
     private void OnEnable() {
         referenceManagement.entryFilters.Add(entryFilter0);
         referenceManagement.entryFilters.Add(entryFilter1);
-    }
-
-    private void Start() {
         referenceManagement.pathManagement.AddToTunnels(this);
         portalTrigger.SetTunnelBehaviour(this);
         pathBehaviour = GetComponentInParent<PathBehaviour>();
-        endTunnelID = pathBehaviour.id;
         switchingManagement = referenceManagement.switchingManagement;
+        levelManagement = referenceManagement.levelManagement;
     }
 
     public void SetID(int id) {
@@ -58,6 +55,8 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
                 carAI.endTunnel = this;
             }
             if (isEndTunnel && isLevelEndTunnel && !carAI.autopilotEnabled) {
+                levelManagement.EnteredEndTunnel(pathBehaviour.id, nextLevelStartTunnel.pathBehaviour.id);
+
                 carAI.startTunnel = nextLevelStartTunnel;
                 carAI.endTunnel = this;
                 foreach (CarAI car in carsInTunnel) {
@@ -69,7 +68,10 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
             if (!carInList && !carAI.dontLoop && isEndTunnel) carsInTunnel.Add(carAI);
 
             if (!carAI.autopilotEnabled && isEndTunnel) {
+
                 foreach (CarAI car in carsInTunnel) {
+                    Debug.Log($"car = {car}");
+
                     car.ActiveCarHasEnteredTunnel(isLevelEndTunnel ? nextLevelStartTunnel.pathBehaviour.id : pathBehaviour.id);
                 }
                 if (goalIndicator != null) {

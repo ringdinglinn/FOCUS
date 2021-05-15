@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Camera1stPerson : MonoBehaviourReferenced {
     public Transform rotTarget;
@@ -9,22 +10,14 @@ public class Camera1stPerson : MonoBehaviourReferenced {
     [SerializeField] private float translateSpeed;
     [SerializeField] private float rotationSpeed;
 
-    private Vector3 velocity = new Vector3(0, 0, 0);
 
-
-    private Vector3 targetVelocity;
     private Vector3 targetPos;
-    private Vector3 prevTargetPos;
-    private Vector3 catchUpVelocity = Vector3.zero;
-    private Vector3 targetAcc;
-    private Vector3 prevTargetVel;
-
-    private Vector3 prevPos;
+    private Vector3 startPos;
+    private float loopTime;
+    private float timer;
 
     [SerializeField] private float velocityDamping = 0.1f;
     [SerializeField] private float catchUpDamping = 0.1f;
-
-    private bool inRegion = true;
 
     Camera cam;
     AudioListener audioListener;
@@ -50,15 +43,15 @@ public class Camera1stPerson : MonoBehaviourReferenced {
         cam = GetComponent<Camera>();
         audioListener = GetComponent<AudioListener>();
         switchingManagement = referenceManagement.switchingManagement;
-        prevPos = transform.position;
     }
 
     private void Update() {
         if (looping) {
             LoopMovement();
             if ((translateTarget.transform.position - transform.position).sqrMagnitude <= Mathf.Pow(targetRange, 2)) {
-                switchingManagement.ActiveCar.SetActiveCarValues();
+                switchingManagement.SwitchDone();
                 looping = false;
+                timer = 0;
             }
         } else {
             BaseMovement();
@@ -69,7 +62,6 @@ public class Camera1stPerson : MonoBehaviourReferenced {
         translateTarget = tt;
         rotTarget = rt;
         targetCar = tc;
-        prevTargetPos = translateTarget.position;
         this.shake = shake;
     }
 
@@ -99,9 +91,21 @@ public class Camera1stPerson : MonoBehaviourReferenced {
 
     private void Sloop() {
         targetPos = targetCar.InverseTransformPoint(translateTarget.position);
-        Vector3 currentPos = targetCar.InverseTransformPoint(transform.position);
+        //Vector3 currentPos = targetCar.InverseTransformPoint(transform.position);
 
-        currentPos = Vector3.Lerp(currentPos, targetPos, 5 * Time.deltaTime);
+        //currentPos = Vector3.Lerp(currentPos, targetPos, 5 * Time.deltaTime);
+
+        //transform.position = targetCar.TransformPoint(currentPos);
+
+        Vector3 startPosLocal = targetCar.InverseTransformPoint(startPos);
+        Vector3 currentPos = new Vector3();
+
+        Debug.Log($"loopTime = {loopTime}");
+
+        timer += Time.deltaTime / loopTime;
+        if (timer < 1) {
+            currentPos = Vector3.Lerp(startPosLocal, targetPos, timer);
+        }
 
         transform.position = targetCar.TransformPoint(currentPos);
     }
@@ -121,8 +125,10 @@ public class Camera1stPerson : MonoBehaviourReferenced {
         transform.position += shake;
     }
 
-    public void Loop() {
+    public void Loop(float t) {
         looping = true;
+        startPos = transform.position;
+        loopTime = t;
     }
 
     public bool GetLooping() {

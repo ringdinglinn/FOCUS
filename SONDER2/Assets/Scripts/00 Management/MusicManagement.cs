@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 public class MusicManagement : MonoBehaviourReferenced {
     // Variables that are modified in the callback need to be part of a seperate class.
@@ -19,13 +20,18 @@ public class MusicManagement : MonoBehaviourReferenced {
     FMOD.Studio.EVENT_CALLBACK beatCallback;
     FMOD.Studio.EventInstance track1;
 
+    static int beatNr = 0;
+    static int beatTotal = 4;
     int switchNr = 0;
+
+    SwitchingManagement switchingManagement;
 
     void Start() {
 
         track1 = FMODUnity.RuntimeManager.CreateInstance(referenceManagement.track1);
 
         timelineInfo = new TimelineInfo();
+
 
         // Explicitly create the delegate object and assign it to a member so it doesn't get freed
         // by the garbage collected while it's being used
@@ -67,6 +73,9 @@ public class MusicManagement : MonoBehaviourReferenced {
                 case FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_BEAT: {
                         var parameter = (FMOD.Studio.TIMELINE_BEAT_PROPERTIES)Marshal.PtrToStructure(parameterPtr, typeof(FMOD.Studio.TIMELINE_BEAT_PROPERTIES));
                         timelineInfo.currentMusicBar = parameter.bar;
+                        beatNr++;
+                        if (beatNr == beatTotal) StartBeat();
+                        beatNr %= beatTotal;
                     }
                     break;
                 case FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_MARKER: {
@@ -77,6 +86,11 @@ public class MusicManagement : MonoBehaviourReferenced {
             }
         }
         return FMOD.RESULT.OK;
+    }
+
+    static void StartBeat() {
+        SwitchingManagement switchingManagement = FindObjectOfType<SwitchingManagement>();
+        switchingManagement.TimelineBarDetected();
     }
 
     void HandleCarSwitched() {

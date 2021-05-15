@@ -11,6 +11,7 @@ public class CarManagement : MonoBehaviourReferenced {
     List<PathBehaviour> allPathBehaviours;
     List<SwitchingBehaviour> allSwitchingBehaviours = new List<SwitchingBehaviour>();
     List<CarAI> allCarAIs = new List<CarAI>();
+    LevelManagement levelManagement;
 
     public UnityEvent cameraChanged;
     public UnityEvent carsCreated;
@@ -36,12 +37,9 @@ public class CarManagement : MonoBehaviourReferenced {
         carPrefab = referenceManagement.carPrefab;
         switchingManagement = referenceManagement.switchingManagement;
         parentObj = GameObject.Find("Cars");
+        levelManagement = referenceManagement.levelManagement;
         InstantiateCars();
         SetUpInitialCar();
-    }
-
-    private void Start() {
-
     }
 
     private void InstantiateCars() {
@@ -62,7 +60,7 @@ public class CarManagement : MonoBehaviourReferenced {
 
                 // instantiate and references
                 GameObject car = Instantiate(carPrefab, startPosList[j], Quaternion.LookRotation(dir));
-                car.transform.SetParent(parentObj.transform);
+                car.transform.SetParent(allPathBehaviours[i].transform);
                 CarAI carAI = car.GetComponent<CarAI>();
                 SwitchingBehaviour sb = car.GetComponent<SwitchingBehaviour>();
                 CarVisuals carVisuals = car.GetComponent<CarVisuals>();
@@ -84,8 +82,8 @@ public class CarManagement : MonoBehaviourReferenced {
                 }
 
                 // randomize visuals
-                carVisuals.SetCarVisuals(Random.Range(0, carVisuals.allCarConfigs.Count));
-                carVisuals.UpdateVisuals();
+                carVisuals.SetCarVisuals(Random.Range(0, carVisuals.allCarConfigs.Count), Random.Range(0,2));
+                carVisuals.UpdateVisuals(false);
             }
         }
         if (initialCar != null) {
@@ -103,8 +101,11 @@ public class CarManagement : MonoBehaviourReferenced {
             }
         }
         CarAI carAI = initialCar.GetCarAI();
+        CarVisuals carVisuals = initialCar.GetComponent<CarVisuals>();
         carAI.cam = referenceManagement.cam;
         carAI.SetUpInititalCar();
+        carVisuals.SetCarVisuals(/*Random.Range(0, carVisuals.allCarConfigs.Count)*/ 4, Random.Range(0, 2));
+        carVisuals.UpdateVisuals(true);
         referenceManagement.switchingManagement.SetUpInitialCar(initialCar);
     }
 
@@ -112,6 +113,7 @@ public class CarManagement : MonoBehaviourReferenced {
         GameObject cloneObj = Instantiate(carPrefab, Vector3.zero, Quaternion.identity);
         CarAI carAI = cloneObj.GetComponent<CarAI>();
         carAI.PathID = pathID;
+        cloneObj.transform.SetParent(pathManagement.GetMyPath(pathID).transform);
         return carAI;
     }
 
@@ -125,14 +127,25 @@ public class CarManagement : MonoBehaviourReferenced {
 
     public void ActiveCarHasReachedPortal(CarAI activeCar) {
         carAIsInTunnel = activeCar.endTunnel.GetCarAIsInTunnel();
-        foreach (CarAI car in carAIsInTunnel) {
-            if (car.HasClone) {
-                car.ActiveCarHasReachedPortal();
+
+        int count = carAIsInTunnel.Count - 1;
+        for (int i = count; i >= 0; i--) { 
+            if (carAIsInTunnel[i].HasClone) {
+                carAIsInTunnel[i].ActiveCarHasReachedPortal();
             }
         }
     }
 
+    private void SetAllCarsToStartConfig() {
+        Debug.Log($"all car ais = {allCarAIs.Count}");
+        foreach (CarAI car in allCarAIs) {
+            if (car != switchingManagement.ActiveCar.GetCarAI())
+            car.SetToStartConfig();
+        }
+    }
+
     public void ChangeToClone(bool isActiveCar, CarAI oldCar, CarAI newCar) {
+        Debug.Log("change to clone");
         newCar.MakeMainCar(isActiveCar);
         allSwitchingBehaviours.Remove(oldCar.GetComponent<SwitchingBehaviour>());
         allCarAIs.Remove(oldCar);
@@ -142,6 +155,7 @@ public class CarManagement : MonoBehaviourReferenced {
         ++idCounter;
         newCar.gameObject.name = carName + (idCounter - 1);
         oldCar.endTunnel.CarIsDestroyed(oldCar);
+
         if (isActiveCar) {
             referenceManagement.cam = newCar.cam;
             cameraChanged.Invoke();
@@ -149,7 +163,10 @@ public class CarManagement : MonoBehaviourReferenced {
             Destroy(oldCar.cam.gameObject);
         }
         Destroy(oldCar.gameObject);
+
         allSBChanged.Invoke();
+
+        SetAllCarsToStartConfig();
     }
 
     public void ActiveCarGearChanged(int gear) {
@@ -162,15 +179,35 @@ public class CarManagement : MonoBehaviourReferenced {
         }
     }
 
-    public void AddCarManagement(CarAI carAI) {
+    public void AddCarAI(CarAI carAI) {
         allCarAIs.Add(carAI);
     }
 
+    public void RemoveCarAI(CarAI car) {
+        allCarAIs.Remove(car);
+    }
+
     public void AddSwitchingBehaviour(SwitchingBehaviour sb) {
+        Debug.Log($"add switching behaviour, {name}");
         allSwitchingBehaviours.Add(sb);
+        allSBChanged.Invoke();
+    }
+
+    public void RemoveSwitchingBehaviour(SwitchingBehaviour sb) {
+        allSwitchingBehaviours.Remove(sb);
+        allSBChanged.Invoke();
     }
 
     public bool HasManualInitialCar() {
         return manualInitialCar;
+    }
+
+    public void ClearSBs() {
+        Debug.Log("Clear switching behaviours");
+        allSwitchingBehaviours.Clear();
+    }
+
+    public void ClearCarAIs() {
+        allCarAIs.Clear();
     }
 }

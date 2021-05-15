@@ -17,4 +17,6 @@ public class CarConfig : MonoBehaviourReferenced {
     public MeshRenderer volumetricRenderer1;
     public List<MeshRenderer> headlightCubes;
     public GameObject armaturenbrett;
+    public GameObject armaturenbrett2;
+    public List<GameObject> dangles;
 }

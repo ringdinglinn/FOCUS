@@ -40,6 +40,7 @@ public static class Inputs {
     public static string flash = "Flash";
     public static string enter = "Enter";
     public static string esc = "Escape";
+    public static string turn = "MoveHorizontal";
 
     public static string[] gears = { gear0, gear1, gear2, gear3, gear4, gear5 };
     public static string[] directions = { up, left, down, right };

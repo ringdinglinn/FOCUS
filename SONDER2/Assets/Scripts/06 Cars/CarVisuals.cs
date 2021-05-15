@@ -10,26 +10,39 @@ public class CarVisuals : MonoBehaviourReferenced {
 
 	VehicleBehaviour.WheelVehicle wv;
 	SwitchingBehaviour switchingBehaviour;
+	DangleManagement dangleManagement;
 
-	public enum car { car0, car1, car2, car3, car4, car5, car6, car7 };
+	public enum car { car2, car3, car4, car5, car6, car7 };
 	public car myCar;
+	public int variation = 0;
 
-	public void UpdateVisuals() {
+	public int dangleNr;
+
+	public void UpdateVisuals(bool active) {
+		Debug.Log($"Update Visuals, {active}, {name}");
 		foreach (CarConfig cc in allCarConfigs) {
 			cc.gameObject.SetActive(false);
         }
 		allCarConfigs[(int)myCar].gameObject.SetActive(true);
+		if (variation == 0) {
+			allCarConfigs[(int)myCar].armaturenbrett.SetActive(active);
+			allCarConfigs[(int)myCar].armaturenbrett2.SetActive(false);
+		} else if (variation == 1) {
+			allCarConfigs[(int)myCar].armaturenbrett.SetActive(false);
+			allCarConfigs[(int)myCar].armaturenbrett2.SetActive(active);
+		}
 		ConfigReferences();
 	}
 
-	public void SetCarVisuals(int i) {
+	public void SetCarVisuals(int i, int v) {
 		myCar = (car)i;
+		variation = v;
     }
 
 	private void OnEnable() {
 		switchingBehaviour = GetComponent<SwitchingBehaviour>();
 		wv = GetComponent<VehicleBehaviour.WheelVehicle>();
-        UpdateVisuals();
+		dangleManagement = referenceManagement.dangleManagement;
 	}
 
 	private void ConfigReferences() {
@@ -45,9 +58,28 @@ public class CarVisuals : MonoBehaviourReferenced {
 		switchingBehaviour.volumetricRenderer0 = carConfig.volumetricRenderer0;
 		switchingBehaviour.volumetricRenderer1 = carConfig.volumetricRenderer1;
 		switchingBehaviour.headlightCubes = carConfig.headlightCubes.ToArray();
-		switchingBehaviour.armaturenBrett = carConfig.armaturenbrett;
+		switchingBehaviour.armaturenbrett = carConfig.armaturenbrett;
+		switchingBehaviour.armaturenbrett2 = carConfig.armaturenbrett2;
+		switchingBehaviour.variation = variation;
 		wv.TurnWheel = new WheelCollider[] { carConfig.wheels[0], carConfig.wheels[1] };
 		wv.DriveWheel = new WheelCollider[] { carConfig.wheels[0], carConfig.wheels[1] };
 		wheels = carConfig.wheels;
+	}
+
+	public List<GameObject> GetDangleList() {
+		return allCarConfigs[(int)myCar].dangles;
+    }
+
+	public void SetDangle(int index) {
+		foreach (GameObject d in allCarConfigs[(int)myCar].dangles) {
+			d.SetActive(false);
+        }
+		if (index != -1) {
+			allCarConfigs[(int)myCar].dangles[index].SetActive(true);
+			dangleManagement.SetDangleObj(allCarConfigs[(int)myCar].dangles[index]);
+		} else {
+			dangleManagement.SetDangleObj(null);
+        }
+		dangleNr = index;
 	}
 }

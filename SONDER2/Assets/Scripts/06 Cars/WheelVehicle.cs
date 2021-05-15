@@ -28,7 +28,7 @@ namespace VehicleBehaviour {
         // Input names to read using GetAxis
         [SerializeField] string throttleInput = "Throttle";
         [SerializeField] string brakeInput = "Brake";
-        [SerializeField] string turnInput = "Horizontal";
+        [SerializeField] string turnInput = "MoveHorizontal";
         [SerializeField] string jumpInput = "Jump";
         [SerializeField] string driftInput = "Drift";
 	    [SerializeField] string boostInput = "Boost";

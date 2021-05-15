@@ -1,24 +1,24 @@
 ﻿<Properties StartupConfiguration="{281EEECF-89B9-6D0B-978A-5FDC6B8E6CBA}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/01 Camera/Camera1stPerson.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/04 Switching/SwitchingBehaviour.cs">
     <Files>
-      <File FileName="Assets/Scripts/06 Cars/CarVisuals.cs" Line="31" Column="51" />
-      <File FileName="Assets/Scripts/06 Cars/CarConfig.cs" Line="19" Column="38" />
-      <File FileName="Assets/Scripts/99 Utilities/RendererExtensions.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/04 Switching/SwitchingBehaviour.cs" Line="155" Column="47" />
-      <File FileName="Assets/Scripts/00 Management/MusicManagement.cs" />
-      <File FileName="Assets/Scripts/00 Management/ReferenceManagement.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/00 Management/CarManagement.cs" Line="88" Column="44" />
-      <File FileName="Assets/Scripts/06 Cars/CarAI.cs" Line="90" Column="46" />
-      <File FileName="Assets/Scripts/01 Camera/Camera1stPerson.cs" Line="58" Column="14" />
+      <File FileName="Assets/Scripts/04 Switching/SwitchingBehaviour.cs" Line="104" Column="46" />
+      <File FileName="Assets/Scripts/00 Management/CarManagement.cs" Line="182" Column="17" />
+      <File FileName="Assets/Scripts/04 Switching/SwitchingManagement.cs" Line="124" Column="1" />
+      <File FileName="Assets/Scripts/06 Cars/CarAI.cs" Line="97" Column="41" />
+      <File FileName="Assets/Scripts/00 Management/ReferenceManagement.cs" Line="29" Column="44" />
+      <File FileName="Assets/Scripts/03 Paths/TunnelBehaviour.cs" Line="59" Column="1" />
+      <File FileName="Assets/Scripts/00 Management/LevelManagement.cs" Line="29" Column="39" />
+      <File FileName="Assets/Scripts/03 Paths/PathManagement.cs" Line="25" Column="1" />
+      <File FileName="Assets/Scripts/99 Utilities/RendererExtensions.cs" Line="8" Column="1" />
+      <File FileName="Assets/Scripts/06 Cars/CarVisuals.cs" Line="46" Column="1" />
+      <File FileName="Assets/Scripts/03 Paths/PathLoopTriggerBehaviour.cs" Line="18" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="c3628242-67f4-4d7c-ac17-f81f1fc5e605" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="46a9a613-5414-4c7f-90e7-c26b75f2438c" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/linn/Documents/01 ZHdK/Semester VI/FOCUS/_ Repo/SONDER2/Assets/Scripts/04 Switching/SwitchingManagement.cs" relfile="Assets/Scripts/04 Switching/SwitchingManagement.cs" line="193" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>

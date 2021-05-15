@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Rendering.HighDefinition;
+using UnityEngine.Rendering;
+
 
 public class MonoBehaviourReferenced : MonoBehaviour {
     public ReferenceManagement referenceManagement;
@@ -22,6 +25,8 @@ public class ReferenceManagement : MonoBehaviour
     public GearManagement gearManagement;
     public JourneyManagement journeyManagement;
     public MusicManagement musicManagement;
+    public DangleManagement dangleManagement;
+    public LevelManagement levelManagement;
 
     [Header("Player Items")]
     public Camera1stPerson cam;
@@ -46,6 +51,9 @@ public class ReferenceManagement : MonoBehaviour
     public float GetBeatWindow() {
         return BeatWindow;
     }
+
+    [Header("Levels")]
+    public List<GameObject> levels;
 
     [Header("Prefabs")]
     public GameObject streetlight;
@@ -86,6 +94,14 @@ public class ReferenceManagement : MonoBehaviour
     public string flashShort;
     [FMODUnity.EventRef]
     public string flashLong;
+    [FMODUnity.EventRef]
+    public string switchDone;
+    [FMODUnity.EventRef]
+    public string flashOn;
+    [FMODUnity.EventRef]
+    public string flashOff;
+    [FMODUnity.EventRef]
+    public string flashHum;
 
     [Header("Switching")]
     [Range(0.0f, 1.0f)]
@@ -109,4 +125,7 @@ public class ReferenceManagement : MonoBehaviour
     [Header("Steering")]
     public SteerAssitMode steerAssitMode;
     public float turnAssistStrength = 5;
+
+    [Header("Rendering")]
+    public Volume postProcess;
 }
