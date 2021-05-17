@@ -83,8 +83,8 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     private void OnEnable() {
         CollectReferences();
         GenerateSignalPattern();
-        referenceManagement.beatDetector.bdOnBeatFull.AddListener(HandleBeatFull);
-        referenceManagement.beatDetector.bdOnBeatSubD.AddListener(HandleBeatSubD);
+        referenceManagement.beatDetector.bdOnFourth.AddListener(HandleBeatFull);
+        referenceManagement.beatDetector.bdOnEigth.AddListener(HandleBeatSubD);
         headlightDefaultIntensity = headlight1.intensity;
         headlightDefaultRange = headlight1.range;
         carManagement.AddSwitchingBehaviour(this);
@@ -101,8 +101,8 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     }
 
     private void OnDisable() {
-        referenceManagement.beatDetector.bdOnBeatFull.RemoveListener(HandleBeatFull);
-        referenceManagement.beatDetector.bdOnBeatSubD.RemoveListener(HandleBeatSubD);
+        referenceManagement.beatDetector.bdOnFourth.RemoveListener(HandleBeatFull);
+        referenceManagement.beatDetector.bdOnEigth.RemoveListener(HandleBeatSubD);
         carManagement.RemoveSwitchingBehaviour(this);
     }
 
@@ -114,8 +114,8 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         switchingManagement = referenceManagement.switchingManagement;
         id = switchingManagement.allSwitchingBehaviours.Count;
         beatDetector = referenceManagement.beatDetector;
-        beatInterval = beatDetector.BeatInterval;
-        beatIntervalSubD = beatDetector.BeatIntervalSubD;
+        beatInterval = beatDetector.FourthInterval;
+        beatIntervalSubD = beatDetector.EighthInterval;
     }
 
     public void SwitchIntoCar(Camera1stPerson cam, bool isInitialCar, int variation) {
@@ -159,6 +159,7 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         SetHeadlightsInactiveCar();
         GenerateSignalPattern();
         armaturenbrett.SetActive(false);
+        armaturenbrett2.SetActive(false);
         meshRenderer.gameObject.SetActive(true);
 
         foreach (MeshRenderer mr in headlightCubes) mr.material = frontlightMat;

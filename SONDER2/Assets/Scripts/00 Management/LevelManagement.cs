@@ -11,7 +11,7 @@ public class LevelManagement : MonoBehaviourReferenced {
 
     bool inEndTunnel = false;
 
-    int levelNr = 0;
+    public int levelNr = 0;
 
     private void Start() {
         pathManagement = referenceManagement.pathManagement;

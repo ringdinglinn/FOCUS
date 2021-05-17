@@ -10,8 +10,8 @@ public class TreeAudioScript : MonoBehaviourReferenced {
 
     private void Start() {
         BeatDetector beatDetector = referenceManagement.beatDetector;
-        beatDetector.bdOnBeatFull.AddListener(OnBeatFull);
-        beatDetector.bdOnBeatSubD.AddListener(OnBeatSubD);
+        beatDetector.bdOnFourth.AddListener(OnBeatFull);
+        beatDetector.bdOnEigth.AddListener(OnBeatSubD);
         audioMats = referenceManagement.treeAudioMats;
     }
 

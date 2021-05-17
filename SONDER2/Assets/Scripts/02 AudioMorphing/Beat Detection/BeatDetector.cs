@@ -5,14 +5,14 @@ using UnityEngine;
 public class BeatDetector : MonoBehaviourReferenced {
     private static BeatDetector BDInstance;
     private float bpm;
-    private float beatInterval, beatTimer, beatIntervalSubD, beatTimerSubD, barInterval, barTimer;
-    private float subD;
-    public bool beatFull, beatSubD, bar;
-    public int beatCountFull, beatCountSubD, barCount;
-    public float BeatInterval, BeatIntervalSubD;
+    private float halfInterval, halfTimer, fourthInterval, fourthTimer, eighthInterval, eighthTimer, barInterval, barTimer;
+    public bool half, fourth, eighth, bar;
+    public int halfCount, fourthCount, eighthCount, barCount;
+    public float HalfInterval, FourthInterval, EighthInterval;
 
-    public BDOnBeatEventHandler bdOnBeatFull;
-    public BDOnBeatEventHandler bdOnBeatSubD;
+    public BDOnBeatEventHandler bdOnFourth;
+    public BDOnBeatEventHandler bdOnEigth;
+    public BDOnBeatEventHandler bdOnHalf;
     public BDOnBeatEventHandler bdOnBar;
 
     private float beatWindow = 0.2f;
@@ -35,9 +35,9 @@ public class BeatDetector : MonoBehaviourReferenced {
             DontDestroyOnLoad(gameObject);
         }
         bpm = referenceManagement.GetBPM();
-        subD = referenceManagement.GetSubdivisions();
-        BeatInterval = 60 / bpm;
-        BeatIntervalSubD = BeatInterval / subD;
+        FourthInterval = 60 / bpm;
+        EighthInterval = FourthInterval / 2;
+        HalfInterval = FourthInterval * 2f;
     }
 
     private void Update() {
@@ -45,39 +45,49 @@ public class BeatDetector : MonoBehaviourReferenced {
     }
 
     void BeatDetection() {
-        // full beat
-        beatFull = false;
-        beatInterval = 60 / bpm;
-        beatTimer += Time.deltaTime;
-        if (beatTimer >= beatInterval) {
-            beatTimer -= beatInterval;
-            beatCountFull++;
-            bdOnBeatFull.Invoke();
+        // half
+        half = false;
+        halfInterval = 2f * (60 / bpm);
+        halfTimer += Time.deltaTime;
+        if (halfTimer >= halfInterval) {
+            halfTimer -= halfInterval;
+            halfCount++;
+            bdOnHalf.Invoke();
         }
-        if (beatTimer >= beatInterval - beatWindow / 2) {
+
+        // fourth
+        fourth = false;
+        fourthInterval = 60 / bpm;
+        fourthTimer += Time.deltaTime;
+        if (fourthTimer >= fourthInterval) {
+            fourthTimer -= fourthInterval;
+            fourthCount++;
+            bdOnFourth.Invoke();
+        }
+        if (fourthTimer >= fourthInterval - beatWindow / 2) {
             WithinBeatWindow = true;
         }
-        else if (beatTimer <= beatWindow / 2) {
+        else if (fourthTimer <= beatWindow / 2) {
             WithinBeatWindow = true;
         }
         else {
             WithinBeatWindow = false;
         }
 
-        // subdivided beat
-        beatSubD = false;
-        beatIntervalSubD = beatInterval / subD;
-        beatTimerSubD += Time.deltaTime;
-        if (beatTimerSubD >= beatIntervalSubD) {
-            beatTimerSubD -= beatIntervalSubD;
-            beatSubD = true;
-            beatCountSubD++;
-            bdOnBeatSubD.Invoke();
+        // eighth
+        eighth = false;
+        eighthInterval = fourthInterval / 2;
+        eighthTimer += Time.deltaTime;
+        if (eighthTimer >= eighthInterval) {
+            eighthTimer -= eighthInterval;
+            eighth = true;
+            eighthCount++;
+            bdOnEigth.Invoke();
         }
 
         // bar
         bar = false;
-        barInterval = beatInterval * 4;
+        barInterval = fourthInterval * 4;
         barTimer += Time.deltaTime;
         if (barTimer >= barInterval) {
             barTimer -= barInterval;

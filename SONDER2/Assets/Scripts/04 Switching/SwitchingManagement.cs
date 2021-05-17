@@ -103,8 +103,8 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
     private void Start() {
         BeatDetector beatDetector = referenceManagement.beatDetector;
-        beatDetector.bdOnBeatSubD.AddListener(HandleSubDBeatDetected);
-        beatDetector.bdOnBeatFull.AddListener(HandleFullBeatDetected);
+        beatDetector.bdOnEigth.AddListener(HandleSubDBeatDetected);
+        beatDetector.bdOnFourth.AddListener(HandleFullBeatDetected);
         cam = camController.GetComponent<Camera>();
         switchImgObj = referenceManagement.switchImgObj;
         switchImgTransform = switchImgObj.GetComponent<RectTransform>();
@@ -219,7 +219,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         float dist = Mathf.Infinity;
         Debug.Log($"allSBS.Count = {allSwitchingBehaviours.Count}");
         for (int i = 0; i < allSwitchingBehaviours.Count; i++) {
-            if (allSwitchingBehaviours[i] != activeCar && allSwitchingBehaviours[i].gameObject.activeSelf) {
+            if (allSwitchingBehaviours[i] != activeCar && allSwitchingBehaviours[i].gameObject.activeSelf && !allSwitchingBehaviours[i].isInitialCar) {
                 // check if other car is visible
                 bool isVisible = allSwitchingBehaviours[i].meshRenderer.IsVisibleFrom(cam);
                 float[,] scrPos = CarScreenPos(allSwitchingBehaviours[i]);
