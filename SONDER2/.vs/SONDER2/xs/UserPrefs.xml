@@ -1,13 +1,13 @@
 ﻿<Properties StartupConfiguration="{281EEECF-89B9-6D0B-978A-5FDC6B8E6CBA}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/00 Management/LevelManagement.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/04 Switching/SwitchingManagement.cs">
     <Files>
-      <File FileName="Assets/Scripts/02 AudioMorphing/MountainAudio.cs" Line="10" Column="30" />
-      <File FileName="Assets/Scripts/02 AudioMorphing/BlendShapesAudio.cs" />
-      <File FileName="Assets/Scripts/04 Switching/SwitchingManagement.cs" />
-      <File FileName="Assets/Scripts/02 AudioMorphing/Beat Detection/BeatDetector.cs" />
-      <File FileName="Assets/Scripts/04 Switching/SwitchingBehaviour.cs" />
+      <File FileName="Assets/Scripts/02 AudioMorphing/MountainAudio.cs" Line="10" Column="33" />
+      <File FileName="Assets/Scripts/02 AudioMorphing/BlendShapesAudio.cs" Line="18" Column="27" />
+      <File FileName="Assets/Scripts/04 Switching/SwitchingManagement.cs" Line="467" Column="1" />
+      <File FileName="Assets/Scripts/02 AudioMorphing/Beat Detection/BeatDetector.cs" Line="39" Column="40" />
+      <File FileName="Assets/Scripts/04 Switching/SwitchingBehaviour.cs" Line="305" Column="1" />
       <File FileName="Assets/MatTexShade/_Shaders/_CustomNodes/SimplexNoise3D/SimplexNoise3D.hlsl" Line="19" Column="15" />
-      <File FileName="Assets/Scripts/00 Management/ReferenceManagement.cs" Line="41" Column="47" />
+      <File FileName="Assets/Scripts/00 Management/ReferenceManagement.cs" Line="106" Column="23" />
       <File FileName="Assets/Scripts/00 Management/LevelManagement.cs" Line="14" Column="15" />
     </Files>
   </MonoDevelop.Ide.Workbench>
