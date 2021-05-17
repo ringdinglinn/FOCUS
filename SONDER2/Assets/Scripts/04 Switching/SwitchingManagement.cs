@@ -13,6 +13,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
     public List<SwitchingBehaviour> allSwitchingBehaviours;
     private GearManagement gearManagement;
+    private BeatDetector beatDetector;
     private SwitchingBehaviour activeCar;
     public SwitchingBehaviour ActiveCar {
         get { return activeCar; }
@@ -95,14 +96,23 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     EventInstance flashOn;
     EventInstance flashOff;
     EventInstance flashHum;
+    EventInstance signalSuccess;
+    EventInstance signalFailure;
 
     private Vector3 origScaleMorseDisplay;
 
     public bool inTunnel;
 
+    Texture2D morseLongTex;
+    Texture2D morseShortTex;
+
+    int signalIndex = 0;
+
+    float tolerance = 0.35f;
+
 
     private void Start() {
-        BeatDetector beatDetector = referenceManagement.beatDetector;
+        beatDetector = referenceManagement.beatDetector;
         beatDetector.bdOnEigth.AddListener(HandleSubDBeatDetected);
         beatDetector.bdOnFourth.AddListener(HandleFullBeatDetected);
         cam = camController.GetComponent<Camera>();
@@ -126,8 +136,12 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         flashOn = RuntimeManager.CreateInstance(referenceManagement.flashOn);
         flashOff = RuntimeManager.CreateInstance(referenceManagement.flashOff);
         flashHum = RuntimeManager.CreateInstance(referenceManagement.flashHum);
+        signalSuccess = RuntimeManager.CreateInstance(referenceManagement.signalSuccess);
+        signalFailure = RuntimeManager.CreateInstance(referenceManagement.signalFailure);
         flashHum.start();
         flashHum.setParameterByName("HumStrength", 0f);
+        morseLongTex = referenceManagement.morseSignalLong;
+        morseShortTex = referenceManagement.morseSignalShort;
     }
 
     private void OnEnable() {
@@ -168,10 +182,12 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         referenceManagement.cam.SwitchCar(initSB.camTranslateTarget.transform, initSB.camRotTarget.transform, false, initSB.transform);
         initSB.isInitialCar = true;
         initSB.SwitchIntoCar(camController, true, UnityEngine.Random.Range(0, 2));
-        origScaleMorseDisplay = initSB.morseSignalDisplay.transform.localScale;
+        origScaleMorseDisplay = initSB.morseSingalRenderers[0].transform.localScale;
     }
 
     private void Update() {
+
+        Debug.Log($"signalIndex = {signalIndex}");
 
         Flash = referenceManagement.inputManagement.GetInputButton(Inputs.flash);
 
@@ -196,13 +212,15 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
         identicalFlashes = false;
 
-        float value = activeCar.morseSingalRenderer.materials[0].GetFloat("Clarity");
-        value += currentSDSpeed * Time.deltaTime;
-        value = Mathf.Clamp(value, 0.05f, 2);
-        activeCar.morseSingalRenderer.materials[0].SetFloat("Clarity", value);
-        radioStatic.setParameterByName("SignalStrength", value);
+        for (int i = 0; i < activeCar.morseSingalRenderers.Length; i++) {
+            float value = activeCar.morseSingalRenderers[i].materials[0].GetFloat("Clarity");
+            value += currentSDSpeed * Time.deltaTime;
+            value = Mathf.Clamp(value, 0.05f, 2);
+            activeCar.morseSingalRenderers[i].materials[0].SetFloat("Clarity", value);
+            radioStatic.setParameterByName("SignalStrength", value);
+        }
 
-        MorseUIFeedback();
+        MorseUIScaling();
     }
 
     private void SearchForCars() {
@@ -217,7 +235,6 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         perceptionBorderTransform.sizeDelta = new Vector2(cam.pixelWidth * perceptionW, cam.pixelHeight * perceptionH);
 
         float dist = Mathf.Infinity;
-        Debug.Log($"allSBS.Count = {allSwitchingBehaviours.Count}");
         for (int i = 0; i < allSwitchingBehaviours.Count; i++) {
             if (allSwitchingBehaviours[i] != activeCar && allSwitchingBehaviours[i].gameObject.activeSelf && !allSwitchingBehaviours[i].isInitialCar) {
                 // check if other car is visible
@@ -370,7 +387,6 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
     public void SwitchDone() {
         ActiveCar.SetActiveCarValues();
-        Debug.Log($"Switch Done");
         switchEvt.start();
         motionBlur.intensity.value = 1f;
     }
@@ -393,7 +409,14 @@ public class SwitchingManagement : MonoBehaviourReferenced {
             flashHum.setParameterByName("HumStrength", 0f);
         }
 
-        activeCar.morseSingalRenderer.materials[0].SetInt("_FlashOn", b ? 1 : 0);
+        for (int i = 0; i < activeCar.morseSingalRenderers.Length; i++) {
+            if (i == signalIndex) {
+                Debug.Log($"flashSignal Index = {signalIndex}");
+                activeCar.morseSingalRenderers[i].materials[0].SetInt("_FlashOn", b && hasMarkedCar ? 1 : 0);
+            } else if (i > signalIndex) {
+                activeCar.morseSingalRenderers[i].materials[0].SetFloat("_AlphaFactor", b && hasMarkedCar ? 0.06f : 1);
+            }
+        }
     }
 
     IEnumerator MeasureFlashDuration() {
@@ -421,12 +444,31 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         flashRecordDurations[flashRecordDurations.Length - 1] = currentFlashDuration;
 
         if (markedCar != null) {
-            EvaluateFlashRecord();
+            //EvaluateFlashRecordRelative();
+            EvaluateFlashRecordFixed();
             DisplayMarkedCarSignalPattern();
+            MorseUIProgress();
         }
     }
 
-    private void EvaluateFlashRecord() {
+    private void EvaluateFlashRecordFixed() {
+        float duration = flashRecordDurations[flashRecordDurations.Length - 1];
+        float targetDuration = signalPattern[signalIndex] == FlashType.Long ? beatDetector.FourthInterval : beatDetector.EighthInterval;
+
+        if (duration > targetDuration - targetDuration * tolerance && duration < targetDuration + targetDuration * tolerance) {
+            if (signalIndex == 2) {
+                signalIndex = 0;
+                identicalFlashes = true;
+            } else {
+                signalIndex++;
+            }
+            signalSuccess.start();
+        } else {
+            signalFailure.start();
+        }
+    }
+
+    private void EvaluateFlashRecordRelative() {
         if (flashRecordDurations[0] == -1) return;
 
         bool correct = true;
@@ -476,30 +518,71 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     }
 
     private void DisplayMarkedCarSignalPattern() {
-        string digits = "";
-        for (int i = 0; i < 3; i++) {
-            string digit = signalPattern[i] == FlashType.Short ? "0" : "1";
-            digits += digit;
-        }
-        int index = Convert.ToInt32(digits, 2);
+        // HERE LIETH THE BEST PIECE OF CODE I HAVE WRITTEN. RIP.
 
-        activeCar.morseSingalRenderer.materials[0].SetTexture("BaseTexture", morseSignalTex[index]);
+        //string digits = "";
+        //for (int i = 0; i < 3; i++) {
+        //    string digit = signalPattern[i] == FlashType.Short ? "0" : "1";
+        //    digits += digit;
+        //}
+        //int index = Convert.ToInt32(digits, 2);
+
+        //activeCar.morseSingalRenderer.materials[0].SetTexture("BaseTexture", morseSignalTex[index]);
+
+        float units = 0;
+        float offset = signalPattern[0] == FlashType.Long ? 5 : 1.5f;
+        offset *= 0.15f;
+        for (int i = 0; i < 3; i++) {
+            units += signalPattern[i] == FlashType.Long ? 5 : 1.5f;
+            activeCar.morseSingalRenderers[i].materials[0].SetTexture("BaseTexture", signalPattern[i] == FlashType.Long ? morseLongTex : morseShortTex);
+            activeCar.morseSingalRenderers[i].transform.localPosition = new Vector3(-1,0,0) * units * 0.15f + new Vector3(offset, 0, 0);
+            units += 5;
+            units += signalPattern[i] == FlashType.Long ? 5 : 1.5f;
+        }
+        float centerOffset = units * 0.15f * 0.5f;
+        for (int i = 0; i < 3; i++) {
+            activeCar.morseSingalRenderers[i].transform.localPosition += new Vector3(centerOffset, 0, 0);
+        }
     }
 
     private void ResetFlashRecordDurations() {
         for (int i = 0; i < flashRecordDurations.Length; i++) {
             flashRecordDurations[i] = -1f;
         }
+        signalIndex = 0;
+        MorseUIProgress();
     }
 
-    private void MorseUIFeedback() {
+    private void MorseUIScaling() {
         Vector3 scale;
-        if (measureFlash) {
-            scale = origScaleMorseDisplay * 1.5f;
+        Vector3 scale2;
+        if (measureFlash && hasMarkedCar) {
+            scale = origScaleMorseDisplay * 2f;
+            scale2 = origScaleMorseDisplay * 0.7f;
         } else {
             scale = origScaleMorseDisplay;
+            scale2 = origScaleMorseDisplay;
         }
-        activeCar.morseSignalDisplay.transform.localScale = Vector3.Lerp(activeCar.morseSignalDisplay.transform.localScale, scale, 20 * Time.deltaTime);
+
+        for (int i = 0; i < 3; i++) {
+            if (i == signalIndex) {
+                activeCar.morseSingalRenderers[i].transform.localScale = Vector3.Lerp(activeCar.morseSingalRenderers[i].transform.localScale, scale, 20 * Time.deltaTime);
+            } else {
+                activeCar.morseSingalRenderers[i].transform.localScale = Vector3.Lerp(activeCar.morseSingalRenderers[i].transform.localScale, scale2, 20 * Time.deltaTime);
+            }
+        }
+    }
+
+    private void MorseUIProgress() {
+        for (int i = 0; i < 3; i++) {
+            if (i < signalIndex) {
+                activeCar.morseSingalRenderers[i].materials[0].SetFloat("_AlphaFactor", 0);
+            }
+            else {
+                activeCar.morseSingalRenderers[i].materials[0].SetFloat("_AlphaFactor", 1);
+            }
+            activeCar.morseSingalRenderers[i].materials[0].SetInt("_FlashOn", 0);
+        }
     }
 
     private void HandleFullBeatDetected() {
@@ -511,11 +594,11 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     }
 
     private void HandleBarDetected() {
-        Debug.Log("BAR!");
+        //Debug.Log("BAR!");
     }
 
     public void TimelineBarDetected() {
-        Debug.Log("TIMELINE BAR!");
+        //Debug.Log("TIMELINE BAR!");
     }
 
     public void SetActiveCar(SwitchingBehaviour sb) {

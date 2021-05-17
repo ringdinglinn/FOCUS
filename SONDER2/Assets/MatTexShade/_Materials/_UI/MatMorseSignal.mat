@@ -29,7 +29,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - BaseTexture:
-        m_Texture: {fileID: 2800000, guid: 4630f97aafbdd4d8f915cabe3946b008, type: 3}
+        m_Texture: {fileID: 2800000, guid: 6a34f7d373d974d4d948eb95d2242545, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseColorMap:
@@ -120,6 +120,7 @@ Material:
     - Boolean_74813C04: 0
     - Clarity: 2
     - Vector1_231EF832: 300
+    - Vector1_58FA3302: 1
     - _AORemapMax: 1
     - _AORemapMin: 0
     - _ATDistance: 1
@@ -131,6 +132,7 @@ Material:
     - _AlphaCutoffPrepass: 0.5
     - _AlphaCutoffShadow: 0.5
     - _AlphaDstBlend: 10
+    - _AlphaFactor: 1
     - _AlphaSrcBlend: 1
     - _Anisotropy: 0
     - _BlendMode: 0

@@ -20,6 +20,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &-8818790743433041097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/flash-hum/HumStrength
+  m_EditorClassIdentifier: 
+  Name: HumStrength
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-8775978984742326458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -610,6 +630,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &-7317130356824867943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/static/SignalStrength
+  m_EditorClassIdentifier: 
+  Name: SignalStrength
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 0
 --- !u!114 &-7247711118770250380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -696,6 +736,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 954
+--- !u!114 &-7034936543790644395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/track-1/SignalStrength
+  m_EditorClassIdentifier: 
+  Name: SignalStrength
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 0
 --- !u!114 &-6977106461009709737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -824,6 +884,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 4865
+--- !u!114 &-6765340576370185436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/static2D/SignalStrength
+  m_EditorClassIdentifier: 
+  Name: SignalStrength
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-6764047486371243927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -911,6 +991,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 4865
+--- !u!114 &-6572871729854083824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/flash-hum/HumStrength
+  m_EditorClassIdentifier: 
+  Name: HumStrength
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 0
 --- !u!114 &-6566613182813192570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -967,6 +1067,26 @@ MonoBehaviour:
   Min: 0
   Max: 2
   Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 0
+--- !u!114 &-6509715430233276903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/track-1/Volume
+  m_EditorClassIdentifier: 
+  Name: Volume
+  Min: 0
+  Max: 1
+  Default: 1
   ID:
     data1: 0
     data2: 0
@@ -1094,6 +1214,26 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
+--- !u!114 &-6063215270157935752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/track-1/Volume
+  m_EditorClassIdentifier: 
+  Name: Volume
+  Min: 0
+  Max: 1
+  Default: 1
   ID:
     data1: 0
     data2: 0
@@ -1348,7 +1488,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: -2135528012640315497}
+  - {fileID: 2698639133171834090}
   MinDistance: 0
   MaxDistance: 0
   Length: 31500
@@ -1832,6 +1972,29 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 1
+--- !u!114 &-4168289149167372116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/04 car switching/success
+  m_EditorClassIdentifier: 
+  Path: event:/04 car switching/success
+  guid: b0a97a7d6808d04782fa637a409514bb
+  Banks:
+  - {fileID: 6439672478953253675}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 700
 --- !u!114 &-4134589139087129784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1955,6 +2118,30 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &-3788890560542082548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/06 radio/static2D
+  m_EditorClassIdentifier: 
+  Path: event:/06 radio/static2D
+  guid: 403074f51f6dba43a666693a0177afd4
+  Banks:
+  - {fileID: 6439672478953253675}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 0
+  Parameters:
+  - {fileID: 3728511621247634756}
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 31500
 --- !u!114 &-3740446148235625188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2641,6 +2828,46 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &-1701306268612265795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/track-1/Volume
+  m_EditorClassIdentifier: 
+  Name: Volume
+  Min: 0
+  Max: 1
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 0
+--- !u!114 &-1675368333446182039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/static2D/SignalStrength
+  m_EditorClassIdentifier: 
+  Name: SignalStrength
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 0
 --- !u!114 &-1659560387250991972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2827,6 +3054,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &-991618388675161689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/track-1/SignalStrength
+  m_EditorClassIdentifier: 
+  Name: SignalStrength
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-988084243237182756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2934,6 +3181,52 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &-839470919064542148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/04 car switching/turn-off-flash
+  m_EditorClassIdentifier: 
+  Path: event:/04 car switching/turn-off-flash
+  guid: 5fd7e40e628e6147820c87664bcd0d5a
+  Banks:
+  - {fileID: 6439672478953253675}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 954
+--- !u!114 &-645942187424486381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/04 car switching/turn-on-flash
+  m_EditorClassIdentifier: 
+  Path: event:/04 car switching/turn-on-flash
+  guid: 5a662b7bf3c9c545a4a945dc0f3c1f81
+  Banks:
+  - {fileID: 6439672478953253675}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 954
 --- !u!114 &-627072915346583890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3341,7 +3634,7 @@ MonoBehaviour:
   - {fileID: 6439672478953253675}
   StringsBanks:
   - {fileID: 8796192020974241982}
-  stringsBankWriteTime: 637563449300000000
+  stringsBankWriteTime: 637568959490000000
   cacheVersion: 6
 --- !u!114 &12155377151458878
 MonoBehaviour:
@@ -3383,6 +3676,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 1
+--- !u!114 &124455584440008362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/track-1/SwitchNr
+  m_EditorClassIdentifier: 
+  Name: SwitchNr
+  Min: 0
+  Max: 100
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 0
 --- !u!114 &150649718354878402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3526,6 +3839,29 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 1
+--- !u!114 &403586052942103463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/04 car switching/failure
+  m_EditorClassIdentifier: 
+  Path: event:/04 car switching/failure
+  guid: 19d283203c16274691f5dfc539a95d09
+  Banks:
+  - {fileID: 6439672478953253675}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 1296
 --- !u!114 &479441427898219930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3893,6 +4229,30 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &1939757954202044574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/04 car switching/flash-hum
+  m_EditorClassIdentifier: 
+  Path: event:/04 car switching/flash-hum
+  guid: 58064f3614082b43a6f278c31d18a4b0
+  Banks:
+  - {fileID: 6439672478953253675}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters:
+  - {fileID: 2654526605563808186}
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 4865
 --- !u!114 &2086645513167527912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3980,6 +4340,29 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &2381692531838008309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/04 car switching/turn-off-flash
+  m_EditorClassIdentifier: 
+  Path: event:/04 car switching/turn-off-flash
+  guid: 5fd7e40e628e6147820c87664bcd0d5a
+  Banks:
+  - {fileID: 6439672478953253675}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 954
 --- !u!114 &2488947026015705430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4066,6 +4449,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &2654526605563808186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/flash-hum/HumStrength
+  m_EditorClassIdentifier: 
+  Name: HumStrength
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &2682862599638688495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4086,6 +4489,46 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &2698639133171834090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/static/SignalStrength
+  m_EditorClassIdentifier: 
+  Name: SignalStrength
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
+--- !u!114 &2702292627243879876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/track-1/SwitchNr
+  m_EditorClassIdentifier: 
+  Name: SwitchNr
+  Min: 0
+  Max: 100
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &2786311550068527882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4170,6 +4613,30 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 1
+--- !u!114 &2902871279211501310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/06 radio/static2D
+  m_EditorClassIdentifier: 
+  Path: event:/06 radio/static2D
+  guid: 403074f51f6dba43a666693a0177afd4
+  Banks:
+  - {fileID: 6439672478953253675}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 0
+  Parameters:
+  - {fileID: -6765340576370185436}
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 31500
 --- !u!114 &2934867208717928483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4427,6 +4894,49 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 1020
+--- !u!114 &3679084245482087591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/04 car switching/failure
+  m_EditorClassIdentifier: 
+  Path: event:/04 car switching/failure
+  guid: 19d283203c16274691f5dfc539a95d09
+  Banks:
+  - {fileID: 6439672478953253675}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 1296
+--- !u!114 &3728511621247634756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/static2D/SignalStrength
+  m_EditorClassIdentifier: 
+  Name: SignalStrength
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &3750453374004726726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4840,6 +5350,29 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 1
+--- !u!114 &5490038143615192456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/04 car switching/success
+  m_EditorClassIdentifier: 
+  Path: event:/04 car switching/success
+  guid: b0a97a7d6808d04782fa637a409514bb
+  Banks:
+  - {fileID: 6439672478953253675}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 700
 --- !u!114 &5502520797595215442
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5003,6 +5536,29 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &6081246798771632102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/04 car switching/turn-on-flash
+  m_EditorClassIdentifier: 
+  Path: event:/04 car switching/turn-on-flash
+  guid: 5a662b7bf3c9c545a4a945dc0f3c1f81
+  Banks:
+  - {fileID: 6439672478953253675}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 954
 --- !u!114 &6139043009522765924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5067,6 +5623,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 4865
+--- !u!114 &6191905618772865903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/track-1/SignalStrength
+  m_EditorClassIdentifier: 
+  Name: SignalStrength
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 0
 --- !u!114 &6245825710802964797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5187,6 +5763,30 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &6369351547993554960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/04 car switching/flash-hum
+  m_EditorClassIdentifier: 
+  Path: event:/04 car switching/flash-hum
+  guid: 58064f3614082b43a6f278c31d18a4b0
+  Banks:
+  - {fileID: 6439672478953253675}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters:
+  - {fileID: -8818790743433041097}
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 4865
 --- !u!114 &6377645898257993099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5222,7 +5822,7 @@ MonoBehaviour:
   Path: ../../04 Sound/FMOD/FOCUS/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637563449300000000
+  lastModified: 637568959490000000
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -5431,6 +6031,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 1
+--- !u!114 &7003641283703211602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/static/SignalStrength
+  m_EditorClassIdentifier: 
+  Name: SignalStrength
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 0
 --- !u!114 &7084718041877588066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5859,9 +6479,9 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 63968056020589149}
-  - {fileID: 1277112506351874800}
-  - {fileID: 5341008842076865377}
+  - {fileID: -991618388675161689}
+  - {fileID: -6063215270157935752}
+  - {fileID: 2702292627243879876}
   MinDistance: 0
   MaxDistance: 0
   Length: 155826
@@ -5900,6 +6520,26 @@ MonoBehaviour:
   Name: SignalStrength
   Min: 0
   Max: 2
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 0
+--- !u!114 &8212247006210276209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/track-1/SwitchNr
+  m_EditorClassIdentifier: 
+  Name: SwitchNr
+  Min: 0
+  Max: 100
   Default: 0
   ID:
     data1: 0
@@ -6146,11 +6786,11 @@ MonoBehaviour:
   Path: ../../04 Sound/FMOD/FOCUS/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637563449300000000
+  lastModified: 637568959490000000
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 1536
+    Value: 1634
   Exists: 1
 --- !u!114 &8855780726734534716
 MonoBehaviour:

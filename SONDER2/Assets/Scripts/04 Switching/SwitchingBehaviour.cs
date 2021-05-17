@@ -20,7 +20,7 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
 
     public MeshRenderer meshRenderer;
     public GameObject morseSignalDisplay;
-    public MeshRenderer morseSingalRenderer;
+    public MeshRenderer[] morseSingalRenderers;
 
     public BoxCollider boxCollider;
 
@@ -285,13 +285,8 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         float angle;
         Vector3 camPos = referenceManagement.cam.transform.position;
         Vector3 camDir = camPos - (transform.position + transform.forward * offset);
-        //if (headlightTester) Debug.Log($"position = {transform.position}");
-        //if (headlightTester) Debug.Log($"offset position = {transform.position + transform.forward * offset}");
-        //if (headlightTester) Debug.Log($"dir = {(camPos - transform.position).normalized}");
-        //if (headlightTester) Debug.Log($"dir offset = {camDir.normalized}");
         camDir.Normalize();
         angle = Vector3.Dot(transform.forward, camDir);
-        //angle = Mathf.Pow(angle, 4);
         angle *= 0.2f;
         return angle;
     }

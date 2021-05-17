@@ -102,6 +102,10 @@ public class ReferenceManagement : MonoBehaviour
     public string flashOff;
     [FMODUnity.EventRef]
     public string flashHum;
+    [FMODUnity.EventRef]
+    public string signalSuccess;
+    [FMODUnity.EventRef]
+    public string signalFailure;
 
     [Header("Switching")]
     [Range(0.0f, 1.0f)]
@@ -113,6 +117,8 @@ public class ReferenceManagement : MonoBehaviour
     [Header("Sprites")]
     public List<Texture> morseSingalTex;
     public Material morseSingalMat;
+    public Texture2D morseSignalLong;
+    public Texture2D morseSignalShort;
 
     [Header("Journey")]
     public GameObject alternatePath0;
