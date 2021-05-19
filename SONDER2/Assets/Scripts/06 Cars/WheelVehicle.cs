@@ -264,11 +264,16 @@ namespace VehicleBehaviour {
             }
 
             // Direction
-            float currentSteerAngle = Mathf.Lerp(steering, autoAngle, 0.1f);
-            prevSteering = currentSteerAngle;
+            float correctionAngle = steering != 0 ? steering : autoAngle;
+            if (isPlayer) Debug.Log($"correction angle = {correctionAngle}");
+            if (isPlayer) Debug.Log($"autoAngle = {autoAngle}");
+            autoAngle = Mathf.Lerp(correctionAngle, autoAngle, 0.2f);
+            if (isPlayer) Debug.Log($"autoAngle = {autoAngle}");
+            if (isPlayer) Debug.Log("----------------");
+            //prevSteering = currentSteerAngle;
             foreach (WheelCollider wheel in turnWheel)
             {
-                wheel.steerAngle = currentSteerAngle;
+                wheel.steerAngle = autoAngle;
             }
 
             foreach (WheelCollider wheel in wheels)

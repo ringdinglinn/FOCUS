@@ -53,7 +53,9 @@ public class ReferenceManagement : MonoBehaviour
     }
 
     [Header("Levels")]
-    public List<GameObject> levels;
+    public GameObject[] levels;
+    public Cubemap[] skyCubeMaps;
+    public SkyData[] skyData;
 
     [Header("Prefabs")]
     public GameObject streetlight;
@@ -134,4 +136,5 @@ public class ReferenceManagement : MonoBehaviour
 
     [Header("Rendering")]
     public Volume postProcess;
+    public Volume skyAndFog;
 }

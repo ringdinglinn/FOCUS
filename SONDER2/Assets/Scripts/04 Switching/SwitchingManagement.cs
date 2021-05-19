@@ -186,9 +186,6 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     }
 
     private void Update() {
-
-        Debug.Log($"signalIndex = {signalIndex}");
-
         Flash = referenceManagement.inputManagement.GetInputButton(Inputs.flash);
 
         if (carsCreated) {

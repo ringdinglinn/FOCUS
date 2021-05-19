@@ -393,6 +393,7 @@ namespace PathCreation {
         }
 
         private void UpdateStartTunnelPoints(Vector3 startPos) {
+            Debug.Log("update start tunnel points");
             Vector3 xDir = points[9] - points[10];
             xDir.Normalize();
             xDir *= -1f;
@@ -400,13 +401,13 @@ namespace PathCreation {
             if (zDir.sqrMagnitude != 1) zDir.Normalize();
             if (!flipped) zDir *= -1f;
 
-            int normalsCount = 0;
             for (int i = 0; i < BezierInfo.tunnelCoordinates.Length; i++) {
                 points[BezierInfo.tunnelCoordinates.Length - 1 - i] = startPos + xDir * BezierInfo.tunnelCoordinates[i].x * 0.4f + zDir * BezierInfo.tunnelCoordinates[i].z * 0.4f;
             }
 
             startTunnel.transform.localRotation = Quaternion.LookRotation(xDir);
-            startTunnel.transform.localPosition = new Vector3(points[9].x, points[9].y + tunnelYOffset, points[9].z);
+            Debug.Log($"tunnel y offset = {tunnelYOffset}");
+            startTunnel.transform.localPosition = new Vector3(points[9].x, points[9].y - tunnelYOffset, points[9].z);
             if (!flipped) {
                 startTunnel.transform.RotateAround(startTunnel.transform.position, Vector3.up, 90);
                 startTunnel.transform.position += xDir * -200 * 0.4f;
@@ -584,9 +585,9 @@ namespace PathCreation {
                 }
             }
 
-            if ((i == 9 || i == 10) && hasTunnelPointsStart)
+            if (hasTunnelPointsStart)
                 UpdateStartTunnelPoints(i == 9 ? pointPos : points[9]);
-            if ((i == points.Count - 1 - 9 || i == points.Count - 1 - 10) && hasTunnelPointsEnd)
+            if (hasTunnelPointsEnd)
                 UpdateEndTunnelPoints(i == points.Count - 1 - 9 ? pointPos : points[points.Count - 1 - 9]);
             if (!suppressPathModifiedEvent) {
                 NotifyPathModified();

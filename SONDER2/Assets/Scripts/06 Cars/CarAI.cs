@@ -43,6 +43,9 @@ public class CarAI : MonoBehaviourReferenced {
     private float steerTowardsDist = 2;
     private float throttle = 0;
 
+    float rndSway = 0;
+    float angle;
+
     public int pathID;
 
     public int id;
@@ -104,6 +107,7 @@ public class CarAI : MonoBehaviourReferenced {
         if (isClone) {
             SetCloneTransform();
         }
+        StartCoroutine(RandomSway());
     }
 
     private void Update() {
@@ -131,13 +135,28 @@ public class CarAI : MonoBehaviourReferenced {
 
         distOnPath += (transform.position - prevPos).magnitude;
         prevPos = transform.position;
-        float angle = Vector3.SignedAngle(transform.forward, myPath.path.GetPointAtDistance(distOnPath + steerTowardsDist, EndOfPathInstruction.Loop) - transform.position, Vector3.up);
 
         if (autopilotEnabled) {
+            angle = Vector3.SignedAngle(transform.forward, myPath.path.GetPointAtDistance(distOnPath + steerTowardsDist, EndOfPathInstruction.Loop) - transform.position, Vector3.up);
             wheelVehicle.InstantSetWheelAngle(angle);
         } else {
+            Vector3 offset = transform.right;
+            Debug.Log($"rndSway = {rndSway}");
+            offset *= rndSway;
+            angle = Vector3.SignedAngle(transform.forward, myPath.path.GetPointAtDistance(distOnPath + steerTowardsDist, EndOfPathInstruction.Loop) + offset - transform.position, Vector3.up);
+            Debug.Log($"angle = {angle}");
             wheelVehicle.SetAutoAngle(angle);
         }
+    }
+
+    IEnumerator RandomSway() {
+        float rnd = Random.Range(4f, 6f);
+        yield return new WaitForSeconds(rnd);
+        rndSway = Random.Range(-1f, 1f);
+        rndSway += Mathf.Sign(rndSway) * 0.2f;
+        yield return new WaitForSeconds(Random.Range(5f, 6f));
+        rndSway = 0;
+        StartCoroutine(RandomSway());
     }
 
     public void SwitchOnAutopilot() {
@@ -201,13 +220,6 @@ public class CarAI : MonoBehaviourReferenced {
     public void ActiveCarHasReachedPortal() {
         Debug.Log($"car ai, active car has reached portal");
         //StartCoroutine(WaitToChangeToClone());
-        ChangeToClone();
-    }
-
-    private IEnumerator WaitToChangeToClone() {
-        Debug.Log($"wait to change to clone");
-        yield return new WaitForSeconds(Time.deltaTime * 2);
-        Debug.Log($"wait to change to clone 2");
         ChangeToClone();
     }
 

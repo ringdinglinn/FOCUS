@@ -1,12 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.HighDefinition;
+using UnityEngine.Rendering;
 
 public class LevelManagement : MonoBehaviourReferenced {
 
     PathManagement pathManagement;
     List<PathBehaviour> allPathBehaviours;
-    List<GameObject> levels;
+    GameObject[] levels;
+    HDRISky sky;
+    Volume skyAndFog;
+    Cubemap[] cubeMaps;
+    SkyData[] skyData;
+    
     CarManagement carManagement;
 
     bool inEndTunnel = false;
@@ -18,6 +25,10 @@ public class LevelManagement : MonoBehaviourReferenced {
         allPathBehaviours = pathManagement.GetAllPaths();
         carManagement = referenceManagement.carManagement;
         levels = referenceManagement.levels;
+        skyAndFog = referenceManagement.skyAndFog;
+        skyAndFog.profile.TryGet(out sky);
+        cubeMaps = referenceManagement.skyCubeMaps;
+        skyData = referenceManagement.skyData;
         ChangeLevel(true);
     }
 
@@ -54,10 +65,19 @@ public class LevelManagement : MonoBehaviourReferenced {
             //carManagement.ClearCarAIs();
         }
 
-        for (int i = 0; i < levels.Count; i++) {
+        for (int i = 0; i < levels.Length; i++) {
             if (i != levelNr)
             levels[i].SetActive(false);
         }
         levels[levelNr].SetActive(true);
+
+        sky.hdriSky.Override(skyData[levelNr].cubemap);
+        //sky.exposure.Override(skyData[levelNr].exposure);
     }
+}
+
+[System.Serializable]
+public class SkyData {
+    public Cubemap cubemap;
+    public float exposure;
 }
