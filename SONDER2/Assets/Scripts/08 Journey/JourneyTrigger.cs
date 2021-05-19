@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class JourneyTrigger : MonoBehaviourReferenced {
     JourneyManagement journeyManagement;
-	public enum TriggerType { IntroLoop, Gate0, SlowDownGate, EndGate };
+	public enum TriggerType { IntroLoop, Gate0, SlowDownGate, EndGate, JamStartDrivingGate, SlowDownActiveCar, StopActiveCar};
     public TriggerType type;
 
     private void Start() {
@@ -13,12 +13,33 @@ public class JourneyTrigger : MonoBehaviourReferenced {
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (other.gameObject.CompareTag("Car")) {
-            if (type == TriggerType.SlowDownGate) {
+        if (type == TriggerType.SlowDownGate) {
+            if (other.gameObject.CompareTag("Car")) {
                 CarAI carAI = other.GetComponentInParent<CarAI>();
-                carAI.SlowDown();
-            } else if (type == TriggerType.EndGate) {
+                carAI.SlowDown(1f);
+            }
+        }
+        if (type == TriggerType.EndGate) {
+            if (other.gameObject.CompareTag("Car")) {
                 StartCoroutine(EndScene());
+
+            }
+        }
+        if (type == TriggerType.JamStartDrivingGate) {
+            if (other.gameObject.CompareTag("Camera")) {
+                journeyManagement.SpeedUpAfterJam();
+            }
+        }
+        if (type == TriggerType.SlowDownActiveCar) {
+            if (other.gameObject.CompareTag("Car")) {
+                CarAI carAI = other.GetComponentInParent<CarAI>();
+                carAI.SlowDown(0f);
+            }
+        }
+        if (type == TriggerType.StopActiveCar) {
+            if (other.gameObject.CompareTag("Car")) {
+                CarAI carAI = other.GetComponentInParent<CarAI>();
+                carAI.StopCar();
             }
         }
     }

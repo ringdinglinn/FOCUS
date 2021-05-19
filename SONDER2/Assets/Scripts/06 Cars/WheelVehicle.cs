@@ -233,6 +233,14 @@ namespace VehicleBehaviour {
                 boost += Time.deltaTime * boostRegen;
                 if (boost > maxBoost) { boost = maxBoost; }
             }
+
+            steering = turnInputCurve.Evaluate(GetInput(turnInput)) * steerAngle;
+            if (steeringAssistant.GetDirectionAngle() >= 5 && steering < 0) {
+                steering = 0;
+            }
+            else if (steeringAssistant.GetDirectionAngle() <= -5 && steering > 0) {
+                steering = 0;
+            }
         }
         
         // Update everything
@@ -250,12 +258,7 @@ namespace VehicleBehaviour {
                 // Boost
                 boosting = (GetInput(boostInput) > 0.5f);
                 // Turn
-                steering = turnInputCurve.Evaluate(GetInput(turnInput)) * steerAngle;
-                if (steeringAssistant.GetDirectionAngle() >= 5 && steering < 0) {
-                    steering = 0;
-                } else if (steeringAssistant.GetDirectionAngle() <= -5 && steering > 0) {
-                    steering = 0;
-                }
+
 
                 // Dirft
                 drift = GetInput(driftInput) > 0 && _rb.velocity.sqrMagnitude > 100;
@@ -264,16 +267,27 @@ namespace VehicleBehaviour {
             }
 
             // Direction
-            float correctionAngle = steering != 0 ? steering : autoAngle;
-            if (isPlayer) Debug.Log($"correction angle = {correctionAngle}");
-            if (isPlayer) Debug.Log($"autoAngle = {autoAngle}");
-            autoAngle = Mathf.Lerp(correctionAngle, autoAngle, 0.2f);
-            if (isPlayer) Debug.Log($"autoAngle = {autoAngle}");
-            if (isPlayer) Debug.Log("----------------");
-            //prevSteering = currentSteerAngle;
+            //float correctionAngle = steering != 0 ? steering : autoAngle;
+            //if (isPlayer) Debug.Log($"correction angle = {correctionAngle}");
+            //if (isPlayer) Debug.Log($"autoAngle = {autoAngle}");
+            //autoAngle = Mathf.Lerp(correctionAngle, autoAngle, 0.2f);
+            //if (isPlayer) Debug.Log($"autoAngle = {autoAngle}");
+            //if (isPlayer) Debug.Log("----------------");
+
+            //steering = steering != 0 ? steering : autoAngle;
+            //float currentSteerAngle = Mathf.Lerp(steering, autoAngle, 0.1f);
+            float currentSteerAngle = autoAngle;
+
+            //float currentSteerAngle = autoAngle + steering;
+            //currentSteerAngle = Mathf.Lerp(prevSteering, currentSteerAngle, 0.1f);
+
+            //float currentSteerAngle = Mathf.Lerp(autoAngle, steering + autoAngle, Mathf.Abs(steering));
+            //currentSteerAngle = Mathf.Lerp(prevSteering, currentSteerAngle, 0.1f);
+            prevSteering = currentSteerAngle;
+
             foreach (WheelCollider wheel in turnWheel)
             {
-                wheel.steerAngle = autoAngle;
+                wheel.steerAngle = currentSteerAngle;
             }
 
             foreach (WheelCollider wheel in wheels)

@@ -104,7 +104,7 @@ public class CarManagement : MonoBehaviourReferenced {
         CarVisuals carVisuals = initialCar.GetComponent<CarVisuals>();
         carAI.cam = referenceManagement.cam;
         carAI.SetUpInititalCar();
-        carVisuals.SetCarVisuals(/*Random.Range(0, carVisuals.allCarConfigs.Count)*/ 4, Random.Range(0, 2));
+        carVisuals.SetCarVisuals(/*Random.Range(0, carVisuals.allCarConfigs.Count)*/ 5, Random.Range(0, 2));
         carVisuals.UpdateVisuals(true);
         referenceManagement.switchingManagement.SetUpInitialCar(initialCar);
     }

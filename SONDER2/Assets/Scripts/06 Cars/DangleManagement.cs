@@ -80,8 +80,8 @@ public class DangleManagement : MonoBehaviourReferenced {
     }
 
     private void Update() {
-		if (hasDangle)
-		Animate(speed);
+        if (hasDangle)
+            Animate(speed);
     }
 
 	private void HandleCarSwitched() {

@@ -15,6 +15,7 @@ public class CarAI : MonoBehaviourReferenced {
     private Rigidbody rb;
     private CarVisuals carVisuals;
     private LevelManagement levelManagement;
+    private InputManagement inputManagement;
 
     public bool autopilotEnabled = true;
 
@@ -45,6 +46,11 @@ public class CarAI : MonoBehaviourReferenced {
 
     float rndSway = 0;
     float angle;
+    bool swaying = false;
+    Vector3 steerOffset;
+    Vector3 prevSteerOffset;
+    Vector3 rndOffset;
+    Vector3 prevRndOffset;
 
     public int pathID;
 
@@ -84,6 +90,10 @@ public class CarAI : MonoBehaviourReferenced {
 
     private int dangleNr;
 
+    bool stopped;
+    bool slowingDown;
+    Vector3 steadyPos;
+
     private void OnEnable() {
         wheelVehicle = GetComponent<WheelVehicle>();
         switchingBehaviour = GetComponent<SwitchingBehaviour>();
@@ -94,6 +104,7 @@ public class CarAI : MonoBehaviourReferenced {
         if (carVisuals != null) carVisuals = GetComponent<CarVisuals>();
         carManagement.AddCarAI(this);
         levelManagement = referenceManagement.levelManagement;
+        inputManagement = referenceManagement.inputManagement;
     }
 
     private void OnDisable() {
@@ -107,14 +118,13 @@ public class CarAI : MonoBehaviourReferenced {
         if (isClone) {
             SetCloneTransform();
         }
-        StartCoroutine(RandomSway());
     }
 
     private void Update() {
         if (!autopilotEnabled) {
             AutoPilot();
         }
-        speedLimit = Mathf.Lerp(speedLimit, targetSpeedLimit, 0.15f * Time.deltaTime);
+        speedLimit = Mathf.Lerp(speedLimit, targetSpeedLimit, 0.2f * Time.deltaTime);
     }
 
     private void FixedUpdate() {
@@ -131,6 +141,16 @@ public class CarAI : MonoBehaviourReferenced {
 
     private void AutoPilot() {
         throttle = Mathf.Pow(speedLimit, 2) - rb.velocity.sqrMagnitude;
+
+        if (stopped) {
+            float a = Vector3.Angle(transform.forward, steadyPos - transform.position);
+            if (a < 90) {
+                throttle = 0.01f;
+            } else {
+                throttle = -0.01f;
+            }
+        }
+
         wheelVehicle.Throttle = throttle;
 
         distOnPath += (transform.position - prevPos).magnitude;
@@ -140,23 +160,33 @@ public class CarAI : MonoBehaviourReferenced {
             angle = Vector3.SignedAngle(transform.forward, myPath.path.GetPointAtDistance(distOnPath + steerTowardsDist, EndOfPathInstruction.Loop) - transform.position, Vector3.up);
             wheelVehicle.InstantSetWheelAngle(angle);
         } else {
-            Vector3 offset = transform.right;
-            Debug.Log($"rndSway = {rndSway}");
-            offset *= rndSway;
-            angle = Vector3.SignedAngle(transform.forward, myPath.path.GetPointAtDistance(distOnPath + steerTowardsDist, EndOfPathInstruction.Loop) + offset - transform.position, Vector3.up);
-            Debug.Log($"angle = {angle}");
+            rndOffset = transform.right;
+            steerOffset = transform.right;
+            Vector3 steerTowardsPoint = myPath.path.GetPointAtDistance(distOnPath + steerTowardsDist, EndOfPathInstruction.Loop);
+            Vector3 middlePoint = myPath.path.GetClosestPointOnPath(transform.position);
+            float distToMiddle = (middlePoint - transform.position).sqrMagnitude;
+            if (swaying && distToMiddle < 0.5f && ((inputManagement.GetInput(Inputs.turn) < 0 && rndSway > 0) || (inputManagement.GetInput(Inputs.turn) > 0) && rndSway < 0)) {
+                rndSway = 0;
+                swaying = false;
+                StartCoroutine(RandomSway());
+            }
+            rndOffset *= slowingDown ? 0 : rndSway;
+            rndOffset = Vector3.Lerp(prevRndOffset, rndOffset, 0.02f);
+            prevRndOffset = rndOffset;
+            steerOffset *= inputManagement.GetInput(Inputs.turn) * 1.5f;
+            steerOffset = Vector3.Lerp(prevSteerOffset, steerOffset, 0.05f);
+            prevSteerOffset = steerOffset;
+            angle = Vector3.SignedAngle(transform.forward, steerTowardsPoint + rndOffset + steerOffset - transform.position, Vector3.up);
             wheelVehicle.SetAutoAngle(angle);
         }
     }
 
     IEnumerator RandomSway() {
-        float rnd = Random.Range(4f, 6f);
+        swaying = true;
+        float rnd = Random.Range(6f, 8f);
         yield return new WaitForSeconds(rnd);
         rndSway = Random.Range(-1f, 1f);
-        rndSway += Mathf.Sign(rndSway) * 0.2f;
-        yield return new WaitForSeconds(Random.Range(5f, 6f));
-        rndSway = 0;
-        StartCoroutine(RandomSway());
+        rndSway = Mathf.Sign(rndSway) * 1.5f;
     }
 
     public void SwitchOnAutopilot() {
@@ -165,6 +195,7 @@ public class CarAI : MonoBehaviourReferenced {
 
     public void SwitchOffAutopilot() {
         autopilotEnabled = false;
+        StartCoroutine(RandomSway());
     }
 
     #endregion
@@ -299,7 +330,6 @@ public class CarAI : MonoBehaviourReferenced {
     }
 
     private void ChangeToClone() {
-        Debug.Log("car ai change to clone");
         carManagement.ChangeToClone(!autopilotEnabled, this, clone);
     }
 
@@ -310,7 +340,6 @@ public class CarAI : MonoBehaviourReferenced {
     }
 
     public void StartClone(bool isActiveCar, Transform transform, Rigidbody rb, CarAI carAI, Vector3 startPos, Vector3 startDir, int pathID, int myCar, int v, int dangleNr) {
-        Debug.Log("start clone");
         autopilotEnabled = !isActiveCar;
         dontLoop = true;
         wheelVehicle.IsPlayer = isActiveCar;
@@ -325,7 +354,6 @@ public class CarAI : MonoBehaviourReferenced {
         carVisuals.SetCarVisuals(myCar, v);
         carVisuals.UpdateVisuals(isActiveCar);
         if (isActiveCar) {
-            Debug.Log("is active car, set active car values");
             switchingBehaviour.SetActiveCarValues();
         } else {
             switchingBehaviour.SetInactiveCarValues();
@@ -389,8 +417,19 @@ public class CarAI : MonoBehaviourReferenced {
     #endregion
 
 
-    public void SlowDown() {
-        Debug.Log("Slow down");
-        targetSpeedLimit = 1;
+    public void SlowDown(float targetSpeed) {
+        slowingDown = true;
+        targetSpeedLimit = targetSpeed;
+    }
+
+    public void StopCar() {
+        stopped = true;
+        targetSpeedLimit = 0.0001f;
+        steadyPos = myPath.path.GetClosestPointOnPath(transform.position);
+    }
+
+    public void StartCar() {
+        stopped = false;
+        targetSpeedLimit = pathBehaviour.GetSpeedLimit();
     }
 }

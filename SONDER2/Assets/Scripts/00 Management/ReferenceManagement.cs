@@ -56,6 +56,8 @@ public class ReferenceManagement : MonoBehaviour
     public GameObject[] levels;
     public Cubemap[] skyCubeMaps;
     public SkyData[] skyData;
+    public int startJamID;
+    public int endJamID;
 
     [Header("Prefabs")]
     public GameObject streetlight;

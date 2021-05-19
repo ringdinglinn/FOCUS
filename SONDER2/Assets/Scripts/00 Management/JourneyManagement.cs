@@ -5,6 +5,7 @@ using UnityEngine;
 public class JourneyManagement : MonoBehaviourReferenced {
     PathManagement pathManagement;
 	SwitchingManagement switchingManagement;
+    CarManagement carManagement;
     int nrOfSwitches;
 
     int currentLevelPathID = -1;
@@ -16,6 +17,7 @@ public class JourneyManagement : MonoBehaviourReferenced {
         switchingManagement = referenceManagement.switchingManagement;
         switchingManagement.CarChangedEvent.AddListener(HandleSwitched);
         pathManagement = referenceManagement.pathManagement;
+        carManagement = referenceManagement.carManagement;
 
         alternatePath0 = referenceManagement.alternatePath0;
     }
@@ -61,6 +63,25 @@ public class JourneyManagement : MonoBehaviourReferenced {
     private void ToLevel1() {
         pathManagement.GetMyPath(0).TransitionToNextLevel();
         journeyState = JourneyState.Transition_Intro_1;
+    }
+
+
+    public void SpeedUpAfterJam() {
+        List<CarAI> carAIs = carManagement.GetAllCarAIs();
+        for (int i = 0; i < carAIs.Count; i++) {
+            if (carAIs[i].autopilotEnabled) {
+                carAIs[i].StartCar();
+            }
+        }
+    }
+
+    public void StopAllCars() {
+        List<CarAI> carAIs = carManagement.GetAllCarAIs();
+        for (int i = 0; i < carAIs.Count; i++) {
+            if (carAIs[i].autopilotEnabled) {
+                carAIs[i].StopCar();
+            }
+        }
     }
 
     public enum JourneyState { Intro, Transition_Intro_1, Level1, Transition_1_21, Level21, Transition_21_22, Level22, Transition_22_31, Level31, Transition_31_32, Level32, Transition_32_4, Level4, Outro }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.Rendering;
+using UnityEngine.Events;
 
 public class LevelManagement : MonoBehaviourReferenced {
 
@@ -13,6 +14,7 @@ public class LevelManagement : MonoBehaviourReferenced {
     Volume skyAndFog;
     Cubemap[] cubeMaps;
     SkyData[] skyData;
+    JourneyManagement journeyManagement;
     
     CarManagement carManagement;
 
@@ -29,6 +31,7 @@ public class LevelManagement : MonoBehaviourReferenced {
         skyAndFog.profile.TryGet(out sky);
         cubeMaps = referenceManagement.skyCubeMaps;
         skyData = referenceManagement.skyData;
+        journeyManagement = referenceManagement.journeyManagement;
         ChangeLevel(true);
     }
 
@@ -36,8 +39,6 @@ public class LevelManagement : MonoBehaviourReferenced {
         foreach(GameObject level in levels) {
             level.SetActive(true);
         }
-        //carManagement.ClearSBs();
-        //carManagement.ClearCarAIs();
 
         foreach (PathBehaviour pb in allPathBehaviours) {
             if (pb.id != startPathID && pb.id != endPathID) pb.gameObject.SetActive(false);
@@ -60,11 +61,6 @@ public class LevelManagement : MonoBehaviourReferenced {
     }
 
     private void ChangeLevel(bool start) {
-        if (!start) {
-            //carManagement.ClearSBs();
-            //carManagement.ClearCarAIs();
-        }
-
         for (int i = 0; i < levels.Length; i++) {
             if (i != levelNr)
             levels[i].SetActive(false);
@@ -72,7 +68,8 @@ public class LevelManagement : MonoBehaviourReferenced {
         levels[levelNr].SetActive(true);
 
         sky.hdriSky.Override(skyData[levelNr].cubemap);
-        //sky.exposure.Override(skyData[levelNr].exposure);
+
+        if (levelNr == 5) journeyManagement.StopAllCars();
     }
 }
 

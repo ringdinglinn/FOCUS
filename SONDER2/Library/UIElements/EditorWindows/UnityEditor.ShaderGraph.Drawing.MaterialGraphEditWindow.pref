@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Values:
   - '{}'
   - '{}'
-  - '{"position":{"x":540.0,"y":190.5,"z":0.0},"scale":{"x":0.25,"y":0.25,"z":1.0}}'
-  - '{"m_Version":5,"m_SelectedElementsArray":[]}'
+  - '{"position":{"x":654.0,"y":192.5,"z":0.0},"scale":{"x":0.25,"y":0.25,"z":1.0}}'
+  - '{"m_Version":6,"m_SelectedElementsArray":[]}'
   - '{}'
   - '{}'
   - '{}'
