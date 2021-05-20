@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class JourneyTrigger : MonoBehaviourReferenced {
     JourneyManagement journeyManagement;
-	public enum TriggerType { IntroLoop, Gate0, SlowDownGate, EndGate, JamStartDrivingGate, SlowDownActiveCar, StopActiveCar, FallTrigger};
+	public enum TriggerType { IntroLoop, Gate0, SlowDownGate, EndGate, JamStartDrivingGate, SlowDownActiveCar, StopActiveCar, FallTrigger, AddToOutroCars};
     public TriggerType type;
 
     bool speedUpTrigger;
@@ -43,8 +43,16 @@ public class JourneyTrigger : MonoBehaviourReferenced {
             if (other.gameObject.CompareTag("Car")) {
                 CarAI carAI = other.GetComponentInParent<CarAI>();
                 if (carAI.autopilotEnabled) {
-                    journeyManagement.StartCarsFalling(carAI);
+                    journeyManagement.AddFallenCar(carAI);
+                } else {
+                    journeyManagement.ActiveCarFell();
                 }
+            }
+        }
+        if (type == TriggerType.AddToOutroCars) {
+            if (other.gameObject.CompareTag("Car")) {
+                CarAI carAI = other.GetComponentInParent<CarAI>();
+                journeyManagement.AddToOutroCars(carAI);
             }
         }
     }
@@ -53,7 +61,6 @@ public class JourneyTrigger : MonoBehaviourReferenced {
         if (type == TriggerType.JamStartDrivingGate) {
             if (other.gameObject.CompareTag("Car")) {
                 CarAI carAI = other.GetComponentInParent<CarAI>();
-                Debug.Log($"carAI = {carAI}");
                 if (!carAI.autopilotEnabled && !speedUpTrigger) {
                     speedUpTrigger = true;
                     journeyManagement.SpeedUpAfterJam();

@@ -1,20 +1,19 @@
 ﻿<Properties StartupConfiguration="{281EEECF-89B9-6D0B-978A-5FDC6B8E6CBA}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/00 Management/JourneyManagement.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/04 Switching/SwitchingManagement.cs">
     <Files>
-      <File FileName="Assets/Scripts/06 Cars/CarAI.cs" Line="438" Column="29" />
-      <File FileName="Assets/Scripts/00 Management/LevelManagement.cs" Line="37" Column="1" />
       <File FileName="Assets/Scripts/00 Management/ReferenceManagement.cs" Line="145" Column="42" />
       <File FileName="Assets/Scripts/06 Cars/WheelVehicle.cs" Line="392" Column="36" />
       <File FileName="Assets/Scripts/00 Management/CarManagement.cs" Line="44" Column="1" />
       <File FileName="Assets/Scripts/06 Cars/DangleManagement.cs" Line="84" Column="28" />
-      <File FileName="Assets/Scripts/00 Management/JourneyManagement.cs" Line="97" Column="53" />
-      <File FileName="Assets/Scripts/08 Journey/JourneyTrigger.cs" Line="46" Column="63" />
-      <File FileName="Assets/Scripts/04 Switching/SwitchingManagement.cs" Line="150" Column="86" />
+      <File FileName="Assets/Scripts/04 Switching/SwitchingManagement.cs" Line="595" Column="14" />
+      <File FileName="Assets/Scripts/01 Camera/Camera1stPerson.cs" Line="119" Column="1" />
+      <File FileName="Assets/Scripts/04 Switching/SwitchingBehaviour.cs" Line="98" Column="47" />
+      <File FileName="Assets/Scripts/00 Management/JourneyManagement.cs" Line="142" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="2ef8e40d-337c-48f9-b220-e599c4a619ba" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="c7986629-872a-4c18-9b18-4f1c5eda25aa" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -94,6 +94,8 @@ public class CarAI : MonoBehaviourReferenced {
     bool slowingDown;
     Vector3 steadyPos;
 
+    public int fallTargetID = -1;
+
     public EndOfPathInstruction endOfPathInstruction = EndOfPathInstruction.Loop;
 
     private void OnEnable() {

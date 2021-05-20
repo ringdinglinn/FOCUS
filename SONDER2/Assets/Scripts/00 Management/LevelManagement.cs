@@ -32,7 +32,7 @@ public class LevelManagement : MonoBehaviourReferenced {
         cubeMaps = referenceManagement.skyCubeMaps;
         skyData = referenceManagement.skyData;
         journeyManagement = referenceManagement.journeyManagement;
-        ChangeLevel(true);
+        ChangeLevel();
     }
 
     public void EnteredEndTunnel(int startPathID, int endPathID) {
@@ -54,13 +54,13 @@ public class LevelManagement : MonoBehaviourReferenced {
             foreach (PathBehaviour pb in allPathBehaviours) {
                 pb.gameObject.SetActive(true);
             }
-            ChangeLevel(false);
+            ChangeLevel();
 
             inEndTunnel = false;
         }
     }
 
-    private void ChangeLevel(bool start) {
+    private void ChangeLevel() {
         for (int i = 0; i < levels.Length; i++) {
             if (i != levelNr)
             levels[i].SetActive(false);
@@ -68,13 +68,31 @@ public class LevelManagement : MonoBehaviourReferenced {
         levels[levelNr].SetActive(true);
 
         sky.hdriSky.Override(skyData[levelNr].cubemap);
+        sky.desiredLuxValue.Override(skyData[levelNr].lux);
 
-        if (levelNr == 5) journeyManagement.StopAllCars();
+        if (levelNr == 5) {
+            journeyManagement.StopAllCars();
+        }
+    }
+
+    public void EnterOutroLevel() {
+        Debug.Log("enter outro level");
+        levelNr = levels.Length - 1;
+
+        foreach (PathBehaviour pb in allPathBehaviours) {
+            pb.gameObject.SetActive(true);
+        }
+        ChangeLevel();
+        List<CarAI> outroCars = journeyManagement.GetOutroCars();
+        Debug.Log($"outro cars = {outroCars.Count}");
+        foreach (CarAI car in outroCars) {
+            car.transform.SetParent(levels[levelNr].transform);
+        }
     }
 }
 
 [System.Serializable]
 public class SkyData {
     public Cubemap cubemap;
-    public float exposure;
+    public float lux;
 }

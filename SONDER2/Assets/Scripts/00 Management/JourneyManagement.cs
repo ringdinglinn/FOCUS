@@ -6,6 +6,7 @@ public class JourneyManagement : MonoBehaviourReferenced {
     PathManagement pathManagement;
 	SwitchingManagement switchingManagement;
     CarManagement carManagement;
+    LevelManagement levelManagement;
     int nrOfSwitches;
 
     int currentLevelPathID = -1;
@@ -13,12 +14,18 @@ public class JourneyManagement : MonoBehaviourReferenced {
 
     GameObject alternatePath0;
 
+
+    List<CarAI> outroCars = new List<CarAI>();
     List<CarAI> fallenCars = new List<CarAI>();
     bool hasFallenCars;
     Transform[] fallTargets;
     Transform activeCarFallTargets;
 
-    SwitchingBehaviour activeCar;
+    CarAI startCar;
+
+    int nrOutroCars = 0;
+    int maxNrOutroCars = 8;
+
 
     private void OnEnable() {
         switchingManagement = referenceManagement.switchingManagement;
@@ -27,9 +34,9 @@ public class JourneyManagement : MonoBehaviourReferenced {
         carManagement = referenceManagement.carManagement;
         fallTargets = referenceManagement.fallTargets;
         activeCarFallTargets = referenceManagement.activeCarFallTarget;
+        levelManagement = referenceManagement.levelManagement;
 
         alternatePath0 = referenceManagement.alternatePath0;
-        activeCar = switchingManagement.ActiveCar;
     }
 
     private void OnDisable() {
@@ -39,7 +46,6 @@ public class JourneyManagement : MonoBehaviourReferenced {
     private void HandleSwitched() {
         nrOfSwitches++;
         EvaluateSwitch();
-        activeCar = switchingManagement.ActiveCar;
     }
 
     private void EvaluateSwitch() {
@@ -94,21 +100,44 @@ public class JourneyManagement : MonoBehaviourReferenced {
 
     private void Update() {
         if (hasFallenCars) {
-            activeCar.GetCarAI().SetKinematic(true);
-            activeCar.transform.position = Vector3.Lerp(activeCar.transform.position, activeCarFallTargets.transform.position, 0.2f * Time.deltaTime);
-            activeCar.transform.rotation = Quaternion.Slerp(activeCar.transform.rotation, activeCarFallTargets.transform.rotation, 0.2f * Time.deltaTime);
-            for (int i = 0; i < fallenCars.Count && i < fallTargets.Length; i++) {
-                Debug.Log($"fallen car = {i}");
-                fallenCars[i].SetKinematic(true);
-                fallenCars[i].transform.position = Vector3.Lerp(fallenCars[i].transform.position, fallTargets[i].position, 0.2f * Time.deltaTime);
-                fallenCars[i].transform.rotation = Quaternion.Slerp(fallenCars[i].transform.rotation, fallTargets[i].rotation, 0.2f * Time.deltaTime);
+            Debug.Log("Lerp in progress");
+            startCar.SetKinematic(true);
+            startCar.transform.position = Vector3.Lerp(startCar.transform.position, activeCarFallTargets.transform.position, 0.2f * Time.deltaTime);
+            startCar.transform.rotation = Quaternion.Slerp(startCar.transform.rotation, activeCarFallTargets.transform.rotation, 0.2f * Time.deltaTime);
+            for (int i = 0; i < outroCars.Count && i < fallTargets.Length; i++) {
+                if (outroCars[i] != startCar) {
+                    outroCars[i].SetKinematic(true);
+                    outroCars[i].fallTargetID = i;
+                    outroCars[i].transform.position = Vector3.Lerp(outroCars[i].transform.position, fallTargets[i].position, 0.2f * Time.deltaTime);
+                    outroCars[i].transform.rotation = Quaternion.Slerp(outroCars[i].transform.rotation, fallTargets[i].rotation, 0.2f * Time.deltaTime);
+                }
             }
         }
     }
 
-    public void StartCarsFalling(CarAI carAI) {
+    public void ActiveCarFell() {
+        if (!hasFallenCars) {
+            startCar = switchingManagement.ActiveCar.GetCarAI();
+            levelManagement.EnterOutroLevel();
+            StopAllCars();
+            hasFallenCars = true;
+        }
+    }
+
+    public void AddToOutroCars(CarAI carAI) {
+        if (nrOutroCars < maxNrOutroCars) {
+            outroCars.Add(carAI);
+            nrOutroCars = outroCars.Count;
+        }
+    }
+
+    public void AddFallenCar(CarAI carAI) {
         fallenCars.Add(carAI);
-        hasFallenCars = true;
+        --nrOutroCars;
+    }
+
+    public List<CarAI> GetOutroCars() {
+        return outroCars;
     }
 
     public enum JourneyState { Intro, Transition_Intro_1, Level1, Transition_1_21, Level21, Transition_21_22, Level22, Transition_22_31, Level31, Transition_31_32, Level32, Transition_32_4, Level4, Outro }

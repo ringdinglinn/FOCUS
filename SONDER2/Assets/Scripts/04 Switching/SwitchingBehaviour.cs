@@ -93,6 +93,10 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         flashShort = RuntimeManager.CreateInstance(referenceManagement.flashShort);
         flashLong = RuntimeManager.CreateInstance(referenceManagement.flashLong);
         carVisuals = GetComponent<CarVisuals>();
+
+        for (int i = 0; i < 3; i++) {
+            morseSingalRenderers[i].materials[0].SetFloat("_Index", i);
+        }
     }
 
     private void Start() {

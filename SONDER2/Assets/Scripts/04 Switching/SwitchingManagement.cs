@@ -81,6 +81,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     private bool measureInterval = false;
     private float resetInterval = 1f;
     private bool identicalFlashes = false;
+    private bool successfulFlashes = false;
     Material morseSignalMat;
     List<Texture> morseSignalTex;
 
@@ -186,6 +187,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     }
 
     private void Update() {
+        Debug.Log($"signalIndex = {signalIndex}");
         Flash = referenceManagement.inputManagement.GetInputButton(Inputs.flash);
 
         if (carsCreated) {
@@ -217,7 +219,12 @@ public class SwitchingManagement : MonoBehaviourReferenced {
             radioStatic.setParameterByName("SignalStrength", value);
         }
 
-        MorseUIScaling();
+        if (!successfulFlashes) {
+            MorseUIScaling();
+            MorseUIColor();
+        } else {
+            MorseSignalSuccessfull();
+        }
     }
 
     private void SearchForCars() {
@@ -391,28 +398,21 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     private void FlashValueChanged(bool b) {
         ActiveCar.SetFlash(b);
         if (b) {
+            successfulFlashes = false;
             gearManagement.PlayStopGearSound();
             measureFlash = true;
             measureInterval = false;
             StartCoroutine(MeasureFlashDuration());
             flashOn.start();
             flashHum.setParameterByName("HumStrength", 1f);
-        }
-        else {
+        } else {
             measureFlash = false;
-            measureInterval = true;
-            StartCoroutine(MeasureFlashInterval());
+            if (!successfulFlashes) {
+                measureInterval = true;
+                StartCoroutine(MeasureFlashInterval());
+            }
             flashOff.start();
             flashHum.setParameterByName("HumStrength", 0f);
-        }
-
-        for (int i = 0; i < activeCar.morseSingalRenderers.Length; i++) {
-            if (i == signalIndex) {
-                Debug.Log($"flashSignal Index = {signalIndex}");
-                activeCar.morseSingalRenderers[i].materials[0].SetInt("_FlashOn", b && hasMarkedCar ? 1 : 0);
-            } else if (i > signalIndex) {
-                activeCar.morseSingalRenderers[i].materials[0].SetFloat("_AlphaFactor", b && hasMarkedCar ? 0.06f : 1);
-            }
         }
     }
 
@@ -456,11 +456,14 @@ public class SwitchingManagement : MonoBehaviourReferenced {
             if (signalIndex == 2) {
                 signalIndex = 0;
                 identicalFlashes = true;
+                successfulFlashes = true;
+                StartCoroutine(MorseSignalSuccessfullTimer());
             } else {
                 signalIndex++;
             }
             signalSuccess.start();
         } else {
+            ResetFlashRecordDurations();
             signalFailure.start();
         }
     }
@@ -550,6 +553,20 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         MorseUIProgress();
     }
 
+    IEnumerator MorseSignalSuccessfullTimer() {
+        float secs = 1f;
+        yield return new WaitForSeconds(secs);
+        successfulFlashes = false;
+    }
+
+    private void MorseSignalSuccessfull() {
+        for (int i = 0; i < 3; i++) {
+            activeCar.morseSingalRenderers[i].transform.localScale = origScaleMorseDisplay * 2;
+            activeCar.morseSingalRenderers[i].materials[0].SetFloat("_AlphaFactor", 1);
+            activeCar.morseSingalRenderers[i].materials[0].SetInt("_FlashOn", 1);
+        }
+    }
+
     private void MorseUIScaling() {
         Vector3 scale;
         Vector3 scale2;
@@ -570,6 +587,15 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         }
     }
 
+    private void MorseUIColor() {
+        for (int i = 0; i < activeCar.morseSingalRenderers.Length; i++) {
+            activeCar.morseSingalRenderers[i].materials[0].SetInt("_FlashOn", Flash && hasMarkedCar && i == signalIndex ? 1 : 0);
+            if (i > signalIndex) {
+                activeCar.morseSingalRenderers[i].materials[0].SetFloat("_AlphaFactor", Flash && hasMarkedCar ? 0.06f : 1);
+            }
+        }
+    }
+
     private void MorseUIProgress() {
         for (int i = 0; i < 3; i++) {
             if (i < signalIndex) {
@@ -578,6 +604,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
             else {
                 activeCar.morseSingalRenderers[i].materials[0].SetFloat("_AlphaFactor", 1);
             }
+
             activeCar.morseSingalRenderers[i].materials[0].SetInt("_FlashOn", 0);
         }
     }

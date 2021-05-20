@@ -116,8 +116,7 @@ public class Camera1stPerson : MonoBehaviourReferenced {
     }
 
     private void HandleRotation() {
-        var direction = rotTarget.transform.position - transform.position;
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction, Vector3.up), 0.15f);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotTarget.rotation, 0.15f);
     }
 
     private void Shake() {
