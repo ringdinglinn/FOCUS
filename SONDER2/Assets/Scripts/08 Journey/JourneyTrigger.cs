@@ -5,8 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class JourneyTrigger : MonoBehaviourReferenced {
     JourneyManagement journeyManagement;
-	public enum TriggerType { IntroLoop, Gate0, SlowDownGate, EndGate, JamStartDrivingGate, SlowDownActiveCar, StopActiveCar};
+	public enum TriggerType { IntroLoop, Gate0, SlowDownGate, EndGate, JamStartDrivingGate, SlowDownActiveCar, StopActiveCar, FallTrigger};
     public TriggerType type;
+
+    bool speedUpTrigger;
 
     private void Start() {
         journeyManagement = referenceManagement.journeyManagement;
@@ -25,11 +27,6 @@ public class JourneyTrigger : MonoBehaviourReferenced {
 
             }
         }
-        if (type == TriggerType.JamStartDrivingGate) {
-            if (other.gameObject.CompareTag("Camera")) {
-                journeyManagement.SpeedUpAfterJam();
-            }
-        }
         if (type == TriggerType.SlowDownActiveCar) {
             if (other.gameObject.CompareTag("Car")) {
                 CarAI carAI = other.GetComponentInParent<CarAI>();
@@ -40,6 +37,27 @@ public class JourneyTrigger : MonoBehaviourReferenced {
             if (other.gameObject.CompareTag("Car")) {
                 CarAI carAI = other.GetComponentInParent<CarAI>();
                 carAI.StopCar();
+            }
+        }
+        if (type == TriggerType.FallTrigger) {
+            if (other.gameObject.CompareTag("Car")) {
+                CarAI carAI = other.GetComponentInParent<CarAI>();
+                if (carAI.autopilotEnabled) {
+                    journeyManagement.StartCarsFalling(carAI);
+                }
+            }
+        }
+    }
+
+    private void OnTriggerStay(Collider other) {
+        if (type == TriggerType.JamStartDrivingGate) {
+            if (other.gameObject.CompareTag("Car")) {
+                CarAI carAI = other.GetComponentInParent<CarAI>();
+                Debug.Log($"carAI = {carAI}");
+                if (!carAI.autopilotEnabled && !speedUpTrigger) {
+                    speedUpTrigger = true;
+                    journeyManagement.SpeedUpAfterJam();
+                }
             }
         }
     }

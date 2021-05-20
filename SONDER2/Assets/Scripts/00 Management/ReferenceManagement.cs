@@ -139,4 +139,8 @@ public class ReferenceManagement : MonoBehaviour
     [Header("Rendering")]
     public Volume postProcess;
     public Volume skyAndFog;
+
+    [Header("End Sequence")]
+    public Transform[] fallTargets;
+    public Transform activeCarFallTarget;
 }

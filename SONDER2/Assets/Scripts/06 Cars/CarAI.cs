@@ -94,6 +94,8 @@ public class CarAI : MonoBehaviourReferenced {
     bool slowingDown;
     Vector3 steadyPos;
 
+    public EndOfPathInstruction endOfPathInstruction = EndOfPathInstruction.Loop;
+
     private void OnEnable() {
         wheelVehicle = GetComponent<WheelVehicle>();
         switchingBehaviour = GetComponent<SwitchingBehaviour>();
@@ -143,12 +145,12 @@ public class CarAI : MonoBehaviourReferenced {
         throttle = Mathf.Pow(speedLimit, 2) - rb.velocity.sqrMagnitude;
 
         if (stopped) {
-            float a = Vector3.Angle(transform.forward, steadyPos - transform.position);
-            if (a < 90) {
-                throttle = 0.01f;
-            } else {
-                throttle = -0.01f;
-            }
+            wheelVehicle.toogleHandbrake(true);
+            wheelVehicle.BrakeForce = 1500.0f;
+            throttle = 0;
+        } else {
+            wheelVehicle.toogleHandbrake(false);
+            wheelVehicle.BrakeForce = 1500.0f;
         }
 
         wheelVehicle.Throttle = throttle;
@@ -157,12 +159,12 @@ public class CarAI : MonoBehaviourReferenced {
         prevPos = transform.position;
 
         if (autopilotEnabled) {
-            angle = Vector3.SignedAngle(transform.forward, myPath.path.GetPointAtDistance(distOnPath + steerTowardsDist, EndOfPathInstruction.Loop) - transform.position, Vector3.up);
+            angle = Vector3.SignedAngle(transform.forward, myPath.path.GetPointAtDistance(distOnPath + steerTowardsDist, endOfPathInstruction) - transform.position, Vector3.up);
             wheelVehicle.InstantSetWheelAngle(angle);
         } else {
             rndOffset = transform.right;
             steerOffset = transform.right;
-            Vector3 steerTowardsPoint = myPath.path.GetPointAtDistance(distOnPath + steerTowardsDist, EndOfPathInstruction.Loop);
+            Vector3 steerTowardsPoint = myPath.path.GetPointAtDistance(distOnPath + steerTowardsDist, endOfPathInstruction);
             Vector3 middlePoint = myPath.path.GetClosestPointOnPath(transform.position);
             float distToMiddle = (middlePoint - transform.position).sqrMagnitude;
             if (swaying && distToMiddle < 0.5f && ((inputManagement.GetInput(Inputs.turn) < 0 && rndSway > 0) || (inputManagement.GetInput(Inputs.turn) > 0) && rndSway < 0)) {
@@ -431,5 +433,13 @@ public class CarAI : MonoBehaviourReferenced {
     public void StartCar() {
         stopped = false;
         targetSpeedLimit = pathBehaviour.GetSpeedLimit();
+    }
+
+    public void SetKinematic(bool b) {
+        rb.isKinematic = b;
+    }
+
+    public void SetGravity(bool b) {
+        rb.useGravity = b;
     }
 }
