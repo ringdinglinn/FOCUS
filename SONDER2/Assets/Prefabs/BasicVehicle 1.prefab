@@ -527,7 +527,7 @@ MonoBehaviour:
   referenceManagement: {fileID: 0}
   meshRenderer: {fileID: 3418936123771391361}
   morseSignalDisplay: {fileID: 1464697193034156372}
-  morseSingalRenderers:
+  morseSignalRenderers:
   - {fileID: 6324982927430366023}
   - {fileID: 6062270108839526398}
   - {fileID: 390228978475060185}
@@ -579,6 +579,7 @@ MonoBehaviour:
   endTunnel: {fileID: 0}
   cam: {fileID: 0}
   dontLoop: 0
+  fallTargetID: -1
   endOfPathInstruction: 0
 --- !u!114 &114356753913500666
 MonoBehaviour:
@@ -4493,8 +4494,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1464697193034156372}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 22.8, z: 122.8}
-  m_LocalScale: {x: 20, y: 1, z: 20}
+  m_LocalPosition: {x: 8, y: 22.8, z: 96}
+  m_LocalScale: {x: 23.908, y: 1.1954, z: 23.908}
   m_Children:
   - {fileID: 3195490538159691865}
   - {fileID: 1298770027268911771}

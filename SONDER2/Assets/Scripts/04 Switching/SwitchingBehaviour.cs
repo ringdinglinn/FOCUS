@@ -20,7 +20,7 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
 
     public MeshRenderer meshRenderer;
     public GameObject morseSignalDisplay;
-    public MeshRenderer[] morseSingalRenderers;
+    public MeshRenderer[] morseSignalRenderers;
 
     public BoxCollider boxCollider;
 
@@ -95,7 +95,7 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         carVisuals = GetComponent<CarVisuals>();
 
         for (int i = 0; i < 3; i++) {
-            morseSingalRenderers[i].materials[0].SetFloat("_Index", i);
+            morseSignalRenderers[i].materials[0].SetFloat("_Index", i);
         }
     }
 

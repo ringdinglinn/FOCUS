@@ -1,19 +1,19 @@
 ﻿<Properties StartupConfiguration="{281EEECF-89B9-6D0B-978A-5FDC6B8E6CBA}|">
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/04 Switching/SwitchingManagement.cs">
     <Files>
-      <File FileName="Assets/Scripts/00 Management/ReferenceManagement.cs" Line="145" Column="42" />
-      <File FileName="Assets/Scripts/06 Cars/WheelVehicle.cs" Line="392" Column="36" />
-      <File FileName="Assets/Scripts/00 Management/CarManagement.cs" Line="44" Column="1" />
-      <File FileName="Assets/Scripts/06 Cars/DangleManagement.cs" Line="84" Column="28" />
-      <File FileName="Assets/Scripts/04 Switching/SwitchingManagement.cs" Line="595" Column="14" />
-      <File FileName="Assets/Scripts/01 Camera/Camera1stPerson.cs" Line="119" Column="1" />
-      <File FileName="Assets/Scripts/04 Switching/SwitchingBehaviour.cs" Line="98" Column="47" />
-      <File FileName="Assets/Scripts/00 Management/JourneyManagement.cs" Line="142" Column="1" />
+      <File FileName="Assets/Scripts/04 Switching/SwitchingManagement.cs" Line="562" Column="44" />
+      <File FileName="Assets/Scripts/00 Management/ReferenceManagement.cs" />
+      <File FileName="Assets/Scripts/06 Cars/WheelVehicle.cs" />
+      <File FileName="Assets/Scripts/00 Management/CarManagement.cs" />
+      <File FileName="Assets/Scripts/06 Cars/DangleManagement.cs" />
+      <File FileName="Assets/Scripts/01 Camera/Camera1stPerson.cs" />
+      <File FileName="Assets/Scripts/04 Switching/SwitchingBehaviour.cs" />
+      <File FileName="Assets/Scripts/00 Management/JourneyManagement.cs" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="c7986629-872a-4c18-9b18-4f1c5eda25aa" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="e7096d40-a9e0-4dd1-8edd-eff6cb11e46f" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -100,8 +100,6 @@ public class Camera1stPerson : MonoBehaviourReferenced {
         Vector3 startPosLocal = targetCar.InverseTransformPoint(startPos);
         Vector3 currentPos = new Vector3();
 
-        Debug.Log($"loopTime = {loopTime}");
-
         timer += Time.deltaTime / loopTime;
         if (timer < 1) {
             currentPos = Vector3.Lerp(startPosLocal, targetPos, timer);
