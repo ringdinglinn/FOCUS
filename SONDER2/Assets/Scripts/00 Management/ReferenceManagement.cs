@@ -39,6 +39,7 @@ public class ReferenceManagement : MonoBehaviour
     [SerializeField] private float BPM;
     [SerializeField] private float BeatSubdivisions;
     [SerializeField] private float BeatWindow;
+    public List<GameObject> trees;
 
     public float GetBPM() {
         return BPM;

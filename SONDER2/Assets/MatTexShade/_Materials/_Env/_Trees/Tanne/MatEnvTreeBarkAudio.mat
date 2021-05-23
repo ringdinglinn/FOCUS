@@ -132,11 +132,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Beat1: 0
-    - BeatCounter: 186
+    - BeatCounter: 45
     - Vector1_1BF88BD3: 0
     - Vector1_235258A9: 0.1
     - Vector1_40E2C171: 0
-    - Vector1_76BE5B8A: 0.1
+    - Vector1_569CD5DC: 1
+    - Vector1_6B1C11D5: 0
+    - Vector1_76BE5B8A: 3
     - Vector1_881A8676: 0
     - Vector1_E485665B: 0
     - Vector1_FD692118: 100
@@ -267,6 +269,7 @@ Material:
     - Color_9FD76E05: {r: 1, g: 1, b: 1, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
+    - _BasePos: {r: 276, g: 0, b: -66, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}

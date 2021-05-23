@@ -196,41 +196,33 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
 
     IEnumerator Signal() {
         displayingSignal = true;
+        yield return new WaitForSeconds(beatDetector.GetTimeUntilBar());
         for (int i = 0; i < signalPattern.Length; i++) {
             flashOn = true;
-            //volumetrics.SetActive(true);
             volumetricRenderer0.material.SetInt("_FlashOn", flashOn ? 1 : 0);
             volumetricRenderer1.material.SetInt("_FlashOn", flashOn ? 1 : 0);
 
-            headlight1.intensity = headlightDefaultIntensity * 10f;
-            headlight2.intensity = headlightDefaultIntensity * 10f;
-            //headlight1.range = headlightDefaultRange * 6f;
-            //headlight2.range = headlightDefaultRange * 6f;
+            float time = beatDetector.EighthInterval;
 
-            float time = beatIntervalSubD;
             if (signalPattern[i] == FlashType.Long) {
-                time = beatInterval * 1.0f;
+                time = beatDetector.FourthInterval;
                 flashLong.start();
             } else {
                 flashShort.start();
             }
             yield return new WaitForSeconds(time);
 
-            headlight1.intensity = headlightDefaultIntensity;
-            headlight2.intensity = headlightDefaultIntensity;
-            headlight1.range = headlightDefaultRange;
-            headlight2.range = headlightDefaultRange;
-
             beatSubD = false;
             flashOn = false;
-            //volumetrics.SetActive(false);
             volumetricRenderer0.material.SetInt("_FlashOn", flashOn ? 1 : 0);
             volumetricRenderer1.material.SetInt("_FlashOn", flashOn ? 1 : 0);
 
-            yield return new WaitForSeconds(beatInterval);
+            float deltaTime = beatDetector.HalfInterval - time;
+
+            yield return new WaitForSeconds(deltaTime);
         }
         // interval
-        if (isMarkedCar) yield return new WaitForSeconds(beatInterval * 2f);
+        if (isMarkedCar) yield return new WaitForSeconds(beatDetector.GetTimeUntilBar());
 
         displayingSignal = false;
 

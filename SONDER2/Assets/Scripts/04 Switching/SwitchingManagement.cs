@@ -48,6 +48,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     private float perceptionH;
     private float perceptionR;
     private List<SwitchingBehaviour> SBsInFrame = new List<SwitchingBehaviour>();
+    private float dist;
 
     private bool selectCarNow = false;
 
@@ -235,7 +236,32 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     private void SearchForCars() {
         SBsInFrame.Clear();
         SwitchingBehaviour sb = null;
-        // 1 Draw Perception Frame
+
+        float minDist = Mathf.Infinity;
+
+        if ((HasMarkedCar && !CheckIfVisible(MarkedCar)) || (!HasMarkedCar)) { 
+            for (int i = 0; i < allSwitchingBehaviours.Count; i++) {
+                if (CheckIfVisible(allSwitchingBehaviours[i])) {
+                    SBsInFrame.Add(allSwitchingBehaviours[i]);
+                    //evaluate closest car
+                    if (dist <= minDist) {
+                        minDist = dist;
+                        sb = allSwitchingBehaviours[i];
+                    }
+                }
+            }
+
+            HasMarkedCar = sb != null ? true : false;
+            MarkedCar = sb;
+        }
+
+        if (inTunnel) {
+            MarkedCar = null;
+            HasMarkedCar = false;
+        }
+    }
+
+    private bool CheckIfVisible(SwitchingBehaviour sb) {
         float w = cam.pixelWidth * perceptionW;
         float h = cam.pixelHeight * perceptionH;
         float originX = (cam.pixelWidth / 2) - w / 2;
@@ -243,57 +269,49 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         perceptionBorderTransform.anchoredPosition = new Vector2(cam.pixelWidth / 2, cam.pixelHeight / 2);
         perceptionBorderTransform.sizeDelta = new Vector2(cam.pixelWidth * perceptionW, cam.pixelHeight * perceptionH);
 
-        float dist = Mathf.Infinity;
-        for (int i = 0; i < allSwitchingBehaviours.Count; i++) {
-            if (allSwitchingBehaviours[i] != activeCar && allSwitchingBehaviours[i].gameObject.activeSelf && !allSwitchingBehaviours[i].isInitialCar) {
-                // check if other car is visible
-                bool isVisible = allSwitchingBehaviours[i].meshRenderer.IsVisibleFrom(cam);
-                float[,] scrPos = CarScreenPos(allSwitchingBehaviours[i]);
-                //check if other car is close enough
-                bool inRange = scrPos[4, 0] <= perceptionR ? true : false;
-                //check if points are in perceptionFrame
-                bool inFrame = false;
-                for (int j = 0; j < 4; j++) {
-                    if (scrPos[j,0] > originX && scrPos[j,0] < originX + w && scrPos[j,1] > originY && scrPos[j, 1] < originY + h) {
-                        inFrame = true;
-                    }
-                }
-                bool occluded = false;
-                if (isVisible && inRange && inFrame) {
-                    int layerMask0 = 1 << 9;
-                    int layerMask1 = 1 << 11;
-                    int layerMask = layerMask0 | layerMask1;
-                    layerMask = ~layerMask;
-                    RaycastHit hit;
-                    // Does the ray intersect any objects excluding the player layer
-                    Vector3 pos = allSwitchingBehaviours[i].transform.position;
-                    Vector3 offset = allSwitchingBehaviours[i].transform.up * 1.2f;
-                    pos += offset;
-                    Vector3 dir = activeCar.transform.position - allSwitchingBehaviours[i].transform.position;
-                    float mag = dir.magnitude;
-                    dir = dir / mag;
-                    if (Physics.Raycast(pos, dir, out hit, mag, layerMask)) {
-                        occluded = true;
-                        Debug.DrawRay(pos, dir * hit.distance, Color.red);
-                    } else {
-                        occluded = false;
-                    }
-                }
-                if (isVisible && inRange && inFrame && !occluded) {
-                    SBsInFrame.Add(allSwitchingBehaviours[i]);
-                    //evaluate closest car
-                    if (scrPos[4,0] <= dist) {
-                        dist = scrPos[4, 0];
-                        sb = allSwitchingBehaviours[i];
-                    } 
+        dist = Mathf.Infinity;
+
+        if (sb != activeCar && sb.gameObject.activeSelf && !sb.isInitialCar) {
+            // check if other car is visible
+            bool isVisible = sb.meshRenderer.IsVisibleFrom(cam);
+            float[,] scrPos = CarScreenPos(sb);
+            //check if other car is close enough
+            bool inRange = scrPos[4, 0] <= perceptionR ? true : false;
+            //check if points are in perceptionFrame
+            bool inFrame = false;
+            for (int j = 0; j < 4; j++) {
+                if (scrPos[j, 0] > originX && scrPos[j, 0] < originX + w && scrPos[j, 1] > originY && scrPos[j, 1] < originY + h) {
+                    inFrame = true;
                 }
             }
-        }
-        HasMarkedCar = sb != null ? true : false;
-        MarkedCar = sb;
-        if (inTunnel) {
-            MarkedCar = null;
-            HasMarkedCar = false;
+            bool occluded = false;
+            if (isVisible && inRange && inFrame) {
+                int layerMask0 = 1 << 9;
+                int layerMask1 = 1 << 11;
+                int layerMask = layerMask0 | layerMask1;
+                layerMask = ~layerMask;
+                RaycastHit hit;
+                Vector3 pos = sb.transform.position;
+                Vector3 offset = sb.transform.up * 1.2f;
+                pos += offset;
+                Vector3 dir = activeCar.transform.position - sb.transform.position;
+                float mag = dir.magnitude;
+                dir = dir / mag;
+                if (Physics.Raycast(pos, dir, out hit, mag, layerMask)) {
+                    occluded = true;
+                    Debug.DrawRay(pos, dir * hit.distance, Color.red);
+                }
+                else {
+                    occluded = false;
+                }
+            }
+            if (isVisible && inRange && inFrame && !occluded) {
+                dist = scrPos[4, 0];
+                SBsInFrame.Add(sb);
+            }
+            return isVisible && inRange && inFrame && !occluded;
+        } else {
+            return false;
         }
     }
 
@@ -302,14 +320,12 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     }
 
     private void MarkedCarChanged(SwitchingBehaviour sb) {
-        Debug.Log($"marked car changed = {sb}");
         if (markedCar != null && sb == null) {
             currentSDSpeed = signalDisplayAmplitude;
         } else if (sb != null) {
             currentSDSpeed = -1f * signalDisplayAmplitude;
-        } else if (markedCar != null && sb != null) {
-
         }
+
         if (markedCar != null) markedCar.IsMarkedCar = false;
         if (sb != null) {
             sb.IsMarkedCar = true;

@@ -5,19 +5,21 @@ using UnityEngine;
 public class MountainAudio : MonoBehaviourReferenced {
 
     MeshRenderer meshRenderer;
-    float noiseOffset;
-    float persistance;
+    float noiseOffset0;
+    float[] noiseOffset = new float[3];
+    float[] persistance = new float[3];
+    float[] maxHeight = new float[3];
+    float persistance0;
+    float persistance1;
+    float persistance2;
     float deltaPersistance = 0.2f;
-    float maxHeight;
+    float maxHeight0;
+    float maxHeight1;
+    float maxHeight2;
     float deltaMaxHeight = 0.02f;
 
-    Texture2D noiseTex;
-
-    int width = 1024;
-    int height = 1024;
-
-    int octaves = 10;
-    float lacunarity = 2.0f;
+    int currentBeat;
+    int totalBeats = 4;
 
     private void Start() {
         referenceManagement.beatDetector.bdOnBar.AddListener(HandleBar);
@@ -25,23 +27,9 @@ public class MountainAudio : MonoBehaviourReferenced {
         referenceManagement.beatDetector.bdOnFourth.AddListener(HandleFourth);
         meshRenderer = GetComponent<MeshRenderer>();
 
-        noiseTex = CreateTex();
-    }
-
-    Texture2D CreateTex() {
-        // Create a new 2x2 texture ARGB32 (32 bit with alpha) and no mipmaps
-        var texture = new Texture2D(width, height, TextureFormat.ARGB32, false);
-
-        // set the pixel values
-        texture.SetPixel(0, 0, new Color(1.0f, 1.0f, 1.0f, 0.5f));
-        texture.SetPixel(1, 0, Color.clear);
-        texture.SetPixel(0, 1, Color.white);
-        texture.SetPixel(1, 1, Color.black);
-
-        // Apply all SetPixel calls
-        texture.Apply();
-
-        return texture;
+        for (int i = 0; i < 3; i++) {
+            noiseOffset[i] = i * 2.5f;
+        }
     }
 
     private void HandleBar() {
@@ -49,29 +37,35 @@ public class MountainAudio : MonoBehaviourReferenced {
     }
 
     private void HandleHalf() {
+
     }
 
     private void HandleFourth() {
-        SetValues();
+        currentBeat++;
+        currentBeat %= totalBeats;
+        SetValues(currentBeat);
 
     }
 
-    void SetValues() {
-        noiseOffset += 10;
-        persistance = 0.3f;
-        maxHeight = 3.3f;
+    void SetValues(int i) {
+        if (i != totalBeats - 1) {
+            noiseOffset[i] += 10;
+            persistance[i] = 0.28f;
+            maxHeight[i] = 2.2f;
+        }
     }
 
     private void Update() {
-        meshRenderer.material.SetFloat("_Persistance", -1f * Mathf.Pow(persistance - 1f,2) + 1);
-        meshRenderer.material.SetFloat("_NoiseOffset", noiseOffset);
-        meshRenderer.material.SetFloat("_MaxHeight", maxHeight);
+        for (int i = 0; i < 3; i++) {
+            meshRenderer.material.SetFloat($"_Persistance{i}", -1f * Mathf.Pow(persistance[i] - 1f, 2) + 1);
+            meshRenderer.material.SetFloat($"_NoiseOffset{i}", noiseOffset[i]);
+            meshRenderer.material.SetFloat($"_MaxHeight{i}", maxHeight[i]);
 
-        persistance -= deltaPersistance * Time.deltaTime;
-        persistance = Mathf.Clamp(persistance, 0, 1);
+            persistance[i] -= deltaPersistance * Time.deltaTime;
+            persistance[i] = Mathf.Clamp(persistance[i], 0, 1);
 
-        maxHeight -= deltaMaxHeight * Time.deltaTime;
-        maxHeight = Mathf.Clamp(maxHeight, 0, 3.3f);
+            maxHeight[i] -= deltaMaxHeight * Time.deltaTime;
+            maxHeight[i] = Mathf.Clamp(maxHeight[i], 0, 3.3f);
+        }
     }
-
 }
