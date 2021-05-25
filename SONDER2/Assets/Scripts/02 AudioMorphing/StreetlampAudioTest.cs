@@ -21,7 +21,7 @@ public class StreetlampAudioTest : MonoBehaviourReferenced {
     private void Start() {
         BeatDetector beatDetector = referenceManagement.beatDetector;
         beatDetector.bdOnFourth.AddListener(OnFullBeatDetected);
-        beatDetector.bdOnEigth.AddListener(OnSubDBeatDetected);
+        beatDetector.bdOnEighth.AddListener(OnSubDBeatDetected);
         myLight = GetComponentInChildren<Light>();
     }
 

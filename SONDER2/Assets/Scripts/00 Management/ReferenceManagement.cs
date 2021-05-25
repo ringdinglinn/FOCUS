@@ -111,6 +111,22 @@ public class ReferenceManagement : MonoBehaviour
     public string signalSuccess;
     [FMODUnity.EventRef]
     public string signalFailure;
+    [FMODUnity.EventRef]
+    public string menuClicks;
+    [FMODUnity.EventRef]
+    public string menuAmbience;
+    [FMODUnity.EventRef]
+    public string menuSelect;
+    [FMODUnity.EventRef]
+    public string menuTitle;
+    [FMODUnity.EventRef]
+    public string carInterior0;
+    [FMODUnity.EventRef]
+    public string carInterior1;
+    [FMODUnity.EventRef]
+    public string carInterior2;
+    [FMODUnity.EventRef]
+    public string carExterior;
 
     [Header("Switching")]
     [Range(0.0f, 1.0f)]

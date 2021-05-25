@@ -100,6 +100,9 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     EventInstance flashHum;
     EventInstance signalSuccess;
     EventInstance signalFailure;
+    EventInstance carInterior0;
+    EventInstance carInterior1;
+    EventInstance carInterior2;
 
     private Vector3 origScaleMorseDisplay;
     private Vector3[] origPosMorseDisplay = new Vector3[3];
@@ -118,10 +121,12 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
     float rndJitterRange = 0.1f;
 
+    int carSoundIndex = 0;
+
 
     private void Start() {
         beatDetector = referenceManagement.beatDetector;
-        beatDetector.bdOnEigth.AddListener(HandleSubDBeatDetected);
+        beatDetector.bdOnEighth.AddListener(HandleSubDBeatDetected);
         beatDetector.bdOnFourth.AddListener(HandleFullBeatDetected);
         cam = camController.GetComponent<Camera>();
         switchImgObj = referenceManagement.switchImgObj;
@@ -146,7 +151,11 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         flashHum = RuntimeManager.CreateInstance(referenceManagement.flashHum);
         signalSuccess = RuntimeManager.CreateInstance(referenceManagement.signalSuccess);
         signalFailure = RuntimeManager.CreateInstance(referenceManagement.signalFailure);
+        carInterior0 = RuntimeManager.CreateInstance(referenceManagement.carInterior0);
+        carInterior1 = RuntimeManager.CreateInstance(referenceManagement.carInterior1);
+        carInterior2 = RuntimeManager.CreateInstance(referenceManagement.carInterior2);
         flashHum.start();
+        carInterior0.start();
         flashHum.setParameterByName("HumStrength", 0f);
         morseLongTex = referenceManagement.morseSignalLong;
         morseShortTex = referenceManagement.morseSignalShort;
@@ -231,6 +240,8 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
         MorseUIScaling();
         MorseUIColor();
+
+        carInterior0.setParameterByName("Speed", Mathf.InverseLerp(0, 12, activeCar.GetCarAI().GetSpeed()));
     }
 
     private void SearchForCars() {
@@ -402,7 +413,6 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         SwitchToCar(selectedCar);
         ActiveCar = selectedCar;
         DeselectCar();
-        //referenceManagement.switchSound.Play();
         selectedCar = null;
         StartCoroutine(SelectCoolDown());
         CarChangedEvent.Invoke();
@@ -412,14 +422,28 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         motionBlur.intensity.value = 10000f;
         DisplayMarkedCarSignalPattern();
         currentSDSpeed = signalDisplayAmplitude;
-        Debug.Log("Switch");
+
+        // car sound
+        carSoundIndex++;
+        carSoundIndex %= 3;
+        carInterior0.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        carInterior1.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        carInterior2.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
 
     public void SwitchDone() {
         ActiveCar.SetActiveCarValues();
         switchEvt.start();
         motionBlur.intensity.value = 1f;
-    }
+
+        if (carSoundIndex == 0) {
+            carInterior0.start();
+        } else if (carSoundIndex == 1) {
+            carInterior1.start();
+        } else {
+            carInterior2.start();
+        }
+    }                
 
     private void FlashValueChanged(bool b) {
         ActiveCar.SetFlash(b);

@@ -188,7 +188,6 @@ public class CarManagement : MonoBehaviourReferenced {
     }
 
     public void AddSwitchingBehaviour(SwitchingBehaviour sb) {
-        Debug.Log($"add switching behaviour, {name}");
         allSwitchingBehaviours.Add(sb);
         allSBChanged.Invoke();
     }
@@ -203,7 +202,6 @@ public class CarManagement : MonoBehaviourReferenced {
     }
 
     public void ClearSBs() {
-        Debug.Log("Clear switching behaviours");
         allSwitchingBehaviours.Clear();
     }
 

@@ -444,4 +444,8 @@ public class CarAI : MonoBehaviourReferenced {
     public void SetGravity(bool b) {
         rb.useGravity = b;
     }
+
+    public float GetSpeed() {
+        return rb.velocity.magnitude;
+    }
 }

@@ -19,7 +19,6 @@ public class CarVisuals : MonoBehaviourReferenced {
 	public int dangleNr;
 
 	public void UpdateVisuals(bool active) {
-		Debug.Log($"Update Visuals, {active}, {name}");
 		foreach (CarConfig cc in allCarConfigs) {
 			cc.gameObject.SetActive(false);
         }

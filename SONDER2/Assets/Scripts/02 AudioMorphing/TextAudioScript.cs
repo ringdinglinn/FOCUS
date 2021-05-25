@@ -36,7 +36,7 @@ public class TextAudioScript : MonoBehaviourReferenced {
 
     private void Start() {
         StartCoroutine(GetVertices());
-        referenceManagement.beatDetector.bdOnEigth.AddListener(OnBeat);
+        referenceManagement.beatDetector.bdOnEighth.AddListener(OnBeat);
     }
 
     private void OnBeat() {

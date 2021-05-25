@@ -44,15 +44,8 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     private float headlightDefaultIntensity;
     private float headlightDefaultRange;
 
-    bool beatFull;
-    bool beatSubD;
-
     bool flash = false;
     bool flashOn = false;
-    bool signalCoolDown = false;
-
-    float beatInterval;
-    float beatIntervalSubD;
 
     public GameObject volumetrics;
     public MeshRenderer volumetricRenderer0;
@@ -62,6 +55,7 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
 
     FMOD.Studio.EventInstance flashShort;
     FMOD.Studio.EventInstance flashLong;
+    FMOD.Studio.EventInstance carExterior;
 
     public bool headlightTester;
 
@@ -77,14 +71,13 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     }
 
     bool displayingSignal;
-
     public int variation;
 
     private void OnEnable() {
         CollectReferences();
         GenerateSignalPattern();
         referenceManagement.beatDetector.bdOnFourth.AddListener(HandleBeatFull);
-        referenceManagement.beatDetector.bdOnEigth.AddListener(HandleBeatSubD);
+        referenceManagement.beatDetector.bdOnEighth.AddListener(HandleBeatSubD);
         headlightDefaultIntensity = headlight1.intensity;
         headlightDefaultRange = headlight1.range;
         carManagement.AddSwitchingBehaviour(this);
@@ -93,6 +86,10 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         flashShort = RuntimeManager.CreateInstance(referenceManagement.flashShort);
         flashLong = RuntimeManager.CreateInstance(referenceManagement.flashLong);
         carVisuals = GetComponent<CarVisuals>();
+        carExterior = RuntimeManager.CreateInstance(referenceManagement.carExterior);
+        RuntimeManager.AttachInstanceToGameObject(carExterior, transform, GetComponent<Rigidbody>());
+        carExterior.start();
+        carExterior.setParameterByName("CarPitch", Random.Range(0f, 1f));
 
         for (int i = 0; i < 3; i++) {
             morseSignalRenderers[i].materials[0].SetFloat("_Index", i);
@@ -106,8 +103,9 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
 
     private void OnDisable() {
         referenceManagement.beatDetector.bdOnFourth.RemoveListener(HandleBeatFull);
-        referenceManagement.beatDetector.bdOnEigth.RemoveListener(HandleBeatSubD);
+        referenceManagement.beatDetector.bdOnEighth.RemoveListener(HandleBeatSubD);
         carManagement.RemoveSwitchingBehaviour(this);
+        carExterior.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
 
     public void CollectReferences() {
@@ -118,8 +116,6 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         switchingManagement = referenceManagement.switchingManagement;
         id = switchingManagement.allSwitchingBehaviours.Count;
         beatDetector = referenceManagement.beatDetector;
-        beatInterval = beatDetector.FourthInterval;
-        beatIntervalSubD = beatDetector.EighthInterval;
     }
 
     public void SwitchIntoCar(Camera1stPerson cam, bool isInitialCar, int variation) {
@@ -134,6 +130,7 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         if (isInitialCar && carManagement.HasManualInitialCar()) wheelVehicle.IsPlayer = false;
 
         if (isInitialCar) SetActiveCarValues();
+
     }
 
     public void SwitchOutOfCar() {
@@ -154,6 +151,9 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         obj.SetActive(true);
         meshRenderer.gameObject.SetActive(false);
 
+        //carExterior.setParameterByName("IsActiveCar", 0);
+        carExterior.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+
         foreach (MeshRenderer mr in headlightCubes) mr.material = frontlightMatDull;
     }
 
@@ -165,6 +165,9 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         armaturenbrett.SetActive(false);
         armaturenbrett2.SetActive(false);
         meshRenderer.gameObject.SetActive(true);
+
+        //carExterior.setParameterByName("IsActiveCar", 1);
+        if (isInitialCar) carExterior.start();
 
         foreach (MeshRenderer mr in headlightCubes) mr.material = frontlightMat;
     }
@@ -212,7 +215,6 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
             }
             yield return new WaitForSeconds(time);
 
-            beatSubD = false;
             flashOn = false;
             volumetricRenderer0.material.SetInt("_FlashOn", flashOn ? 1 : 0);
             volumetricRenderer1.material.SetInt("_FlashOn", flashOn ? 1 : 0);
@@ -247,17 +249,13 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
 
     IEnumerator ResetBeatValue() {
         yield return new WaitForEndOfFrame();
-        beatFull = false;
-        beatSubD = false;
     }
 
     private void HandleBeatFull() {
-        beatFull = true;
         StartCoroutine(ResetBeatValue());
     }
 
     private void HandleBeatSubD() {
-        beatSubD = true;
         StartCoroutine(ResetBeatValue());
     }
 

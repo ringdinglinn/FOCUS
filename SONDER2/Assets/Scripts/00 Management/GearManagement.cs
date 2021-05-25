@@ -43,7 +43,7 @@ public class GearManagement : MonoBehaviourReferenced {
     private void OnEnable() {
         referenceManagement.beatDetector.bdOnBar.AddListener(OnBar);
         referenceManagement.beatDetector.bdOnFourth.AddListener(OnBeat);
-        referenceManagement.beatDetector.bdOnEigth.AddListener(OnSubBeat);
+        referenceManagement.beatDetector.bdOnEighth.AddListener(OnSubBeat);
         inputManagement = referenceManagement.inputManagement;
         carManagement = referenceManagement.carManagement;
         beatDetector = referenceManagement.beatDetector;
@@ -67,7 +67,7 @@ public class GearManagement : MonoBehaviourReferenced {
     private void OnDisable() {
         referenceManagement.beatDetector.bdOnBar.RemoveListener(OnBar);
         referenceManagement.beatDetector.bdOnFourth.RemoveListener(OnBeat);
-        referenceManagement.beatDetector.bdOnEigth.RemoveListener(OnSubBeat);
+        referenceManagement.beatDetector.bdOnEighth.RemoveListener(OnSubBeat);
     }
 
     private void OnBar() {

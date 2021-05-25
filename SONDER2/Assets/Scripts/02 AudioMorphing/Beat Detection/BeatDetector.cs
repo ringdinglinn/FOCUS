@@ -11,7 +11,7 @@ public class BeatDetector : MonoBehaviourReferenced {
     public float HalfInterval, FourthInterval, EighthInterval;
 
     public BDOnBeatEventHandler bdOnFourth;
-    public BDOnBeatEventHandler bdOnEigth;
+    public BDOnBeatEventHandler bdOnEighth;
     public BDOnBeatEventHandler bdOnHalf;
     public BDOnBeatEventHandler bdOnBar;
 
@@ -64,15 +64,6 @@ public class BeatDetector : MonoBehaviourReferenced {
             fourthCount++;
             bdOnFourth.Invoke();
         }
-        if (fourthTimer >= fourthInterval - beatWindow / 2) {
-            WithinBeatWindow = true;
-        }
-        else if (fourthTimer <= beatWindow / 2) {
-            WithinBeatWindow = true;
-        }
-        else {
-            WithinBeatWindow = false;
-        }
 
         // eighth
         eighth = false;
@@ -82,7 +73,7 @@ public class BeatDetector : MonoBehaviourReferenced {
             eighthTimer -= eighthInterval;
             eighth = true;
             eighthCount++;
-            bdOnEigth.Invoke();
+            bdOnEighth.Invoke();
         }
 
         // bar

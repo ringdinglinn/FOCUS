@@ -33,9 +33,30 @@ public class MenuManagement : MonoBehaviourReferenced {
     bool menuActive = true;
     bool creditsActive = false;
 
+    FMOD.Studio.EventInstance radioStatic;
+    FMOD.Studio.EventInstance menuClicks;
+    FMOD.Studio.EventInstance menuAmbience;
+    FMOD.Studio.EventInstance menuSelect;
+    FMOD.Studio.EventInstance menuTitle;
+
     void Start() {
         inputManagement = referenceManagement.inputManagement;
         currentClarity = startClarity;
+        radioStatic = FMODUnity.RuntimeManager.CreateInstance(referenceManagement.radioStatic);
+        menuClicks = FMODUnity.RuntimeManager.CreateInstance(referenceManagement.menuClicks);
+        menuAmbience = FMODUnity.RuntimeManager.CreateInstance(referenceManagement.menuAmbience);
+        menuSelect = FMODUnity.RuntimeManager.CreateInstance(referenceManagement.menuSelect);
+        menuTitle = FMODUnity.RuntimeManager.CreateInstance(referenceManagement.menuTitle);
+        radioStatic.start();
+        menuAmbience.start();
+    }
+
+    void OnDisable() {
+        radioStatic.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        menuAmbience.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        foreach (Image img in menuItems) {
+            img.material.SetFloat("Clarity", defaultClarity);
+        }
     }
 
     void Update() {
@@ -58,8 +79,15 @@ public class MenuManagement : MonoBehaviourReferenced {
 
             currentClarity = Mathf.Lerp(currentClarity, defaultClarity, 0.3f);
             menuItems[index].material.SetFloat("Clarity", currentClarity);
+            Debug.Log($"currentClarity = {currentClarity}");
+            float rs = Mathf.InverseLerp(defaultClarity, changedClarity, currentClarity);
+            rs = 1 - rs;
+            rs *= 2;
+            Debug.Log($"radioStatic = {rs}");
+            radioStatic.setParameterByName("SignalStrength", rs);
 
             if (!inputManagement.GetInputButton(Inputs.enter) && enterPressed) {
+                menuSelect.start();
                 switch (index) {
                     case 0:
                         Play();
@@ -86,17 +114,12 @@ public class MenuManagement : MonoBehaviourReferenced {
     }
 
     void ChangeSelected() {
+        menuClicks.start();
         foreach (Image img in menuItems) {
             img.gameObject.SetActive(false);
         }
         menuItems[index].gameObject.SetActive(true);
         currentClarity = changedClarity;
-    }
-
-    void OnDisable() {
-        foreach(Image img in menuItems) {
-            img.material.SetFloat("Clarity", defaultClarity);
-        }
     }
 
     void Play() {
@@ -112,7 +135,8 @@ public class MenuManagement : MonoBehaviourReferenced {
         controlsImg.gameObject.SetActive(false);
         yield return new WaitForSeconds(1f);
         titleImg.gameObject.SetActive(true);
-        yield return new WaitForSeconds(4f);
+        menuTitle.start();
+        yield return new WaitForSeconds(3.5f);
         titleImg.gameObject.SetActive(false);
         yield return new WaitForSeconds(0.5f);
         waitForSignalImg.gameObject.SetActive(true);
