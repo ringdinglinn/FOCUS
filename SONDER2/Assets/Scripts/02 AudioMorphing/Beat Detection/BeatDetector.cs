@@ -25,6 +25,8 @@ public class BeatDetector : MonoBehaviourReferenced {
         }
     }
 
+    LevelManagement levelManagement;
+
     protected override void Awake() {
         base.Awake();
         if (BDInstance != null && BDInstance != this) {
@@ -38,6 +40,7 @@ public class BeatDetector : MonoBehaviourReferenced {
         FourthInterval = 60 / bpm;
         EighthInterval = FourthInterval / 2;
         HalfInterval = FourthInterval * 2f;
+        levelManagement = referenceManagement.levelManagement;
     }
 
     private void Update() {
@@ -62,8 +65,11 @@ public class BeatDetector : MonoBehaviourReferenced {
         if (fourthTimer >= fourthInterval) {
             fourthTimer -= fourthInterval;
             fourthCount++;
-            bdOnFourth.Invoke();
+            if (levelManagement.levelNr != 1) {
+                bdOnFourth.Invoke();
+            }
         }
+
 
         // eighth
         eighth = false;

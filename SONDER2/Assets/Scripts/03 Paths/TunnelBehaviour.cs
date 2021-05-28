@@ -50,6 +50,9 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
 
             CarAI carAI;
             carAI = other.GetComponentInParent<CarAI>();
+
+            Debug.Log($"car entered tunnel = {other.name}");
+
             if (isEndTunnel) {
                 carAI.startTunnel = startTunnel;
                 carAI.endTunnel = this;

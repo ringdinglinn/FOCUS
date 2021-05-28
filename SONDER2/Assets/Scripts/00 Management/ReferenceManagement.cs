@@ -102,11 +102,15 @@ public class ReferenceManagement : MonoBehaviour
     [FMODUnity.EventRef]
     public string switchDone;
     [FMODUnity.EventRef]
+    public string switchStart;
+    [FMODUnity.EventRef]
     public string flashOn;
     [FMODUnity.EventRef]
     public string flashOff;
     [FMODUnity.EventRef]
     public string flashHum;
+    [FMODUnity.EventRef]
+    public string flashHumMarkedCar;
     [FMODUnity.EventRef]
     public string signalSuccess;
     [FMODUnity.EventRef]
@@ -127,6 +131,9 @@ public class ReferenceManagement : MonoBehaviour
     public string carInterior2;
     [FMODUnity.EventRef]
     public string carExterior;
+    public string voiceOver;
+    
+
 
     [Header("Switching")]
     [Range(0.0f, 1.0f)]

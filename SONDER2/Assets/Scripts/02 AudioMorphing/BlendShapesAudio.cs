@@ -23,6 +23,8 @@ public class BlendShapesAudio : MonoBehaviourReferenced {
     public enum rate { bar, half, fourth };
     public rate myRate;
 
+    Vector3 startPosition;
+
     private void OnEnable() {
         bd = referenceManagement.beatDetector;
         bd.bdOnFourth.AddListener(HandleFourth);
@@ -38,6 +40,7 @@ public class BlendShapesAudio : MonoBehaviourReferenced {
 
     private void Start() {
         skinnedMesh = GetComponent<SkinnedMeshRenderer>();
+        startPosition = transform.position;
     }
 
     private void HandleFourth() {
@@ -97,6 +100,11 @@ public class BlendShapesAudio : MonoBehaviourReferenced {
 
         skinnedMesh.SetBlendShapeWeight(currentShape % nrOfShapes, 0);
         skinnedMesh.SetBlendShapeWeight((currentShape + 1) % nrOfShapes, 100);
+
+        if ((currentShape + 1) % nrOfShapes == 0) {
+            Debug.Log("Reset");
+            transform.position = startPosition;
+        }
 
         currentShape++;
 

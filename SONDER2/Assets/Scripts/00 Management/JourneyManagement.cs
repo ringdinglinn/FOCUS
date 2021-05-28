@@ -102,14 +102,14 @@ public class JourneyManagement : MonoBehaviourReferenced {
         if (hasFallenCars) {
             Debug.Log("Lerp in progress");
             startCar.SetKinematic(true);
-            startCar.transform.position = Vector3.Lerp(startCar.transform.position, activeCarFallTargets.transform.position, 0.2f * Time.deltaTime);
-            startCar.transform.rotation = Quaternion.Slerp(startCar.transform.rotation, activeCarFallTargets.transform.rotation, 0.2f * Time.deltaTime);
+            startCar.transform.position = Vector3.Lerp(startCar.transform.position, activeCarFallTargets.transform.position, 0.1f * Time.deltaTime);
+            startCar.transform.rotation = Quaternion.Slerp(startCar.transform.rotation, activeCarFallTargets.transform.rotation, 0.1f * Time.deltaTime);
             for (int i = 0; i < outroCars.Count && i < fallTargets.Length; i++) {
                 if (outroCars[i] != startCar) {
                     outroCars[i].SetKinematic(true);
                     outroCars[i].fallTargetID = i;
-                    outroCars[i].transform.position = Vector3.Lerp(outroCars[i].transform.position, fallTargets[i].position, 0.2f * Time.deltaTime);
-                    outroCars[i].transform.rotation = Quaternion.Slerp(outroCars[i].transform.rotation, fallTargets[i].rotation, 0.2f * Time.deltaTime);
+                    outroCars[i].transform.position = Vector3.Lerp(outroCars[i].transform.position, fallTargets[i].position, 0.1f * Time.deltaTime);
+                    outroCars[i].transform.rotation = Quaternion.Slerp(outroCars[i].transform.rotation, fallTargets[i].rotation, 0.1f * Time.deltaTime);
                 }
             }
         }

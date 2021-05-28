@@ -26,7 +26,9 @@ public class TreeAudioScript : MonoBehaviourReferenced {
             mrs = trees[i].GetComponentsInChildren<MeshRenderer>();
             mrList.Add(mrs);
             for (int j = 0; j < mrs.Length; j++) {
-                mrs[j].materials[0].SetVector("_BasePos", trees[i].transform.position);
+                for (int k = 0; k < mrs[j].materials.Length; k++) {
+                    mrs[j].materials[k].SetVector("_BasePos", trees[i].transform.position);
+                }
             }
         }
     }
@@ -37,13 +39,14 @@ public class TreeAudioScript : MonoBehaviourReferenced {
 
     private void OnBeatSubD() {
         beatCounterSubD++;
-        //for (int i = 0; i < audioMats.Count; i++) {
-        //    audioMats[i].SetFloat("BeatCounter", beatCounterSubD);
-        //}
-
         for (int i = 0; i < mrList.Count; i++) {
+            Debug.Log($"i = {i}");
             for (int j = 0; j < mrList[i].Length; j++) {
-                mrList[i][j].materials[0].SetFloat("BeatCounter", beatCounterSubD);
+                Debug.Log($"j = {j}");
+                for (int k = 0; k < mrList[i][j].materials.Length; k++) {
+                    Debug.Log($"k = {k}");
+                    mrList[i][j].materials[k].SetFloat("_BeatCounter", beatCounterSubD);
+                }
             }
         }
     }

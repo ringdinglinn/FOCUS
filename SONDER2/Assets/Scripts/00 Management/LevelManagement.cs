@@ -36,6 +36,7 @@ public class LevelManagement : MonoBehaviourReferenced {
     }
 
     public void EnteredEndTunnel(int startPathID, int endPathID) {
+        Debug.Log("entered end tunnel");
         foreach(GameObject level in levels) {
             level.SetActive(true);
         }

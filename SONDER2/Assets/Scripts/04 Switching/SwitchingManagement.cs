@@ -94,10 +94,12 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     public float signalDisplayAmplitude = 1f;
 
     EventInstance radioStatic;
-    EventInstance switchEvt;
+    EventInstance switchDone;
+    EventInstance switchStart;
     EventInstance flashOn;
     EventInstance flashOff;
     EventInstance flashHum;
+    EventInstance flashHumMarkedCar;
     EventInstance signalSuccess;
     EventInstance signalFailure;
     EventInstance carInterior0;
@@ -143,18 +145,21 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         morseSignalTex = referenceManagement.morseSingalTex;
         radioStatic = RuntimeManager.CreateInstance(referenceManagement.radioStatic);
         radioStatic.start();
-        switchEvt = RuntimeManager.CreateInstance(referenceManagement.switchDone);
+        switchDone = RuntimeManager.CreateInstance(referenceManagement.switchDone);
+        switchStart = RuntimeManager.CreateInstance(referenceManagement.switchStart);
         postProcessVolume = referenceManagement.postProcess;
         postProcessVolume.profile.TryGet(out motionBlur);
         flashOn = RuntimeManager.CreateInstance(referenceManagement.flashOn);
         flashOff = RuntimeManager.CreateInstance(referenceManagement.flashOff);
         flashHum = RuntimeManager.CreateInstance(referenceManagement.flashHum);
+        flashHumMarkedCar = RuntimeManager.CreateInstance(referenceManagement.flashHumMarkedCar);
         signalSuccess = RuntimeManager.CreateInstance(referenceManagement.signalSuccess);
         signalFailure = RuntimeManager.CreateInstance(referenceManagement.signalFailure);
         carInterior0 = RuntimeManager.CreateInstance(referenceManagement.carInterior0);
         carInterior1 = RuntimeManager.CreateInstance(referenceManagement.carInterior1);
         carInterior2 = RuntimeManager.CreateInstance(referenceManagement.carInterior2);
         flashHum.start();
+        flashHumMarkedCar.start();
         carInterior0.start();
         flashHum.setParameterByName("HumStrength", 0f);
         morseLongTex = referenceManagement.morseSignalLong;
@@ -250,7 +255,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
         float minDist = Mathf.Infinity;
 
-        if ((HasMarkedCar && !CheckIfVisible(MarkedCar)) || (!HasMarkedCar)) { 
+        if ((HasMarkedCar && !CheckIfVisible(MarkedCar)) || (!HasMarkedCar)) {
             for (int i = 0; i < allSwitchingBehaviours.Count; i++) {
                 if (CheckIfVisible(allSwitchingBehaviours[i])) {
                     SBsInFrame.Add(allSwitchingBehaviours[i]);
@@ -410,6 +415,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     }
 
     private void Switch() {
+        switchStart.start();
         SwitchToCar(selectedCar);
         ActiveCar = selectedCar;
         DeselectCar();
@@ -432,8 +438,10 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     }
 
     public void SwitchDone() {
+        Debug.Log("switch done");
         ActiveCar.SetActiveCarValues();
-        switchEvt.start();
+        switchDone.start();
+        switchStart.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         motionBlur.intensity.value = 1f;
 
         if (carSoundIndex == 0) {
@@ -454,7 +462,8 @@ public class SwitchingManagement : MonoBehaviourReferenced {
             measureInterval = false;
             StartCoroutine(MeasureFlashDuration());
             flashOn.start();
-            flashHum.setParameterByName("HumStrength", 1f);
+            if (!HasMarkedCar) flashHum.setParameterByName("HumStrength", 1f);
+            else flashHumMarkedCar.setParameterByName("HumStrengthMarkedCar", 1f);
         } else {
             measureFlash = false;
             if (!successfulFlashes) {
@@ -463,6 +472,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
             }
             flashOff.start();
             flashHum.setParameterByName("HumStrength", 0f);
+            flashHumMarkedCar.setParameterByName("HumStrengthMarkedCar", 0f);
         }
     }
 

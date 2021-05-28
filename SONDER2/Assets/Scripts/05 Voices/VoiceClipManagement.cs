@@ -7,69 +7,111 @@ public class VoiceClipManagement : MonoBehaviourReferenced {
     private VoiceClipBehaviour voiceClipBehaviour;
     private SwitchingManagement switchingManagement;
     private MusicManagement musicManagement;
+    private LevelManagement levelManagement;
+    private BeatDetector beatDetector;
 
     float p = 1f;
-    float delay = 7f;
+    float delay = 10f;
     float delayRange = 2f;
-    float volumeTime = 1f;
+    float volumeTime = 0.5f;
 
     float targetVolume = 1f;
     float currentVolume = 1f;
 
     bool playedAudio = false;
 
+    int voiceOverIndex = -1;
+
+    FMOD.Studio.EventInstance[] voicesOvers = new FMOD.Studio.EventInstance[17];
+
+    private bool playVoiceOverAfterSwitch = true;
+    private List<Coroutine> waitToPlayCoroutines = new List<Coroutine>();
+
+    bool endSeqAlternating = false;
+
     private void OnEnable() {
         voiceClipBehaviour = referenceManagement.voiceClipBehaviour;
         switchingManagement = referenceManagement.switchingManagement;
         musicManagement = referenceManagement.musicManagement;
+        levelManagement = referenceManagement.levelManagement;
+        beatDetector = referenceManagement.beatDetector;
 
-        switchingManagement.CarSwitchedEvent.AddListener(OnCarSwitched);
+        switchingManagement.CarSwitchedEvent.AddListener(HandleCarSwitched);
+
+        GetVoiceOvers();
+    }
+
+    private void GetVoiceOvers() {
+        for (int i = 0; i < voicesOvers.Length; i++) {
+            voicesOvers[i] = FMODUnity.RuntimeManager.CreateInstance(referenceManagement.voiceOver + $" {i+1}");
+        }
     }
 
     private void OnDisable() {
-        switchingManagement.CarSwitchedEvent.RemoveListener(OnCarSwitched);
+        switchingManagement.CarSwitchedEvent.RemoveListener(HandleCarSwitched);
     }
 
-    private void OnCarSwitched() {
+    private void HandleCarSwitched() {
         currentVolume = 1;
         targetVolume = 1;
-        voiceClipBehaviour.Stop();
         StopCoroutine(WaitToPlaySnippet());
-        if (Random.Range(0f, 1f) <= p) {
-            StartCoroutine(WaitToPlaySnippet());
+        foreach (Coroutine coroutine in waitToPlayCoroutines) {
+            StopCoroutine(coroutine);
+        }
+        waitToPlayCoroutines.Clear();
+        TerminateSnippet();
+
+        if (levelManagement.levelNr == 6) endSeqAlternating = !endSeqAlternating;
+        if (playVoiceOverAfterSwitch || (endSeqAlternating && levelManagement.levelNr == 6)) {
+            waitToPlayCoroutines.Add(StartCoroutine(WaitToPlaySnippet()));
         }
     }
 
     IEnumerator WaitToPlaySnippet() {
-        int index = Random.Range(0, 10);
-        Debug.Log($"Wait to play snippet {index}");
+        playVoiceOverAfterSwitch = false;
         float d = Random.Range(delay - delayRange * 0.5f, delay + delayRange * 0.5f);
-        yield return new WaitForSeconds(d - volumeTime);
-        yield return new WaitForSeconds(d);
-        targetVolume = 0.7f;
-        PlaySnippet(index);
+        yield return new WaitForSeconds(levelManagement.levelNr >= 5 ? beatDetector.GetBarInterval() - volumeTime / 2 : d - volumeTime);
+        targetVolume = 0.5f;
+        yield return new WaitForSeconds(levelManagement.levelNr >= 5 ? volumeTime / 2 : volumeTime);
+
+        PlaySnippet();
+    }
+
+    void PlaySnippet() {
+        voiceOverIndex++;
+        voicesOvers[voiceOverIndex].start();
         playedAudio = true;
     }
 
-    void SnippedDone() {
-        Debug.Log("Snippet done");
-        targetVolume = 1;
-        playedAudio = false;
+    void TerminateSnippet() {
+        if (voiceOverIndex >= 0)
+        voicesOvers[voiceOverIndex].stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
     }
 
-    private void PlaySnippet(int i) {
-        voiceClipBehaviour.ChangeClip(i);
-        voiceClipBehaviour.Play();
+    void SnippedDone() {
+        targetVolume = 1;
+        playedAudio = false;
     }
 
     private void Update() {
         currentVolume = Mathf.Lerp(currentVolume, targetVolume, 1 * Time.deltaTime);
         if (playedAudio) {
-            if (!voiceClipBehaviour.IsPlaying()) {
+            if (!IsPlaying(voicesOvers[voiceOverIndex])) {
                 SnippedDone();
             }
         }
-
         musicManagement.SetVolume(currentVolume);
+    }
+
+
+    bool IsPlaying(FMOD.Studio.EventInstance instance) {
+        FMOD.Studio.PLAYBACK_STATE state;
+        instance.getPlaybackState(out state);
+        Debug.Log($"playback state = {state}");
+        return state != FMOD.Studio.PLAYBACK_STATE.STOPPED;
+    }
+
+    public void SetPlayVoiceOverAfterSwitch(bool b) {
+        playVoiceOverAfterSwitch = true;
     }
 }

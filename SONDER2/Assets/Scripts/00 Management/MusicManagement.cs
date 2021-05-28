@@ -95,7 +95,6 @@ public class MusicManagement : MonoBehaviourReferenced {
 
     void HandleCarSwitched() {
         track1.setParameterByName("SwitchNr", ++switchNr);
-        Debug.Log($"Set parementer evt, {switchNr}");
     }
 
     public void SetVolume(float v) {

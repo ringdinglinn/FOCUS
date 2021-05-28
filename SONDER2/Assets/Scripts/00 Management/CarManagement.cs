@@ -145,7 +145,7 @@ public class CarManagement : MonoBehaviourReferenced {
     }
 
     public void ChangeToClone(bool isActiveCar, CarAI oldCar, CarAI newCar) {
-        Debug.Log("change to clone");
+        Debug.Log($"change to clone {newCar.name}");
         newCar.MakeMainCar(isActiveCar);
         allSwitchingBehaviours.Remove(oldCar.GetComponent<SwitchingBehaviour>());
         allCarAIs.Remove(oldCar);

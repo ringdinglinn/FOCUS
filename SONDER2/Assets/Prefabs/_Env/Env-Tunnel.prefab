@@ -449,7 +449,7 @@ GameObject:
   - component: {fileID: 5760106087050140503}
   - component: {fileID: 8801963016382128993}
   - component: {fileID: 4905332501707864501}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Env-Tunnel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -512,6 +512,8 @@ MonoBehaviour:
   entryFilter0: {fileID: 946652023418357883}
   entryFilter1: {fileID: 2897044115712433804}
   pathBehaviour: {fileID: 0}
+  goalIndicator: {fileID: 0}
+  nextGoalIndicator: {fileID: 0}
 --- !u!65 &8801963016382128993
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1293,7 +1295,7 @@ GameObject:
   - component: {fileID: 2134307785838151212}
   - component: {fileID: 2912582016769699149}
   - component: {fileID: 528448572671357932}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Portal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
