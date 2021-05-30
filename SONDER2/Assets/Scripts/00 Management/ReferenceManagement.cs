@@ -78,11 +78,6 @@ public class ReferenceManagement : MonoBehaviour
     public Canvas canvas;
 
     [Header("Sounds")]
-    public AudioSource switchSound;
-    public AudioSource selectedSwitchCar;
-    public AudioSource voiceClips;
-    public VoiceClipBehaviour voiceClipBehaviour;
-
     [FMODUnity.EventRef]
     public string track1;
     [FMODUnity.EventRef]

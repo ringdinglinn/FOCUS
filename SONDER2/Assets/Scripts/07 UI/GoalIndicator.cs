@@ -6,14 +6,23 @@ public class GoalIndicator : MonoBehaviourReferenced {
 
     SwitchingManagement switchingManagement;
     public Transform activeCar;
+    private Camera1stPerson cam;
+
+    float prevRot;
 
     private void Start() {
         activeCar = switchingManagement.ActiveCar.transform;
+        cam = referenceManagement.cam;
     }
 
     private void OnEnable() {
         switchingManagement = referenceManagement.switchingManagement;
         switchingManagement.CarChangedEvent.AddListener(ActiveCarChanged);
+        referenceManagement.carManagement.cameraChanged.AddListener(HandleCameraSwitched);
+    }
+
+    private void HandleCameraSwitched() {
+        cam = referenceManagement.cam;
     }
 
     private void OnDisable() {
@@ -25,6 +34,8 @@ public class GoalIndicator : MonoBehaviourReferenced {
     }
 
     private void Update() {
-        transform.rotation = Quaternion.LookRotation(activeCar.position - transform.position);
+        transform.forward = activeCar.position - transform.position;
+        transform.localRotation = cam.transform.localRotation;
+        transform.RotateAround(transform.position, transform.up, 180);
     }
 }

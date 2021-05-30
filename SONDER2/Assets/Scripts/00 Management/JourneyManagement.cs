@@ -14,7 +14,6 @@ public class JourneyManagement : MonoBehaviourReferenced {
 
     GameObject alternatePath0;
 
-
     List<CarAI> outroCars = new List<CarAI>();
     List<CarAI> fallenCars = new List<CarAI>();
     bool hasFallenCars;
@@ -25,7 +24,6 @@ public class JourneyManagement : MonoBehaviourReferenced {
 
     int nrOutroCars = 0;
     int maxNrOutroCars = 8;
-
 
     private void OnEnable() {
         switchingManagement = referenceManagement.switchingManagement;

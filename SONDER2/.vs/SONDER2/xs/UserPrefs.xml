@@ -1,13 +1,17 @@
 ﻿<Properties StartupConfiguration="{281EEECF-89B9-6D0B-978A-5FDC6B8E6CBA}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/04 Switching/SwitchingManagement.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/06 Cars/WheelVehicle.cs">
     <Files>
-      <File FileName="Assets/Scripts/04 Switching/SwitchingManagement.cs" Line="466" Column="76" />
-      <File FileName="Assets/Scripts/00 Management/ReferenceManagement.cs" Line="113" Column="36" />
+      <File FileName="Assets/Scripts/06 Cars/CarAI.cs" Line="11" Column="25" />
+      <File FileName="Assets/Scripts/04 Switching/SwitchingManagement.cs" />
+      <File FileName="Assets/Scripts/00 Management/ReferenceManagement.cs" />
+      <File FileName="Assets/Scripts/05 Voices/VoiceClipManagement.cs" />
+      <File FileName="Assets/Scripts/02 AudioMorphing/Beat Detection/BeatDetector.cs" Line="68" Column="32" />
+      <File FileName="Assets/Scripts/06 Cars/WheelVehicle.cs" Line="210" Column="39" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="328cc2f6-3e96-4256-8271-c9baa36cc0c6" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="4bb03aab-9665-49b1-ac21-8d3990aa209f" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

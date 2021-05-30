@@ -397,7 +397,6 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         ResetFlashRecordDurations();
         hasSelectedCar = true;
         selectedCar = MarkedCar;
-        referenceManagement.selectedSwitchCar.Play();
         canSelectCar = false;
         Switch();
     }

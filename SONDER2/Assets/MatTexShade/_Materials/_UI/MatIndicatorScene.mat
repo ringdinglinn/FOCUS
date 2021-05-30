@@ -27,7 +27,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - BaseTexture:
-        m_Texture: {fileID: 2800000, guid: 651625baf96f948ec98379e6d5965b35, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _AnisotropyMap:
@@ -118,6 +118,7 @@ Material:
     - Clarity: 0.02
     - Vector1_231EF832: 500
     - Vector1_58FA3302: 1
+    - Vector1_73DF20C7: 1
     - _AORemapMax: 1
     - _AORemapMin: 0
     - _ATDistance: 1
@@ -129,6 +130,7 @@ Material:
     - _AlphaCutoffPrepass: 0.5
     - _AlphaCutoffShadow: 0.5
     - _AlphaDstBlend: 0
+    - _AlphaFactor: 1
     - _AlphaSrcBlend: 1
     - _Anisotropy: 0
     - _BlendMode: 0
@@ -180,6 +182,7 @@ Material:
     - _HeightPoMAmplitude: 2
     - _HeightTessAmplitude: 2
     - _HeightTessCenter: 0.5
+    - _Index: 0
     - _InvTilingScale: 1
     - _Ior: 1.5
     - _IridescenceMask: 1

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class VoiceClipManagement : MonoBehaviourReferenced {
 
-    private VoiceClipBehaviour voiceClipBehaviour;
     private SwitchingManagement switchingManagement;
     private MusicManagement musicManagement;
     private LevelManagement levelManagement;
@@ -30,7 +29,6 @@ public class VoiceClipManagement : MonoBehaviourReferenced {
     bool endSeqAlternating = false;
 
     private void OnEnable() {
-        voiceClipBehaviour = referenceManagement.voiceClipBehaviour;
         switchingManagement = referenceManagement.switchingManagement;
         musicManagement = referenceManagement.musicManagement;
         levelManagement = referenceManagement.levelManagement;

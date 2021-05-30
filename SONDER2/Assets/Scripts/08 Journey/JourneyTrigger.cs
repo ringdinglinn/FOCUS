@@ -24,7 +24,6 @@ public class JourneyTrigger : MonoBehaviourReferenced {
         if (type == TriggerType.EndGate) {
             if (other.gameObject.CompareTag("Car")) {
                 StartCoroutine(EndScene());
-
             }
         }
         if (type == TriggerType.SlowDownActiveCar) {

@@ -55,7 +55,9 @@ public class BeatDetector : MonoBehaviourReferenced {
         if (halfTimer >= halfInterval) {
             halfTimer -= halfInterval;
             halfCount++;
-            bdOnHalf.Invoke();
+            if (levelManagement.levelNr != 1 && levelManagement.levelNr != 0) {
+                bdOnHalf.Invoke();
+            }
         }
 
         // fourth
@@ -65,7 +67,7 @@ public class BeatDetector : MonoBehaviourReferenced {
         if (fourthTimer >= fourthInterval) {
             fourthTimer -= fourthInterval;
             fourthCount++;
-            if (levelManagement.levelNr != 1) {
+            if (levelManagement.levelNr != 1 && levelManagement.levelNr != 0) {
                 bdOnFourth.Invoke();
             }
         }
@@ -79,7 +81,9 @@ public class BeatDetector : MonoBehaviourReferenced {
             eighthTimer -= eighthInterval;
             eighth = true;
             eighthCount++;
-            bdOnEighth.Invoke();
+            if (levelManagement.levelNr != 0) {
+                bdOnEighth.Invoke();
+            }
         }
 
         // bar
