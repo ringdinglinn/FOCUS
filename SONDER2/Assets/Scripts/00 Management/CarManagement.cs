@@ -158,6 +158,8 @@ public class CarManagement : MonoBehaviourReferenced {
 
         if (isActiveCar) {
             referenceManagement.cam = newCar.cam;
+            Camera camcam = newCar.cam.GetComponent<Camera>();
+            camcam.enabled = true;
             cameraChanged.Invoke();
             switchingManagement.SetActiveCar(newSB);
             Destroy(oldCar.cam.gameObject);

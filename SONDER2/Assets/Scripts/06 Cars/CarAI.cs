@@ -394,6 +394,8 @@ public class CarAI : MonoBehaviourReferenced {
         Vector3 dir = TransformDirectionToStart(cam.transform.forward);
         GameObject cloneCamObj = Instantiate(referenceManagement.camPrefab, pos, Quaternion.LookRotation(dir));
         Camera1stPerson cloneCam = cloneCamObj.GetComponent<Camera1stPerson>();
+        Camera cloneCamCam = cloneCamObj.GetComponent<Camera>();
+        cloneCamCam.enabled = false;
         cloneCam.SetAsCloneCam();
         cloneCam.SwitchCar(clone.switchingBehaviour.camTranslateTarget.transform, clone.switchingBehaviour.camRotTarget.transform, true, clone.transform);
         clone.cam = cloneCam;

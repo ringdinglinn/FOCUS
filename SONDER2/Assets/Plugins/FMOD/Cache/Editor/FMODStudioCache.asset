@@ -203,6 +203,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &-9004139852913064175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/car0-inside/Speed
+  m_EditorClassIdentifier: 
+  Name: Speed
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-8891188413652815115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -366,6 +386,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &-8695707501943617265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/track-1/SwitchNr
+  m_EditorClassIdentifier: 
+  Name: SwitchNr
+  Min: 0
+  Max: 100
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-8691628486075339479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -592,8 +632,8 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: -796303913527503034}
-  - {fileID: 8048918646243970658}
+  - {fileID: -8474447646516158383}
+  - {fileID: 1711210845409497346}
   MinDistance: 1
   MaxDistance: 150
   Length: 64106
@@ -657,6 +697,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &-8474447646516158383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/car-outside/CarPitch
+  m_EditorClassIdentifier: 
+  Name: CarPitch
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-8457634171944346789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3510,7 +3570,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: -7658093462027471664}
+  - {fileID: -2947864685098742306}
   MinDistance: 0
   MaxDistance: 0
   Length: 4865
@@ -3841,6 +3901,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &-4891910372119910684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/light-noise-marked-car/HumStrengthMarkedCar
+  m_EditorClassIdentifier: 
+  Name: HumStrengthMarkedCar
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-4880558087364520492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4043,6 +4123,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &-4564347038588286689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/car1-inside/Speed
+  m_EditorClassIdentifier: 
+  Name: Speed
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-4559118335795685213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5192,7 +5292,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 2413785185765506681}
+  - {fileID: -9004139852913064175}
   MinDistance: 0
   MaxDistance: 0
   Length: 42919
@@ -5522,9 +5622,9 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 6896017049499902018}
-  - {fileID: 8184592002115775757}
-  - {fileID: -2964488508884779451}
+  - {fileID: 2756081234473339319}
+  - {fileID: 859994558476445367}
+  - {fileID: -8695707501943617265}
   MinDistance: 0
   MaxDistance: 0
   Length: 155826
@@ -5588,6 +5688,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &-2947864685098742306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/light-hum/HumStrength
+  m_EditorClassIdentifier: 
+  Name: HumStrength
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-2941641285251247940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6258,6 +6378,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 1
+--- !u!114 &-2125564650053377261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/static/SignalStrength
+  m_EditorClassIdentifier: 
+  Name: SignalStrength
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-2111276989817378794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6714,7 +6854,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 2217681808289643330}
+  - {fileID: -4891910372119910684}
   MinDistance: 0
   MaxDistance: 0
   Length: 4500
@@ -7284,7 +7424,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 7015416788783233064}
+  - {fileID: -4564347038588286689}
   MinDistance: 0
   MaxDistance: 0
   Length: 28075
@@ -8159,6 +8299,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &-280112802803663441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/car2-inside/Speed
+  m_EditorClassIdentifier: 
+  Name: Speed
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-266839556378030470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8738,7 +8898,7 @@ MonoBehaviour:
   - {fileID: 6439672478953253675}
   StringsBanks:
   - {fileID: 8796192020974241982}
-  stringsBankWriteTime: 637578199250000000
+  stringsBankWriteTime: 637580581870000000
   cacheVersion: 6
 --- !u!114 &12155377151458878
 MonoBehaviour:
@@ -9691,6 +9851,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &859994558476445367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/track-1/Volume
+  m_EditorClassIdentifier: 
+  Name: Volume
+  Min: 0
+  Max: 1
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &862955570566482523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10334,6 +10514,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &1711210845409497346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/car-outside/IsActiveCar
+  m_EditorClassIdentifier: 
+  Name: IsActiveCar
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &1757108568912136389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11302,6 +11502,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &2756081234473339319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/track-1/SignalStrength
+  m_EditorClassIdentifier: 
+  Name: SignalStrength
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &2786311550068527882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13380,7 +13600,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: 9063583251908942540}
+  - {fileID: 7392071424110015993}
   MinDistance: 0
   MaxDistance: 0
   Length: 31500
@@ -14219,7 +14439,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 9154722090195096078}
+  - {fileID: -280112802803663441}
   MinDistance: 0
   MaxDistance: 0
   Length: 12585
@@ -14817,7 +15037,7 @@ MonoBehaviour:
   Path: ../../04 Sound/FMOD/FOCUS/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637578199250000000
+  lastModified: 637580581870000000
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -15791,6 +16011,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &7392071424110015993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/static2D/SignalStrength
+  m_EditorClassIdentifier: 
+  Name: SignalStrength
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &7392906259036126689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16590,7 +16830,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: -3894807478219981833}
+  - {fileID: -2125564650053377261}
   MinDistance: 0
   MaxDistance: 0
   Length: 31500
@@ -17258,7 +17498,7 @@ MonoBehaviour:
   Path: ../../04 Sound/FMOD/FOCUS/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637578199250000000
+  lastModified: 637580581870000000
   LoadResult: 0
   FileSizes:
   - Name: Desktop

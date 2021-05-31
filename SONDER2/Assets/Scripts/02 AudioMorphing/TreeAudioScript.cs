@@ -10,9 +10,10 @@ public class TreeAudioScript : MonoBehaviourReferenced {
     private float beatCounterFull = 0;
     private float beatCounterSubD = 0;
 
+    private bool animate = false;
+
     private void Start() {
         BeatDetector beatDetector = referenceManagement.beatDetector;
-        beatDetector.bdOnFourth.AddListener(OnBeatFull);
         beatDetector.bdOnEighth.AddListener(OnBeatSubD);
         audioMats = referenceManagement.treeAudioMats;
         trees = referenceManagement.trees;
@@ -33,20 +34,37 @@ public class TreeAudioScript : MonoBehaviourReferenced {
         }
     }
 
-    private void OnBeatFull() {
+    private void OnBeatSubD() {
 
+        if (animate) {
+            beatCounterSubD++;
+            for (int i = 0; i < mrList.Count; i++) {
+                Debug.Log($"i = {i}");
+                for (int j = 0; j < mrList[i].Length; j++) {
+                    Debug.Log($"j = {j}");
+                    for (int k = 0; k < mrList[i][j].materials.Length; k++) {
+                        Debug.Log($"k = {k}");
+                        mrList[i][j].materials[k].SetFloat("_BeatCounter", beatCounterSubD);
+                    }
+                }
+            }
+        }
     }
 
-    private void OnBeatSubD() {
-        beatCounterSubD++;
-        for (int i = 0; i < mrList.Count; i++) {
-            Debug.Log($"i = {i}");
-            for (int j = 0; j < mrList[i].Length; j++) {
-                Debug.Log($"j = {j}");
-                for (int k = 0; k < mrList[i][j].materials.Length; k++) {
-                    Debug.Log($"k = {k}");
-                    mrList[i][j].materials[k].SetFloat("_BeatCounter", beatCounterSubD);
-                }
+    private void OnTriggerEnter(Collider other) {
+        if (other.CompareTag("Car")) {
+            CarAI car = other.GetComponentInParent<CarAI>();
+            if (!car.autopilotEnabled) {
+                animate = true;
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other) {
+        if (other.CompareTag("Car")) {
+            CarAI car = other.GetComponentInParent<CarAI>();
+            if (!car.autopilotEnabled) {
+                animate = false;
             }
         }
     }
