@@ -530,10 +530,12 @@ MonoBehaviour:
   referenceManagement: {fileID: 0}
   meshRenderer: {fileID: 3418936123771391361}
   morseSignalDisplay: {fileID: 5926734854586897732}
-  morseSingalRenderer: {fileID: 8902208831850504093}
+  morseSignalRenderers: []
   boxCollider: {fileID: 1918709712}
   camRotTarget: {fileID: 9162481712970016909}
   camTranslateTarget: {fileID: 2474092420525005858}
+  armaturenbrett: {fileID: 0}
+  armaturenbrett2: {fileID: 0}
   spotlights: {fileID: 1692020089261094322}
   headlight1: {fileID: 7309495314784279257}
   headlight2: {fileID: 8172697537446575392}
@@ -543,6 +545,10 @@ MonoBehaviour:
   volumetricRenderer0: {fileID: 8797994633598951850}
   volumetricRenderer1: {fileID: 8230380655655169965}
   headlightTester: 0
+  headlightCubes: []
+  frontlightMat: {fileID: 0}
+  frontlightMatDull: {fileID: 0}
+  variation: 0
 --- !u!114 &2449730331452780726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -567,6 +573,8 @@ MonoBehaviour:
   endTunnel: {fileID: 0}
   cam: {fileID: 0}
   dontLoop: 0
+  fallTargetID: -1
+  endOfPathInstruction: 0
 --- !u!114 &114356753913500666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -805,13 +813,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6759cd5a1a1e49f9bb00cbd29f85741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carModels:
-  - {fileID: 3779219627906346068}
-  - {fileID: 508883298716417737}
+  referenceManagement: {fileID: 0}
+  allCarConfigs: []
   wheels:
   - {fileID: 2383167943945795484}
   - {fileID: 0}
   myCar: 0
+  variation: 0
+  dangleNr: 0
 --- !u!1 &1671426575577570
 GameObject:
   m_ObjectHideFlags: 0
@@ -1539,7 +1548,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3179712754922561905
 Transform:
   m_ObjectHideFlags: 0

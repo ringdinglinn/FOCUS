@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class JourneyTrigger : MonoBehaviourReferenced {
     JourneyManagement journeyManagement;
-	public enum TriggerType { IntroLoop, Gate0, SlowDownGate, EndGate, JamStartDrivingGate, SlowDownActiveCar, StopActiveCar, FallTrigger, AddToOutroCars};
+	public enum TriggerType { IntroLoop, Gate0, SlowDownGate, EndGate, JamStartDrivingGate, SlowDownActiveCar, StopActiveCar, FallTrigger, AddToOutroCars, TutorialCarReset};
     public TriggerType type;
 
     bool speedUpTrigger;
@@ -52,6 +52,14 @@ public class JourneyTrigger : MonoBehaviourReferenced {
             if (other.gameObject.CompareTag("Car")) {
                 CarAI carAI = other.GetComponentInParent<CarAI>();
                 journeyManagement.AddToOutroCars(carAI);
+            }
+        }
+        if (type == TriggerType.TutorialCarReset) {
+            if (other.gameObject.CompareTag("Car")) {
+                CarAI carAI = other.GetComponentInParent<CarAI>();
+                if (carAI.autopilotEnabled) {
+                    carAI.SetToStartConfig();
+                }
             }
         }
     }

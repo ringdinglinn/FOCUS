@@ -25,11 +25,13 @@ public class JourneyManagement : MonoBehaviourReferenced {
     int nrOutroCars = 0;
     int maxNrOutroCars = 8;
 
+
     private void OnEnable() {
         switchingManagement = referenceManagement.switchingManagement;
         switchingManagement.CarChangedEvent.AddListener(HandleSwitched);
         pathManagement = referenceManagement.pathManagement;
         carManagement = referenceManagement.carManagement;
+        carManagement.carsCreated.AddListener(HandleCarsInstantiated);
         fallTargets = referenceManagement.fallTargets;
         activeCarFallTargets = referenceManagement.activeCarFallTarget;
         levelManagement = referenceManagement.levelManagement;
@@ -39,6 +41,7 @@ public class JourneyManagement : MonoBehaviourReferenced {
 
     private void OnDisable() {
         switchingManagement.CarChangedEvent.RemoveListener(HandleSwitched);
+        carManagement.carsCreated.RemoveListener(HandleCarsInstantiated);
     }
 
     private void HandleSwitched() {
@@ -47,36 +50,58 @@ public class JourneyManagement : MonoBehaviourReferenced {
     }
 
     private void EvaluateSwitch() {
-        if (nrOfSwitches == 1) {
-            ToLevel1();
+        Debug.Log("Evaluate Switch");
+        if (levelManagement.levelNr == 0 && nrOfSwitches == 1) {
+            EnableFirstMovingCar();
         }
     }
 
-    public void NewLevelReached(int id) {
-        if (id != currentLevelPathID) {
-            levelID++;
-            currentLevelPathID = id;
-            EvaluateNewLevel();
+    private void DisableFirstMovingCar() {
+        SwitchingBehaviour[] sbs = referenceManagement.levels[0].GetComponentsInChildren<SwitchingBehaviour>(true);
+        foreach (SwitchingBehaviour sb in sbs) {
+            sb.gameObject.SetActive(false);
         }
     }
 
-    private void EvaluateNewLevel() {
-        //if (currentLevelPathID == 5) {
-        //    StartCoroutine(WaitToQuit());
-        //    referenceManagement.youDidItText.SetActive(true);
-        //}
+    private void EnableFirstMovingCar() {
+        Debug.Log("Enable First Moving Car");
+        SwitchingBehaviour[] sbs = referenceManagement.levels[0].GetComponentsInChildren<SwitchingBehaviour>(true);
+        foreach (SwitchingBehaviour sb in sbs) {
+            sb.gameObject.SetActive(true);
+        }
     }
 
-    IEnumerator WaitToQuit() {
-        yield return new WaitForSeconds(3f);
-        Application.Quit();
+    private void HandleCarsInstantiated() {
+        if (levelManagement.levelNr == 0) {
+            DisableFirstMovingCar();
+        }
     }
 
+    //public void NewLevelReached(int id) {
+    //    if (id != currentLevelPathID) {
+    //        levelID++;
+    //        currentLevelPathID = id;
+    //        EvaluateNewLevel();
+    //    }
+    //}
 
-    private void ToLevel1() {
-        pathManagement.GetMyPath(0).TransitionToNextLevel();
-        journeyState = JourneyState.Transition_Intro_1;
-    }
+    //private void EvaluateNewLevel() {
+    //    //if (currentLevelPathID == 5) {
+    //    //    StartCoroutine(WaitToQuit());
+    //    //    referenceManagement.youDidItText.SetActive(true);
+    //    //}
+    //}
+
+    //IEnumerator WaitToQuit() {
+    //    yield return new WaitForSeconds(3f);
+    //    Application.Quit();
+    //}
+
+
+    //private void ToLevel1() {
+    //    pathManagement.GetMyPath(0).TransitionToNextLevel();
+    //    journeyState = JourneyState.Transition_Intro_1;
+    //}
 
 
     public void SpeedUpAfterJam() {

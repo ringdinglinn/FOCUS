@@ -71,6 +71,11 @@ public class LevelManagement : MonoBehaviourReferenced {
         sky.hdriSky.Override(skyData[levelNr].cubemap);
         sky.desiredLuxValue.Override(skyData[levelNr].lux);
 
+        Camera cam = referenceManagement.cam.GetComponent<Camera>();
+        cam.farClipPlane = 800;
+        if (levelNr == 3) {
+            cam.farClipPlane = 2000;
+        }
         if (levelNr == 5) {
             journeyManagement.StopAllCars();
         }

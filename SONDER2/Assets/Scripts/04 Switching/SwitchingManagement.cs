@@ -197,7 +197,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
     private void SwitchToCar(SwitchingBehaviour newSB) {
         activeCar.SwitchOutOfCar();
-        referenceManagement.cam.SwitchCar(newSB.camTranslateTarget.transform, newSB.camRotTarget.transform, true, newSB.transform);
+        referenceManagement.cam.SwitchCar(newSB.camTranslateTarget.transform, newSB.camRotTarget.transform, !newSB.isSecondCar, newSB.transform);
         newSB.SwitchIntoCar(camController, false, activeCar.variation);
     }
 

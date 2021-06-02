@@ -38,6 +38,7 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
 
     public int id;
     public bool isInitialCar = false;
+    public bool isSecondCar = false;
 
     FlashType[] signalPattern = new FlashType[3];
     private float longSignalP = 0.5f;

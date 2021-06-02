@@ -39,6 +39,12 @@ public class Camera1stPerson : MonoBehaviourReferenced {
 
     SwitchingManagement switchingManagement;
 
+    Vector3 randPos;
+    Vector3 prevRandPos = Vector3.zero;
+    float randPosRange = 10f;
+
+    bool initiated = false;
+
     private void OnEnable() {
         cam = GetComponent<Camera>();
         audioListener = GetComponent<AudioListener>();
@@ -46,6 +52,10 @@ public class Camera1stPerson : MonoBehaviourReferenced {
     }
 
     private void Update() {
+        if (!initiated) {
+            initiated = true;
+        }
+
         if (looping) {
             LoopMovement();
             if ((translateTarget.transform.position - transform.position).sqrMagnitude <= Mathf.Pow(targetRange, 2)) {
@@ -114,12 +124,11 @@ public class Camera1stPerson : MonoBehaviourReferenced {
     }
 
     private void HandleRotation() {
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotTarget.rotation, 0.15f);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotTarget.rotation, 2 * Time.deltaTime);
     }
 
     private void Shake() {
-        Vector3 shake = new Vector3(Random.Range(-shakeRange, shakeRange), Random.Range(-shakeRange, shakeRange), Random.Range(-shakeRange, shakeRange));
-        transform.position += shake;
+        transform.position = transform.InverseTransformPoint(transform.TransformPoint(translateTarget.position) + new Vector3(0.01f * Mathf.Sin(Time.time * 5 + 0.4f), 0.008f * Mathf.Sin(Time.time * 10), 0.01f * Mathf.Sin(Time.time * 4 + 0.8f)));
     }
 
     public void Loop(float t) {

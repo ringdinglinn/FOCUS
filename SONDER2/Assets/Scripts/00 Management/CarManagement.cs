@@ -40,6 +40,7 @@ public class CarManagement : MonoBehaviourReferenced {
         levelManagement = referenceManagement.levelManagement;
         InstantiateCars();
         SetUpInitialCar();
+        SetUpSecondCar();
     }
 
     private void InstantiateCars() {
@@ -104,9 +105,23 @@ public class CarManagement : MonoBehaviourReferenced {
         CarVisuals carVisuals = initialCar.GetComponent<CarVisuals>();
         carAI.cam = referenceManagement.cam;
         carAI.SetUpInititalCar();
-        carVisuals.SetCarVisuals(/*Random.Range(0, carVisuals.allCarConfigs.Count)*/ 5, Random.Range(0, 2));
+        carVisuals.SetCarVisuals(Random.Range(0, carVisuals.allCarConfigs.Count), Random.Range(0, 2));
         carVisuals.UpdateVisuals(true);
         referenceManagement.switchingManagement.SetUpInitialCar(initialCar);
+    }
+
+    private void SetUpSecondCar() {
+        SwitchingBehaviour secondCar;
+        for (int i = 0; i < allSwitchingBehaviours.Count; i++) {
+            if (allSwitchingBehaviours[i].isSecondCar) {
+                secondCar = allSwitchingBehaviours[i];
+                manualInitialCar = true;
+                CarAI carAI = secondCar.GetCarAI();
+                CarVisuals carVisuals = secondCar.GetComponent<CarVisuals>();
+                carVisuals.SetCarVisuals(Random.Range(0, carVisuals.allCarConfigs.Count), Random.Range(0, 2));
+                carVisuals.UpdateVisuals(true);
+            }
+        }
     }
 
     public CarAI CreateCarClone(int pathID) {

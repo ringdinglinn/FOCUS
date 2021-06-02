@@ -23,7 +23,7 @@ public class VoiceClipManagement : MonoBehaviourReferenced {
 
     FMOD.Studio.EventInstance[] voicesOvers = new FMOD.Studio.EventInstance[17];
 
-    private bool playVoiceOverAfterSwitch = true;
+    private bool playVoiceOverAfterSwitch = false;
     private List<Coroutine> waitToPlayCoroutines = new List<Coroutine>();
 
     bool endSeqAlternating = false;
@@ -105,7 +105,6 @@ public class VoiceClipManagement : MonoBehaviourReferenced {
     bool IsPlaying(FMOD.Studio.EventInstance instance) {
         FMOD.Studio.PLAYBACK_STATE state;
         instance.getPlaybackState(out state);
-        Debug.Log($"playback state = {state}");
         return state != FMOD.Studio.PLAYBACK_STATE.STOPPED;
     }
 

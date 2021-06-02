@@ -98,6 +98,7 @@ public class CarAI : MonoBehaviourReferenced {
 
     public EndOfPathInstruction endOfPathInstruction = EndOfPathInstruction.Loop;
 
+
     private void OnEnable() {
         wheelVehicle = GetComponent<WheelVehicle>();
         switchingBehaviour = GetComponent<SwitchingBehaviour>();
@@ -116,7 +117,7 @@ public class CarAI : MonoBehaviourReferenced {
     }
 
     private void Start() {
-        if (carManagement.HasManualInitialCar() && switchingBehaviour.isInitialCar) {
+        if (carManagement.HasManualInitialCar() && (switchingBehaviour.isInitialCar || switchingBehaviour.isSecondCar)) {
             PathID = manualPathID;
         }
         if (isClone) {
