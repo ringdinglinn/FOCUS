@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="AudioFile" id="{fc560c2d-723b-4c11-91da-e61cda900be7}">
+		<property name="assetPath">
+			<value>gear-start_05.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>1.1565532879818594</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{cd95300f-5517-4993-bb62-db94ba49f3b3}</destination>
+		</relationship>
+	</object>
+</objects>

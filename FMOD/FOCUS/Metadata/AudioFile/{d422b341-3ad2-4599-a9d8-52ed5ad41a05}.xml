@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="AudioFile" id="{d422b341-3ad2-4599-a9d8-52ed5ad41a05}">
+		<property name="assetPath">
+			<value>1966_Chevy_Impala_Car_Recorded_out_Window_Drive_Constant_Med_ODV-1348-066.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>64.106666666666669</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{cd95300f-5517-4993-bb62-db94ba49f3b3}</destination>
+		</relationship>
+	</object>
+</objects>

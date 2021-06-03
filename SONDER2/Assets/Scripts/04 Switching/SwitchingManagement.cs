@@ -48,6 +48,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     private float perceptionH;
     private float perceptionR;
     private List<SwitchingBehaviour> SBsInFrame = new List<SwitchingBehaviour>();
+    private int SBsInFrameIndex;
     private float dist;
 
     private bool selectCarNow = false;
@@ -66,6 +67,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
     public UnityEvent CarChangedEvent;
     public UnityEvent CarSwitchedEvent;
+    public UnityEvent CarSwitchDoneEvent;
 
     bool flash = false;
     bool Flash {
@@ -116,7 +118,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
     int signalIndex = 0;
 
-    float tolerance = 0.35f;
+    float tolerance = 0.45f;
 
     float clarity = 0;
     float clarity2 = 0;
@@ -125,6 +127,9 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
     int carSoundIndex = 0;
 
+    float rangeToClosestCar = 20f;
+    float markedCarDist = 0;
+    bool markedCarVisible;
 
     private void Start() {
         beatDetector = referenceManagement.beatDetector;
@@ -247,6 +252,17 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         MorseUIColor();
 
         carInterior0.setParameterByName("Speed", Mathf.InverseLerp(0, 12, activeCar.GetCarAI().GetSpeed()));
+
+        if (referenceManagement.inputManagement.GetInputButtonUp(Inputs.tab)) Debug.Log($"input, count = {SBsInFrame.Count}");
+        if (SBsInFrame.Count > 1 && referenceManagement.inputManagement.GetInputButtonUp(Inputs.tab)) {
+            MarkDifferentCar();
+        }
+    }
+
+    private void MarkDifferentCar() {
+        SBsInFrameIndex++;
+        SBsInFrameIndex %= SBsInFrame.Count;
+        MarkedCar = SBsInFrame[SBsInFrameIndex];
     }
 
     private void SearchForCars() {
@@ -255,21 +271,25 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
         float minDist = Mathf.Infinity;
 
-        if ((HasMarkedCar && !CheckIfVisible(MarkedCar)) || (!HasMarkedCar)) {
-            for (int i = 0; i < allSwitchingBehaviours.Count; i++) {
-                if (CheckIfVisible(allSwitchingBehaviours[i])) {
-                    SBsInFrame.Add(allSwitchingBehaviours[i]);
-                    //evaluate closest car
+        markedCarVisible = HasMarkedCar ? CheckIfVisible(MarkedCar) : false;
+        markedCarDist = dist;
+
+        for (int i = 0; i < allSwitchingBehaviours.Count; i++) {
+            if (CheckIfVisible(allSwitchingBehaviours[i])) {
+                SBsInFrame.Add(allSwitchingBehaviours[i]);
+                //evaluate closest car
+                if (!HasMarkedCar || (HasMarkedCar && !markedCarVisible)) {
                     if (dist <= minDist) {
                         minDist = dist;
                         sb = allSwitchingBehaviours[i];
+                        SBsInFrameIndex = i;
                     }
                 }
             }
-
-            HasMarkedCar = sb != null ? true : false;
-            MarkedCar = sb;
         }
+
+        HasMarkedCar = sb == null && !HasMarkedCar ? false : true;
+        MarkedCar = sb != null ? sb : MarkedCar;
 
         if (inTunnel) {
             MarkedCar = null;
@@ -292,7 +312,8 @@ public class SwitchingManagement : MonoBehaviourReferenced {
             bool isVisible = sb.meshRenderer.IsVisibleFrom(cam);
             float[,] scrPos = CarScreenPos(sb);
             //check if other car is close enough
-            bool inRange = scrPos[4, 0] <= perceptionR ? true : false;
+            bool inRange = scrPos[4, 0] <= perceptionR;
+            //if (HasMarkedCar && markedCarVisible) inRange = scrPos[4, 0] < markedCarDist + rangeToClosestCar && scrPos[4, 0] > markedCarDist - rangeToClosestCar;
             //check if points are in perceptionFrame
             bool inFrame = false;
             for (int j = 0; j < 4; j++) {
@@ -323,7 +344,6 @@ public class SwitchingManagement : MonoBehaviourReferenced {
             }
             if (isVisible && inRange && inFrame && !occluded) {
                 dist = scrPos[4, 0];
-                SBsInFrame.Add(sb);
             }
             return isVisible && inRange && inFrame && !occluded;
         } else {
@@ -437,7 +457,6 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     }
 
     public void SwitchDone() {
-        Debug.Log("switch done");
         ActiveCar.SetActiveCarValues();
         switchDone.start();
         switchStart.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
@@ -450,6 +469,8 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         } else {
             carInterior2.start();
         }
+
+        CarSwitchDoneEvent.Invoke();
     }                
 
     private void FlashValueChanged(bool b) {
@@ -511,7 +532,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         float duration = flashRecordDurations[flashRecordDurations.Length - 1];
         float targetDuration = signalPattern[signalIndex] == FlashType.Long ? beatDetector.FourthInterval : beatDetector.EighthInterval;
 
-        if (duration > targetDuration - targetDuration * tolerance && duration < targetDuration + targetDuration * tolerance) {
+        if ((duration > (signalPattern[signalIndex] == FlashType.Long ? targetDuration - targetDuration * tolerance : 0)) && (duration < targetDuration + targetDuration * tolerance)) {
             if (signalIndex == 2) {
                 signalIndex = 0;
                 identicalFlashes = true;

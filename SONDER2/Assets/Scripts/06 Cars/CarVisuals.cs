@@ -60,6 +60,7 @@ public class CarVisuals : MonoBehaviourReferenced {
 		switchingBehaviour.armaturenbrett = carConfig.armaturenbrett;
 		switchingBehaviour.armaturenbrett2 = carConfig.armaturenbrett2;
 		switchingBehaviour.variation = variation;
+		switchingBehaviour.dangle = carConfig.dangles[0].transform.parent.gameObject;
 		wv.TurnWheel = new WheelCollider[] { carConfig.wheels[0], carConfig.wheels[1] };
 		wv.DriveWheel = new WheelCollider[] { carConfig.wheels[0], carConfig.wheels[1] };
 		wheels = carConfig.wheels;

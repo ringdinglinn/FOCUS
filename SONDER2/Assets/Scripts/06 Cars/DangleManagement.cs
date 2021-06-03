@@ -54,6 +54,8 @@ public class DangleManagement : MonoBehaviourReferenced {
 
     private void Animate(float speed) {
 
+		dangle.transform.parent.up = Vector3.up;
+
 		amplitudeX = Mathf.Lerp(0, maxAmpX, speed);
 		amplitudeY = Mathf.Lerp(0, maxAmpY, speed);
 		frequencyX = Mathf.Lerp(0, maxFreqX, speed);
@@ -64,11 +66,11 @@ public class DangleManagement : MonoBehaviourReferenced {
 			turning = false;
         } else {
 			turning = true;
-			currentAmplitudeX = maxAmpX * 2;
+			amplitudeX = maxAmpX * 1.5f;
 		}
-		currentAmplitudeX = Mathf.Lerp(currentAmplitudeX, amplitudeX, 0.02f);
+		currentAmplitudeX = Mathf.Lerp(amplitudeX, currentAmplitudeX, 0.1f * Time.deltaTime);
 
-		angularOffset = -1 * angularSpeed * maxAngularOffset;
+		angularOffset = Mathf.Lerp(angularOffset, -1 * angularSpeed * maxAngularOffset, 3f * Time.deltaTime);
 
 		dangle.transform.localRotation = Quaternion.Euler(dangle.transform.rotation.x, dangle.transform.rotation.y, angularOffset);
 

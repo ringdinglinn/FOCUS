@@ -35,6 +35,7 @@ public class VoiceClipManagement : MonoBehaviourReferenced {
         beatDetector = referenceManagement.beatDetector;
 
         switchingManagement.CarSwitchedEvent.AddListener(HandleCarSwitched);
+        switchingManagement.CarSwitchDoneEvent.AddListener(HandleCarSwitchDone);
 
         GetVoiceOvers();
     }
@@ -47,6 +48,7 @@ public class VoiceClipManagement : MonoBehaviourReferenced {
 
     private void OnDisable() {
         switchingManagement.CarSwitchedEvent.RemoveListener(HandleCarSwitched);
+        switchingManagement.CarSwitchDoneEvent.RemoveListener(HandleCarSwitchDone);
     }
 
     private void HandleCarSwitched() {
@@ -58,18 +60,22 @@ public class VoiceClipManagement : MonoBehaviourReferenced {
         }
         waitToPlayCoroutines.Clear();
         TerminateSnippet();
+    }
 
-        if (levelManagement.levelNr == 6) endSeqAlternating = !endSeqAlternating;
-        if (playVoiceOverAfterSwitch || (endSeqAlternating && levelManagement.levelNr == 6)) {
-            waitToPlayCoroutines.Add(StartCoroutine(WaitToPlaySnippet()));
+    private void HandleCarSwitchDone() {
+        if (playVoiceOverAfterSwitch) {
+            if (levelManagement.levelNr == 6) endSeqAlternating = !endSeqAlternating;
+            if (playVoiceOverAfterSwitch || (endSeqAlternating && levelManagement.levelNr == 6)) {
+                waitToPlayCoroutines.Add(StartCoroutine(WaitToPlaySnippet()));
+            }
         }
     }
 
     IEnumerator WaitToPlaySnippet() {
         playVoiceOverAfterSwitch = false;
-        float d = Random.Range(delay - delayRange * 0.5f, delay + delayRange * 0.5f);
-        yield return new WaitForSeconds(levelManagement.levelNr >= 5 ? beatDetector.GetBarInterval() - volumeTime / 2 : d - volumeTime);
-        targetVolume = 0.5f;
+        //float d = Random.Range(delay - delayRange * 0.5f, delay + delayRange * 0.5f);
+        //yield return new WaitForSeconds(levelManagement.levelNr >= 5 ? beatDetector.GetBarInterval() - volumeTime / 2 : d - volumeTime);
+        targetVolume = 0.6f;
         yield return new WaitForSeconds(levelManagement.levelNr >= 5 ? volumeTime / 2 : volumeTime);
 
         PlaySnippet();
@@ -109,6 +115,10 @@ public class VoiceClipManagement : MonoBehaviourReferenced {
     }
 
     public void SetPlayVoiceOverAfterSwitch(bool b) {
-        playVoiceOverAfterSwitch = true;
+        playVoiceOverAfterSwitch = b;
+    }
+
+    public bool GetPlayVoiceOverAfterSwitch() {
+        return playVoiceOverAfterSwitch;
     }
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="ParameterPreset" id="{e32eab22-e2b3-465e-a0a9-f3203ef2c455}">
+		<property name="name">
+			<value>SignalStrength</value>
+		</property>
+		<relationship name="folder">
+			<destination>{c35bcf5b-50e1-4f04-ab58-db52dbad52ab}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{b9c96bd5-7a9e-48e8-bc19-7f6c759e96d8}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{b9c96bd5-7a9e-48e8-bc19-7f6c759e96d8}">
+		<property name="maximum">
+			<value>2</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

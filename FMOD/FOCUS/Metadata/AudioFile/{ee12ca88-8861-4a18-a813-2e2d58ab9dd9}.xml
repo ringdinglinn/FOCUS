@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="AudioFile" id="{ee12ca88-8861-4a18-a813-2e2d58ab9dd9}">
+		<property name="assetPath">
+			<value>moldavian2.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>25.965714285714284</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{cd95300f-5517-4993-bb62-db94ba49f3b3}</destination>
+		</relationship>
+	</object>
+</objects>

@@ -31,7 +31,7 @@ public class Camera1stPerson : MonoBehaviourReferenced {
     [Range(0,0.02f)]
     public float shakeRange = 0.003f;
 
-    float targetRange = 4f;
+    float targetRange = 0.5f;
     bool isInTargetRange;
     public bool IsInTargetRange {
         get { return isInTargetRange; }
@@ -39,23 +39,18 @@ public class Camera1stPerson : MonoBehaviourReferenced {
 
     SwitchingManagement switchingManagement;
 
-    Vector3 randPos;
-    Vector3 prevRandPos = Vector3.zero;
-    float randPosRange = 10f;
-
-    bool initiated = false;
-
     private void OnEnable() {
         cam = GetComponent<Camera>();
         audioListener = GetComponent<AudioListener>();
         switchingManagement = referenceManagement.switchingManagement;
     }
 
-    private void Update() {
-        if (!initiated) {
-            initiated = true;
-        }
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.white;
+        Gizmos.DrawSphere(translateTarget.position, 0.3f);
+    }
 
+    private void Update() {
         if (looping) {
             LoopMovement();
             if ((translateTarget.transform.position - transform.position).sqrMagnitude <= Mathf.Pow(targetRange, 2)) {
@@ -100,14 +95,9 @@ public class Camera1stPerson : MonoBehaviourReferenced {
     }
 
     private void Sloop() {
-        targetPos = targetCar.InverseTransformPoint(translateTarget.position);
-        //Vector3 currentPos = targetCar.InverseTransformPoint(transform.position);
+        targetPos = translateTarget.InverseTransformPoint(translateTarget.position);
 
-        //currentPos = Vector3.Lerp(currentPos, targetPos, 5 * Time.deltaTime);
-
-        //transform.position = targetCar.TransformPoint(currentPos);
-
-        Vector3 startPosLocal = targetCar.InverseTransformPoint(startPos);
+        Vector3 startPosLocal = translateTarget.InverseTransformPoint(startPos);
         Vector3 currentPos = new Vector3();
 
         timer += Time.deltaTime / loopTime;
@@ -115,7 +105,7 @@ public class Camera1stPerson : MonoBehaviourReferenced {
             currentPos = Vector3.Lerp(startPosLocal, targetPos, timer);
         }
 
-        transform.position = targetCar.TransformPoint(currentPos);
+        transform.position = translateTarget.TransformPoint(currentPos);
     }
 
     private void HandleTranslation() {

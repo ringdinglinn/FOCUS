@@ -35,6 +35,7 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     public HDAdditionalLightData headlight2;
     private float activeCarVolumetric = 0.5f;
     private float inactiveCarVolumetric = 3.5f;
+    public GameObject dangle;
 
     public int id;
     public bool isInitialCar = false;
@@ -123,7 +124,6 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         if (variation == this.variation) {
             carVisuals.SetCarVisuals((int)carVisuals.myCar, variation == 0 ? 1 : 0);
         }
-        carVisuals.UpdateVisuals(true);
         carAI.SwitchOffAutopilot();
         carAI.cam = cam;
         switchingManagement.ActiveCar = this;
@@ -145,14 +145,16 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     }
 
     public void SetActiveCarValues() {
+        Debug.Log($"Set active car values, {name}");
         volumetrics.SetActive(false);
         spotlights.SetActive(true);
         SetHeadlightsActiveCar();
         GameObject obj = variation == 0 ? armaturenbrett : armaturenbrett2;
         obj.SetActive(true);
         meshRenderer.gameObject.SetActive(false);
+        carVisuals.UpdateVisuals(true);
+        dangle.SetActive(true);
 
-        //carExterior.setParameterByName("IsActiveCar", 0);
         carExterior.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
 
         foreach (MeshRenderer mr in headlightCubes) mr.material = frontlightMatDull;
@@ -166,8 +168,9 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         armaturenbrett.SetActive(false);
         armaturenbrett2.SetActive(false);
         meshRenderer.gameObject.SetActive(true);
+        carVisuals.UpdateVisuals(false);
+        dangle.SetActive(false);
 
-        //carExterior.setParameterByName("IsActiveCar", 1);
         if (isInitialCar) carExterior.start();
 
         foreach (MeshRenderer mr in headlightCubes) mr.material = frontlightMat;

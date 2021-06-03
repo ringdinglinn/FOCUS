@@ -1,27 +1,18 @@
 ﻿<Properties StartupConfiguration="{281EEECF-89B9-6D0B-978A-5FDC6B8E6CBA}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/08 Journey/JourneyTrigger.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/04 Switching/SwitchingBehaviour.cs">
     <Files>
-      <File FileName="Assets/Scripts/04 Switching/SwitchingManagement.cs" Line="600" Column="68" />
-      <File FileName="Assets/Scripts/00 Management/LevelManagement.cs" Line="75" Column="31" />
-      <File FileName="Assets/Scripts/06 Cars/CarAI.cs" Line="401" Column="18" />
-      <File FileName="Assets/Scripts/00 Management/ReferenceManagement.cs" />
-      <File FileName="Assets/Scripts/05 Voices/VoiceClipManagement.cs" Line="27" Column="74" />
-      <File FileName="Assets/Scripts/02 AudioMorphing/Beat Detection/BeatDetector.cs" />
-      <File FileName="Assets/Scripts/06 Cars/WheelVehicle.cs" />
-      <File FileName="Assets/Scripts/00 Management/CarManagement.cs" Line="43" Column="26" />
-      <File FileName="Assets/Scripts/02 AudioMorphing/TreeAudioScript.cs" />
-      <File FileName="Assets/LimitFPS.cs" />
-      <File FileName="Assets/Scripts/01 Camera/Camera1stPerson.cs" Line="132" Column="199" />
-      <File FileName="Assets/Scripts/04 Switching/SwitchingBehaviour.cs" Line="41" Column="37" />
-      <File FileName="Assets/Scripts/99 Utilities/RendererExtensions.cs" Line="7" Column="1" />
-      <File FileName="Assets/Scripts/06 Cars/CarVisuals.cs" Line="21" Column="14" />
-      <File FileName="Assets/Scripts/00 Management/JourneyManagement.cs" Line="68" Column="6" />
-      <File FileName="Assets/Scripts/08 Journey/JourneyTrigger.cs" Line="8" Column="164" />
+      <File FileName="Assets/Scripts/04 Switching/SwitchingManagement.cs" Line="288" Column="1" />
+      <File FileName="Assets/Scripts/01 Camera/Camera1stPerson.cs" Line="56" Column="1" />
+      <File FileName="Assets/Scripts/06 Cars/CarVisuals.cs" Line="63" Column="80" />
+      <File FileName="Assets/Scripts/04 Switching/SwitchingBehaviour.cs" Line="174" Column="1" />
+      <File FileName="Assets/Scripts/05 Voices/VoiceClipManagement.cs" Line="118" Column="1" />
+      <File FileName="Assets/Scripts/05 Voices/VoiceClipTrigger.cs" Line="17" Column="1" />
+      <File FileName="Assets/Scripts/00 Management/InputManagement.cs" Line="44" Column="36" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="d88e430a-7b47-4931-86d6-dc58fc4c995c" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="9608d74d-1cb5-4273-af4f-efda2b7974b6" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -26,6 +26,8 @@ public class MusicManagement : MonoBehaviourReferenced {
 
     SwitchingManagement switchingManagement;
 
+    private bool playVoiceOverAfterSwitch = false;
+
     void Start() {
 
         track1 = FMODUnity.RuntimeManager.CreateInstance(referenceManagement.track1);
@@ -45,7 +47,7 @@ public class MusicManagement : MonoBehaviourReferenced {
         track1.setCallback(beatCallback, FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_BEAT | FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_MARKER);
         track1.start();
 
-        referenceManagement.switchingManagement.CarSwitchedEvent.AddListener(HandleCarSwitched);
+        referenceManagement.switchingManagement.CarSwitchDoneEvent.AddListener(HandleCarSwtchDone);
     }
 
     void OnDestroy() {
@@ -93,11 +95,17 @@ public class MusicManagement : MonoBehaviourReferenced {
         switchingManagement.TimelineBarDetected();
     }
 
-    void HandleCarSwitched() {
-        track1.setParameterByName("SwitchNr", ++switchNr);
+    void HandleCarSwtchDone() {
+        if (!playVoiceOverAfterSwitch) ++switchNr;
+        track1.setParameterByName("SwitchNr", switchNr);
+        playVoiceOverAfterSwitch = false;
     }
 
     public void SetVolume(float v) {
         track1.setParameterByName("Volume", v);
+    }
+
+    public void SetPlayVoiceOverAfterSwitch(bool b) {
+        playVoiceOverAfterSwitch = b;
     }
 }

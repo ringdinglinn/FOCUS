@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="ParameterPreset" id="{5e19da3d-e404-429c-b7d6-a02fb4c8e05e}">
+		<property name="name">
+			<value>CarPitch</value>
+		</property>
+		<relationship name="folder">
+			<destination>{c35bcf5b-50e1-4f04-ab58-db52dbad52ab}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{c4d96fa2-0b59-4fe7-8216-d074d86b1ce6}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{c4d96fa2-0b59-4fe7-8216-d074d86b1ce6}">
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

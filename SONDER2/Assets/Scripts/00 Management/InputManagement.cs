@@ -23,6 +23,10 @@ public class InputManagement : MonoBehaviourReferenced {
     public bool GetInputButton(string key) {
         return player.GetButton(key);
     }
+
+    public bool GetInputButtonUp(string key) {
+        return player.GetButtonUp(key);
+    }
 }
 
 public static class Inputs {
@@ -41,6 +45,7 @@ public static class Inputs {
     public static string enter = "Enter";
     public static string esc = "Escape";
     public static string turn = "MoveHorizontal";
+    public static string tab = "Tab";
 
     public static string[] gears = { gear0, gear1, gear2, gear3, gear4, gear5 };
     public static string[] directions = { up, left, down, right };

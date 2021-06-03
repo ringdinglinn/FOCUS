@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="ParameterPreset" id="{468c33e9-09e8-4da2-8fb6-1839e1a73aee}">
+		<property name="name">
+			<value>HumStrengthMarkedCar</value>
+		</property>
+		<relationship name="folder">
+			<destination>{c35bcf5b-50e1-4f04-ab58-db52dbad52ab}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{59fcb872-36e1-4278-8633-a8a9f46c536c}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{59fcb872-36e1-4278-8633-a8a9f46c536c}">
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

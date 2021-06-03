@@ -102,7 +102,6 @@ public class BlendShapesAudio : MonoBehaviourReferenced {
         skinnedMesh.SetBlendShapeWeight((currentShape + 1) % nrOfShapes, 100);
 
         if ((currentShape + 1) % nrOfShapes == 0) {
-            Debug.Log("Reset");
             transform.position = startPosition;
         }
 
