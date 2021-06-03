@@ -45,11 +45,6 @@ public class Camera1stPerson : MonoBehaviourReferenced {
         switchingManagement = referenceManagement.switchingManagement;
     }
 
-    private void OnDrawGizmos() {
-        Gizmos.color = Color.white;
-        Gizmos.DrawSphere(translateTarget.position, 0.3f);
-    }
-
     private void Update() {
         if (looping) {
             LoopMovement();

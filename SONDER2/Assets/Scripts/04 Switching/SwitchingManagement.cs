@@ -47,7 +47,8 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     private float perceptionW;
     private float perceptionH;
     private float perceptionR;
-    private List<SwitchingBehaviour> SBsInFrame = new List<SwitchingBehaviour>();
+    public List<SwitchingBehaviour> SBsInFrame = new List<SwitchingBehaviour>();
+    private List<float> SBsDists = new List<float>();
     private int SBsInFrameIndex;
     private float dist;
 
@@ -127,9 +128,10 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
     int carSoundIndex = 0;
 
-    float rangeToClosestCar = 20f;
+    float rangeToClosestCar = 100f;
     float markedCarDist = 0;
     bool markedCarVisible;
+    float closestCarDist = 0;
 
     private void Start() {
         beatDetector = referenceManagement.beatDetector;
@@ -257,6 +259,13 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         if (SBsInFrame.Count > 1 && referenceManagement.inputManagement.GetInputButtonUp(Inputs.tab)) {
             MarkDifferentCar();
         }
+
+        if (HasMarkedCar) {
+            Debug.Log($"marked car = {markedCar}");
+            Debug.Log($"acitve car = {activeCar}");
+            Debug.Log($"sbs in frame = {SBsInFrame.Count}");
+        }
+
     }
 
     private void MarkDifferentCar() {
@@ -267,20 +276,22 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
     private void SearchForCars() {
         SBsInFrame.Clear();
+        SBsDists.Clear();
         SwitchingBehaviour sb = null;
 
         float minDist = Mathf.Infinity;
 
-        markedCarVisible = HasMarkedCar ? CheckIfVisible(MarkedCar) : false;
+        markedCarVisible = HasMarkedCar && CheckIfVisible(MarkedCar);
         markedCarDist = dist;
 
         for (int i = 0; i < allSwitchingBehaviours.Count; i++) {
             if (CheckIfVisible(allSwitchingBehaviours[i])) {
                 SBsInFrame.Add(allSwitchingBehaviours[i]);
+                SBsDists.Add(dist);
                 //evaluate closest car
-                if (!HasMarkedCar || (HasMarkedCar && !markedCarVisible)) {
-                    if (dist <= minDist) {
-                        minDist = dist;
+                if (dist <= minDist) {
+                    minDist = dist;
+                    if (!HasMarkedCar || (HasMarkedCar && !CheckIfVisible(MarkedCar))) {
                         sb = allSwitchingBehaviours[i];
                         SBsInFrameIndex = i;
                     }
@@ -288,8 +299,20 @@ public class SwitchingManagement : MonoBehaviourReferenced {
             }
         }
 
-        HasMarkedCar = sb == null && !HasMarkedCar ? false : true;
-        MarkedCar = sb != null ? sb : MarkedCar;
+        for (int j = SBsDists.Count - 1; j >= 0; j--) {
+            if (SBsDists[j] > minDist + rangeToClosestCar || SBsDists[j] < minDist - rangeToClosestCar) {
+                SBsInFrame.RemoveAt(j);
+            }
+        }
+
+        if (SBsInFrame.Count > 0) {
+            SBsInFrameIndex %= SBsInFrame.Count;
+            sb = SBsInFrame[SBsInFrameIndex];
+        }
+
+
+        HasMarkedCar = sb == null ? false : true;
+        MarkedCar = sb;
 
         if (inTunnel) {
             MarkedCar = null;
@@ -313,7 +336,6 @@ public class SwitchingManagement : MonoBehaviourReferenced {
             float[,] scrPos = CarScreenPos(sb);
             //check if other car is close enough
             bool inRange = scrPos[4, 0] <= perceptionR;
-            //if (HasMarkedCar && markedCarVisible) inRange = scrPos[4, 0] < markedCarDist + rangeToClosestCar && scrPos[4, 0] > markedCarDist - rangeToClosestCar;
             //check if points are in perceptionFrame
             bool inFrame = false;
             for (int j = 0; j < 4; j++) {
@@ -345,6 +367,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
             if (isVisible && inRange && inFrame && !occluded) {
                 dist = scrPos[4, 0];
             }
+            if (isVisible && inRange && inFrame && !occluded) Debug.Log($" sb {sb.name} is visible!");
             return isVisible && inRange && inFrame && !occluded;
         } else {
             return false;
@@ -454,6 +477,9 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         carInterior0.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         carInterior1.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         carInterior2.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+
+        MarkedCar = null;
+        HasMarkedCar = false;
     }
 
     public void SwitchDone() {
