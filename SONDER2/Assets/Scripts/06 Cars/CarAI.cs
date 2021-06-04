@@ -52,6 +52,8 @@ public class CarAI : MonoBehaviourReferenced {
     Vector3 rndOffset;
     Vector3 prevRndOffset;
 
+    Vector3 steerTowardsPos;
+
     public int pathID;
 
     public int id;
@@ -96,6 +98,8 @@ public class CarAI : MonoBehaviourReferenced {
 
     public int fallTargetID = -1;
 
+    float lerpedAngle;
+
     public EndOfPathInstruction endOfPathInstruction = EndOfPathInstruction.Loop;
 
 
@@ -126,16 +130,16 @@ public class CarAI : MonoBehaviourReferenced {
     }
 
     private void Update() {
-        if (!autopilotEnabled) {
-            AutoPilot();
-        }
+        //if (!autopilotEnabled) {
+        AutoPilot();
+        //}
         speedLimit = Mathf.Lerp(speedLimit, targetSpeedLimit, 0.2f * Time.deltaTime);
     }
 
     private void FixedUpdate() {
-        if (autopilotEnabled) {
-            AutoPilot();
-        }
+        //if (autopilotEnabled) {
+            //AutoPilot();
+        //}
     }
 
     public void SetUpInititalCar() {
@@ -143,6 +147,11 @@ public class CarAI : MonoBehaviourReferenced {
     }
 
     #region ------------------------------------------------ AUTOPILOT -----------------------------------------------------
+
+    private void OnDrawGizmos() {
+        //Gizmos.color = Color.white;
+        //Gizmos.DrawSphere(steerTowardsPos, 1);
+    }
 
     private void AutoPilot() {
         throttle = Mathf.Pow(speedLimit, 2) - rb.velocity.sqrMagnitude;
@@ -161,29 +170,33 @@ public class CarAI : MonoBehaviourReferenced {
         distOnPath += (transform.position - prevPos).magnitude;
         prevPos = transform.position;
 
-        if (autopilotEnabled) {
-            angle = Vector3.SignedAngle(transform.forward, myPath.path.GetPointAtDistance(distOnPath + steerTowardsDist, endOfPathInstruction) - transform.position, Vector3.up);
-            wheelVehicle.InstantSetWheelAngle(angle);
-        } else {
-            rndOffset = transform.right;
-            steerOffset = transform.right;
-            Vector3 steerTowardsPoint = myPath.path.GetPointAtDistance(distOnPath + steerTowardsDist, endOfPathInstruction);
-            Vector3 middlePoint = myPath.path.GetClosestPointOnPath(transform.position);
-            float distToMiddle = (middlePoint - transform.position).sqrMagnitude;
-            if (swaying && distToMiddle < 0.5f && ((inputManagement.GetInput(Inputs.turn) < 0 && rndSway > 0) || (inputManagement.GetInput(Inputs.turn) > 0) && rndSway < 0)) {
-                rndSway = 0;
-                swaying = false;
-                StartCoroutine(RandomSway());
-            }
-            rndOffset *= slowingDown ? 0 : rndSway;
-            rndOffset = Vector3.Lerp(prevRndOffset, rndOffset, 0.02f);
-            prevRndOffset = rndOffset;
-            steerOffset *= inputManagement.GetInput(Inputs.turn) * 1.5f;
-            steerOffset = Vector3.Lerp(prevSteerOffset, steerOffset, 0.05f);
-            prevSteerOffset = steerOffset;
-            angle = Vector3.SignedAngle(transform.forward, steerTowardsPoint + rndOffset + steerOffset - transform.position, Vector3.up);
-            wheelVehicle.SetAutoAngle(angle);
-        }
+        steerTowardsPos = myPath.path.GetPointAtDistance(distOnPath + steerTowardsDist, endOfPathInstruction);
+
+        //if (autopilotEnabled) {
+        angle = Vector3.SignedAngle(transform.forward, steerTowardsPos - transform.position, Vector3.up);
+        wheelVehicle.SetAutoAngle(angle);
+
+
+        //} else {
+        //    rndOffset = transform.right;
+        //    steerOffset = transform.right;
+        //    Vector3 steerTowardsPoint = myPath.path.GetPointAtDistance(distOnPath + steerTowardsDist, endOfPathInstruction);
+        //    Vector3 middlePoint = myPath.path.GetClosestPointOnPath(transform.position);
+        //    float distToMiddle = (middlePoint - transform.position).sqrMagnitude;
+        //    if (swaying && distToMiddle < 0.5f && ((inputManagement.GetInput(Inputs.turn) < 0 && rndSway > 0) || (inputManagement.GetInput(Inputs.turn) > 0) && rndSway < 0)) {
+        //        rndSway = 0;
+        //        swaying = false;
+        //        StartCoroutine(RandomSway());
+        //    }
+        //    rndOffset *= slowingDown ? 0 : rndSway;
+        //    rndOffset = Vector3.Lerp(prevRndOffset, rndOffset, 0.02f);
+        //    prevRndOffset = rndOffset;
+        //    steerOffset *= inputManagement.GetInput(Inputs.turn) * 1.5f;
+        //    steerOffset = Vector3.Lerp(prevSteerOffset, steerOffset, 0.05f);
+        //    prevSteerOffset = steerOffset;
+        //    angle = Vector3.SignedAngle(transform.forward, steerTowardsPoint + rndOffset + steerOffset - transform.position, Vector3.up);
+        //    wheelVehicle.SetAutoAngle(angle);
+        //}
     }
 
     IEnumerator RandomSway() {

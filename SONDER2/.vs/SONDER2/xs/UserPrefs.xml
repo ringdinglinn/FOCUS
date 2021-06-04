@@ -1,18 +1,20 @@
 ﻿<Properties StartupConfiguration="{281EEECF-89B9-6D0B-978A-5FDC6B8E6CBA}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/04 Switching/SwitchingManagement.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/06 Cars/CarAI.cs">
     <Files>
-      <File FileName="Assets/Scripts/04 Switching/SwitchingManagement.cs" Line="315" Column="23" />
+      <File FileName="Assets/Scripts/04 Switching/SwitchingManagement.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/01 Camera/Camera1stPerson.cs" Line="57" Column="28" />
-      <File FileName="Assets/Scripts/06 Cars/CarVisuals.cs" Line="63" Column="80" />
-      <File FileName="Assets/Scripts/04 Switching/SwitchingBehaviour.cs" Line="174" Column="1" />
-      <File FileName="Assets/Scripts/05 Voices/VoiceClipManagement.cs" Line="118" Column="1" />
-      <File FileName="Assets/Scripts/05 Voices/VoiceClipTrigger.cs" Line="17" Column="1" />
-      <File FileName="Assets/Scripts/00 Management/InputManagement.cs" Line="28" Column="40" />
+      <File FileName="Assets/Scripts/06 Cars/CarVisuals.cs" />
+      <File FileName="Assets/Scripts/04 Switching/SwitchingBehaviour.cs" />
+      <File FileName="Assets/Scripts/05 Voices/VoiceClipManagement.cs" />
+      <File FileName="Assets/Scripts/05 Voices/VoiceClipTrigger.cs" />
+      <File FileName="Assets/Scripts/00 Management/InputManagement.cs" />
+      <File FileName="Assets/Scripts/06 Cars/CarAI.cs" Line="158" Column="1" />
+      <File FileName="Assets/Scripts/06 Cars/WheelVehicle.cs" Line="17" Column="18" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="9608d74d-1cb5-4273-af4f-efda2b7974b6" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="666f1acc-fcb9-4762-a951-4e2e98dc1fc1" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
