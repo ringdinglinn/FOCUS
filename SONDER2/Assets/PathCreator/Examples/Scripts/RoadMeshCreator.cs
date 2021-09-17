@@ -236,6 +236,10 @@ namespace PathCreation.Examples {
             meshHolder.transform.position = Vector3.zero;
             meshHolder.transform.localScale = Vector3.one;
 
+            meshHolderRaycast.transform.rotation = Quaternion.identity;
+            meshHolderRaycast.transform.position = Vector3.zero;
+            meshHolderRaycast.transform.localScale = Vector3.one;
+
             // Ensure mesh renderer and filter components are assigned
             if (!meshHolder.gameObject.GetComponent<MeshFilter> ()) {
                 meshHolder.gameObject.AddComponent<MeshFilter> ();
