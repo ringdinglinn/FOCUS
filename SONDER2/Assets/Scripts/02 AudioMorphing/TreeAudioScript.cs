@@ -10,7 +10,7 @@ public class TreeAudioScript : MonoBehaviourReferenced {
     private float beatCounterFull = 0;
     private float beatCounterSubD = 0;
 
-    private bool animate = false;
+    public bool animate = false;
 
     private void Start() {
         BeatDetector beatDetector = referenceManagement.beatDetector;

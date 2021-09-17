@@ -38,7 +38,7 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.3266325, z: 0.21960562}
   desiredLuxValue:
     m_OverrideState: 1
-    m_Value: 121.3
+    m_Value: 200
   updateMode:
     m_OverrideState: 0
     m_Value: 0
@@ -129,14 +129,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d7593b3a9277ac4696b20006c21dde2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   m_AdvancedMode: 0
   skyType:
     m_OverrideState: 1
     m_Value: 1
   skyAmbientMode:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 1
   fogType:
     m_OverrideState: 1
     m_Value: 3
@@ -191,7 +191,7 @@ MonoBehaviour:
     min: 0
   baseHeight:
     m_OverrideState: 1
-    m_Value: 493.5
+    m_Value: 423.1
   maximumHeight:
     m_OverrideState: 0
     m_Value: 1000
@@ -203,7 +203,7 @@ MonoBehaviour:
     showEyeDropper: 1
   meanFreePath:
     m_OverrideState: 1
-    m_Value: 808.7
+    m_Value: 643.1
     min: 1
   enableVolumetricFog:
     m_OverrideState: 1

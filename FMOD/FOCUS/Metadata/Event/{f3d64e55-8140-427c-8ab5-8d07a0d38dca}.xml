@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.00.00">
 	<object class="Event" id="{f3d64e55-8140-427c-8ab5-8d07a0d38dca}">
 		<property name="name">
-			<value>voice over 7</value>
+			<value>voice over 6</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>

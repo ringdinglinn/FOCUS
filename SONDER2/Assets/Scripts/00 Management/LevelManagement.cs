@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.Rendering;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class LevelManagement : MonoBehaviourReferenced {
 
@@ -15,12 +16,20 @@ public class LevelManagement : MonoBehaviourReferenced {
     Cubemap[] cubeMaps;
     SkyData[] skyData;
     JourneyManagement journeyManagement;
-    
+    SwitchingManagement switchingManagement;
+
     CarManagement carManagement;
 
     bool inEndTunnel = false;
 
     public int levelNr = 0;
+
+    float titleDuration = 5f;
+    Image[] titles;
+    int titleIndex = 0;
+
+    float[] predelays = new float[]{0,0,0,0,0,0, 5, 3};
+    float[] delays = new float[] { 5, 10, 10, 10, 10, 10, 5, 5 };
 
     private void Start() {
         pathManagement = referenceManagement.pathManagement;
@@ -32,11 +41,14 @@ public class LevelManagement : MonoBehaviourReferenced {
         cubeMaps = referenceManagement.skyCubeMaps;
         skyData = referenceManagement.skyData;
         journeyManagement = referenceManagement.journeyManagement;
+        titles = referenceManagement.texts;
+        switchingManagement = referenceManagement.switchingManagement;
+        referenceManagement.musicManagement.announcementDone.AddListener(HandleAnnouncementDone);
+        titleIndex = levelNr;
         ChangeLevel();
     }
 
     public void EnteredEndTunnel(int startPathID, int endPathID) {
-        Debug.Log("entered end tunnel");
         foreach(GameObject level in levels) {
             level.SetActive(true);
         }
@@ -75,14 +87,21 @@ public class LevelManagement : MonoBehaviourReferenced {
         cam.farClipPlane = 800;
         if (levelNr == 3) {
             cam.farClipPlane = 2000;
+        } else if (levelNr == 6) {
+            cam.farClipPlane = 3000;
         }
         if (levelNr == 5) {
             journeyManagement.StopAllCars();
         }
+
+        if (levelNr != 0) {
+            StartCoroutine(ShowTitle());
+        }
+
+        switchingManagement.rangeToClosestCar = referenceManagement.ranges[levelNr];
     }
 
-    public void EnterOutroLevel() {
-        Debug.Log("enter outro level");
+    public void EnterFallLevel() {
         levelNr = levels.Length - 1;
 
         foreach (PathBehaviour pb in allPathBehaviours) {
@@ -90,10 +109,32 @@ public class LevelManagement : MonoBehaviourReferenced {
         }
         ChangeLevel();
         List<CarAI> outroCars = journeyManagement.GetOutroCars();
-        Debug.Log($"outro cars = {outroCars.Count}");
         foreach (CarAI car in outroCars) {
             car.transform.SetParent(levels[levelNr].transform);
         }
+        referenceManagement.musicManagement.StartOutro1();
+    }
+
+    public void EnterOutroLevel() {
+        StartCoroutine(ShowTitle());
+        referenceManagement.voiceClipManagement.StartOutro();
+        referenceManagement.musicManagement.StartOutro2();
+    }
+
+    void HandleAnnouncementDone() {
+        if (levelNr == 0)
+        StartCoroutine(ShowTitle());
+    }
+    
+
+    IEnumerator ShowTitle(){
+        switchingManagement.TitleShowing = true;
+        yield return new WaitForSeconds(predelays[titleIndex]);
+        titles[titleIndex].gameObject.SetActive(true);
+    	yield return new WaitForSeconds(delays[titleIndex]);
+    	titles[titleIndex].gameObject.SetActive(false);
+    	titleIndex++;
+        switchingManagement.TitleShowing = false;
     }
 }
 

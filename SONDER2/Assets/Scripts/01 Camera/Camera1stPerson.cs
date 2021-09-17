@@ -39,6 +39,8 @@ public class Camera1stPerson : MonoBehaviourReferenced {
 
     SwitchingManagement switchingManagement;
 
+    public float carSpeed;
+
     private void OnEnable() {
         cam = GetComponent<Camera>();
         audioListener = GetComponent<AudioListener>();
@@ -113,7 +115,9 @@ public class Camera1stPerson : MonoBehaviourReferenced {
     }
 
     private void Shake() {
-        transform.position = transform.InverseTransformPoint(transform.TransformPoint(translateTarget.position) + new Vector3(0.01f * Mathf.Sin(Time.time * 5 + 0.4f), 0.008f * Mathf.Sin(Time.time * 10), 0.01f * Mathf.Sin(Time.time * 4 + 0.8f)));
+        float s = Mathf.InverseLerp(0, 10, carSpeed);
+        s = Mathf.Clamp(s, 0.1f, 1f);
+        transform.position = transform.InverseTransformPoint(transform.TransformPoint(translateTarget.position) + new Vector3(s * 0.01f * Mathf.Sin(Time.time * 5 + 0.4f), s * 0.008f * Mathf.Sin(Time.time * 10), s * 0.01f * Mathf.Sin(Time.time * 4 + 0.8f)));
     }
 
     public void Loop(float t) {

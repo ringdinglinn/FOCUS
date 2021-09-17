@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.00.00">
 	<object class="Event" id="{c432195e-8e21-44f2-a73c-5a366a47ddfa}">
 		<property name="name">
-			<value>voice over 15</value>
+			<value>voice over 5</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
@@ -96,7 +96,10 @@
 	<object class="MixerBusPanner" id="{fb08f9f3-6af9-44aa-a0ac-7773d90e2527}" />
 	<object class="SingleSound" id="{71d79061-22cd-4976-90a4-5fce96de17a4}">
 		<property name="length">
-			<value>25.965714285714284</value>
+			<value>25.465714285714284</value>
+		</property>
+		<property name="timelockedOffset">
+			<value>0.5</value>
 		</property>
 		<relationship name="audioFile">
 			<destination>{ee12ca88-8861-4a18-a813-2e2d58ab9dd9}</destination>
@@ -104,7 +107,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{6dedb9f7-d62b-4426-a3b8-ceb10b36f987}">
 		<property name="volume">
-			<value>-8</value>
+			<value>-5</value>
 		</property>
 		<property name="name">
 			<value>Audio 1</value>

@@ -125,15 +125,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_316B95E9: 1.31
-    - Vector1_6326DAB8: 0.2
-    - Vector1_6941CC1F: 16.11
-    - Vector1_769E4972: 0.68
-    - Vector1_9C80E736: 0.52
-    - Vector1_A3A83189: 5.44
-    - Vector1_A4D1D817: 1
-    - Vector1_C7F92A28: 0.14
-    - Vector1_E0D791F1: 0.89
+    - Vector1_316B95E9: 1.12
+    - Vector1_6326DAB8: -0.1
+    - Vector1_6941CC1F: 1.6
+    - Vector1_769E4972: 1.03
+    - Vector1_9C80E736: -0.54
+    - Vector1_A3A83189: 7.04
+    - Vector1_A4D1D817: 0.35
+    - Vector1_C7F92A28: 0.38
+    - Vector1_E0D791F1: 0.4
     - _AORemapMax: 1
     - _AORemapMin: 0
     - _ATDistance: 1
@@ -148,7 +148,7 @@ Material:
     - _AlphaSrcBlend: 1
     - _Anisotropy: 0
     - _BlendMode: 0
-    - _CameraAngle: -0.13
+    - _CameraAngle: 1.46
     - _CoatMask: 0
     - _CullMode: 2
     - _CullModeForward: 2
@@ -256,8 +256,8 @@ Material:
     - _ZTestTransparent: 4
     - _ZWrite: 0
     m_Colors:
-    - Color_338C2ED5: {r: 10.680629, g: 9.729997, b: 7.828733, a: 1}
-    - Color_9D605FFA: {r: 0.89121735, g: 0.74442863, b: 0.47531596, a: 0}
+    - Color_338C2ED5: {r: 1.7824347, g: 1.6170831, b: 1.2863797, a: 1}
+    - Color_9D605FFA: {r: 0.5, g: 0.42352942, b: 0.28235295, a: 0}
     - ObjectOrientation: {r: 0, g: 0, b: 1, a: 0}
     - _BaseColor: {r: 1, g: 0.9764151, b: 0.74056596, a: 0.21960784}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}

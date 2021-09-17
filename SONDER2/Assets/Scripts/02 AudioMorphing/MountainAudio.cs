@@ -23,6 +23,8 @@ public class MountainAudio : MonoBehaviourReferenced {
 
     public AnimationCurve animCurve;
 
+    LevelManagement levelManagement;
+
     float nOffset = 0;
     float animTime = 0.2f;
 
@@ -31,6 +33,7 @@ public class MountainAudio : MonoBehaviourReferenced {
         referenceManagement.beatDetector.bdOnHalf.AddListener(HandleHalf);
         referenceManagement.beatDetector.bdOnFourth.AddListener(HandleFourth);
         meshRenderer = GetComponent<MeshRenderer>();
+        levelManagement = referenceManagement.levelManagement;
 
         for (int i = 0; i < 3; i++) {
             noiseOffset[i] = i * 2.5f;
@@ -48,34 +51,12 @@ public class MountainAudio : MonoBehaviourReferenced {
     }
 
     private void HandleFourth() {
-        currentBeat++;
-        currentBeat %= totalBeats;
-        //SetValues(currentBeat);
-        StartCoroutine(Animate());
-
-    }
-
-    void SetValues(int i) {
-        if (i != totalBeats - 1) {
-            noiseOffset[i] += 10;
-            persistance[i] = 0.28f;
-            maxHeight[i] = 3f;
+        if (levelManagement.levelNr == 3) {
+            currentBeat++;
+            currentBeat %= totalBeats;
+            StartCoroutine(Animate());
         }
     }
-
-    //private void Update() {
-    //    for (int i = 0; i < 3; i++) {
-    //        meshRenderer.material.SetFloat($"_Persistance{i}", -1f * Mathf.Pow(persistance[i] - 1f, 2) + 1);
-    //        meshRenderer.material.SetFloat($"_NoiseOffset{i}", noiseOffset[i]);
-    //        meshRenderer.material.SetFloat($"_MaxHeight{i}", maxHeight[i]);
-
-    //        persistance[i] -= deltaPersistance * Time.deltaTime;
-    //        persistance[i] = Mathf.Clamp(persistance[i], 0, 1);
-
-    //        maxHeight[i] -= deltaMaxHeight * Time.deltaTime;
-    //        maxHeight[i] = Mathf.Clamp(maxHeight[i], 0, 3.3f);
-    //    }
-    //}
 
     IEnumerator Animate() {
         float time = animTime;

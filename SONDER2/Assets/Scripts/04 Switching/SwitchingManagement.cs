@@ -48,6 +48,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     private float perceptionH;
     private float perceptionR;
     public List<SwitchingBehaviour> SBsInFrame = new List<SwitchingBehaviour>();
+    List<SwitchingBehaviour> SBsInRange = new List<SwitchingBehaviour>();
     private List<float> SBsDists = new List<float>();
     private int SBsInFrameIndex;
     private float dist;
@@ -128,10 +129,22 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
     int carSoundIndex = 0;
 
-    float rangeToClosestCar = 100f;
-    float markedCarDist = 0;
-    bool markedCarVisible;
-    float closestCarDist = 0;
+    public float rangeToClosestCar = 100f;
+
+    Image[] morseSignalImages;
+
+    private bool titleShowing = true;
+    public bool TitleShowing {
+        set {
+                TitleShowingChanged(value);
+                titleShowing = value;
+            }
+        get {
+                return titleShowing;
+            }
+    }
+
+    List<Vector3> sbInFramePos = new List<Vector3>();
 
     private void Start() {
         beatDetector = referenceManagement.beatDetector;
@@ -172,6 +185,11 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         morseLongTex = referenceManagement.morseSignalLong;
         morseShortTex = referenceManagement.morseSignalShort;
         clarity = activeCar.morseSignalRenderers[0].materials[0].GetFloat("Clarity");
+        clarity = 2;
+        for (int i = 0; i < 3; i++) {
+            morseSignalImages[i].material.SetFloat("Clarity", clarity);
+        }
+        
     }
 
     private void OnEnable() {
@@ -179,6 +197,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         referenceManagement.carManagement.carsCreated.AddListener(OnCarsCreated);
         referenceManagement.carManagement.allSBChanged.AddListener(HandleAllSBChanged);
         camController = referenceManagement.cam;
+        morseSignalImages = referenceManagement.morseSignalImages;
     }
 
     private void OnDisable() {
@@ -203,6 +222,9 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     }
 
     private void SwitchToCar(SwitchingBehaviour newSB) {
+        Debug.Log($"switch to car, newSB = {newSB}");
+        Debug.Log($"switch to car, newSB camTranslateTarget = {newSB.camTranslateTarget.transform}");
+        Debug.Log($"switch to car, newSB camRotTarget = {newSB.camRotTarget.transform}");
         activeCar.SwitchOutOfCar();
         referenceManagement.cam.SwitchCar(newSB.camTranslateTarget.transform, newSB.camRotTarget.transform, !newSB.isSecondCar, newSB.transform);
         newSB.SwitchIntoCar(camController, false, activeCar.variation);
@@ -213,15 +235,17 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         initSB.isInitialCar = true;
         initSB.SwitchIntoCar(camController, true, UnityEngine.Random.Range(0, 2));
         origScaleMorseDisplay = initSB.morseSignalRenderers[0].transform.localScale;
+        origScaleMorseDisplay = morseSignalImages[0].rectTransform.localScale;
         for (int i = 0; i < 3; i++) {
             origPosMorseDisplay[i] = initSB.morseSignalRenderers[i].transform.localPosition;
+            origPosMorseDisplay[i] = morseSignalImages[i].rectTransform.localPosition;
         }
     }
 
     private void Update() {
         Flash = referenceManagement.inputManagement.GetInputButton(Inputs.flash);
 
-        if (carsCreated && !successfulFlashes) {
+        if (carsCreated && !successfulFlashes && !titleShowing) {
             SearchForCars();
         }
 
@@ -231,11 +255,13 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
         if (!hasSelectedCar && canSelectCar) {
             if (identicalFlashes) {
+                Debug.Log($"identical flashes, Marked Car = {MarkedCar}");
                 selectCarNow = true;
             }
         }
 
         if (selectCarNow) {
+            Debug.Log($"select car now, Marked Car = {MarkedCar}");
             SelectCar();
             selectCarNow = false;
         }
@@ -244,9 +270,11 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
         for (int i = 0; i < activeCar.morseSignalRenderers.Length; i++) {
             clarity = activeCar.morseSignalRenderers[i].materials[0].GetFloat("Clarity");
+            clarity = morseSignalImages[i].material.GetFloat("Clarity");
             clarity += currentSDSpeed * Time.deltaTime;
             clarity = Mathf.Clamp(clarity, 0.05f, 2);
             activeCar.morseSignalRenderers[i].materials[0].SetFloat("Clarity", clarity);
+            morseSignalImages[i].material.SetFloat("Clarity", clarity);
             radioStatic.setParameterByName("SignalStrength", clarity);
         }
 
@@ -255,34 +283,38 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
         carInterior0.setParameterByName("Speed", Mathf.InverseLerp(0, 12, activeCar.GetCarAI().GetSpeed()));
 
-        if (referenceManagement.inputManagement.GetInputButtonUp(Inputs.tab)) Debug.Log($"input, count = {SBsInFrame.Count}");
-        if (SBsInFrame.Count > 1 && referenceManagement.inputManagement.GetInputButtonUp(Inputs.tab)) {
+        if (SBsInFrame.Count > 1 && referenceManagement.inputManagement.GetInputButtonUp(Inputs.changeSelection)) {
             MarkDifferentCar();
         }
+    }
 
-        if (HasMarkedCar) {
-            Debug.Log($"marked car = {markedCar}");
-            Debug.Log($"acitve car = {activeCar}");
-            Debug.Log($"sbs in frame = {SBsInFrame.Count}");
+    private void TitleShowingChanged(bool b) {
+        if (b) {
+            MarkedCar = null;
+            HasMarkedCar = false;
         }
-
     }
 
     private void MarkDifferentCar() {
+        Debug.Log($"sb index 0 = {SBsInFrameIndex}, {MarkedCar}");
         SBsInFrameIndex++;
         SBsInFrameIndex %= SBsInFrame.Count;
-        MarkedCar = SBsInFrame[SBsInFrameIndex];
+        Debug.Log($"sb index 1 = {SBsInFrameIndex}, {MarkedCar}");
+        MarkedCar = SBsInRange[SBsInFrameIndex];
+    }
+
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.white;
+        foreach (Vector3 pos in sbInFramePos) Gizmos.DrawSphere(pos, 1);
     }
 
     private void SearchForCars() {
         SBsInFrame.Clear();
+        SBsInRange.Clear();
         SBsDists.Clear();
         SwitchingBehaviour sb = null;
 
         float minDist = Mathf.Infinity;
-
-        markedCarVisible = HasMarkedCar && CheckIfVisible(MarkedCar);
-        markedCarDist = dist;
 
         for (int i = 0; i < allSwitchingBehaviours.Count; i++) {
             if (CheckIfVisible(allSwitchingBehaviours[i])) {
@@ -299,15 +331,30 @@ public class SwitchingManagement : MonoBehaviourReferenced {
             }
         }
 
+        sbInFramePos.Clear();
+
+        int index = -1;
         for (int j = SBsDists.Count - 1; j >= 0; j--) {
             if (SBsDists[j] > minDist + rangeToClosestCar || SBsDists[j] < minDist - rangeToClosestCar) {
                 SBsInFrame.RemoveAt(j);
+            } else {
+                SBsInRange.Add(SBsInFrame[j]);
+                if (HasMarkedCar && SBsInRange[SBsInRange.Count - 1].name == MarkedCar.name) {
+                    index = SBsInRange.Count - 1;
+
+                }
+                sbInFramePos.Add(SBsInRange[SBsInRange.Count - 1].transform.position);
             }
         }
 
-        if (SBsInFrame.Count > 0) {
-            SBsInFrameIndex %= SBsInFrame.Count;
-            sb = SBsInFrame[SBsInFrameIndex];
+        if (index < SBsInRange.Count && index != -1) {
+            SBsInFrameIndex = index;
+        }
+
+
+        if (SBsInRange.Count > 0) {
+            SBsInFrameIndex %= SBsInRange.Count;
+            sb = SBsInRange[SBsInFrameIndex];
         }
 
 
@@ -317,6 +364,11 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         if (inTunnel) {
             MarkedCar = null;
             HasMarkedCar = false;
+        }
+
+        if (HasMarkedCar && referenceManagement.inputManagement.GetInputButtonUp(Inputs.cheatSwitch)) {
+            Debug.Log($"cheat switch, MarkedCar = {MarkedCar}");
+            identicalFlashes = true;
         }
     }
 
@@ -330,7 +382,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
         dist = Mathf.Infinity;
 
-        if (sb != activeCar && sb.gameObject.activeSelf && !sb.isInitialCar) {
+        if (sb != activeCar && sb.gameObject.activeSelf && !sb.isInitialCar && !sb.GetCarAI().InTunnel) {
             // check if other car is visible
             bool isVisible = sb.meshRenderer.IsVisibleFrom(cam);
             float[,] scrPos = CarScreenPos(sb);
@@ -362,12 +414,12 @@ public class SwitchingManagement : MonoBehaviourReferenced {
                 }
                 else {
                     occluded = false;
+                    Debug.DrawRay(pos, dir * hit.distance, Color.green);
                 }
             }
             if (isVisible && inRange && inFrame && !occluded) {
                 dist = scrPos[4, 0];
             }
-            if (isVisible && inRange && inFrame && !occluded) Debug.Log($" sb {sb.name} is visible!");
             return isVisible && inRange && inFrame && !occluded;
         } else {
             return false;
@@ -379,6 +431,8 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     }
 
     private void MarkedCarChanged(SwitchingBehaviour sb) {
+        if (markedCar != sb && markedCar != null) markedCar.StopSignal();
+
         if (markedCar != null && sb == null) {
             currentSDSpeed = signalDisplayAmplitude;
         } else if (sb != null) {
@@ -437,6 +491,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     }
 
     private void SelectCar() {
+        Debug.Log($"select car, MarkedCar = {MarkedCar}");
         ResetFlashRecordDurations();
         hasSelectedCar = true;
         selectedCar = MarkedCar;
@@ -458,6 +513,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
     private void Switch() {
         switchStart.start();
+        Debug.Log($"switch, selected car = {selectedCar}");
         SwitchToCar(selectedCar);
         ActiveCar = selectedCar;
         DeselectCar();
@@ -564,6 +620,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
                 identicalFlashes = true;
                 successfulFlashes = true;
                 StartCoroutine(MorseSignalSuccessfullTimer(activeCar));
+                Debug.Log($"Evaluate flash record, MarkedCar = {MarkedCar}");
             }
             else {
                 signalIndex++;
@@ -638,18 +695,22 @@ public class SwitchingManagement : MonoBehaviourReferenced {
 
         float units = 0;
         float offset = signalPattern[0] == FlashType.Long ? 5 : 1.5f;
-        offset *= 0.15f;
+        offset *= 30f;
         for (int i = 0; i < 3; i++) {
             units += signalPattern[i] == FlashType.Long ? 5 : 1.5f;
             activeCar.morseSignalRenderers[i].materials[0].SetTexture("BaseTexture", signalPattern[i] == FlashType.Long ? morseLongTex : morseShortTex);
+            morseSignalImages[i].material.SetTexture("BaseTexture", signalPattern[i] == FlashType.Long ? morseLongTex : morseShortTex);
             activeCar.morseSignalRenderers[i].transform.localPosition = new Vector3(-1,0,0) * units * 0.15f + new Vector3(offset, 0, 0);
+            morseSignalImages[i].rectTransform.localPosition = new Vector3(1, 0, 0) * units * 30f + new Vector3(offset, 380, 0);
             units += 5;
             units += signalPattern[i] == FlashType.Long ? 5 : 1.5f;
         }
-        float centerOffset = units * 0.15f * 0.5f;
+        float centerOffset = units * -30f * 0.5f;
         for (int i = 0; i < 3; i++) {
             activeCar.morseSignalRenderers[i].transform.localPosition += new Vector3(centerOffset, 0, 0);
+            morseSignalImages[i].rectTransform.localPosition += new Vector3(centerOffset, 0, 0);
             origPosMorseDisplay[i] = activeCar.morseSignalRenderers[i].transform.localPosition;
+            origPosMorseDisplay[i] = morseSignalImages[i].rectTransform.localPosition;
         }
     }
 
@@ -669,6 +730,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         Vector3[] origPos = new Vector3[3];
         for (int i = 0; i < 3; i++) {
             origPos[i] = sb.morseSignalRenderers[i].transform.localPosition;
+            origPos[i] = morseSignalImages[i].rectTransform.localPosition;
         }
 
         while (secs > 0) {
@@ -683,6 +745,7 @@ public class SwitchingManagement : MonoBehaviourReferenced {
             MeshRenderer mr = sb.morseSignalRenderers[i];
             mr.transform.localPosition = new Vector3(origPos[i].x + (i - 1) * offset, mr.transform.localPosition.y, mr.transform.localPosition.z);
             mr.transform.localScale = origScaleMorseDisplay;
+
         }
     }
 
@@ -699,6 +762,13 @@ public class SwitchingManagement : MonoBehaviourReferenced {
             mr.materials[0].SetFloat("_AlphaFactor", 1);
             mr.materials[0].SetInt("_FlashOn", 1);
             mr.materials[0].SetFloat("Clarity", clarity2);
+
+            Image image = morseSignalImages[i];
+            image.rectTransform.localScale = Vector3.Lerp(image.rectTransform.localScale, targetScale, 0.2f);
+            image.rectTransform.localPosition = Vector3.Lerp(image.rectTransform.localPosition, new Vector3(origPos[i].x - (i - 1) * offset, image.rectTransform.localPosition.y, image.rectTransform.localPosition.z), 0.2f);
+            image.material.SetFloat("_AlphaFactor", 1);
+            image.material.SetInt("_FlashOn", 1);
+            image.material.SetFloat("Clarity", clarity2);
         }
     }
 
@@ -716,8 +786,10 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         for (int i = 0; i < 3; i++) {
             if (i == signalIndex) {
                 activeCar.morseSignalRenderers[i].transform.localScale = Vector3.Lerp(activeCar.morseSignalRenderers[i].transform.localScale, scale, 20 * Time.deltaTime);
+                morseSignalImages[i].rectTransform.localScale = Vector3.Lerp(morseSignalImages[i].rectTransform.localScale, scale, 20 * Time.deltaTime);
             } else {
                 activeCar.morseSignalRenderers[i].transform.localScale = Vector3.Lerp(activeCar.morseSignalRenderers[i].transform.localScale, scale2, 20 * Time.deltaTime);
+                morseSignalImages[i].rectTransform.localScale = Vector3.Lerp(morseSignalImages[i].rectTransform.localScale, scale2, 20 * Time.deltaTime);
             }
         }
     }
@@ -725,13 +797,18 @@ public class SwitchingManagement : MonoBehaviourReferenced {
     private void MorseUIColor() {
         for (int i = 0; i < activeCar.morseSignalRenderers.Length; i++) {
             activeCar.morseSignalRenderers[i].materials[0].SetInt("_FlashOn", Flash && hasMarkedCar && i == signalIndex ? 1 : 0);
+            morseSignalImages[i].material.SetInt("_FlashOn", Flash && hasMarkedCar && i == signalIndex ? 1 : 0);
             if (Flash && i == signalIndex) {
                 activeCar.morseSignalRenderers[i].transform.localPosition = origPosMorseDisplay[i] + new Vector3(UnityEngine.Random.Range(-rndJitterRange, rndJitterRange), UnityEngine.Random.Range(-rndJitterRange, rndJitterRange), UnityEngine.Random.Range(-rndJitterRange, rndJitterRange));
-            } else {
+                morseSignalImages[i].rectTransform.localPosition = origPosMorseDisplay[i] + new Vector3(UnityEngine.Random.Range(-rndJitterRange, rndJitterRange), UnityEngine.Random.Range(-rndJitterRange, rndJitterRange), UnityEngine.Random.Range(-rndJitterRange, rndJitterRange));
+            }
+            else {
                 activeCar.morseSignalRenderers[i].transform.localPosition = origPosMorseDisplay[i];
+                morseSignalImages[i].rectTransform.localPosition = origPosMorseDisplay[i];
             }
             if (i > signalIndex) {
                 activeCar.morseSignalRenderers[i].materials[0].SetFloat("_AlphaFactor", Flash && hasMarkedCar ? 0.06f : 1);
+                morseSignalImages[i].material.SetFloat("_AlphaFactor", Flash && hasMarkedCar ? 0.06f : 1);
             }
         }
     }
@@ -740,12 +817,17 @@ public class SwitchingManagement : MonoBehaviourReferenced {
         for (int i = 0; i < 3; i++) {
             if (i < signalIndex) {
                 activeCar.morseSignalRenderers[i].materials[0].SetFloat("_AlphaFactor", 0);
+                morseSignalImages[i].material.SetFloat("_AlphaFactor", 0);
             }
             else {
                 activeCar.morseSignalRenderers[i].materials[0].SetFloat("_AlphaFactor", 1);
+                morseSignalImages[i].material.SetFloat("_AlphaFactor", 1);
+
             }
 
             activeCar.morseSignalRenderers[i].materials[0].SetInt("_FlashOn", 0);
+            morseSignalImages[i].material.SetFloat("_FlashOn", 0);
+
         }
     }
 

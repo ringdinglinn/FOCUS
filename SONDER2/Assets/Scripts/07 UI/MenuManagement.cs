@@ -7,10 +7,12 @@ using UnityEngine.SceneManagement;
 public class MenuManagement : MonoBehaviourReferenced {
     public Image menu0;
     public Image[] menuItems;
-    public Image controlsImg;
+    public Image instructionsImg;
     public Image titleImg;
     public Image creditsImg;
     public Image waitForSignalImg;
+    public Image controlsImage;
+   
 
     InputManagement inputManagement;
 
@@ -93,6 +95,7 @@ public class MenuManagement : MonoBehaviourReferenced {
                         Play();
                         break;
                     case 1:
+                        Controls();
                         break;
                     case 2:
                         Credits();
@@ -105,11 +108,11 @@ public class MenuManagement : MonoBehaviourReferenced {
 
             enterPressed = inputManagement.GetInputButton(Inputs.enter);
         } else if (creditsActive) {
-            if (!inputManagement.GetInputButton(Inputs.esc) && escPressed) {
+            if (!inputManagement.GetInputButton(Inputs.back) && escPressed) {
                 BackToMenu();
             }
 
-            escPressed = inputManagement.GetInputButton(Inputs.esc);
+            escPressed = inputManagement.GetInputButton(Inputs.back);
         }
     }
 
@@ -130,9 +133,9 @@ public class MenuManagement : MonoBehaviourReferenced {
     IEnumerator StartInfo() {
         menuItems[index].gameObject.SetActive(false);
         yield return new WaitForSeconds(0.5f);
-        controlsImg.gameObject.SetActive(true);
+        instructionsImg.gameObject.SetActive(true);
         yield return new WaitForSeconds(5f);
-        controlsImg.gameObject.SetActive(false);
+        instructionsImg.gameObject.SetActive(false);
         yield return new WaitForSeconds(1f);
         titleImg.gameObject.SetActive(true);
         menuTitle.start();
@@ -150,10 +153,18 @@ public class MenuManagement : MonoBehaviourReferenced {
         creditsActive = true;
     }
 
+    void Controls() {
+        menuActive = false;
+        menuItems[index].gameObject.SetActive(false);
+        controlsImage.gameObject.SetActive(true);
+        creditsActive = true;
+    }
+
     void BackToMenu() {
         creditsActive = false;
         menuActive = true;
         creditsImg.gameObject.SetActive(false);
+        controlsImage.gameObject.SetActive(false);
         menuItems[index].gameObject.SetActive(true);
         currentClarity = changedClarity;
     }

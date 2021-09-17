@@ -21,12 +21,14 @@ public class VoiceClipManagement : MonoBehaviourReferenced {
 
     int voiceOverIndex = -1;
 
-    FMOD.Studio.EventInstance[] voicesOvers = new FMOD.Studio.EventInstance[17];
+    FMOD.Studio.EventInstance[] voicesOvers = new FMOD.Studio.EventInstance[15];
 
     private bool playVoiceOverAfterSwitch = false;
     private List<Coroutine> waitToPlayCoroutines = new List<Coroutine>();
 
-    bool endSeqAlternating = false;
+    bool endSeqAlternating = true;
+
+    public bool inOutro;
 
     private void OnEnable() {
         switchingManagement = referenceManagement.switchingManagement;
@@ -63,21 +65,34 @@ public class VoiceClipManagement : MonoBehaviourReferenced {
     }
 
     private void HandleCarSwitchDone() {
-        if (playVoiceOverAfterSwitch) {
-            if (levelManagement.levelNr == 6) endSeqAlternating = !endSeqAlternating;
-            if (playVoiceOverAfterSwitch || (endSeqAlternating && levelManagement.levelNr == 6)) {
+        if (switchingManagement.ActiveCar.GetCarAI().PathID < 20) {
+            if (playVoiceOverAfterSwitch) {
                 waitToPlayCoroutines.Add(StartCoroutine(WaitToPlaySnippet()));
             }
+            else if (endSeqAlternating && levelManagement.levelNr == 6) {
+                waitToPlayCoroutines.Add(StartCoroutine(WaitToPlaySnippet()));
+            }
+            if (levelManagement.levelNr == 6) endSeqAlternating = !endSeqAlternating;
         }
     }
 
     IEnumerator WaitToPlaySnippet() {
-        playVoiceOverAfterSwitch = false;
-        //float d = Random.Range(delay - delayRange * 0.5f, delay + delayRange * 0.5f);
-        //yield return new WaitForSeconds(levelManagement.levelNr >= 5 ? beatDetector.GetBarInterval() - volumeTime / 2 : d - volumeTime);
-        targetVolume = 0.6f;
-        yield return new WaitForSeconds(levelManagement.levelNr >= 5 ? volumeTime / 2 : volumeTime);
+        Debug.Log("Wait to play snippet");
+        if (voiceOverIndex < voicesOvers.Length && !inOutro) {
+            playVoiceOverAfterSwitch = false;
+            targetVolume = 0.6f;
+            yield return new WaitForSeconds(levelManagement.levelNr >= 5 ? volumeTime / 2 : volumeTime);
+            PlaySnippet();
+        } else {
+            yield return null;
+        }
 
+    }
+
+    IEnumerator WaitToPlaySnippetAfterTrack() {
+        while (musicManagement.Track1IsPlaying()) {
+            yield return new WaitForEndOfFrame();
+        }
         PlaySnippet();
     }
 
@@ -108,7 +123,7 @@ public class VoiceClipManagement : MonoBehaviourReferenced {
     }
 
 
-    bool IsPlaying(FMOD.Studio.EventInstance instance) {
+    public static bool IsPlaying(FMOD.Studio.EventInstance instance) {
         FMOD.Studio.PLAYBACK_STATE state;
         instance.getPlaybackState(out state);
         return state != FMOD.Studio.PLAYBACK_STATE.STOPPED;
@@ -120,5 +135,11 @@ public class VoiceClipManagement : MonoBehaviourReferenced {
 
     public bool GetPlayVoiceOverAfterSwitch() {
         return playVoiceOverAfterSwitch;
+    }
+
+    public void StartOutro() {
+        Debug.Log("Start OUTRO");
+        inOutro = true;
+        TerminateSnippet();
     }
 }

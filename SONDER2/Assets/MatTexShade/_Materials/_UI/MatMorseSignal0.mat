@@ -118,7 +118,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Boolean_74813C04: 0
-    - Clarity: 2
+    - Clarity: 0.05
     - Vector1_231EF832: 300
     - Vector1_58FA3302: 1
     - Vector1_73DF20C7: 5

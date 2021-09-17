@@ -9,7 +9,7 @@ public class InputManagement : MonoBehaviourReferenced {
     [SerializeField] private Player player;
 
     private void Start() {
-        player = ReInput.players.GetPlayer("SYSTEM");
+        player = ReInput.players.GetPlayer("Player0");
     }
 
     public float GetInput(string key) {
@@ -17,14 +17,17 @@ public class InputManagement : MonoBehaviourReferenced {
     }
 
     public bool GetInputBool(string key) {
+
         return player.GetAxis(key) != 0;
     }
 
     public bool GetInputButton(string key) {
+
         return player.GetButton(key);
     }
 
     public bool GetInputButtonUp(string key) {
+
         return player.GetButtonUp(key);
     }
 }
@@ -43,9 +46,12 @@ public static class Inputs {
     public static string right = "Right";
     public static string flash = "Flash";
     public static string enter = "Enter";
-    public static string esc = "Escape";
+    public static string back = "Back";
     public static string turn = "MoveHorizontal";
-    public static string tab = "Tab";
+    public static string changeSelection = "ChangeSelection";
+    public static string pause = "Pause";
+    public static string restart = "Restart";
+    public static string cheatSwitch = "CheatSwitch";
 
     public static string[] gears = { gear0, gear1, gear2, gear3, gear4, gear5 };
     public static string[] directions = { up, left, down, right };

@@ -75,6 +75,8 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     bool displayingSignal;
     public int variation;
 
+    List<Coroutine> signalCoroutines = new List<Coroutine>();
+
     private void OnEnable() {
         CollectReferences();
         GenerateSignalPattern();
@@ -83,14 +85,11 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         headlightDefaultIntensity = headlight1.intensity;
         headlightDefaultRange = headlight1.range;
         carManagement.AddSwitchingBehaviour(this);
-        volumetricMesh0 = volumetricRenderer0.GetComponent<MeshFilter>();
-        volumetricMesh1 = volumetricRenderer1.GetComponent<MeshFilter>();
+        //volumetricMesh0 = volumetricRenderer0.GetComponent<MeshFilter>();
+        //volumetricMesh1 = volumetricRenderer1.GetComponent<MeshFilter>();
         flashShort = RuntimeManager.CreateInstance(referenceManagement.flashShort);
         flashLong = RuntimeManager.CreateInstance(referenceManagement.flashLong);
         carVisuals = GetComponent<CarVisuals>();
-        carExterior = RuntimeManager.CreateInstance(referenceManagement.carExterior);
-        RuntimeManager.AttachInstanceToGameObject(carExterior, transform, GetComponent<Rigidbody>());
-        carExterior.start();
         carExterior.setParameterByName("CarPitch", Random.Range(0f, 1f));
 
         for (int i = 0; i < 3; i++) {
@@ -99,8 +98,8 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     }
 
     private void Start() {
-        SetVertexColor(volumetricMesh0.mesh);
-        SetVertexColor(volumetricMesh1.mesh);
+        //SetVertexColor(volumetricMesh0.mesh);
+        //SetVertexColor(volumetricMesh1.mesh);
     }
 
     private void OnDisable() {
@@ -124,7 +123,6 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         if (variation == this.variation) {
             carVisuals.SetCarVisuals((int)carVisuals.myCar, variation == 0 ? 1 : 0);
         }
-        carAI.SwitchOffAutopilot();
         carAI.cam = cam;
         switchingManagement.ActiveCar = this;
         wheelVehicle.IsPlayer = true;
@@ -135,9 +133,6 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     }
 
     public void SwitchOutOfCar() {
-        if (!(carManagement.HasManualInitialCar() && isInitialCar)) {
-            carAI.SwitchOnAutopilot();
-        }
         carAI.cam = null;
         wheelVehicle.IsPlayer = false;
 
@@ -145,14 +140,14 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     }
 
     public void SetActiveCarValues() {
-        Debug.Log($"Set active car values, {name}");
+        carAI.SwitchOffAutopilot();
         volumetrics.SetActive(false);
         spotlights.SetActive(true);
         SetHeadlightsActiveCar();
         GameObject obj = variation == 0 ? armaturenbrett : armaturenbrett2;
         obj.SetActive(true);
-        meshRenderer.gameObject.SetActive(false);
-        carVisuals.UpdateVisuals(true);
+        meshRenderer.transform.parent.gameObject.SetActive(false);
+        carVisuals.UpdateVisuals(true, false);
         dangle.SetActive(true);
 
         carExterior.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
@@ -161,14 +156,15 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     }
 
     public void SetInactiveCarValues() {
+        carAI.SwitchOnAutopilot();
         volumetrics.SetActive(true);
         spotlights.SetActive(false);
         SetHeadlightsInactiveCar();
         GenerateSignalPattern();
         armaturenbrett.SetActive(false);
         armaturenbrett2.SetActive(false);
-        meshRenderer.gameObject.SetActive(true);
-        carVisuals.UpdateVisuals(false);
+        meshRenderer.transform.parent.gameObject.SetActive(true);
+        carVisuals.UpdateVisuals(false, false);
         dangle.SetActive(false);
 
         if (isInitialCar) carExterior.start();
@@ -198,10 +194,15 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
     }
 
     public void DisplaySignalPattern() {
-        if (!displayingSignal) StartCoroutine(Signal());
+        if (!displayingSignal) {
+            SignalRoutine signalRoutine = new SignalRoutine();
+            IEnumerator routine = Signal(signalRoutine);
+            signalCoroutines.Add(StartCoroutine(routine));
+        }
     }
 
-    IEnumerator Signal() {
+    IEnumerator Signal(SignalRoutine sig) {
+        Coroutine self = sig.coroutine;
         displayingSignal = true;
         yield return new WaitForSeconds(beatDetector.GetTimeUntilBar());
         for (int i = 0; i < signalPattern.Length; i++) {
@@ -233,7 +234,13 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         displayingSignal = false;
 
         // restart
-        if (isMarkedCar) StartCoroutine(Signal());
+        if (isMarkedCar) DisplaySignalPattern();
+
+        signalCoroutines.Remove(self);
+    }
+
+    public class SignalRoutine {
+        public Coroutine coroutine;
     }
 
     public void SetFlash(bool b) {
@@ -309,12 +316,17 @@ public class SwitchingBehaviour : MonoBehaviourReferenced {
         }
     }
 
-    void StopSignal() {
-        StopCoroutine(Signal());
-        flashShort.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        flashLong.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+    public void StopSignal() {
+        flashShort.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        flashLong.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         volumetricRenderer0.material.SetInt("_FlashOn", 0);
         volumetricRenderer1.material.SetInt("_FlashOn", 0);
+
+        foreach (Coroutine coroutine in signalCoroutines) {
+            StopCoroutine(coroutine);
+        }
+
+        displayingSignal = false;
     }
 
     public CarVisuals GetCarVisuals() {

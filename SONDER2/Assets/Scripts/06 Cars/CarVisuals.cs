@@ -6,7 +6,6 @@ using UnityEngine;
 public class CarVisuals : MonoBehaviourReferenced {
 	public List<CarConfig> allCarConfigs = new List<CarConfig>();
 	[HideInInspector]
-	public List<WheelCollider> wheels = new List<WheelCollider>();
 
 	VehicleBehaviour.WheelVehicle wv;
 	SwitchingBehaviour switchingBehaviour;
@@ -18,10 +17,13 @@ public class CarVisuals : MonoBehaviourReferenced {
 
 	public int dangleNr;
 
-	public void UpdateVisuals(bool active) {
-		foreach (CarConfig cc in allCarConfigs) {
-			cc.gameObject.SetActive(false);
-        }
+	public void UpdateVisuals(bool active, bool initial) {
+		if (initial) {
+			foreach (CarConfig cc in allCarConfigs) {
+				cc.gameObject.SetActive(false);
+			}
+		}
+
 		allCarConfigs[(int)myCar].gameObject.SetActive(true);
 		if (variation == 0) {
 			allCarConfigs[(int)myCar].armaturenbrett.SetActive(active);
@@ -30,7 +32,7 @@ public class CarVisuals : MonoBehaviourReferenced {
 			allCarConfigs[(int)myCar].armaturenbrett.SetActive(false);
 			allCarConfigs[(int)myCar].armaturenbrett2.SetActive(active);
 		}
-		ConfigReferences();
+		ConfigReferences(initial);
 	}
 
 	public void SetCarVisuals(int i, int v) {
@@ -44,10 +46,9 @@ public class CarVisuals : MonoBehaviourReferenced {
 		dangleManagement = referenceManagement.dangleManagement;
 	}
 
-	private void ConfigReferences() {
+	private void ConfigReferences(bool initial) {
 		CarConfig carConfig = allCarConfigs[(int)myCar];
 		switchingBehaviour.meshRenderer = carConfig.meshRenderer;
-		switchingBehaviour.boxCollider = carConfig.boxCollider;
 		switchingBehaviour.camRotTarget = carConfig.camRotTarget;
 		switchingBehaviour.camTranslateTarget = carConfig.camTranslateTarget;
 		switchingBehaviour.spotlights = carConfig.spotlights;
@@ -61,9 +62,11 @@ public class CarVisuals : MonoBehaviourReferenced {
 		switchingBehaviour.armaturenbrett2 = carConfig.armaturenbrett2;
 		switchingBehaviour.variation = variation;
 		switchingBehaviour.dangle = carConfig.dangles[0].transform.parent.gameObject;
-		wv.TurnWheel = new WheelCollider[] { carConfig.wheels[0], carConfig.wheels[1] };
-		wv.DriveWheel = new WheelCollider[] { carConfig.wheels[0], carConfig.wheels[1] };
-		wheels = carConfig.wheels;
+		if (initial) {
+			switchingBehaviour.boxCollider = carConfig.boxCollider;
+			wv.TurnWheel = new WheelCollider[] { carConfig.wheels[0], carConfig.wheels[1] };
+			wv.DriveWheel = new WheelCollider[] { carConfig.wheels[0], carConfig.wheels[1] };
+		}
 	}
 
 	public List<GameObject> GetDangleList() {

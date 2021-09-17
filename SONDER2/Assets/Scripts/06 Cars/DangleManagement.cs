@@ -42,6 +42,8 @@ public class DangleManagement : MonoBehaviourReferenced {
 	float rotX;
 	float rotY;
 
+	public float carSpeed;
+
     private void Start() {
 		switchingManagement = referenceManagement.switchingManagement;
 		switchingManagement.CarSwitchedEvent.AddListener(HandleCarSwitched);
@@ -56,18 +58,25 @@ public class DangleManagement : MonoBehaviourReferenced {
 
 		dangle.transform.parent.up = Vector3.up;
 
-		amplitudeX = Mathf.Lerp(0, maxAmpX, speed);
-		amplitudeY = Mathf.Lerp(0, maxAmpY, speed);
-		frequencyX = Mathf.Lerp(0, maxFreqX, speed);
-		frequencyY = Mathf.Lerp(0, maxFreqY, speed);
+		float s = Mathf.InverseLerp(0, 10, carSpeed);
+		float s1 = Mathf.Clamp(s, 0.4f, 1f);
+
+		amplitudeX = Mathf.Lerp(0, s1 * maxAmpX, speed);
+		amplitudeY = Mathf.Lerp(0, s1 * maxAmpY, speed);
+		frequencyX = Mathf.Lerp(0, s1 * maxFreqX, speed);
+		frequencyY = Mathf.Lerp(0, s1 * maxFreqY, speed);
 
 		angularSpeed = inputManagement.GetInput(Inputs.turn);
+		if (s < 0.1f) s = 0;
+		angularSpeed *= s;
+
 		if (angularSpeed == 0) {
 			turning = false;
         } else {
 			turning = true;
 			amplitudeX = maxAmpX * 1.5f;
 		}
+
 		currentAmplitudeX = Mathf.Lerp(amplitudeX, currentAmplitudeX, 0.1f * Time.deltaTime);
 
 		angularOffset = Mathf.Lerp(angularOffset, -1 * angularSpeed * maxAngularOffset, 3f * Time.deltaTime);

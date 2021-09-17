@@ -50,7 +50,6 @@ public class JourneyManagement : MonoBehaviourReferenced {
     }
 
     private void EvaluateSwitch() {
-        Debug.Log("Evaluate Switch");
         if (levelManagement.levelNr == 0 && nrOfSwitches == 1) {
             EnableFirstMovingCar();
         }
@@ -64,7 +63,6 @@ public class JourneyManagement : MonoBehaviourReferenced {
     }
 
     private void EnableFirstMovingCar() {
-        Debug.Log("Enable First Moving Car");
         SwitchingBehaviour[] sbs = referenceManagement.levels[0].GetComponentsInChildren<SwitchingBehaviour>(true);
         foreach (SwitchingBehaviour sb in sbs) {
             sb.gameObject.SetActive(true);
@@ -112,6 +110,16 @@ public class JourneyManagement : MonoBehaviourReferenced {
         }
     }
 
+    public void SpeedUpOutroCar() {
+        Debug.Log($"SpeedUpOutroCar");
+        List<CarAI> carAIs = carManagement.GetAllCarAIs();
+        for (int i = 0; i < carAIs.Count; i++) {
+            carAIs[i].StartCar();
+            carAIs[i].endOfPathInstruction = PathCreation.EndOfPathInstruction.Loop;
+        }
+        levelManagement.EnterOutroLevel();
+    }
+
     public void StopAllCars() {
         List<CarAI> carAIs = carManagement.GetAllCarAIs();
         for (int i = 0; i < carAIs.Count; i++) {
@@ -123,7 +131,6 @@ public class JourneyManagement : MonoBehaviourReferenced {
 
     private void Update() {
         if (hasFallenCars) {
-            Debug.Log("Lerp in progress");
             startCar.SetKinematic(true);
             startCar.transform.position = Vector3.Lerp(startCar.transform.position, activeCarFallTargets.transform.position, 0.1f * Time.deltaTime);
             startCar.transform.rotation = Quaternion.Slerp(startCar.transform.rotation, activeCarFallTargets.transform.rotation, 0.1f * Time.deltaTime);
@@ -141,7 +148,7 @@ public class JourneyManagement : MonoBehaviourReferenced {
     public void ActiveCarFell() {
         if (!hasFallenCars) {
             startCar = switchingManagement.ActiveCar.GetCarAI();
-            levelManagement.EnterOutroLevel();
+            levelManagement.EnterFallLevel();
             StopAllCars();
             hasFallenCars = true;
         }

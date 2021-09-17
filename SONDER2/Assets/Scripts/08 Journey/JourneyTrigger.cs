@@ -5,10 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class JourneyTrigger : MonoBehaviourReferenced {
     JourneyManagement journeyManagement;
-	public enum TriggerType { IntroLoop, Gate0, SlowDownGate, EndGate, JamStartDrivingGate, SlowDownActiveCar, StopActiveCar, FallTrigger, AddToOutroCars, TutorialCarReset};
+	public enum TriggerType { IntroLoop, Gate0, SlowDownGate, EndGate, JamStartDrivingGate, SlowDownActiveCar, StopActiveCar, FallTrigger, AddToOutroCars, TutorialCarReset, StartCarOutro};
     public TriggerType type;
 
     bool speedUpTrigger;
+    bool speedUpTrigger2;
 
     private void Start() {
         journeyManagement = referenceManagement.journeyManagement;
@@ -18,7 +19,8 @@ public class JourneyTrigger : MonoBehaviourReferenced {
         if (type == TriggerType.SlowDownGate) {
             if (other.gameObject.CompareTag("Car")) {
                 CarAI carAI = other.GetComponentInParent<CarAI>();
-                carAI.SlowDown(1f);
+                carAI.SlowDown(1f, 0.3f);
+                referenceManagement.musicManagement.StartOutro3();
             }
         }
         if (type == TriggerType.EndGate) {
@@ -29,7 +31,7 @@ public class JourneyTrigger : MonoBehaviourReferenced {
         if (type == TriggerType.SlowDownActiveCar) {
             if (other.gameObject.CompareTag("Car")) {
                 CarAI carAI = other.GetComponentInParent<CarAI>();
-                carAI.SlowDown(0f);
+                carAI.SlowDown(3f, 0.2f);
             }
         }
         if (type == TriggerType.StopActiveCar) {
@@ -74,10 +76,19 @@ public class JourneyTrigger : MonoBehaviourReferenced {
                 }
             }
         }
+
+        if (type == TriggerType.StartCarOutro) {
+            if (other.gameObject.CompareTag("Car")) {
+                CarAI carAI = other.GetComponentInParent<CarAI>();
+                if (!carAI.autopilotEnabled && !speedUpTrigger2) {
+                    speedUpTrigger2 = true;
+                    journeyManagement.SpeedUpOutroCar();
+                }
+            }
+        }
     }
 
     IEnumerator EndScene() {
-        referenceManagement.thankYouText.SetActive(true);
         yield return new WaitForSeconds(4f);
         SceneManager.LoadScene("MenuScene", LoadSceneMode.Single);
     }

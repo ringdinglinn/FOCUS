@@ -30,6 +30,13 @@ public class CarManagement : MonoBehaviourReferenced {
     private bool manualInitialCar = true;
     public bool carsGenerated = false;
 
+    [System.Serializable]
+    public class PathCars {
+        public List<CarAI> cars;
+    }
+
+    public List<PathCars> allPathCars = new List<PathCars>();
+
 
     private void OnEnable() {
         pathManagement = referenceManagement.pathManagement;
@@ -50,6 +57,9 @@ public class CarManagement : MonoBehaviourReferenced {
             List<Vector3> startPosList = allPathBehaviours[i].GetStartPosBehaviour().GetStartPosList();
             int initPosIndex = allPathBehaviours[i].GetStartPosBehaviour().GetInitialPosIndex();
             PathCreator path = allPathBehaviours[i].GetPath();
+
+            PathCars carsOnPath = new PathCars();
+            carsOnPath.cars = new List<CarAI>();
 
             for (int j = 0; j < startPosList.Count; j++) {
                 // adjust start position
@@ -84,8 +94,12 @@ public class CarManagement : MonoBehaviourReferenced {
 
                 // randomize visuals
                 carVisuals.SetCarVisuals(Random.Range(0, carVisuals.allCarConfigs.Count), Random.Range(0,2));
-                carVisuals.UpdateVisuals(false);
+                carVisuals.UpdateVisuals(false, true);
+
+                carsOnPath.cars.Add(carAI);
             }
+
+            allPathCars.Add(carsOnPath);
         }
         if (initialCar != null) {
             manualInitialCar = false;
@@ -106,7 +120,7 @@ public class CarManagement : MonoBehaviourReferenced {
         carAI.cam = referenceManagement.cam;
         carAI.SetUpInititalCar();
         carVisuals.SetCarVisuals(Random.Range(0, carVisuals.allCarConfigs.Count), Random.Range(0, 2));
-        carVisuals.UpdateVisuals(true);
+        carVisuals.UpdateVisuals(true, true);
         referenceManagement.switchingManagement.SetUpInitialCar(initialCar);
     }
 
@@ -119,7 +133,7 @@ public class CarManagement : MonoBehaviourReferenced {
                 CarAI carAI = secondCar.GetCarAI();
                 CarVisuals carVisuals = secondCar.GetComponent<CarVisuals>();
                 carVisuals.SetCarVisuals(Random.Range(0, carVisuals.allCarConfigs.Count), Random.Range(0, 2));
-                carVisuals.UpdateVisuals(true);
+                carVisuals.UpdateVisuals(false, true);
             }
         }
     }
@@ -165,6 +179,8 @@ public class CarManagement : MonoBehaviourReferenced {
         allSwitchingBehaviours.Remove(oldCar.GetComponent<SwitchingBehaviour>());
         allCarAIs.Remove(oldCar);
         allCarAIs.Add(newCar);
+        allPathCars[oldCar.pathID].cars.Remove(oldCar);
+        allPathCars[newCar.pathID].cars.Add(newCar);
         SwitchingBehaviour newSB = newCar.GetComponent<SwitchingBehaviour>();
         newSB.id = idCounter;                   
         ++idCounter;
@@ -175,6 +191,9 @@ public class CarManagement : MonoBehaviourReferenced {
             referenceManagement.cam = newCar.cam;
             Camera camcam = newCar.cam.GetComponent<Camera>();
             camcam.enabled = true;
+            Debug.Log($"camcam = {camcam}");
+            Debug.Log($"camCanvas = {referenceManagement.camCanvas}");
+            referenceManagement.camCanvas.worldCamera = camcam;
             cameraChanged.Invoke();
             switchingManagement.SetActiveCar(newSB);
             Destroy(oldCar.cam.gameObject);

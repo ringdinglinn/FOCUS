@@ -51,7 +51,6 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
             CarAI carAI;
             carAI = other.GetComponentInParent<CarAI>();
 
-            Debug.Log($"car entered tunnel = {other.name}");
 
             if (isEndTunnel) {
                 carAI.startTunnel = startTunnel;
@@ -73,7 +72,6 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
             if (!carAI.autopilotEnabled && isEndTunnel) {
 
                 foreach (CarAI car in carsInTunnel) {
-                    Debug.Log($"car = {car}");
 
                     car.ActiveCarHasEnteredTunnel(isLevelEndTunnel ? nextLevelStartTunnel.pathBehaviour.id : pathBehaviour.id);
                 }
@@ -104,6 +102,7 @@ public class TunnelBehaviour : MonoBehaviourReferenced {
         if (other.gameObject.CompareTag("Car")) {
             CarAI carAI;
             carAI = other.GetComponentInParent<CarAI>();
+
             if (this != carAI.endTunnel) {
                 carAI.dontLoop = false;
             }

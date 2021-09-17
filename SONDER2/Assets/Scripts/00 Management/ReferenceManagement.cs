@@ -59,6 +59,7 @@ public class ReferenceManagement : MonoBehaviour
     public SkyData[] skyData;
     public int startJamID;
     public int endJamID;
+    public float[] ranges;
 
     [Header("Prefabs")]
     public GameObject streetlight;
@@ -76,10 +77,15 @@ public class ReferenceManagement : MonoBehaviour
     public GameObject youDidItText;
     public GameObject thankYouText;
     public Canvas canvas;
+    public Canvas camCanvas;
+    public Image[] texts;
+    public GameObject pauseScreen;
 
     [Header("Sounds")]
     [FMODUnity.EventRef]
     public string track1;
+    [FMODUnity.EventRef]
+    public string outro;
     [FMODUnity.EventRef]
     public string gearShiftStart;
     [FMODUnity.EventRef]
@@ -126,9 +132,10 @@ public class ReferenceManagement : MonoBehaviour
     public string carInterior2;
     [FMODUnity.EventRef]
     public string carExterior;
+    [FMODUnity.EventRef]
+    public string radioAnnouncement;
     public string voiceOver;
-    
-
+   
 
     [Header("Switching")]
     [Range(0.0f, 1.0f)]
@@ -142,6 +149,7 @@ public class ReferenceManagement : MonoBehaviour
     public Material morseSingalMat;
     public Texture2D morseSignalLong;
     public Texture2D morseSignalShort;
+    public Image[] morseSignalImages;
 
     [Header("Journey")]
     public GameObject alternatePath0;

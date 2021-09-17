@@ -1,4 +1,4 @@
-{
+	{
   "dependencies": {
     "com.coffee.ui-effect": "https://github.com/mob-sakai/UIEffect.git#4.0.0-preview.9",
     "com.unity.2d.sprite": "1.0.0",

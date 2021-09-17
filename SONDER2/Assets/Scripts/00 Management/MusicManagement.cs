@@ -25,16 +25,39 @@ public class MusicManagement : MonoBehaviourReferenced {
     int switchNr = 0;
 
     SwitchingManagement switchingManagement;
+    VoiceClipManagement voiceClipManagement;
+
+    public FMOD.Studio.EventInstance radioAnnouncement;
 
     private bool playVoiceOverAfterSwitch = false;
 
+    public UnityEvent announcementDone;
+
     void Start() {
+
+        voiceClipManagement = referenceManagement.voiceClipManagement;
 
         track1 = FMODUnity.RuntimeManager.CreateInstance(referenceManagement.track1);
 
         timelineInfo = new TimelineInfo();
 
+        radioAnnouncement = FMODUnity.RuntimeManager.CreateInstance(referenceManagement.radioAnnouncement);
+        radioAnnouncement.start();
 
+        StartCoroutine(WaitToStartMusic());
+
+        referenceManagement.switchingManagement.CarSwitchDoneEvent.AddListener(HandleCarSwtchDone);
+    }
+
+    IEnumerator WaitToStartMusic() {
+        while (VoiceClipManagement.IsPlaying(radioAnnouncement)) {
+            yield return new WaitForEndOfFrame();
+        }
+        announcementDone.Invoke();
+        MusicSetup();
+    }
+
+    void MusicSetup() {
         // Explicitly create the delegate object and assign it to a member so it doesn't get freed
         // by the garbage collected while it's being used
         beatCallback = new FMOD.Studio.EVENT_CALLBACK(BeatEventCallback);
@@ -46,8 +69,6 @@ public class MusicManagement : MonoBehaviourReferenced {
 
         track1.setCallback(beatCallback, FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_BEAT | FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_MARKER);
         track1.start();
-
-        referenceManagement.switchingManagement.CarSwitchDoneEvent.AddListener(HandleCarSwtchDone);
     }
 
     void OnDestroy() {
@@ -107,5 +128,22 @@ public class MusicManagement : MonoBehaviourReferenced {
 
     public void SetPlayVoiceOverAfterSwitch(bool b) {
         playVoiceOverAfterSwitch = b;
+    }
+
+    public void StartOutro1() {
+        track1.setParameterByName("Outro", 1);
+    }
+
+    public void StartOutro2() {
+        track1.setParameterByName("Outro", 2);
+    }
+
+    public void StartOutro3() {
+        FMOD.Studio.EventInstance outro = FMODUnity.RuntimeManager.CreateInstance(referenceManagement.outro);
+        outro.start();
+    }
+
+    public bool Track1IsPlaying() {
+        return VoiceClipManagement.IsPlaying(track1);
     }
 }

@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.00.00">
 	<object class="Event" id="{cf412174-56a7-4202-b436-3b85a01216c2}">
 		<property name="name">
-			<value>voice over 16</value>
+			<value>voice over 15</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
@@ -104,7 +104,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{dfba4990-3204-4866-998a-381c208d7a34}">
 		<property name="volume">
-			<value>2.5</value>
+			<value>6.5</value>
 		</property>
 		<property name="name">
 			<value>Audio 1</value>
